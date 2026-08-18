@@ -1,0 +1,97 @@
+# =========================================================
+# LaTeX Build Artifacts
+# =========================================================
+
+# Archivos auxiliares principales
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.lb
+
+# Archivos de interlineado / referencias cruzadas
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Archivos de índice
+*.idx
+*.ilg
+*.ind
+*.ist
+
+# Archivos de glosario
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+
+# Archivos de nomeclatura
+*.nlo
+
+# Archivos de sincronización (SyncTeX)
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Archivos temporales de pdflatex / latexmk
+*.fdb_latexmk
+*.latexmain
+.auctex-auto/
+auto/
+
+# Archivos de hacer / revisar
+*.dvi
+*.xdv
+*.ps
+*.eps
+
+# =========================================================
+# PDF compilado (descomenta si NO quieres versionar el PDF)
+# =========================================================
+*.pdf
+
+# =========================================================
+# Directorios de build
+# =========================================================
+Build/
+_build/
+out/
+
+# =========================================================
+# Editores y SO
+# =========================================================
+
+# VS Code / VS Codium
+.vscode/
+
+# JetBrains (TeXiFy)
+.idea/
+
+# Overleaf / ShareLaTeX (archivos locales generados)
+.overleaf/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+

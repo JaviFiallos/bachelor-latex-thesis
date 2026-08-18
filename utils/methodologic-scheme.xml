@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-05-28T00:00:00.000Z" agent="Gemini" version="24.7.17" type="device">
+  <diagram id="esquema-metodologico-bellidental" name="Esquema Metodológico Bellidental">
+    <mxGraphModel dx="1500" dy="1700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TÍTULO -->
+        <mxCell id="title" value="Esquema Metodológico — Centro Odontológico Bellidental" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="10" width="860" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- BADGES SUPERIORES -->
+        <mxCell id="badge1" value="Investigación Aplicada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="120" y="55" width="220" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="badge2" value="Enfoque Cuantitativo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="390" y="55" width="220" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="badge3" value="Diseño Preexperimental" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=1;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="660" y="55" width="220" height="34" as="geometry" />
+        </mxCell>
+
+        <!-- BLOQUE 1: PROBLEMA CENTRAL -->
+        <mxCell id="p1" value="1. Problema Central&#xa;La clínica opera bajo un modelo de gestión artesanal y descentralizado: el flujo de información clínica,&#xa;administrativa y financiera está fragmentado en silos desconectados y sostenido por la memoria&#xa;y acción manual del personal, generando fricción operativa, riesgo normativo y límite de crecimiento." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="110" width="760" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- BLOQUE 2: VARIABLES -->
+        <mxCell id="p2_container" value="2. Variables de Investigación" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;dashed=1;dashPattern=8 4;fontSize=14;fontStyle=1;container=1;collapsible=0;verticalAlign=top;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="170" y="225" width="760" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="p2a" value="Variable Independiente (VI)&#xa;Nivel de estandarización e integración&#xa;del flujo de información clínico-administrativa&#xa;Medida: N.º de silos de información (inventario)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="p2_container">
+          <mxGeometry x="20" y="40" width="340" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p2b" value="Variable Dependiente (VD)&#xa;Tiempo promedio de gestión administrativa&#xa;por paciente (ciclo completo de atención)&#xa;Unidad: minutos por paciente (min/pac)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="p2_container">
+          <mxGeometry x="400" y="40" width="340" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- BLOQUE 3: OE1 -->
+        <mxCell id="p3" value="3. OE1 — Análisis del flujo clínico-administrativo actual&#xa;Identificar procesos existentes, puntos de ruptura operativa y requerimientos funcionales y normativos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#6aa84f;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="360" width="760" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- SUB-BLOQUE OE1: TÉCNICAS -->
+        <mxCell id="p3_sub" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9ee;strokeColor=#6aa84f;dashed=1;dashPattern=6 3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="430" width="760" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="p3a" value="Observación directa&#xa;del flujo operativo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6aa84f;fontSize=12;" vertex="1" parent="p3_sub">
+          <mxGeometry x="15" y="12" width="210" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="p3b" value="Entrevista semiestructurada&#xa;al personal (censo: 3 actores)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6aa84f;fontSize=12;" vertex="1" parent="p3_sub">
+          <mxGeometry x="275" y="12" width="210" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="p3c" value="Revisión documental&#xa;normativa MSP / ACESS Ecuador" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6aa84f;fontSize=12;" vertex="1" parent="p3_sub">
+          <mxGeometry x="535" y="12" width="210" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- OUTPUT OE1 -->
+        <mxCell id="p3out" value="➜  Salida: Mapa de procesos AS-IS · Inventario de silos · Requerimientos funcionales y normativos documentados" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fillColor=#e2efda;strokeColor=#6aa84f;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="515" width="760" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- BLOQUE 4: OE2 -->
+        <mxCell id="p4" value="4. OE2 — Diseño del modelo de información estandarizado e integrado&#xa;Estructurar procesos clínico-administrativos, unificando reglas de negocio y lineamientos normativos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d0e0e3;strokeColor=#76a5af;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="565" width="760" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- SUB-BLOQUE OE2 -->
+        <mxCell id="p4_sub" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eaf3f5;strokeColor=#76a5af;dashed=1;dashPattern=6 3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="635" width="760" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="p4a" value="Modelo de datos&#xa;Historia Clínica Electrónica" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#76a5af;fontSize=12;" vertex="1" parent="p4_sub">
+          <mxGeometry x="15" y="12" width="210" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="p4b" value="Reglas de negocio&#xa;flujo clínico-financiero integrado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#76a5af;fontSize=12;" vertex="1" parent="p4_sub">
+          <mxGeometry x="275" y="12" width="210" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="p4c" value="Arquitectura del sistema&#xa;módulos y flujo unificado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#76a5af;fontSize=12;" vertex="1" parent="p4_sub">
+          <mxGeometry x="535" y="12" width="210" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- OUTPUT OE2 -->
+        <mxCell id="p4out" value="➜  Salida: Modelo de información TO-BE · Diagrama de arquitectura · Especificación de módulos funcionales" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fillColor=#dce9ec;strokeColor=#76a5af;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="720" width="760" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- BLOQUE 5: OE3 — IMPLEMENTACIÓN (contenedor con módulos) -->
+        <mxCell id="p5" value="5. OE3 — Implementación del sistema de información centralizado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;dashed=1;dashPattern=8 4;fontSize=15;fontStyle=1;container=1;collapsible=0;verticalAlign=top;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="170" y="770" width="760" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="p5a" value="Historia Clínica Digital&#xa;Ficha MSP estandarizada&#xa;Códigos diagnósticos integrados" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="p5">
+          <mxGeometry x="20" y="50" width="165" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p5b" value="Agendamiento y&#xa;Recordatorios Automáticos&#xa;Citas · notificaciones" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="p5">
+          <mxGeometry x="205" y="50" width="165" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p5c" value="Gestión Financiera&#xa;Abonos y pagos vinculados&#xa;al acto clínico" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="p5">
+          <mxGeometry x="390" y="50" width="165" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p5d" value="Recetas e Indicaciones&#xa;Generación digital&#xa;Comunicación al paciente" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="p5">
+          <mxGeometry x="575" y="50" width="165" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p5note" value="Sistema centralizado que elimina los silos: un único flujo conecta el acto clínico, el registro administrativo y el control financiero." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fillColor=none;strokeColor=none;color=#6a0dad;" vertex="1" parent="p5">
+          <mxGeometry x="20" y="150" width="720" height="44" as="geometry" />
+        </mxCell>
+
+        <!-- BLOQUE 6: EVALUACIÓN PREEXPERIMENTAL -->
+        <mxCell id="p6" value="6. Evaluación de Impacto — Diseño Preexperimental (O₁ → X → O₂)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe599;strokeColor=#bf9000;dashed=1;dashPattern=8 4;fontSize=14;fontStyle=1;container=1;collapsible=0;verticalAlign=top;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="170" y="1005" width="760" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="p6a" value="Pre-implementación (O₁)&#xa;Octubre 2026&#xa;Medición del ciclo administrativo&#xa;actual · cronometría · selección al azar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#bf9000;fontSize=12;fontStyle=1;" vertex="1" parent="p6">
+          <mxGeometry x="20" y="40" width="215" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p6x" value="X&#xa;Sistema&#xa;implementado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffce51;strokeColor=#bf9000;fontSize=14;fontStyle=1;" vertex="1" parent="p6">
+          <mxGeometry x="285" y="45" width="190" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p6b" value="Post-implementación (O₂)&#xa;Enero 2027&#xa;Medición del ciclo administrativo&#xa;con el sistema · comparación de medias" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#bf9000;fontSize=12;fontStyle=1;" vertex="1" parent="p6">
+          <mxGeometry x="525" y="40" width="215" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- MÉTRICA -->
+        <mxCell id="p6metric" value="Métrica principal: Δ Tiempo promedio de gestión administrativa por paciente (min/pac) · Comparación de medias con desviación estándar pre/post" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fillColor=#fef9e7;strokeColor=#bf9000;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="1170" width="760" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- BLOQUE 7: RESULTADO FINAL -->
+        <mxCell id="p7" value="7. Resultado — Sistema de Información Centralizado · Bellidental&#xa;Estandarización e integración del flujo clínico-administrativo comprobada&#xa;Octubre 2026 – Enero 2027 · Ambato, Tungurahua" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="1220" width="760" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- NOTA INFERIOR -->
+        <mxCell id="foot" value="Unidad de análisis: personal de Bellidental (censo: 3 actores) + ciclos de atención administrativa (muestreo aleatorio) · Período: octubre 2026 – enero 2027 · VI: estandarización del flujo · VD: tiempo de gestión (min/pac)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3f3f3;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="110" y="1318" width="880" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- FLECHAS DE CONEXIÓN -->
+        <mxCell id="e1" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p1" target="p2_container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p2_container" target="p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p3" target="p3_sub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p3_sub" target="p3out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p3out" target="p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p4" target="p4_sub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p4_sub" target="p4out">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p4out" target="p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p5" target="p6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p6" target="p6metric">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" edge="1" parent="1" source="p6metric" target="p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

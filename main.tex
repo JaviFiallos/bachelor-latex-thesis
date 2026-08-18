@@ -1,0 +1,248 @@
+\documentclass[12pt,a4paper]{report}
+
+% ================= IDIOMA Y CODIFICACIÓN =================
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+
+% ================= MAPEO Y FUENTE MEJORADA =================
+\usepackage{cmap}
+\usepackage{lmodern}
+
+% ================= FUENTE: Times New Roman =================
+\usepackage{newtxtext,newtxmath}
+
+% ================= MÁRGENES (formato UTA) =================
+\usepackage[
+    top=3cm,
+    bottom=2.5cm,
+    left=4cm,
+    right=2.5cm,
+    a4paper
+]{geometry}
+
+% ================= INTERLINEADO 1.5 =================
+\usepackage{setspace}
+\onehalfspacing
+
+% ================= PÁRRAFOS =================
+\setlength{\parskip}{0pt}
+\usepackage{indentfirst}
+
+% ================= JUSTIFICADO Y OTROS =================
+\usepackage{ragged2e}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{enumitem}
+
+% ================= TABLAS Y FIGURAS =================
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{pdflscape}
+
+\captionsetup[table]{
+    font=footnotesize,
+    labelfont=bf,
+    position=below,
+    skip=4pt
+}
+\captionsetup[figure]{
+    font=footnotesize,
+    labelfont=bf,
+    position=below,
+    skip=4pt
+}
+
+% ================= GRÁFICOS =================
+\usepackage{graphicx}
+
+% ================= BIBLIOGRAFÍA ESTILO IEEE =================
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{ieeetr}
+
+% ================= NUMERACIÓN DE CAPÍTULOS Y SECCIONES =================
+% Capítulos en números romanos (I, II, III...)
+\renewcommand{\thechapter}{\Roman{chapter}}
+% Secciones con números arábigos (1.1, 1.2...)
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+
+% ================= FORMATO DEL ÍNDICE GENERAL (TOC) =================
+\renewcommand{\cftchappresnum}{CAPÍTULO }
+\renewcommand{\cftchapaftersnum}{.}
+\addtolength{\cftchapnumwidth}{5.5em}
+
+% ---- Formato de capítulos en el texto tipo "CAPÍTULO I. TÍTULO" ----
+\titleformat{\chapter}[hang]
+  {\normalfont\bfseries\centering}{CAPÍTULO \thechapter.}{0.5em}{\bfseries\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{24pt}
+
+% Títulos de sección: negrita, alineado a la izquierda
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14}\bfseries}{\thesection}{1em}{}
+
+% Subtítulos: negrita
+\titleformat{\subsection}
+  {\normalfont\fontsize{12}{14}\bfseries}{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\itshape}{\thesubsubsection}{1em}{}
+
+% ================= COMANDO PARA SECCIONES PRELIMINARES =================
+% Genera una página nueva sin número de capítulo, pero agregada al TOC
+\newcommand{\seccionpreliminar}[1]{%
+    \clearpage
+    \phantomsection
+    \chapter*{#1}
+    \addcontentsline{toc}{chapter}{#1}
+}
+
+% ================= AJUSTES DE REDACCIÓN =================
+\sloppy
+\raggedbottom
+
+% ================= HIPERVÍNCULOS (siempre al último) =================
+\usepackage[hidelinks]{hyperref}
+
+% =========================================================
+\begin{document}
+
+% =========================================================
+% NUMERACIÓN ROMANA PARA SECCIONES PRELIMINARES
+% =========================================================
+\pagenumbering{roman}
+\renewcommand{\thepage}{\romannumeral\value{page}}
+
+% =========================================================
+% PORTADA
+% =========================================================
+\input{tex/Profile/portada-titulacion}
+
+% =========================================================
+% APROBACIÓN DEL TUTOR
+% =========================================================
+\input{tex/Profile/aprobacion-tutor}
+
+% =========================================================
+% AUTORÍA
+% =========================================================
+\input{tex/Profile/autoria}
+
+% =========================================================
+% DERECHOS DE AUTOR
+% =========================================================
+\input{tex/Profile/derechos-autor}
+
+% =========================================================
+% APROBACIÓN DEL TRIBUNAL DE GRADO
+% =========================================================
+\input{tex/Profile/aprobacion-tribunal}
+
+% =========================================================
+% DEDICATORIA
+% =========================================================
+\input{tex/Dedication/dedicatoria}
+
+% =========================================================
+% AGRADECIMIENTO
+% =========================================================
+\input{tex/Dedication/agradecimiento}
+
+% =========================================================
+% ÍNDICES
+% =========================================================
+\newpage
+\phantomsection
+\tableofcontents
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{ÍNDICE DE TABLAS}
+\listoftables
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{ÍNDICE DE FIGURAS}
+\listoffigures
+
+% =========================================================
+% RESUMEN EJECUTIVO
+% =========================================================
+\input{tex/Summary/resumen-ejecutivo}
+
+% =========================================================
+% ABSTRACT
+% =========================================================
+\input{tex/Summary/abstract}
+
+% =========================================================
+% CUERPO DEL DOCUMENTO — NUMERACIÓN ARÁBIGA
+% =========================================================
+\newpage
+\pagenumbering{arabic}
+
+% 1. Tema de Investigación
+\input{tex/Research-topic/tema-investigacion}
+
+% 1.1 Planteamiento del problema
+\input{tex/Research-topic/planteamiento_problema}
+
+% 1.2 Delimitación
+\input{tex/Research-topic/delimitacion}
+
+% 2. Justificación
+\input{tex/Justification/justificacion}
+
+% 3. Objetivo general / Objetivos específicos
+\input{tex/Objetive/objetivos}
+
+% 4. Fundamentación teórica
+\input{tex/Theoretical-foundation/fundamento}
+
+% 4.1 Antecedentes investigativos
+\input{tex/Theoretical-foundation/antecedentes}
+
+% 4.2 Marco teórico
+\input{tex/Theoretical-foundation/marco-teorico}
+
+% 5. Metodología
+\input{tex/Methodology/introduction.methodology}
+% 5.1 Modalidad de investigación
+\input{tex/Methodology/researh-modality}
+% 5.2 Población y muestra
+\input{tex/Methodology/population-sample}
+% 5.3 Recolección de información
+\input{tex/Methodology/data-collection}
+% 5.4 Procesamiento y análisis de datos
+\input{tex/Methodology/data-analysis}
+% 5.5 Propuesta de solución
+\input{tex/Methodology/solution-proposal}
+% 5.6 Desarrollo del proyecto
+\input{tex/Methodology/project-development}
+
+% 6. Recursos
+\input{tex/Resources/introduction.resources}
+\input{tex/Resources/resources}
+
+% 7. Cronograma de actividades
+\input{tex/Schedule/schedule}
+
+% =========================================================
+% BIBLIOGRAFÍA
+% =========================================================
+\newpage
+\bibliography{bib/references}
+
+% =========================================================
+% ANEXOS
+% =========================================================
+\newpage
+\input{tex/Appendices/appendices}
+
+\end{document}

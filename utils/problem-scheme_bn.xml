@@ -1,0 +1,137 @@
+<mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    
+    <mxCell id="center" value="PROBLEMA CENTRAL:&#xa;Fragmentación total de la información del paciente&#xa;y ausencia de una fuente única y confiable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=13;fontStyle=1;align=center;strokeWidth=3;" vertex="1" parent="1">
+      <mxGeometry x="550" y="400" width="300" height="90" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="effectA" value="A. Ineficiencia operativa y administrativa&#xa;• Duplicación de tareas&#xa;• Interrupciones al doctor&#xa;• Aumento tiempo administrativo&#xa;• Sobrecarga de secretaria y doctor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=2;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="150" y="100" width="220" height="100" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="effectB" value="B. Riesgos clínicos y administrativos&#xa;• Errores en medicación&#xa;• Pérdida de información clínica&#xa;• Dificultad para acceder al historial" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=2;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="410" y="100" width="220" height="100" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="effectC" value="C. Incumplimiento normativo ministerial&#xa;• Fichas rechazadas en inspección&#xa;• Recetas no impresas (posible sanción)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=2;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="670" y="100" width="220" height="100" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="effectD" value="D. Mala experiencia del paciente&#xa;• Falta claridad sobre tratamiento&#xa;• Desconocimiento del saldo&#xa;• Olvido de citas por falta de recordatorio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=2;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="930" y="100" width="220" height="100" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="effectE" value="E. Pérdida de ingresos y tiempo productivo&#xa;• Citas no asistidas por no confirmar&#xa;• Imposibilidad de reasignar cupos&#xa;• Tiempo ocioso del odontólogo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=2;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="280" y="240" width="220" height="100" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="effectF" value="F. Dificultad para escalar el negocio&#xa;• Procesos manuales al límite con 1000+ pacientes&#xa;• Riesgo de deterioro en calidad y cumplimiento" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=2;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="800" y="240" width="220" height="100" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause1" value="1. Manejo manual de Historia Clínica (Excel)&#xa;• Llenado lento (tecleo)&#xa;• Dependencia del doctor para códigos&#xa;• Riesgo de no conformidad&#xa;• Búsqueda difícil en 1000+ registros" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="150" y="570" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause2" value="2. Recetas manuscritas ilegibles&#xa;• Letra difícil para el paciente&#xa;• Riesgo de confusión en farmacia&#xa;• Proceso sin ayudas de búsqueda&#xa;• Incumplimiento de receta impresa" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="410" y="570" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause3" value="3. Agendamiento y recordatorios manuales&#xa;• Dependencia de la memoria&#xa;• Falta de confirmación en tiempo real&#xa;• Olvido de envío → inasistencias&#xa;• Sobrecarga de tareas repetitivas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="670" y="570" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause4" value="4. Comunicación post‑consulta sin automatizar&#xa;• No se envían recetas ni indicaciones&#xa;• Saldo de abonos invisible fuera de la clínica&#xa;• Seguimiento manual vía WhatsApp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="930" y="570" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause5" value="5. Registro de pagos en papel aislado&#xa;• Hoja de abonos sin vínculo digital&#xa;• Imposible consulta remota del saldo&#xa;• Riesgo de pérdida o deterioro&#xa;• Sin historial financiero consolidado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="150" y="720" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause6" value="6. Radiografías sin integrar a la historia clínica&#xa;• Archivos físicos y digitales separados&#xa;• Búsqueda lenta y riesgo de extravío&#xa;• Visión fragmentada del paciente" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="410" y="720" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause7" value="7. Herramientas dispersas&#xa;• Excel (fichas) + Calendar (citas)&#xa;• WhatsApp (recordatorios)&#xa;• Papel (abonos) + Carpetas (radiografías)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="670" y="720" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="cause8" value="8. Volumen y crecimiento de pacientes&#xa;• 75 pacientes/semana, 1000+ registros&#xa;• Procesos manuales al límite&#xa;• El crecimiento agravará lentitud y desorden" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=left;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="930" y="720" width="220" height="110" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="edge_effA" edge="1" parent="1" source="effectA" target="center">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_effB" edge="1" parent="1" source="effectB" target="center">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_effC" edge="1" parent="1" source="effectC" target="center">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_effD" edge="1" parent="1" source="effectD" target="center">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_effE" edge="1" parent="1" source="effectE" target="center">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_effF" edge="1" parent="1" source="effectF" target="center">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c1" edge="1" parent="1" source="center" target="cause1">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c2" edge="1" parent="1" source="center" target="cause2">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c3" edge="1" parent="1" source="center" target="cause3">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c4" edge="1" parent="1" source="center" target="cause4">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c5" edge="1" parent="1" source="center" target="cause5">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c6" edge="1" parent="1" source="center" target="cause6">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c7" edge="1" parent="1" source="center" target="cause7">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+    <mxCell id="edge_c8" edge="1" parent="1" source="center" target="cause8">
+      <mxGeometry relative="1" as="geometry"/>
+      <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=1.5;endArrow=classic;endFill=1;"/>
+    </mxCell>
+    
+  </root>
+</mxGraphModel>

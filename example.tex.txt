@@ -1,0 +1,463 @@
+\documentclass[12pt,letterpaper]{report}
+
+% ================= IDIOMA Y CODIFICACIÓN =================
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+
+% ================= FUENTE: Times New Roman, 12pt =================
+\usepackage{mathptmx} % Times New Roman (texto y matemáticas)
+
+% ================= MÁRGENES (según formato UTA) =================
+\usepackage[
+top=3cm,
+bottom=2.5cm,
+left=4cm,
+right=2.5cm
+]{geometry}
+
+% ================= INTERLINEADO 1.5 =================
+\usepackage{setspace}
+\onehalfspacing
+
+% ================= JUSTIFICADO Y OTROS PAQUETES =================
+\usepackage{ragged2e}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{enumitem}
+
+% ================= NUMERACIÓN DE CAPÍTULOS Y SECCIONES =================
+% Hace que el número del capítulo sea Romano (I, II, III...)
+\renewcommand{\thechapter}{\Roman{chapter}}
+% Obliga a que las secciones sigan usando números arábigos (1.1, 1.2...)
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+
+% ================= FORMATO DEL ÍNDICE GENERAL (TOC) =================
+% Añade la palabra "CAPÍTULO " antes del número en el índice
+\renewcommand{\cftchappresnum}{CAPÍTULO } 
+% Añade un punto después del número (Ej. CAPÍTULO I.)
+\renewcommand{\cftchapaftersnum}{.} 
+% Aumenta el espacio para que la palabra "CAPÍTULO" no se superponga con el título
+\addtolength{\cftchapnumwidth}{5.5em} 
+
+% ---- Formato de capítulos en el texto tipo "CAPÍTULO I. TÍTULO" ----
+\titleformat{\chapter}[hang]
+{\normalfont\bfseries\centering}{CAPÍTULO \thechapter.}{0.5em}{\bfseries\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{24pt}
+
+\titleformat{\section}
+{\normalfont\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+{\normalfont\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+{\normalfont\bfseries\itshape}{\thesubsubsection}{1em}{}
+
+% ================= ENCABEZADOS SIN NUMERAR (portada, dedicatoria, etc.) =================
+\newcommand{\seccionpreliminar}[1]{%
+	\clearpage
+	\phantomsection
+	\chapter*{#1}
+	\addcontentsline{toc}{chapter}{#1}
+}
+
+% ================= HIPERVÍNCULOS =================
+% Este paquete debe ser el último antes de \begin{document}
+	\usepackage[hidelinks]{hyperref}
+	\begin{document}
+		
+	% =========================================================
+	% NUMERACIÓN ROMANA PARA SECCIONES PRELIMINARES
+	% =========================================================
+	\pagenumbering{roman}
+	\renewcommand{\thepage}{\romannumeral\value{page}}
+	
+		% =========================================================
+		% PORTADA
+		% =========================================================
+		\clearpage
+		\thispagestyle{empty} % Oculta el número visualmente, pero mantiene la cuenta
+		\phantomsection
+		\addcontentsline{toc}{chapter}{PORTADA}
+		
+		\begingroup
+		\centering
+		\Large
+		UNIVERSIDAD TÉCNICA DE AMBATO\\[0.5em]
+		FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL\\[0.5em]
+		CARRERA DE SOFTWARE\\[3em]
+		
+		\textbf{Tema:}\\[1em]
+		\textbf{(COLOCAR TEMA EN MAYÚSCULAS)}\\[3em]
+		
+		\normalsize
+		Trabajo de titulación modalidad Proyecto de Investigación, presentado previo a la
+		obtención del título de Ingeniero/Ingeniera en Software\\[3em]
+		
+		\begin{flushleft}
+			ÁREA: SOFTWARE\\
+			LÍNEA DE INVESTIGACIÓN: SOFTWARE, TECNOLOGÍAS DE LA INFORMACIÓN Y CIENCIAS DE DATOS.\\
+			AUTOR: ESTEBAN DAVID LOPEZ NUÑEZ\\
+			TUTOR: Ing. DENNIS CHICAIZA, Mg.
+		\end{flushleft}
+		
+		\vfill
+		Ambato - Ecuador\\
+		junio -- 2026\\
+		\par
+		\endgroup
+		
+		% =========================================================
+		% APROBACIÓN DEL TUTOR
+		% =========================================================
+		\seccionpreliminar{APROBACIÓN DEL TUTOR}
+		
+		En calidad de tutor del trabajo de titulación con el tema: (COLOCAR TEMA EN MAYÚSCULAS),
+		desarrollado bajo la modalidad Proyecto de Investigación por el/la señor/señorita
+		(nombres y apellidos), estudiante de la Carrera de (Ingeniería), de la Facultad de
+		Ingeniería en Sistemas, Electrónica e Industrial, de la Universidad Técnica de Ambato,
+		me permito indicar que el estudiante ha sido tutorado durante todo el desarrollo del
+		trabajo hasta su conclusión, de acuerdo a lo dispuesto en el Artículo 17 del Reglamento
+		para la Titulación de Grado en la Universidad Técnica de Ambato y el numeral 6.3 del
+		instructivo del reglamento referido.
+		
+		\vspace{2em}
+		Ambato, (mes) (año).
+		
+		\vspace{4em}
+		\noindent\rule{6cm}{0.4pt}\\
+		Ing. Nombres y apellidos, Mg./PhD./MSc.\\
+		TUTOR
+		
+		% =========================================================
+		% AUTORÍA
+		% =========================================================
+		\seccionpreliminar{AUTORÍA}
+		
+		El presente trabajo de titulación con el tema: (COLOCAR TEMA EN MAYÚSCULAS) es
+		absolutamente original, auténtico y personal y ha observado los preceptos establecidos
+		en la Disposición General Quinta del Reglamento para la Titulación de Grado en la
+		Universidad Técnica de Ambato. En tal virtud, el contenido, efectos legales y académicos
+		que se desprenden del mismo son de exclusiva responsabilidad del autor.
+		
+		\vspace{2em}
+		Ambato, (mes) (año).
+		
+		\vspace{4em}
+		\noindent\rule{6cm}{0.4pt}\\
+		(nombres y apellidos)\\
+		C.C. ……………\\
+		AUTOR
+		
+		% =========================================================
+		% DERECHOS DE AUTOR
+		% =========================================================
+		\seccionpreliminar{DERECHOS DE AUTOR}
+		
+		Autorizo a la Universidad Técnica de Ambato para que reproduzca total o parcialmente
+		este trabajo de titulación dentro de las regulaciones legales e institucionales
+		correspondientes. Además, cedo todos mis derechos de autor a favor de la institución
+		con el propósito de su difusión pública, por lo tanto, autorizo su publicación en el
+		repositorio virtual institucional como un documento disponible para la lectura y uso
+		con fines académicos e investigativos de acuerdo con la Disposición General Cuarta del
+		Reglamento para la Titulación de Grado en la Universidad Técnica de Ambato.
+		
+		\vspace{2em}
+		Ambato, (mes) (año).
+		
+		\vspace{4em}
+		\noindent\rule{6cm}{0.4pt}\\
+		(nombres y apellidos)\\
+		C.C. ……………\\
+		AUTOR
+		
+		% =========================================================
+		% APROBACIÓN DEL TRIBUNAL DE GRADO
+		% =========================================================
+		\seccionpreliminar{APROBACIÓN DEL TRIBUNAL DE GRADO}
+		
+		En calidad de par calificador del informe final del trabajo de titulación presentado por
+		el/la señor/señorita (nombres y apellidos), estudiante de la Carrera de (Ingeniería), de
+		la Facultad de Ingeniería en Sistemas, Electrónica e Industrial, bajo la Modalidad
+		Proyecto de Investigación, titulado (COLOCAR TEMA EN MAYÚSCULAS), nos permitimos
+		informar que el trabajo ha sido revisado y calificado de acuerdo al Artículo 19 del
+		Reglamento para la Titulación de Grado en la Universidad Técnica de Ambato y el numeral
+		6.4 del instructivo del reglamento referido. Para cuya constancia suscribimos,
+		conjuntamente con la señora Presidente del Tribunal.
+		
+		\vspace{2em}
+		Ambato, (mes) (año).
+		
+		\vspace{4em}
+		\noindent\rule{6cm}{0.4pt}\\
+		Ing. Nombres y apellidos, Mg.\\
+		PRESIDENTE DEL TRIBUNAL
+		
+		\vspace{3em}
+		\noindent
+		\begin{minipage}[t]{0.45\textwidth}
+			\rule{6cm}{0.4pt}\\
+			Ing. Nombres y apellidos, Mg./PhD./MSc.\\
+			PROFESOR CALIFICADOR
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{0.45\textwidth}
+			\rule{6cm}{0.4pt}\\
+			Ing. Nombres y apellidos, Mg./PhD./MSc.\\
+			PROFESOR CALIFICADOR
+		\end{minipage}
+		
+		% =========================================================
+		% DEDICATORIA
+		% =========================================================
+		\seccionpreliminar{DEDICATORIA}
+		
+		Redactar dedicatoria en no más de una hoja, en una sola columna.
+		
+		% =========================================================
+		% AGRADECIMIENTO
+		% =========================================================
+		\seccionpreliminar{AGRADECIMIENTO}
+		
+		Redactar el agradecimiento en no más de una hoja, en una sola columna.
+		
+		% =========================================================
+		% ÍNDICES
+		% =========================================================
+		\newpage
+		\phantomsection
+		\tableofcontents
+		
+		\newpage
+		\phantomsection
+		\addcontentsline{toc}{chapter}{ÍNDICE DE TABLAS}
+		\listoftables
+		
+		\newpage
+		\phantomsection
+		\addcontentsline{toc}{chapter}{ÍNDICE DE FIGURAS}
+		\listoffigures
+		
+		% Índice de anexos (manual, ya que LaTeX no lo genera por defecto)
+		\newpage
+		\phantomsection
+		\addcontentsline{toc}{chapter}{ÍNDICE DE ANEXOS}
+		\chapter*{ÍNDICE DE ANEXOS}
+		\noindent Anexo A. Ejemplo de anexo \dotfill\ 8
+		
+		% =========================================================
+		% RESUMEN EJECUTIVO
+		% =========================================================
+		\seccionpreliminar{RESUMEN EJECUTIVO}
+		
+		El resumen ejecutivo constará de máximo 250 palabras, debe sintetizar el propósito,
+		metodología, resultados y conclusiones clave en un solo párrafo o sección breve. Se
+		escribe en pasado, enfocado en el valor del estudio. Defina el problema, los objetivos,
+		la metodología, los resultados destacados y las conclusiones principales.
+		
+		\vspace{1em}
+		\noindent\textbf{Palabras clave:} palabra1, Palabra2, palabra3.
+		
+		% =========================================================
+		% ABSTRACT
+		% =========================================================
+		\seccionpreliminar{ABSTRACT}
+		
+		The executive summary will consist of a maximum of 250 words.
+		
+		\vspace{1em}
+		\noindent\textbf{Keywords:} word1, Word2, word3.
+		
+		% =========================================================
+		% CUERPO DEL DOCUMENTO
+		% =========================================================
+		\newpage
+		% AQUÍ SE REINICIA LA NUMERACIÓN A NÚMEROS ARÁBIGOS (1, 2, 3...)
+		\pagenumbering{arabic}
+		
+		% ---------------------------------------------------------
+		\chapter{MARCO TEÓRICO}
+		
+		\section{Tema de investigación}
+		Texto.
+		
+		\subsection{Planteamiento del problema}
+		Describe la situación actual (realidad) contrastándola con lo ideal, utilizando un
+		enfoque deductivo (de lo general a lo particular). Identifica causas, consecuencias y
+		ubica el problema en un contexto específico. Termina formulando la pregunta de
+		investigación principal.
+		
+		\section{Antecedentes investigativos}
+		Viene del diseño del proyecto, con la revisión de artículos y el análisis del estado
+		del arte.
+		
+		\section{Fundamentación teórica}
+		Conceptos básicos que guardan relación con las variables directa e indirecta que se
+		enuncian en el tema del trabajo de investigación.
+		
+		\subsection{Subtítulo tercer nivel}
+		Texto.
+		
+		\subsubsection{Subtítulo cuarto nivel}
+		Texto.
+		\begin{itemize}[noitemsep]
+			\item Ejemplo de lista
+			\item Ejemplo de lista
+		\end{itemize}
+		
+		\subsubsection{Subtítulo cuarto nivel}
+		Texto.
+		
+		\paragraph{Subtítulo quinto nivel.} Información pertinente de este nivel.
+		\paragraph{Subtítulo quinto nivel.} Información pertinente de este nivel.
+		
+		% Ejemplo de tabla (referenciar según formato IEEE)
+		\begin{table}[h!]
+			\centering
+			\caption{Niveles en el texto}
+			\label{tab:niveles}
+			\begin{tabular}{ll}
+				\hline
+				Nivel & Descripción \\
+				\hline
+				1 & Texto \\
+				2 & Texto \\
+				\hline
+			\end{tabular}
+		\end{table}
+		
+		\section{Objetivos}
+		\subsection{Objetivo general}
+		Texto.
+		
+		\subsection{Objetivos específicos}
+		\begin{itemize}[noitemsep]
+			\item Objetivo 1
+			\item Objetivo 2
+			\item Objetivo 3
+		\end{itemize}
+		
+		% ---------------------------------------------------------
+		\chapter{METODOLOGÍA}
+		
+		El enfoque metodológico es el plan sistemático y estratégico que guía una
+		investigación para resolver un problema, definiendo si se utilizan datos numéricos
+		(cuantitativo), narrativos/subjetivos (cualitativo) o una integración de ambos (mixto).
+		
+		\section{Materiales}
+		Enumera los insumos, equipos, reactivos, instrumentos de medición (encuestas,
+		software) o documentos analizados.
+		
+		\section{Métodos}
+		
+		\subsection{Modalidad de la investigación}
+		Se refiere al estilo, forma o estrategia particular que adopta un estudio para cumplir
+		con sus objetivos (documental, de campo, experimental, no experimental, proyecto
+		factible, estudio de caso, entre otras).
+		
+		\subsection{Población y muestra}
+		La población es el conjunto total de elementos con características comunes a estudiar,
+		mientras que la muestra es un subconjunto representativo de esa población.
+		
+		\subsection{Recolección de información}
+		Entrevistas, encuestas, fichas bibliográficas y fichas de observación, según
+		corresponda al proyecto.
+		
+		\subsection{Procesamiento y análisis de datos}
+		Justifica la elaboración del proyecto a partir del análisis de la información
+		recolectada (entrevistas, encuestas, fichas documentales y de observación).
+		
+		% ---------------------------------------------------------
+		\chapter{RESULTADOS Y DISCUSIÓN}
+		
+		Párrafo introductorio opcional, describiendo los principales puntos del contenido del
+		capítulo III. \\
+		\textit{IMPORTANTE: la siguiente guía solo es una sugerencia; queda a criterio del
+			autor y su tutor el contenido íntegro de este capítulo.}
+		
+		\section{Diagnóstico y Análisis de Requerimientos (u Objeto de Estudio)}
+		Este apartado presenta la base técnica sobre la cual se trabajó, validando los
+		síntomas detectados en los capítulos I y II.
+		
+		\subsection{Análisis de requerimientos funcionales y no funcionales}
+		Texto.
+		
+		\subsection{Caracterización del entorno de pruebas o auditoría}
+		Texto.
+		
+		\subsection{Análisis de Viabilidad (Científica y Operativa)}
+		Texto.
+		
+		\subsection{Establecimiento de línea base}
+		Texto.
+		
+		\subsection{Procesamiento de datos iniciales / Baseline (proyectos de Data Science e IA)}
+		Texto.
+		
+		\section{Desarrollo de la Propuesta Tecnológica / Ejecución de la Investigación}
+		Aquí se detalla el ``producto'' o el resultado de la aplicación de la metodología.
+		
+		\subsection{Selección de la metodología de desarrollo}
+		Texto.
+		
+		\subsection{Arquitectura del sistema y diseño de componentes}
+		Texto.
+		
+		\subsection{Implementación de algoritmos, modelos o protocolos}
+		Texto.
+		
+		\section{Pruebas de Funcionamiento, Validación y Evaluación de Resultados}
+		Se demuestra que la solución cumple con los criterios de eficacia y eficiencia.
+		
+		\subsection{Pruebas de caja negra/blanca o validación de modelos}
+		Texto.
+		
+		\subsection{Evaluación de rendimiento y estrés del sistema}
+		Texto.
+		
+		\subsection{Análisis de usabilidad y satisfacción del usuario final}
+		Texto.
+		
+		\section{Discusión de Resultados}
+		Se contrastan los hallazgos con los antecedentes investigativos y el marco teórico.
+		
+		\subsection{Comparativa con el estado del arte}
+		Texto.
+		
+		\subsection{Análisis de cumplimiento de objetivos y validación de la investigación}
+		Texto.
+		
+		% ---------------------------------------------------------
+		\chapter{CONCLUSIONES Y RECOMENDACIONES}
+		
+		\section{Conclusiones}
+		Texto.
+		
+		\section{Recomendaciones}
+		Texto.
+		
+		% =========================================================
+		% REFERENCIAS BIBLIOGRÁFICAS
+		% =========================================================
+		\seccionpreliminar{REFERENCIAS BIBLIOGRÁFICAS}
+		
+		Para las referencias bibliográficas se debe utilizar la norma IEEE.
+		
+		% =========================================================
+		% ANEXOS
+		% =========================================================
+		\seccionpreliminar{ANEXOS}
+		
+		\section*{Anexo A. Ejemplo de anexo}
+		En la Figura A1 se muestra el diagrama de flujo.
+		
+		% Figura de ejemplo (omitida: reemplazar con \includegraphics cuando se tenga la imagen)
+		% \begin{figure}[h!]
+			%     \centering
+			%     \includegraphics[width=0.7\textwidth]{ruta_imagen}
+			%     \caption{Diagrama de flujo}
+			% \end{figure}
+		
+	\end{document}
