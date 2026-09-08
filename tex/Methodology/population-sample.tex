@@ -1,96 +1,51 @@
-\subsection{Población y Muestra}
-Dado que este estudio utiliza un enfoque cuantitativo basado en
-mediciones numéricas, la recolección de datos se apoya en valores
-reales que representen fielmente la situación de la clínica. Para
-garantizar representatividad y evitar sesgos, los ciclos de atención
-administrativa que conforman la segunda unidad de análisis serán
-seleccionados mediante muestreo aleatorio simple. Este procedimiento
-consiste en asignar un número de control consecutivo a cada ciclo
-registrado durante el período de estudio y elegir aleatoriamente
-los que formarán parte de la medición en cada fase. De este modo,
-cada ciclo de atención tiene la misma probabilidad de ser incluido,
-lo que permite comparar los resultados antes y después de la
-implementación del sistema con validez estadística.
+\subsection{Población y muestra}
+Para los instrumentos aplicados al personal de Bellidental (entrevista semiestructurada y encuesta de fricción operativa), la población es reducida y perfectamente identificable, por lo que se trabajó con la totalidad de sus integrantes, es decir, con un censo y no con una muestra:
 
-La primera unidad de análisis está conformada por el personal
-directamente involucrado en la atención y administración del centro
-odontológico Bellidental. Al tratarse de un establecimiento de
-pequeña escala, el número total de personas que participan en la
-gestión es reducido y perfectamente conocido; por ello se trabajará
-con un censo total, incluyendo a todos sus miembros sin necesidad
-de seleccionar una muestra parcial. Este grupo constituye la fuente
-principal de información para comprender los procesos actuales, será
-el insumo central para el diseño del nuevo sistema de información y
-el sujeto de observación durante las mediciones del ciclo de
-atención. El personal del proceso de atención y administración se
-detalla en la Tabla~\ref{tab:actores_proceso}.
-
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
-\begin{tabular}{|l|c|p{7.5cm}|}
+\caption{Población del personal de Bellidental}
+\label{tab:poblacion_personal}
+\begin{tabular}{lc}
 \hline
-\textbf{Rol} & \textbf{Cantidad} &
-\textbf{Participación en el estudio} \\ \hline
-Odontólogo general      & 1 & Entrevista, revisión del flujo de
-                              trabajo y usuario final del sistema \\ \hline
-Odontólogo especialista & 1 & Entrevista, revisión del flujo de
-                              trabajo y usuario final del sistema \\ \hline
-Secretaria              & 1 & Entrevista, revisión de tareas de
-                              oficina y usuario final del sistema \\ \hline
-\textbf{Total}          & \textbf{3} & \\ \hline
+\textbf{Cargo} & \textbf{Número de personas} \\
+\hline
+Secretaria & 1 \\
+Doctor especialista & 1 \\
+Doctor odontólogo general & 1 \\
+\hline
+\textbf{Total} & \textbf{3} \\
+\hline
 \end{tabular}
-\caption{Personal del proceso de atención y administración del
-         centro odontológico Bellidental.}
-\label{tab:actores_proceso}
 \end{table}
 
-La segunda unidad de análisis corresponde a los ciclos completos de
-atención administrativa. Siguiendo la definición operacional
-establecida en la delimitación del estudio, cada ciclo se define
-como el período transcurrido desde que el paciente es registrado en
-recepción hasta que se completa el asiento del pago y se emite el
-comprobante correspondiente, abarcando los subprocesos de registro
-de datos personales, apertura o actualización de la historia
-clínica, consulta odontológica, elaboración de receta y registro
-de facturación. Dado que la clínica mantiene un flujo regular de
-aproximadamente 75 pacientes semanales, el volumen total de
-atenciones durante el período de estudio es limitado y cuantificable.
-El número exacto de ciclos a observar en cada fase se determinará
-aplicando la fórmula para poblaciones finitas con variable continua,
-considerando un nivel de confianza del 95\,\%, una estimación de la
-desviación estándar obtenida a partir de los tiempos registrados en
-estudios análogos de entornos dentales similares~\cite{Ozkaynak2021},
-y un margen de error preestablecido de dos minutos, congruente con la
-precisión requerida para detectar diferencias clínicamente
-relevantes en el ciclo de atención. El total resultante se dividirá
-en dos grupos de igual tamaño, uno correspondiente a la fase previa
-a la implementación y otro a la fase posterior, para calcular el
-tiempo promedio y la dispersión en cada etapa y evaluar si la
-diferencia observada es estadísticamente significativa. Las fases
-de medición se presentan en la Tabla~\ref{tab:fases_medicion}.
+Dado que la población total es de tres personas, no se aplica ningún procedimiento de muestreo: los tres integrantes participaron en su totalidad.
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|p{3.2cm}|p{3.8cm}|p{6.2cm}|}
-\hline
-\textbf{Fase de medición} & \textbf{Período} &
-\textbf{Criterio de selección} \\ \hline
-Pre-implementación  & Julio--agosto de 2026
-                    & Muestreo aleatorio simple sobre
-                      los ciclos completos registrados
-                      durante la fase de diagnóstico \\ \hline
-Post-implementación & Noviembre de 2026
-                    & Muestreo aleatorio simple sobre
-                      los ciclos completos registrados
-                      con el sistema en operación \\ \hline
-\end{tabular}
-\caption{Fases de medición de ciclos de atención administrativa.}
-\label{tab:fases_medicion}
-\end{table}
+Para la encuesta aplicada a los pacientes, en cambio, la población es considerablemente mayor, por lo que sí fue necesario calcular un tamaño de muestra. Se tomó como referencia el volumen de atención habitual del centro, de aproximadamente 75 pacientes por semana, y se aplicó la fórmula estadística para poblaciones finitas:
 
-Los criterios de inclusión considerarán únicamente los ciclos en
-los que el paciente complete las tres etapas del proceso en la
-misma visita: registro, consulta y cobro. Se excluirán los casos
-de urgencias no programadas, las consultas que no generen receta
-ni registro de pago, y los ciclos interrumpidos por causas externas
-ajenas al flujo administrativo del consultorio.
+\begin{equation}
+n = \frac{N \cdot Z^{2} \cdot p \cdot q}{e^{2}(N - 1) + Z^{2} \cdot p \cdot q}
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $N$: tamaño de la población (75 pacientes atendidos por semana).
+    \item $Z$: $1{,}96$ (nivel de confianza del $95$\,\%).
+    \item $p$: $0{,}5$ (probabilidad de ocurrencia, valor conservador al no existir un estudio previo de referencia).
+    \item $q$: $0{,}5$ ($1 - p$).
+    \item $e$: $0{,}05$ (margen de error del $5$\,\%).
+\end{itemize}
+
+Al reemplazar los valores:
+
+\begin{equation}
+n = \frac{75 \cdot (1{,}96)^{2} \cdot 0{,}5 \cdot 0{,}5}{(0{,}05)^{2}(75 - 1) + (1{,}96)^{2} \cdot 0{,}5 \cdot 0{,}5} = \frac{72{,}03}{1{,}1454} \approx 63
+\end{equation}
+
+Con base en este cálculo, se estableció una muestra objetivo de 63 pacientes, a quienes se buscó llegar combinando la vía digital (Google Forms, mediante código QR) y la vía física (encuesta impresa), de manera que ambos canales se complementaran para aproximarse al tamaño calculado dentro del tiempo disponible de recolección.
+
+Para la ficha de observación cronometrada, no se calculó una muestra mediante fórmula, ya que su naturaleza es distinta: no busca representar estadísticamente a un grupo de opinión, sino registrar directamente el tiempo real de gestión administrativa. Por ello, se optó por una muestra no probabilística por conveniencia, conformada por todos los pacientes atendidos durante los días de observación en cada fase (pretest y, posteriormente, postest), lo cual permite obtener una medición directa y comparable sin depender de un tamaño calculado previamente.
+
+%criterios de inclusion exclusion
+%Para la ficha de observación cronometrada, no se calculó una muestra mediante fórmula, ya que su naturaleza es distinta: no busca representar estadísticamente a un grupo de opinión, sino registrar directamente el tiempo real de gestión administrativa. Por ello, se optó por una muestra no probabilística por conveniencia, conformada por todos los pacientes atendidos durante los días de observación en cada fase (pretest y, posteriormente, postest), lo cual permite obtener una medición directa y comparable sin depender de un tamaño calculado previamente.
+
+%El Instrumento 9 no busca representar una opinión, sino medir directamente el tiempo real de gestión administrativa. En un diseño preexperimental de un solo grupo con medición antes-después (que es justamente tu diseño), lo que importa no es "cuántos pacientes son estadísticamente representativos", sino cuántas observaciones se registraron en cada fase (pretest y postest) y que ambas fases sean comparables entre sí (mismos días de la semana, mismo tipo de jornada, etc.). Esto es coherente con lo que ya citas en tu fundamentación teórica sobre Time and Motion Studies (Lopetegui2014TMS, staras2021using), donde el propio antecedente que mencionas trabajó con apenas 13 observaciones sin aplicar ninguna fórmula muestral.

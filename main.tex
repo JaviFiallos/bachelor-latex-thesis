@@ -27,6 +27,7 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{array}
+\usepackage{tabularx}
 
 \captionsetup[table]{
     font=footnotesize,
@@ -118,6 +119,10 @@
 \usepackage{multirow}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{enumitem}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[skins,breakable]{tcolorbox}
+\usepackage{rotating}
 
 % -----------------------------
 % Ajustes de Redacción
@@ -200,28 +205,33 @@
 % % 5 Antecedentes investigativos
 \input{tex/Theoretical-foundation/antecedentes}
 % % 5.1 Fundamentación teórica
-\input{tex/Theoretical-foundation/fundamento_v2}
+\input{tex/Theoretical-foundation/fundamento}
 % % 5.2 Marco teórico
 \input{tex/Theoretical-foundation/objetivos}
 
 
 
-% 6. Metodología
-\input{tex/Methodology/introduction.methodology}
-% 6.1. Modalidad de investigación
-\input{tex/Methodology/researh-modality}
-% 6.2. Población y muestra
+% =========================================================
+% CAPÍTULO II. METODOLOGÍA
+% =========================================================
+\newpage
+\input{tex/Methodology/introduction-methodology}
+\input{tex/Methodology/materials}
+
+\input{tex/Methodology/methods}
+% 2.2.2 Población y muestra
 \input{tex/Methodology/population-sample}
-% 6.3. Recolección de información
+% 2.2.3 Recolección de información
 \input{tex/Methodology/data-collection}
-% 6.4. Procesamiento y análisis de datos
+% 2.2.4 Procesamiento y análisis de datos
 \input{tex/Methodology/data-analysis}
-% 6.5. Propuesta de solución
-\input{tex/Methodology/solution-proposal}
-% 6.6. Desarrollo del proyecto
-\input{tex/Methodology/project-development}
+
+% Archivos de la estructura anterior pendientes de reestructuración
+% \input{tex/Methodology/solution-proposal}
+% \input{tex/Methodology/project-development}
 
 % 7. Recursos
+\newpage
 \input{tex/Resources/introduction.resources}
 \input{tex/Resources/resources}
 
@@ -232,7 +242,7 @@
 % BIBLIOGRAFÍA
 % =========================================================
 \newpage
-\bibliography{bib/references,bib/planteamiento_problema,bib/fundamentacion_teorica}
+\bibliography{bib/planteamiento_problema,bib/fundamentacion_teorica,bib/antecedentes,bib/references}
 
 % =========================================================
 % ANEXOS

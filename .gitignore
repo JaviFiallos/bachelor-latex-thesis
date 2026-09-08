@@ -65,7 +65,7 @@ auto/
 # PDF compilado (descomenta si NO quieres versionar el PDF)
 # =========================================================
 *.pdf
-
+*.txt
 # =========================================================
 # Directorios de build
 # =========================================================
@@ -95,3 +95,5 @@ out/
 *~
 .directory
 
+# Respaldos/archivos archivados
+*.bak
