@@ -1,36 +1,263 @@
+% ============================================================
+% 1.3 Fundamentación Teórica  —  v3
+% Archivo: tex/Theoretical-foundation/fundamento_v3.tex
+% Bibliografía: bib/fundamentacion_teorica.bib (+ references.bib compartido)
+% ============================================================
+
 \subsection{Fundamentación teórica}
-% Contiene los fundamentos científicos o tecnológicos relevantes que sustentan el
-% trabajo, requieren ser citados.
 
-\textit{La presente fundamentación teórica reúne y analiza los estudios y normas más relevantes a nivel global y local para respaldar la organización de las tareas y flujos de trabajo en una clínica odontológica. Con el fin de construir una base sólida y confiable para este proyecto, se seleccionaron únicamente los trabajos que responden de forma directa a las metas de la investigación: entender cómo se maneja la información clínica y de oficina actualmente, diseñar un sistema digital integrado y comprobar si esta tecnología realmente logra reducir el tiempo que se dedica a los trámites administrativos por cada paciente. A través de un proceso de selección claro que se detalla a continuación, se recopilaron 29 documentos clave que sirven como guía para el diagnóstico, el diseño y la puesta en marcha de la solución propuesta.}
+Los conceptos básicos que guardan relación con las variables directa e indirecta
+que se enuncian en el tema del trabajo de investigación se organizan en cuatro
+bloques: el flujo de información clínico-administrativo y sus técnicas de
+representación, los sistemas de información en salud y su arquitectura de
+software, los agentes conversacionales aplicados a la comunicación con el
+paciente, y el marco normativo ecuatoriano aplicable al manejo de información
+clínica.
 
-El presente marco teórico no es un simple listado de definiciones, sino un análisis enfocado en el problema principal de esta investigación: el desorden y la separación de los datos clínicos y administrativos en un consultorio dental pequeño, y cómo un sistema integrado puede ayudar a reducir el tiempo que se pierde en estas tareas. Para organizar las ideas, el texto se divide en tres ejes analíticos que responden directamente a los objetivos específicos del estudio: el diagnóstico de la fragmentación de datos, el uso del modelado de procesos para diseñar una solución y la medición del tiempo para comprobar el impacto real del sistema.
-\subsubsection{La fragmentación de la información como un problema de gestión}
+% -----------------------------------------------------------
+\subsubsection{Gestión del flujo de información clínico-administrativa}
+% -----------------------------------------------------------
 
-En el área de la informática médica, se sabe que los problemas para manejar la información en los consultorios pequeños no son fallas del momento, sino un problema de fondo donde los datos están totalmente divididos. Los estudios especializados en odontología confirman que tener archivos sueltos y la falta de reglas comunes son las barreras más repetidas en el sector \cite{ballester2022current}. Esta falta de orden no solo vuelve lento el trabajo diario, sino que daña la continuidad de la atención, porque trabajar con datos incompletos hace que sea más difícil tomar buenas decisiones sobre los tratamientos de los pacientes \cite{gurupur2024need}.
+El flujo de información clínico-administrativa comprende el conjunto de
+actividades, decisiones y transferencias de datos que ocurren desde el primer
+contacto del paciente con un establecimiento de salud hasta el cierre
+administrativo de su atención, incluyendo tanto los datos clínicos (diagnóstico,
+tratamiento, odontograma) como los datos de gestión (agenda, facturación,
+seguimiento). Su representación formal es el punto de partida habitual para el
+análisis de procesos en entornos sanitarios, dado que permite hacer visibles
+pasos, actores y dependencias que de otro modo permanecen implícitos en la
+práctica cotidiana.
 
-La consecuencia más clara de este desorden es el aumento del papeleo para el personal. Se ha comprobado que las tareas de oficina exageradas son la fuente principal de cansancio y estrés en los empleados de salud \cite{murad2024measuring}. Pasar datos a mano de un registro a otro quita tiempo que debería usarse para atender a las personas. Además, trabajar con carpetas físicas y hojas sueltas vuelve todo más propenso a equivocaciones, ya que los experimentos demuestran que las personas que usan papel cometen un promedio de 9.3 omisiones de datos importantes por cada paciente en comparación con quienes usan sistemas digitales \cite{pmc2024digital}.
+\paragraph{Modelado de procesos de negocio (BPMN).}
 
-En Ecuador, esta situación se vuelve más delicada por las exigencias de las leyes de salud. El Acuerdo Ministerial 5216-A del Ministerio de Salud Pública exige que los consultorios garanticen el archivo seguro, la confidencialidad y el registro de quién revisa las historias clínicas \cite{msp2016reglamento}. Sin embargo, los análisis técnicos demuestran que la mayoría de los consultorios pequeños tienen fallas graves para cumplir con estas reglas de protección de datos personales \cite{martinez2022proteccion}. A esto se suma que los formularios físicos obligatorios, como el Formulario 033, suelen llenarse mal, y menos del 50\% de los expedientes en papel cuentan con los diagnósticos o planes médicos completos \cite{uce2016caracteristicas}.
+El \textit{Business Process Model and Notation} (BPMN) es un estándar
+internacional de notación gráfica para la representación de procesos de negocio,
+mantenido por el \textit{Object Management Group} (OMG) y publicado como estándar
+ISO/IEC 19510 \cite{omg2024bpmn}. Su propósito es ofrecer una notación
+comprensible tanto para actores del negocio como para desarrolladores técnicos,
+de modo que un mismo diagrama sirva como puente entre el diseño de un proceso y
+su eventual implementación en software \cite{omg2024bpmn}. En el sector salud,
+esta notación se ha empleado para elicitar requerimientos de modelado a partir de
+iniciativas clínicas reales y para documentar fragmentos reutilizables ante
+desafíos propios del dominio, como la simultaneidad de roles y la variabilidad de
+los procesos \cite{pufahl2022bpmn}. El \textit{process mapping} como práctica
+general en entornos sanitarios ha sido objeto de revisión sistemática,
+encontrándose alta variabilidad en su rigor metodológico y en el grado de
+involucramiento de los actores clínicos durante su elaboración
+\cite{antonacci2021process}.
 
-Para solucionar esto, la ciencia propone unir la información en un solo sistema. Centralizar los datos ayuda a que la información generada en la consulta pase de forma automática a los cobros y a las recetas, mejorando el servicio y eliminando las tareas repetitivas \cite{ovreiu2024empowering}. En el caso de una clínica dental, ordenar el flujo de trabajo y conectar las herramientas digitales reduce los tiempos de espera y aumenta la productividad del consultorio, evitando que el personal tenga que copiar los mismos datos en diferentes lugares \cite{batheja2025optimizing}.
+\paragraph{Mapeo de flujo de valor (Value Stream Mapping) y metodología Lean.}
 
-\subsubsection{El modelado de procesos para el diagnóstico y el diseño del software}
+El \textit{Value Stream Mapping} (VSM) es una técnica de gestión orientada a
+diagramar la totalidad de pasos ---de valor y sin valor agregado--- necesarios
+para llevar un servicio desde su inicio hasta el cliente, incluyendo tanto el
+flujo de materiales como el de información \cite{lean2022vsm}. En el ámbito
+odontológico, se ha propuesto un modelo de traducción de sus elementos clásicos a
+términos propios del entorno clínico ambulatorio, validado en clínicas dentales
+\cite{alogla2025revisiting}, hallazgo consistente con revisiones más amplias sobre
+gestión de la práctica dental basada en evidencia \cite{batheja2025optimizing}.
 
-Para construir un software útil, primero se debe entender a fondo cómo trabaja el consultorio hoy en día. La ingeniería de software demuestra que los programas diseñados sin revisar el flujo de trabajo real terminan empeorando los problemas que querían arreglar. Analizar paso a paso las tareas junto con el personal, antes de instalar cualquier tecnología, ayuda a que el sistema se adapte a la realidad del negocio y a que los empleados lo acepten con mayor facilidad \cite{staras2021using}. Cuando los sistemas no se alinean con el camino real que sigue el paciente, aparecen fallas graves en la entrega de recetas y en los controles posteriores a la consulta \cite{makerere2024business}.
+\paragraph{Estudios de tiempos y movimientos.}
 
-Para representar estos flujos con claridad, no bastan las descripciones habladas, sino que se necesitan diagramas estructurados que muestren quién hace cada tarea y dónde se rompe la comunicación \cite{antonacci2021process}. La notación gráfica BPMN es la herramienta más recomendada para esto, aunque en el sector salud plantea retos especiales debido a las variaciones en la atención de cada paciente y a que el doctor y la secretaria trabajan al mismo tiempo con datos compartidos \cite{pufahl2022bpmn}.
+Los Estudios de Tiempos y Movimientos (\textit{Time and Motion Studies}, TMS)
+tienen su origen en la ingeniería industrial y han sido adoptados por la
+investigación biomédica como método para capturar y analizar la duración de
+eventos dentro de un proceso asistencial \cite{cureus2022purpose}. La literatura
+reconoce que el término agrupa variantes heterogéneas ---desde la observación
+continua por un observador externo hasta el análisis de registros de actividad del
+sistema---, siendo la captura de la duración de uno o más eventos el único
+elemento común entre ellas \cite{Lopetegui2014TMS}. En el registro dental
+electrónico, esta metodología ha permitido identificar rupturas de flujo de
+trabajo asociadas al registro de cargos, la visualización de radiografías y la
+interacción con el agendador, con diferencias estadísticamente significativas en
+los tiempos de interacción según el rol del proveedor \cite{schwei2016exploring}.
 
-Dibujar los procesos actuales sirve como base para identificar qué funciones debe tener el nuevo programa. Estos requisitos de software se pueden organizar según el ciclo de vida de la información, abarcando desde cómo se guardan los datos del paciente hasta las seguridades del sistema \cite{kinast2023functional}. Además, para que el programa maneje las reglas del Formulario 033 de forma automática, la teoría aconseja usar herramientas de gestión de reglas de negocio, logrando que el software valide los códigos de salud sin que el usuario tenga que memorizarlos \cite{nelson2014business}. 
+% -----------------------------------------------------------
+\subsubsection{Sistemas de información en salud}
+% -----------------------------------------------------------
 
-El mapa de procesos permite ver la diferencia entre cómo funciona la clínica hoy y cómo debería funcionar en el futuro con la ayuda del software \cite{hoang2026data}. Este enfoque ayuda a eliminar pasos innecesarios que solo quitan tiempo, asegurando una atención más ágil \cite{alogla2025revisiting}. Finalmente, esto permite diseñar una base de datos limpia y ordenada desde el inicio, superando las típicas fallas de los sistemas dentales viejos que suelen tener archivos mal documentados y desconectados \cite{duncan2020structuring}.
+Un sistema de información en salud se define como el conjunto organizado de
+componentes ---datos, procesos y tecnología--- que interactúan para producir
+información que sustente la toma de decisiones en una organización sanitaria
+\cite{sciencedirect2024his}. Este marco conceptual orienta tanto la selección de
+componentes funcionales de un sistema como los criterios para evaluar su éxito
+frente a objetivos organizacionales y estándares regulatorios
+\cite{ovreiu2024empowering}.
 
-\subsubsection{La medición del tiempo como prueba del éxito del proyecto}
+\paragraph{Historia clínica electrónica (EHR).}
 
-La meta final de ordenar y conectar la información es lograr un impacto positivo en el tiempo que se pierde en los trámites del consultorio. Elegir el tiempo promedio por paciente como la variable para medir el éxito del proyecto es una decisión respaldada por la ciencia, ya que es el indicador más claro para evaluar la carga de trabajo de la oficina \cite{murad2024measuring}. Las pruebas en centros médicos reales confirman que el uso de registros electrónicos reduce de forma directa los minutos dedicados al papeleo por cada paciente atendido \cite{pmc2021electronic}.
+La historia clínica electrónica (\textit{Electronic Health Record}, EHR)
+reemplaza el registro en papel por un repositorio digital estructurado de la
+información clínica del paciente. La evidencia disponible reporta mejoras en
+eficiencia clínica y gestión de datos asociadas a su adopción, junto con barreras
+persistentes de interoperabilidad, ciberseguridad, costo y resistencia del
+usuario \cite{sravya2024electronic}. En el subdominio dental, la ausencia de
+estándares globales para la implementación de EHR ha sido señalada como fuente de
+desafíos de comunicación entre plataformas y de discontinuidades en el cuidado
+\cite{gurupur2024standards}.
 
-Para medir estos minutos de forma exacta en el consultorio, la metodología estándar es el estudio de tiempos y movimientos \cite{cureus2022purpose}. Esta técnica consiste en observar directamente las tareas de la clínica y cronometrar cuánto dura cada evento del ciclo administrativo, como abrir la ficha del paciente, escribir la receta o registrar el pago \cite{lopetegui2014time}. Al usar este método en el campo dental, los investigadores han descubierto que los tiempos varían mucho según el rol de la persona, por lo que es vital medir por separado el trabajo del odontólogo y el de la secretaria \cite{schwei2016exploring}.
+\paragraph{Estándares de interoperabilidad: HL7 y HL7 FHIR.}
 
-La mejor forma de comprobar si el sistema funciona es mediante un diseño de investigación de antes y después \cite{pmc2021electronic}. Al medir los tiempos bajo las mismas condiciones de la clínica antes de poner el programa y volver a medirlos meses después de su instalación, se puede demostrar matemáticamente si la herramienta tecnológica cumplió con su objetivo.
+Health Level Seven (HL7) es una organización acreditada por el \textit{American
+National Standards Institute} (ANSI) que produce los estándares técnicos más
+utilizados mundialmente para el intercambio de información clínica y
+administrativa entre sistemas de salud heterogéneos \cite{hl7international2024}.
+\textit{Fast Healthcare Interoperability Resources} (FHIR) es la especificación
+más reciente de esta familia: describe la información sanitaria mediante
+componentes modulares llamados \textit{recursos} y define una interfaz REST sobre
+JSON o XML para su intercambio, facilitando la integración con arquitecturas
+orientadas a servicios \cite{hl7fhir2023overview}. En la literatura revisada, HL7
+es la variante de mayor aplicación en sistemas de información sanitarios de la
+última década \cite{wongperez2023hl7}; su combinación con arquitecturas de
+microservicios ha sido documentada como patrón técnicamente sólido para chatbots
+de salud \cite{roca2020microservice}.
 
-Por último, los autores recuerdan que el éxito de un software no solo depende de que esté bien programado, sino de factores humanos como la usabilidad, la capacitación y la buena disposición del personal para cambiar su forma de trabajar \cite{haddad2017perceived}. En los países en desarrollo, la falta de costumbre tecnológica y el miedo al cambio son los mayores obstáculos para que un sistema funcione \cite{tun2023clinical}. Por esta razón, integrar a los usuarios en las etapas de diseño ayuda a que sientan la herramienta como suya y se alcancen los resultados de tiempo esperados \cite{saladdin2025information}.
+\paragraph{Arquitectura de software: backend, frontend y API REST.}
+
+Una interfaz de programación de aplicaciones (API) es el mecanismo que permite
+que una aplicación acceda a recursos alojados en otra aplicación o servicio. El
+estilo REST (\textit{Representational State Transfer}), de mayor adopción para
+APIs web, se caracteriza por la independencia entre cliente y servidor y la
+identificación uniforme de recursos \cite{ibm2024restapi}. Bajo este esquema, el
+\textit{backend} concentra la lógica de negocio y el acceso a datos, mientras que
+el \textit{frontend} presenta la información al usuario final mediante el consumo
+de esas interfaces.
+
+\paragraph{Arquitectura de microservicios.}
+
+La arquitectura de microservicios estructura una aplicación como un conjunto de
+servicios pequeños, débilmente acoplados e independientemente desplegables, cada
+uno responsable de una capacidad de negocio específica y comunicado con los demás
+mediante API REST \cite{ibm2026microservices}. Este enfoque se ha aplicado
+concretamente al dominio dental en una arquitectura de cuatro microservicios
+---Paciente, Registro Médico Dental, Odontograma y Proveedor de Servicios
+Dentales--- con API Gateway y autenticación por token, que demostró en un
+prototipo en la nube capacidad de escalamiento automático ante incrementos de
+demanda \cite{arcila2022microservice}.
+
+\paragraph{Contenedorización y despliegue: Docker.}
+
+Un contenedor es una unidad estándar de software que empaqueta el código de una
+aplicación junto con todas sus dependencias, de modo que se ejecuta de forma
+rápida y consistente en cualquier entorno de cómputo \cite{docker2024containers}.
+Docker es la plataforma de contenedorización de mayor adopción en la industria y
+constituye el mecanismo habitual para desplegar de forma aislada y escalable cada
+microservicio de una arquitectura distribuida \cite{docker2024containers}; ha sido
+empleado de forma explícita en arquitecturas de chatbot de salud
+\cite{roca2020microservice} y en prototipos de sistemas dentales basados en
+microservicios \cite{arcila2022microservice}.
+
+\paragraph{Autenticación en arquitecturas distribuidas: JSON Web Token (JWT).}
+
+Un \textit{JSON Web Token} (JWT) es un estándar abierto (RFC~7519) que define una
+forma compacta y autocontenida de transmitir información entre partes como un
+objeto JSON firmado digitalmente, permitiendo verificar la identidad del emisor y
+la integridad del contenido \cite{auth0jwt2024introduction}. En arquitecturas de
+microservicios expuestas mediante un API Gateway, JWT centraliza la autenticación
+de solicitudes evitando que cada servicio implemente su propio esquema de
+credenciales \cite{auth0jwt2024introduction}; fue adoptado de forma explícita en
+el sistema de registros dental de \cite{arcila2022microservice} y en el módulo de
+reserva de citas de \cite{shaikh2026smartmedibook}.
+
+\paragraph{Evaluación de la calidad del software: ISO/IEC 25010.}
+
+ISO/IEC~25010 define un modelo de calidad de producto de software organizado en
+características medibles ---eficiencia de desempeño, compatibilidad, usabilidad,
+fiabilidad, seguridad, mantenibilidad y portabilidad--- dentro de la serie SQuaRE
+\cite{iso2011iec25010}. Ofrece un lenguaje común para especificar requisitos de
+calidad y evaluar en qué grado un producto los satisface \cite{iso2011iec25010},
+y fue empleada de forma explícita para verificar los atributos de calidad de una
+arquitectura de microservicios dental bajo pruebas de carga
+\cite{arcila2022microservice}.
+
+% -----------------------------------------------------------
+\subsubsection{Agentes conversacionales para la gestión de citas}
+% -----------------------------------------------------------
+
+\paragraph{Procesamiento de Lenguaje Natural (NLP).}
+
+El Procesamiento de Lenguaje Natural (\textit{Natural Language Processing}, NLP)
+es un subcampo de la inteligencia artificial que utiliza aprendizaje automático
+para permitir que los sistemas computacionales interpreten y generen lenguaje
+humano \cite{ibm2024nlp}. Sus técnicas sustentan la clasificación y extracción de
+información en texto, así como el reconocimiento de intención (\textit{intent
+recognition}) dentro de una conversación \cite{ibm2024nlp}.
+
+\paragraph{Agentes conversacionales (chatbots).}
+
+Un agente conversacional, o \textit{chatbot}, es un programa de software capaz de
+comunicarse con personas mediante lenguaje natural, entendiendo las expresiones
+del usuario y generando respuestas relevantes al problema planteado
+\cite{csaky2019chatbot}. Las arquitecturas de chatbot han evolucionado desde
+reglas y plantillas escritas manualmente hacia métodos estadísticos y, más
+recientemente, basados en aprendizaje profundo \cite{csaky2019chatbot}.
+
+\paragraph{Modelado de diálogo basado en reglas: AIML.}
+
+\textit{Artificial Intelligence Markup Language} (AIML) es un lenguaje de
+marcado basado en XML para especificar el comportamiento de agentes
+conversacionales mediante unidades llamadas \textit{categorías}, cada una
+compuesta por un patrón de entrada y una plantilla de respuesta asociada
+\cite{geeksforgeeks2023aiml}. A diferencia de los enfoques estadísticos, AIML
+representa un modelado de diálogo por reglas explícitas, lo que facilita su
+trazabilidad y su combinación con estándares de datos clínicos
+\cite{geeksforgeeks2023aiml}. En los antecedentes revisados, aparece como
+mecanismo conversacional de una arquitectura de chatbot para pacientes crónicos,
+incluyendo un generador automático de categorías AIML a partir de recursos FHIR
+\cite{roca2020microservice}, y entre las tecnologías identificadas en una revisión
+sistemática de chatbots de toma de historia clínica \cite{hindelang2024chatbots}.
+
+\paragraph{Plataformas de mensajería: WhatsApp Business Platform y LINE.}
+
+La \textit{WhatsApp Business Platform}, operada por Meta, permite a una
+organización enviar y recibir mensajes de forma programática mediante su Cloud
+API. La integración con sistemas externos se realiza mediante \textit{webhooks}:
+cuando ocurre un evento ---como la recepción de un mensaje--- la plataforma
+transmite un \textit{payload} a una URL registrada por el desarrollador, quien
+debe confirmarlo mediante una respuesta HTTP \cite{meta2026whatsapp}. Otras
+plataformas de alta penetración regional, como LINE (predominante en el sudeste
+asiático), ofrecen una \textit{Messaging API} de estructura equivalente y
+notificación de eventos mediante el mismo patrón de \textit{webhook}
+\cite{line2026messaging}. La elección de una u otra plataforma responde
+principalmente a la penetración de mensajería de la población objetivo; el patrón
+de integración es análogo en ambas. Esta última variante fue la empleada en un
+chatbot de reserva de servicios odontológicos en un centro de salud universitario
+\cite{hmadchayyapum2025line}.
+
+% -----------------------------------------------------------
+\subsubsection{Marco normativo de la información clínica en Ecuador}
+% -----------------------------------------------------------
+
+\paragraph{Historia clínica y confidencialidad de la información en salud.}
+
+El Acuerdo Ministerial 5216-A del Ministerio de Salud Pública del Ecuador
+establece el marco normativo obligatorio para el manejo de información
+confidencial dentro del Sistema Nacional de Salud, disponiendo que la gestión
+documental de historias clínicas ---en formato físico o digital--- debe
+garantizar un sistema adecuado de archivo, custodia, confidencialidad y
+trazabilidad del uso de la información \cite{msp2016reglamento}.
+
+\paragraph{Estandarización del registro clínico odontológico e indicadores de calidad.}
+
+Dentro del marco normativo dispuesto por el Ministerio de Salud Pública, la
+historia clínica única odontológica se registra en Ecuador mediante un formulario
+estandarizado del Sistema Nacional de Salud \cite{msp2016reglamento}. La
+completitud de este tipo de formularios se evalúa mediante indicadores de calidad
+de registro que combinan variables administrativas con indicadores clínicos
+propios de la especialidad, entre los que destaca el índice CPO-D (dientes
+permanentes cariados, perdidos y obturados), instrumento epidemiológico
+estandarizado internacionalmente por la Organización Mundial de la Salud para
+cuantificar la prevalencia de caries dental \cite{who2013oralhealth}. La
+evaluación de 293~formularios de historia clínica única odontológica en un
+contexto universitario ecuatoriano constató que menos de la mitad de los
+indicadores clave, incluido el índice CPO-D, se registraba de forma completa
+\cite{uce2016caracteristicas}.
+
+\paragraph{Protección de datos personales en el ámbito sanitario.}
+
+La Ley Orgánica de Protección de Datos Personales del Ecuador regula el
+tratamiento de datos personales, incluyendo los datos de salud como categoría de
+tratamiento especial. Su nivel de cumplimiento en sistemas de historia clínica
+electrónica del subsistema nacional de salud ecuatoriano ha sido analizado,
+identificándose brechas entre lo dispuesto por la normativa y su implementación
+técnica efectiva \cite{martinez2022proteccion}.
