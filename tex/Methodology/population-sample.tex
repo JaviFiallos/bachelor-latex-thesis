@@ -20,7 +20,7 @@ Doctor odontólogo general & 1 \\
 
 Dado que la población total es de tres personas, no se aplica ningún procedimiento de muestreo: los tres integrantes participaron en su totalidad.
 
-Para la encuesta aplicada a los pacientes, en cambio, la población es considerablemente mayor, por lo que sí fue necesario calcular un tamaño de muestra. Se tomó como referencia el volumen de atención habitual del centro, de aproximadamente 75 pacientes por semana, y se aplicó la fórmula estadística para poblaciones finitas:
+Para la encuesta aplicada a los pacientes, en cambio, la población es considerablemente mayor, por lo que sí fue necesario calcular un tamaño de muestra. Se tomó como referencia el volumen de atención habitual del centro, con una media de 340 pacientes atendidos mensualmente, y se aplicó la fórmula estadística para poblaciones finitas:
 
 \begin{equation}
 n = \frac{N \cdot Z^{2} \cdot p \cdot q}{e^{2}(N - 1) + Z^{2} \cdot p \cdot q}
@@ -28,23 +28,22 @@ n = \frac{N \cdot Z^{2} \cdot p \cdot q}{e^{2}(N - 1) + Z^{2} \cdot p \cdot q}
 
 Donde:
 \begin{itemize}
-    \item $N$: tamaño de la población (75 pacientes atendidos por semana).
-    \item $Z$: $1{,}96$ (nivel de confianza del $95$\,\%).
+    \item $N$: $340$ (tamaño de la población, correspondiente a la media de pacientes atendidos mensualmente).
+    \item $Z$: $1{,}96$ (nivel de confianza del $95\%$).
     \item $p$: $0{,}5$ (probabilidad de ocurrencia, valor conservador al no existir un estudio previo de referencia).
     \item $q$: $0{,}5$ ($1 - p$).
-    \item $e$: $0{,}05$ (margen de error del $5$\,\%).
+    \item $e$: $0{,}08$ (margen de error del $8\%$).
 \end{itemize}
 
 Al reemplazar los valores:
 
 \begin{equation}
-n = \frac{75 \cdot (1{,}96)^{2} \cdot 0{,}5 \cdot 0{,}5}{(0{,}05)^{2}(75 - 1) + (1{,}96)^{2} \cdot 0{,}5 \cdot 0{,}5} = \frac{72{,}03}{1{,}1454} \approx 63
+n = \frac{340 \cdot (1{,}96)^{2} \cdot 0{,}5 \cdot 0{,}5}{(0{,}08)^{2}(340 - 1) + (1{,}96)^{2} \cdot 0{,}5 \cdot 0{,}5} = \frac{326{,}536}{3{,}1300} \approx 105
 \end{equation}
 
-Con base en este cálculo, se estableció una muestra objetivo de 63 pacientes, a quienes se buscó llegar combinando la vía digital (Google Forms, mediante código QR) y la vía física (encuesta impresa), de manera que ambos canales se complementaran para aproximarse al tamaño calculado dentro del tiempo disponible de recolección.
+Con base en este cálculo, se estableció una muestra objetivo de 105 pacientes, a quienes se buscó llegar combinando la vía digital (Google Forms, mediante código QR) y la vía física (encuesta impresa), de manera que ambos canales se complementaran para aproximarse al tamaño calculado dentro del tiempo disponible de recolección.
 
 Para la ficha de observación cronometrada, no se calculó una muestra mediante fórmula, ya que su naturaleza es distinta: no busca representar estadísticamente a un grupo de opinión, sino registrar directamente el tiempo real de gestión administrativa. Por ello, se optó por una muestra no probabilística por conveniencia, conformada por todos los pacientes atendidos durante los días de observación en cada fase (pretest y, posteriormente, postest), lo cual permite obtener una medición directa y comparable sin depender de un tamaño calculado previamente.
-
 %criterios de inclusion exclusion
 %Para la ficha de observación cronometrada, no se calculó una muestra mediante fórmula, ya que su naturaleza es distinta: no busca representar estadísticamente a un grupo de opinión, sino registrar directamente el tiempo real de gestión administrativa. Por ello, se optó por una muestra no probabilística por conveniencia, conformada por todos los pacientes atendidos durante los días de observación en cada fase (pretest y, posteriormente, postest), lo cual permite obtener una medición directa y comparable sin depender de un tamaño calculado previamente.
 
