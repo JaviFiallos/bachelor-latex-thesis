@@ -1,0 +1,119 @@
+\paragraph{Fichas de contenido documental}
+
+Para sustentar teóricamente el diseño del sistema, se revisaron trabajos científicos relacionados con arquitecturas de microservicios, sistemas de información odontológica y agentes conversacionales en salud. Las fichas siguientes sintetizan las fuentes más relevantes, destacando sus ideas centrales y el aporte específico al presente estudio.
+
+\begin{table}[H]
+    \centering
+    \fontsize{10}{12}\selectfont
+    \caption{Ficha de contenido documental: Arcila-Díaz \& Valdivia (2022)}
+    \label{tab:ficha_arcila_2022}
+    \renewcommand{\arraystretch}{1.2}
+
+    \begin{tabularx}{\textwidth}{|>{\bfseries}p{4cm}|X|}
+        \hline
+        Campo & Descripción \\
+        \hline
+
+        Tema & Arquitectura de software orientada a microservicios para la disponibilidad e integración de registros de salud dental. \\
+        \hline
+
+        Año de publicación & 2022 \\
+        \hline
+
+        Referencia bibliográfica & J. Arcila-Diaz and C. Valdivia, ``A Microservice-based Software Architecture for Improving the Availability of Dental Health Records,'' \textit{International Journal of Computing}, vol.~21, no.~4, pp.~475--481, 2022, doi: 10.47839/ijc.21.4.2783. \\
+        \hline
+
+        Ideas centrales & Propuesta y validación experimental de una arquitectura distribuida mediante microservicios desacoplados para centralizar registros odontológicos bajo normativas sanitarias, garantizando alta disponibilidad, seguridad por tokens y escalamiento independiente frente a la fragmentación de datos clínicos. \\
+        \hline
+
+        Conceptos clave & Arquitectura de microservicios, API Gateway, API REST, autenticación JWT, disponibilidad de historias clínicas, pruebas de carga (JMeter). \\
+        \hline
+
+        Conclusiones & La descomposición por dominios funcionales acoplada a un API Gateway soporta hasta 21 solicitudes por segundo por instancia con 100\% de disponibilidad, optimizando el rendimiento computacional sin exponer directamente las bases de datos internas. \\
+        \hline
+
+        Aporte al tema & Sustenta la arquitectura backend del sistema centralizado: separación de dominios (pacientes, citas, registros clínicos), uso de API Gateway como punto único de integración desacoplado para el agente conversacional y control de acceso mediante tokens. \\
+        \hline
+
+        Observaciones & Estudio enfocado estrictamente en atributos de calidad de software (rendimiento computacional y disponibilidad); no evalúa tiempos de gestión administrativa humana ni integra canales de mensajería automatizada. \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \fontsize{10}{12}\selectfont
+    \caption{Ficha de contenido documental: Alejandrino \& Pajota (2023)}
+    \label{tab:ficha_alejandrino_2023}
+    \renewcommand{\arraystretch}{1.2}
+
+    \begin{tabularx}{\textwidth}{|>{\bfseries}p{4cm}|X|}
+        \hline
+        Campo & Descripción \\
+        \hline
+
+        Tema & Sistema de información para clínicas dentales privadas con integración de un sistema de chatbot. \\
+        \hline
+
+        Año de publicación & 2023 \\
+        \hline
+
+        Referencia bibliográfica & J. C. Alejandrino and E. L. P. Pajota, ``An Information System for Private Dental Clinic with Integration of Chat-Bot System: A Project Development Plan,'' \textit{International Journal of Advanced Trends in Computer Science and Engineering}, vol.~12, no.~2, pp.~38--43, 2023, doi: 10.30534/ijatcse/2023/011222023. \\
+        \hline
+
+        Ideas centrales & Planificación de un sistema centralizado web para reemplazar registros manuales en clínicas odontológicas, integrando un agente conversacional para la reserva de citas y proyectando una disminución del 68{,}75\% en el tiempo total de gestión administrativa (de 80 a 25 minutos en tareas clave). \\
+        \hline
+
+        Conceptos clave & Arquitectura web cliente-servidor, chatbot basado en reglas con procesamiento de lenguaje natural (NLP), automatización del agendamiento, APIs de integración, optimización del tiempo administrativo. \\
+        \hline
+
+        Conclusiones & La integración modular de historias clínicas, facturación y un chatbot conversacional mitiga cuellos de botella y reduce los tiempos de espera y procesamiento operativo en entornos dentales privados. \\
+        \hline
+
+        Aporte al tema & Aporta una referencia directa sobre la arquitectura modular (administración, citas y reportes), el diseño lógico del chatbot con NLP para agendamiento automatizado y un desglose metodológico de tiempos de proceso análogo al flujo clínico evaluado. \\
+        \hline
+
+        Observaciones & Estudio de nivel conceptual/plan de desarrollo; las reducciones temporales constituyen estimaciones de diseño y no mediciones empíricas posimplementación. \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \fontsize{10}{12}\selectfont
+    \caption{Ficha de contenido documental: Santhosh et al. (2026)}
+    \label{tab:ficha_santhosh_2026}
+    \renewcommand{\arraystretch}{1.2}
+
+    \begin{tabularx}{\textwidth}{|>{\bfseries}p{4cm}|X|}
+        \hline
+        Campo & Descripción \\
+        \hline
+
+        Tema & Agente conversacional basado en inteligencia artificial integrado a WhatsApp para la gestión de citas médicas. \\
+        \hline
+
+        Año de publicación & 2026 \\
+        \hline
+
+        Referencia bibliográfica & Santhosh and Sanath Kumar Team, ``Healthcare Appointment Booking On Whatsapp By Using AI Agent,'' Parul University, preprint, 2026, doi: 10.13140/RG.2.2.28074.99520. \\
+        \hline
+
+        Ideas centrales & Implementación de un agente conversacional para automatizar el ciclo integral de citas médicas (reserva, reprogramación y cancelación) mediante mensajería instantánea, reduciendo el tiempo operativo de reserva de un rango de 5--8 minutos a 3 minutos y 42 segundos en pruebas con usuarios reales. \\
+        \hline
+
+        Conceptos clave & WhatsApp Cloud API, modelos de lenguaje grande (LLM), orquestación de flujos de trabajo (n8n), máquina de estados finita, optimización del tiempo de reserva. \\
+        \hline
+
+        Conclusiones & La orquestación de un LLM acoplado a una API de mensajería mitiga las rigideces del software tradicional, resolviendo un 68\% de las consultas administrativas y alcanzando un 96{,}2\% de precisión en la detección de intenciones operativas. \\
+        \hline
+
+        Aporte al tema & Proporciona un patrón arquitectónico directo para el agente conversacional: integración vía webhooks, manejo del diálogo mediante máquina de estados y estructuración de respuestas en formato JSON acotadas al dominio clínico. \\
+        \hline
+
+        Observaciones & Estudio aplicado con validación preliminar en entorno ambulatorio (UAT, $n = 40$); no evalúa la integración previa con sistemas de historias clínicas ni incluye un grupo de control formal. \\
+        \hline
+    \end{tabularx}
+\end{table}
