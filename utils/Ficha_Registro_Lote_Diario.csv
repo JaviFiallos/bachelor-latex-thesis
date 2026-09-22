@@ -1,0 +1,9 @@
+﻿CENTRO ODONTOLÓGICO BELLIDENTAL
+INSTRUMENTO — PARTE B: REGISTRO DE LOTE DIARIO (DIGITALIZACIÓN DE HISTORIA CLÍNICA)
+Fase: Pretest  |  Observador: Analista de Requisitos  |  Unidad de Análisis: Registro diario en bloque (Vespertino / Matutino libre)
+
+N.º Registro,Fase,Fecha,Día,Jornada Transcripción,Hora Inicio Lote,Hora Fin Lote,Duración Total (min),N.º Pacientes Transcritos,N.º Pacientes Nuevos,N.º Pacientes Recurrentes,Tiempo Promedio / Paciente (min),Incidencias Observadas
+LOTE-001,Pretest,2026-09-22,Martes,Turno Tarde (Vespertino),17:45,19:35,110,29,6,23,3.79,Transcripción realizada al final de la jornada por alta ocupación del equipo en la mañana. Interrupciones frecuentes (15 min acumulados) por llamadas telefónicas entrantes y mensajes de WhatsApp.
+LOTE-002,Pretest,2026-09-24,Jueves,Turno Mañana (Matutino),09:40,11:25,105,28,3,25,3.75,Transcripción efectuada en la mañana aprovechando baja afluencia inicial en recepción. Se presentó dificultad puntual para descifrar códigos CIE-10 manuscritos en 2 historias clínicas físicas.
+LOTE-003,Pretest,2026-09-26,Sábado,Turno Tarde (Vespertino),17:15,19:10,115,29,8,21,3.97,Alta afluencia de pacientes en recepción. El lote se fragmentó en dos bloques debido a la necesidad de atender cobros directos y emisión de comprobantes de pago en caja.
+PROMEDIO / TOTAL,,,,,,,330,86,17,69,3.84,Medición consolidada de 3 días concurridos pretest
