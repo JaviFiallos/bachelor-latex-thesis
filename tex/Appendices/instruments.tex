@@ -178,48 +178,86 @@ mediante un asistente automatizado.
 \vspace{1cm}
 
 % ==============================================================
-%  INSTRUMENTO 4 — FICHA DE OBSERVACIÓN
+%  INSTRUMENTO 4 — PARTE A: FICHA DE OBSERVACIÓN POR PACIENTE
 % ==============================================================
 
 \medskip\small
 \begin{longtable}{|p{\fichawidth}|}
 \hline
-\cellcolor{gray!20}\textbf{INSTRUMENTO 4 — FICHA DE OBSERVACIÓN CRONOMETRADA} \\[-2pt]
-\cellcolor{gray!20}Tiempo de Gestión Administrativa | Centro Odontológico Bellidental \\
+\cellcolor{gray!20}\textbf{INSTRUMENTO 4 — PARTE A: FICHA DE OBSERVACIÓN CRONOMETRADA} \\[-2pt]
+\cellcolor{gray!20}Tiempo de Gestión Administrativa por Paciente | Centro Odontológico Bellidental \\
 \hline
-\cellcolor{gray!10}\textbf{DATOS GENERALES} \\
+\cellcolor{gray!10}\textbf{DATOS DE APLICACIÓN} \\
 \hline
-Fase: $\square$~Pretest \quad $\square$~Postest \qquad
-Fecha: \underline{\hspace{3cm}} \quad
-Observador: \underline{\hspace{4cm}} \\[4pt]
-Tipo de paciente: $\square$~Nuevo \; $\square$~Recurrente \\
-Hora programada de cita: \underline{\hspace{2.2cm}} \quad
+N.\textsuperscript{o} de registro: \underline{\hspace{2.5cm}} \quad
+Fase: $\square$~Pretest \quad $\square$~Postest \quad
+Fecha: \underline{\hspace{2.5cm}} \\[4pt]
+Tipo de paciente: $\square$~Nuevo \quad $\square$~Recurrente \\
+Hora programada de la cita: \underline{\hspace{2.2cm}} \quad
 Hora de llegada: \underline{\hspace{2.2cm}} \\
 \hline
-\cellcolor{gray!10}\textbf{TRAMOS ADMINISTRATIVOS} \\
+\cellcolor{gray!10}\textbf{TRAMOS OBSERVADOS (Hora HH:MM, Duración en min)} \\
 \hline
-\begin{tabular}{|p{0.44\linewidth}|c|c|c|}
+\begin{tabular}{|p{0.46\linewidth}|c|c|c|}
 \hline
-\textbf{Tramo} & \textbf{Hora inicio} & \textbf{Hora fin} & \textbf{Duración} \\ \hline
-T1 — Historia clínica (llenado / actualización) & & & \\ \hline
-T2 — Hora inicio atención clínica (referencia) & & & \\ \hline
-T3 — Hora fin atención clínica (referencia) & & & \\ \hline
+\textbf{Tramo} & \textbf{Hora inicio} & \textbf{Hora fin} & \textbf{Duración (min)} \\ \hline
+T2 — Atención clínica (referencia) & & & \\ \hline
 T4 — Registro post-consulta (receta, actualización) & & & \\ \hline
-T5 — Registro de pago \newline
-(¿Consulta de saldo? Sí \,$\square$ \; No \,$\square$) & & & \\ \hline
+T5 — Registro de pago & & & \\ \hline
 T6 — Agendamiento próxima cita & & & \\ \hline
 \end{tabular} \\
 \hline
 \cellcolor{gray!10}\textbf{INDICADORES CALCULADOS} \\
 \hline
-Tiempo administrativo total $(T_1 + T_4 + T_5 + T_6)$: \underline{\hspace{3cm}} \\[4pt]
-Retraso vs.\ cita programada $(T_2 - \text{Hora programada})$: \underline{\hspace{3cm}} \\[4pt]
-Espera tras llegada $(T_2 - \text{Hora de llegada})$: \underline{\hspace{3cm}} \\
+Tiempo administrativo directo $(T_4 + T_5 + T_6)$: \underline{\hspace{3cm}} \\[4pt]
+Espera previa a la atención $(\text{Hora inicio } T_2 - \text{Hora de llegada})$: \underline{\hspace{3cm}} \\[4pt]
+Retraso vs.\ cita programada $(\text{Hora inicio } T_2 - \text{Hora programada})$: \underline{\hspace{3cm}} \\
 \hline
 \cellcolor{gray!10}\textbf{INCIDENCIAS OBSERVADAS} \\
 \hline
 \underline{\hspace{\linewidth}} \\[4pt]
+\underline{\hspace{\linewidth}} \\
+\hline
+\end{longtable}
+
+\vspace{0.8cm}
+
+% ==============================================================
+%  INSTRUMENTO 4 — PARTE B: REGISTRO DE LOTE DIARIO
+% ==============================================================
+
+\medskip\small
+\begin{longtable}{|p{\fichawidth}|}
+\hline
+\cellcolor{gray!20}\textbf{INSTRUMENTO 4 — PARTE B: REGISTRO DE LOTE DIARIO} \\[-2pt]
+\cellcolor{gray!20}Digitalización de Historia Clínica (Transcripción en Bloque) | Centro Odontológico Bellidental \\
+\hline
+\cellcolor{gray!10}\textbf{NOTA METODOLÓGICA} \\
+\hline
+Este registro se completa una sola vez por día (no por paciente), debido a que la transcripción de historias clínicas físicas a la hoja de cálculo se realiza en bloque durante la tarde o momentos libres de la jornada. \\
+\hline
+\cellcolor{gray!10}\textbf{DATOS DE APLICACIÓN} \\
+\hline
+Fase: $\square$~Pretest \quad $\square$~Postest \qquad
+Fecha: \underline{\hspace{3cm}} \quad
+Observador: \underline{\hspace{4cm}} \\
+\hline
+\cellcolor{gray!10}\textbf{REGISTRO DEL LOTE DIARIO} \\
+\hline
+\begin{tabularx}{\linewidth}{|c|c|c|c|X|}
+\hline
+\textbf{Fecha} & \textbf{Hora inicio lote} & \textbf{Hora fin lote} & \textbf{Duración total (min)} & \textbf{N.\textsuperscript{o} pacientes transcritos} \\ \hline
+& & & & \\[12pt] \hline
+\end{tabularx} \\
+\hline
+\cellcolor{gray!10}\textbf{INDICADOR DERIVADO} \\
+\hline
+Tiempo promedio de historia clínica por paciente $(\text{Duración total} \div \text{N.\textsuperscript{o} de pacientes transcritos})$: \underline{\hspace{3cm}} \\
+\hline
+\cellcolor{gray!10}\textbf{INCIDENCIAS OBSERVADAS} \\
+\hline
 \underline{\hspace{\linewidth}} \\[4pt]
 \underline{\hspace{\linewidth}} \\
 \hline
 \end{longtable}
+
