@@ -1,0 +1,138 @@
+<mxfile host="app.diagrams.net" modified="2026-09-22T00:00:00.000Z" agent="BPMN Generator" version="24.0.0" type="device">
+  <diagram id="proceso-2-actualizacion" name="P2 - Digitalizacion Vespertina">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- POOL P2 -->
+        <mxCell id="pool_p2" value="PROCESO 2: DIGITALIZACIÓN Y ACTUALIZACIÓN VESPERTINA" style="swimlane;html=1;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;horizontal=1;startSize=30;horizontalStack=0;fillColor=#fff3e0;strokeColor=#e65100;fontStyle=1;fontSize=13;fontColor=#bf360c;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="800" height="1260" as="geometry" />
+        </mxCell>
+
+        <!-- LANE SECRETARIA -->
+        <mxCell id="lane_p2_sec" value="Secretaria (Recepción y Administración)" style="swimlane;html=1;startSize=25;fillColor=#fffaf0;strokeColor=#fb8c00;fontStyle=1;fontSize=11;fontColor=#e65100;" vertex="1" parent="pool_p2">
+          <mxGeometry y="30" width="800" height="1230" as="geometry" />
+        </mxCell>
+
+        <!-- Inicio Evento Temporizado -->
+        <mxCell id="p2_start" value="Llega el bloque de la tarde para actualización&#xa;(17:00 - 20:00)" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff9c4;strokeColor=#f57f17;strokeWidth=2;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="415" y="90" width="50" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Recopilar Fichas -->
+        <mxCell id="p2_recopila" value="Recopila las fichas rápidas&#xa;atendidas ese día" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#fb8c00;strokeWidth=1.5;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="170" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- CONTENEDOR MULTI-INSTANCIA -->
+        <mxCell id="sub_multi" value="Subproceso multi-instancia: Por cada ficha rápida" style="swimlane;html=1;startSize=25;rounded=1;dashed=1;dashPattern=8 4;fillColor=#ffffff;strokeColor=#455a64;strokeWidth=1.5;fontSize=11;fontStyle=1;fontColor=#263238;" vertex="1" parent="1">
+          <mxGeometry x="80" y="250" width="720" height="730" as="geometry" />
+        </mxCell>
+
+        <!-- Interpretar Odontograma -->
+        <mxCell id="p2_interpreta" value="Interpreta el odontograma físico (colores/figuras) de la&#xa;ficha rápida, con apoyo de la guía documental de la doctora" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0288d1;strokeWidth=1.5;fontSize=10;" vertex="1" parent="sub_multi">
+          <mxGeometry x="180" y="45" width="360" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- AND-Split -->
+        <mxCell id="p2_and_split" value="+" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=2;fontSize=22;fontStyle=1;" vertex="1" parent="sub_multi">
+          <mxGeometry x="340" y="125" width="40" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Rama A: Formulario 033 -->
+        <mxCell id="p2_rama_a" value="Transcribe al Formulario 033 físico oficial:&#xa;• Datos de filiación y antecedentes&#xa;• Odontograma (dibujado/copiado)&#xa;• Tabla control clínico-financiero completa&#xa;  (Fecha, Dg, Tratamiento, Dr/a, Abono, Saldo, Firma)" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#0288d1;fontSize=10;" vertex="1" parent="sub_multi">
+          <mxGeometry x="35" y="195" width="295" height="230" as="geometry" />
+        </mxCell>
+
+        <!-- Rama B: Excel Digital -->
+        <mxCell id="p2_rama_b" value="Transcribe al historial digital (Excel):&#xa;• Mismos datos de filiación y antecedentes&#xa;• Código CIE, tratamiento&#xa;• Medicación prescrita&#xa;• Registro de abono / saldo&#xa;• (SIN odontograma: no aplica en Excel)" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#0288d1;fontSize=10;" vertex="1" parent="sub_multi">
+          <mxGeometry x="390" y="195" width="295" height="230" as="geometry" />
+        </mxCell>
+
+        <!-- AND-Join -->
+        <mxCell id="p2_and_join" value="+" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;strokeWidth=2;fontSize=22;fontStyle=1;" vertex="1" parent="sub_multi">
+          <mxGeometry x="340" y="465" width="40" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Archiva ficha rápida -->
+        <mxCell id="p2_archiva_fr" value="Archiva la ficha rápida física" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#0288d1;strokeWidth=1.5;fontSize=10;" vertex="1" parent="sub_multi">
+          <mxGeometry x="260" y="540" width="200" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Marcador visual multi-instancia -->
+        <mxCell id="mi_marker" value="|||" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#455a64;" vertex="1" parent="sub_multi">
+          <mxGeometry x="345" y="695" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Extraer expedientes para mañana -->
+        <mxCell id="p2_extrae_exp" value="Extrae del archivo los expedientes (Formulario 033)&#xa;de los pacientes agendados para el día siguiente" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#fb8c00;strokeWidth=1.5;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="1010" width="300" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Fin P2 -->
+        <mxCell id="p2_end" value="Formulario 033 y Excel actualizados /&#xa;expedientes listos para mañana" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffcdd2;strokeColor=#c62828;strokeWidth=3;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="1095" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- EDGES P2 -->
+        <mxCell id="e_p2_1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="1" source="p2_start" target="p2_recopila">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_p2_2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="1" source="p2_recopila" target="p2_interpreta">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_p2_3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="sub_multi" source="p2_interpreta" target="p2_and_split">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_p2_4a" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="sub_multi" source="p2_and_split" target="p2_rama_a">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="182" y="145" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_p2_4b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="sub_multi" source="p2_and_split" target="p2_rama_b">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="537" y="145" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_p2_5a" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="sub_multi" source="p2_rama_a" target="p2_and_join">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="182" y="485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_p2_5b" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="sub_multi" source="p2_rama_b" target="p2_and_join">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="537" y="485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_p2_6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="sub_multi" source="p2_and_join" target="p2_archiva_fr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_p2_7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="1" source="p2_archiva_fr" target="p2_extrae_exp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_p2_8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#37474f;strokeWidth=1.5;" edge="1" parent="1" source="p2_extrae_exp" target="p2_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

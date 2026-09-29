@@ -1,0 +1,82 @@
+% =========================================================
+% CAPÍTULO III. RESULTADOS Y DISCUSIÓN
+% =========================================================
+\section{Resultados y Discusión}
+
+\subsection{Proceso de atención al paciente y actualización de información}
+
+La gestión operacional y clínica en el Centro Odontológico Bellidental se realiza mediante un esquema tradicional basado en soportes de papel, hojas de cálculo independientes y canales informales de comunicación. Este flujo de trabajo se compone de dos procesos principales: el Proceso 1, correspondiente a la atención del paciente durante la consulta, y el Proceso 2, referente a la actualización diferida de fichas al finalizar la jornada.
+
+\subsubsection{Situación actual}
+
+En la operatividad diaria de la clínica, la atención del paciente y el manejo de su historial clínico se desarrollan en las siguientes etapas:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Recepción e inicio de atención:} Al ingresar el paciente, la secretaria verifica su registro. Si es un usuario nuevo, se abre una ficha física preliminar de papel para anotar los datos de filiación y antecedentes médicos básicos. Si es un paciente recurrente, se busca su carpeta en el archivo de recepción.
+    
+    \item \textbf{Verificación de agendamiento:} La secretaria confirma la cita en la aplicación Google Calendar, donde los turnos están organizados por colores según el profesional asignado. Al mismo tiempo, atiende las solicitudes de confirmación y cambio de citas que ingresan por WhatsApp al teléfono corporativo.
+    
+    \item \textbf{Atención clínica y anamnesis:} El paciente ingresa al consultorio y el odontólogo recibe la ficha física. Debido a que la información inicial suele ser concisa, el profesional reinterroga al paciente sobre sus antecedentes de salud. Posterior a la revisión clínica, dibuja a mano el odontograma en el Formulario 033 oficial del Ministerio de Salud Pública, aplicando la convención de color rojo para tratamientos pendientes y azul para los ejecutados.
+    
+    \item \textbf{Procedimiento y prescripción médica:} Finalizada la intervención, si el paciente requiere medicación, el odontólogo escribe la receta a mano, indicando el fármaco, la dosis y el código diagnóstico de la Clasificación Internacional de Enfermedades. Al terminar, comunica verbalmente a la secretaria los procedimientos efectuados y le entrega la ficha con las notas manuscritas.
+    
+    \item \textbf{Cierre de atención y agendamiento:} En recepción, la secretaria realiza el cobro, registra en una hoja auxiliar los valores pagados y saldos pendientes, acuerda la fecha del próximo turno y lo asigna en Google Calendar.
+    
+    \item \textbf{Actualización diferida de fichas:} La secretaria no digita la información en tiempo real durante la consulta. En el bloque vespertino o al cierre del día, dedica entre 90 y 120 minutos a recopilar las fichas diarias. En esta etapa transcribe manualmente las notas y el odontograma al Formulario 033 físico definitivo y registra los datos administrativos en una hoja de cálculo en Microsoft Excel.
+\end{enumerate}
+
+\subsubsection{Análisis del proceso actual}
+
+El diagnóstico del flujo de trabajo evidencia aspectos críticos en la operatividad, el registro de información y el cumplimiento normativo.
+
+\paragraph{Identificación de procesos y cuellos de botella}
+
+El modelado de los procesos permite identificar dos dinámicas de trabajo:
+
+\begin{itemize}
+    \item \textbf{Proceso 1 (Atención del paciente):} La acumulación de 20 a 30 mensajes diarios en WhatsApp al inicio de la jornada genera demoras en la recepción. En el ámbito clínico, la confección manual de recetas y la búsqueda de códigos diagnósticos restan tiempo a la atención presencial.
+    
+    \item \textbf{Proceso 2 (Actualización de fichas):} Representa el principal cuello de botella administrativo. La retranscripción de datos ocupa entre hora y media y dos horas diarias a la secretaria, lo que desvincula la atención presencial de la actualización del sistema informático y retrasa la disponibilidad de las historias clínicas.
+\end{itemize}
+
+\paragraph{Inconsistencias, errores y reprocesos}
+
+La falta de un sistema unificado origina las siguientes dificultades:
+
+\begin{itemize}
+    \item \textbf{Cruces de agenda:} Ocurren duplicidades de turnos cuando los odontólogos confirman o modifican citas directamente con los pacientes por llamadas o mensajes personales, sin que la secretaria lo registre oportunamente en la agenda central.
+    
+    \item \textbf{Errores de transcripción:} El traspaso de datos desde las fichas preliminares al Formulario 033 definitivo y al archivo de Excel expone el historial clínico a errores de interpretación de la caligrafía o de la simbología del odontograma.
+    
+    \item \textbf{Falta de privacidad:} La recolección de antecedentes de salud en la sala de espera inhibe a algunos pacientes de declarar enfermedades o alergias. Esto obliga al odontólogo a repetir el cuestionario en el consultorio, prolongando la consulta.
+\end{itemize}
+
+\paragraph{Análisis normativo y legal}
+
+El manejo actual de la información presenta vulnerabilidades frente a la legislación ecuatoriana:
+
+\begin{itemize}
+    \item \textbf{Ley Orgánica de Protección de Datos Personales:} El Artículo 10 y el Artículo 31 establecen que los datos de salud son sensibles y requieren medidas de seguridad y confidencialidad. Los expedientes en papel guardados en recepción y los registros en hojas de Excel locales carecen de controles de acceso por usuario y de registros de auditoría que identifiquen quién consulta o modifica la información. Asimismo, el uso de servicios de mensajería comercial sin consentimiento formal ni canales cifrados contraviene las disposiciones legales \cite{martinez2022proteccion}.
+    
+    \item \textbf{Normativa del Ministerio de Salud Pública:} El Acuerdo Ministerial 5216-A exige el llenado completo y legible de la Historia Clínica Única. La transcripción diferida fomenta la omisión de datos obligatorios en el Formulario 033 \cite{uce2016caracteristicas}. Además, el Reglamento de Historia Clínica Electrónica, mediante el Acuerdo Ministerial 0009-2017, requiere sistemas informáticos que garanticen la inalterabilidad de los registros, condición que las hojas de cálculo no cumplen.
+\end{itemize}
+
+\newpage
+\begin{landscape}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{img/bpmn1.png}
+    \caption{Proceso 1: Atención del paciente en el Centro Odontológico Bellidental.}
+    \label{fig:bpmn1}
+\end{figure}
+\end{landscape}
+
+\newpage
+\begin{landscape}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{img/bpmn2.png}
+    \caption{Proceso 2: Actualización diferida de fichas en lote.}
+    \label{fig:bpmn2}
+\end{figure}
+\end{landscape}

@@ -1,176 +1,343 @@
 % ==============================================================
-%  INSTRUMENTO 1 — ENTREVISTAS
+%  INSTRUMENTO 1 — ENTREVISTAS SEMIESTRUCTURADAS
 % ==============================================================
 
 \textbf{Resultados del instrumento 1}
 
-El instrumento fue aplicado individualmente a tres miembros del equipo clínico y se estructuró en tres bloques: proceso actual, problemáticas y normativa.
+El instrumento fue aplicado individualmente a tres miembros del equipo clínico (Odontólogo Principal, Secretaria y Odontóloga de Planta) y se estructuró en tres bloques: proceso actual, problemáticas operativas y cumplimiento normativo. A continuación, se presentan los datos informativos de aplicación y el análisis detallado pregunta por pregunta para cada entrevistado.
 
-\textbf{Entrevista al Doctor / Director en Jefe}
 % ================================================================
-% MACRO: ancho de celda = linewidth - bordes y padding de longtable
+% ENTREVISTA 1: DOCTOR / DIRECTOR EN JEFE
 % ================================================================
-\newlength{\fichawidth}
-\setlength{\fichawidth}{\dimexpr\linewidth - 2\tabcolsep - 2\arrayrulewidth\relax}
+\subsection*{Entrevista 1: El Doctor / Director en Jefe}
 
-% ---- FICHA 1 ----
-\medskip\fontsize{10}{12}\selectfont
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\begin{longtable}{|p{\fichawidth}|}
+\begin{table}[H]
+\centering
+\caption{Datos informativos de la Entrevista 1: Odontólogo Principal / Director}
+\label{tab:ent1_datos}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{|>{\bfseries}p{3.8cm}|X|}
 \hline
-\cellcolor{gray!20}\textbf{INSTRUMENTO 1 — GUIÓN DE ENTREVISTA SEMIESTRUCTURADA} \\[-2pt]
-\cellcolor{gray!20}Centro Odontológico Bellidental \\[-2pt]
-\cellcolor{gray!20}\textbf{ENTREVISTA 1: El Doctor / Director en Jefe} \\
+Instrumento & \textbf{INSTRUMENTO 1 — GUIÓN DE ENTREVISTA SEMIESTRUCTURADA} \\ \hline
+Sección & \textbf{DATOS DE APLICACIÓN} \\ \hline
+Aplicado a & \textbf{[x]} Doctor \quad \mbox{[~]} Secretaria \\ \hline
+Fecha & 09/09/2026 \\ \hline
+Hora de inicio & 08:30 \\ \hline
+Hora de fin & 08:55 \\ \hline
+Sección & \textbf{DATOS GENERALES} \\ \hline
+Rol / cargo & Odontólogo Principal / Director del Centro \\ \hline
+Tiempo en la función & Odontólogo titular del centro \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 1 — Pregunta 1: Proceso de atención paso a paso}
+\label{tab:ent1_q1}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
 \hline
-\cellcolor{gray!10}\textbf{DATOS DE APLICACIÓN} \\
-\hline
-Aplicado a: \textbf{[x]}~Doctor \quad \mbox{[~]}~Secretaria \\
-Fecha: 09/09/2026 \quad Hora inicio: 08:30 \quad Hora fin: 08:55 \\
-\hline
-\cellcolor{gray!10}\textbf{DATOS GENERALES} \\
-\hline
-\textbf{Rol / cargo:} \enspace Odontólogo Principal / Director del Centro \\
-\textbf{Tiempo en la función:} \enspace Odontólogo titular del centro \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 1 — PROCESO ACTUAL} \\
-\hline
-\textbf{Describa, paso a paso, qué ocurre desde que un paciente llega hasta que se cierra su atención (clínica y administrativamente), incluyendo qué herramienta usa en cada paso.} \\[4pt]
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+1 & Describa, paso a paso, qué ocurre desde que un paciente llega hasta que se cierra su atención (clínica y administrativamente), incluyendo qué herramienta usa en cada paso. & 
 \begin{enumerate}[nosep,leftmargin=*,topsep=0pt]
   \item \textit{Llegada:} La secretaria toma datos de filiación en la ficha física preliminar.
   \item \textit{Anamnesis clínica:} En consultorio, el doctor indaga directamente antecedentes patológicos y completa el odontograma en la ficha física normativa (códigos cromáticos: rojo para pendiente, azul para ejecutado).
   \item \textit{Atención y egreso:} Se realiza el procedimiento. Si amerita fármacos, se elabora receta manual. El doctor indica verbalmente a la secretaria el tratamiento realizado.
   \item \textit{Cierre administrativo:} La secretaria cobra, anota el tratamiento y abonos en la ficha auxiliar y agenda la próxima cita en Google Calendar.
 \end{enumerate}
-\textbf{Herramienta principal:} Ficha oficial de papel en consultorio y Google Calendar / WhatsApp para citas. \\
-\hline
-\textbf{¿En qué punto del proceso, o en qué momentos del día, suele acumularse más demora o espera de pacientes?} \\[4pt]
-En la franja de 07:00 a 08:00 AM se acumula una gran carga de mensajes sin leer (20 a 30 diarios). En consulta, la elaboración manual de recetas y la transcripción a pulso de procedimientos detallados retrasan el ritmo de atención. \\
-\hline
-\textbf{¿Cómo interactúa con la hoja de cálculo que replica el Formulario 033? ¿Registra los datos durante la consulta o al finalizar la jornada?} \\[4pt]
-El doctor no digita en la hoja de cálculo durante la consulta; delega la transcripción a la secretaria, quien traslada la información del papel al Excel en la tarde o al cierre de jornada. \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 2 — PROBLEMAS} \\
-\hline
-\textbf{¿Qué errores o reprocesos ocurren con más frecuencia (datos perdidos, doble registro, citas cruzadas)?} \\[4pt]
-Solapamiento de citas y doble agendamiento por desfases de sincronización entre turnos confirmados por el doctor de forma personal (vía WhatsApp) y los registrados por la secretaria en Google Calendar; discrepancias en la hora pactada con el paciente. \\
-\hline
-\textbf{¿Qué información necesita y no encuentra disponible cuando la necesita?} \\[4pt]
-Falta de un catálogo precargado y predictivo de tratamientos y medicamentos con posología fija; demora en ubicar el estado del tratamiento en pacientes no programados si su expediente físico no fue extraído con anterioridad. \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 3 — NORMATIVA} \textit{(exclusivo personal médico)} \\
-\hline
-\textbf{¿Qué requisitos del Formulario 033 o del Acuerdo 5216-A le generan más carga o dudas de cumplimiento?} \\[4pt]
-La obligatoriedad de registrar todos los campos normativos del Formulario~033 del MSP sin contar con un odontograma digital funcional que permita marcar cuadrantes y caras dentales de forma esquemática; la sobrecarga de redactar manualmente a pulso códigos diagnósticos CIE-10 en cada procedimiento e indicación médica. \\
-\hline
-\end{longtable}
+\textbf{Herramienta principal:} Ficha oficial de papel en consultorio y Google Calendar / WhatsApp para citas. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} El flujo de atención depende exclusivamente del soporte en papel y la comunicación verbal directa, lo que genera duplicidad de registros y riesgo de omisión en el historial clínico.} \\ \hline
+\end{tabularx}
+\end{table}
 
-El análisis de la entrevista al odontólogo principal revela que los mayores cuellos de botella en la atención clínica derivan de la transcripción manual de historias clínicas, la elaboración de recetas físicas y la desconexión temporal entre los agendamientos personales y los registrados por la secretaria. Además, la carga normativa del Ministerio de Salud, especialmente la exigencia de completar el odontograma físico de manera detallada y la codificación CIE-10 a pulso, incrementa sustancialmente el tiempo administrativo en detrimento del tiempo de atención directa.
+\begin{table}[H]
+\centering
+\caption{Entrevista 1 — Pregunta 2: Puntos de acumulación de demora y espera}
+\label{tab:ent1_q2}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+2 & ¿En qué punto del proceso, o en qué momentos del día, suele acumularse más demora o espera de pacientes? & En la franja de 07:00 a 08:00 AM se acumula una gran carga de mensajes sin leer (20 a 30 diarios). En consulta, la elaboración manual de recetas y la transcripción a pulso de procedimientos detallados retrasan el ritmo de atención. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} Las mayores demoras surgen por la saturación de mensajes a primera hora y por el tiempo administrativo consumido en la prescripción manuscrita dentro del gabinete.} \\ \hline
+\end{tabularx}
+\end{table}
 
-% ---- FICHA 2 ----
-\textbf{Entrevista a la Secretaria}
+\begin{table}[H]
+\centering
+\caption{Entrevista 1 — Pregunta 3: Interacción con la hoja de cálculo de historias clínicas}
+\label{tab:ent1_q3}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+3 & ¿Cómo interactúa con la hoja de cálculo que replica el Formulario 033? ¿Registra los datos durante la consulta o al finalizar la jornada? & El doctor no digita en la hoja de cálculo durante la consulta; delega la transcripción a la secretaria, quien traslada la información del papel al Excel en la tarde o al cierre de jornada. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La digitalización de la información clínica se realiza de forma diferida en lote, desvinculando el registro digital de la atención presencial.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 1 — Pregunta 4: Errores y reprocesos más frecuentes}
+\label{tab:ent1_q4}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+4 & ¿Qué errores o reprocesos ocurren con más frecuencia (datos perdidos, doble registro, citas cruzadas)? & Solapamiento de citas y doble agendamiento por desfases de sincronización entre turnos confirmados por el doctor de forma personal (vía WhatsApp) y los registrados por la secretaria en Google Calendar; discrepancias en la hora pactada con el paciente. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La ausencia de una plataforma de agendamiento unificada propicia cruces de turnos por confirmaciones paralelas desajustadas.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 1 — Pregunta 5: Información requerida no disponible}
+\label{tab:ent1_q5}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+5 & ¿Qué información necesita y no encuentra disponible cuando la necesita? & Falta de un catálogo precargado y predictivo de tratamientos y medicamentos con posología fija; demora en ubicar el estado del tratamiento en pacientes no programados si su expediente físico no fue extraído con anterioridad. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} El acceso físico a expedientes y la falta de un catálogo médico predeterminado ralentizan la fluidez operativa en consulta.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 1 — Pregunta 6: Carga y cumplimiento de requisitos normativos}
+\label{tab:ent1_q6}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+6 & ¿Qué requisitos del Formulario 033 o del Acuerdo 5216-A le generan más carga o dudas de cumplimiento? & La obligatoriedad de registrar todos los campos normativos del Formulario~033 del MSP sin contar con un odontograma digital funcional que permita marcar cuadrantes y caras dentales de forma esquemática; la sobrecarga de redactar manualmente a pulso códigos diagnósticos CIE-10 en cada procedimiento e indicación médica. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La exigencia normativa del odontograma físico y la codificación CIE-10 manuscrita recargan el tiempo administrativo del médico.} \\ \hline
+\end{tabularx}
+\end{table}
 
 
-\medskip\fontsize{10}{12}\selectfont
-\begin{longtable}{|p{\fichawidth}|}
+% ================================================================
+% ENTREVISTA 2: LA SECRETARIA
+% ================================================================
+\subsection*{Entrevista 2: La Secretaria}
+
+\begin{table}[H]
+\centering
+\caption{Datos informativos de la Entrevista 2: Secretaria de recepción}
+\label{tab:ent2_datos}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{|>{\bfseries}p{3.8cm}|X|}
 \hline
-\cellcolor{gray!20}\textbf{INSTRUMENTO 1 — GUIÓN DE ENTREVISTA SEMIESTRUCTURADA} \\[-2pt]
-\cellcolor{gray!20}Diagnóstico de Procesos (OE1) | Centro Odontológico Bellidental \\[-2pt]
-\cellcolor{gray!20}\textbf{ENTREVISTA 2: La Secretaria} \\
+Instrumento & \textbf{INSTRUMENTO 1 — GUIÓN DE ENTREVISTA SEMIESTRUCTURADA} \\ \hline
+Sección & \textbf{DATOS DE APLICACIÓN} \\ \hline
+Aplicado a & \mbox{[~]} Doctor \quad \textbf{[x]} Secretaria \\ \hline
+Fecha & 09/09/2026 \\ \hline
+Hora de inicio & 09:15 \\ \hline
+Hora de fin & 09:45 \\ \hline
+Sección & \textbf{DATOS GENERALES} \\ \hline
+Rol / cargo & Encargada de recepción, registro inicial, digitación y agendamiento \\ \hline
+Tiempo en la función & Secretaria de planta \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 2 — Pregunta 1: Flujo de trabajo de recepción y cierre}
+\label{tab:ent2_q1}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
 \hline
-\cellcolor{gray!10}\textbf{DATOS DE APLICACIÓN} \\
-\hline
-Aplicado a: \mbox{[~]}~Doctor \quad \textbf{[x]}~Secretaria \\
-Fecha: 09/09/2026 \quad Hora inicio: 09:15 \quad Hora fin: 09:45 \\
-\hline
-\cellcolor{gray!10}\textbf{DATOS GENERALES} \\
-\hline
-\textbf{Rol / cargo:} \enspace Encargada de recepción, registro inicial, digitación y agendamiento \\
-\textbf{Tiempo en la función:} \enspace Secretaria de planta \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 1 — PROCESO ACTUAL} \\
-\hline
-\textbf{Describa, paso a paso, qué ocurre desde que un paciente llega hasta que se cierra su atención, incluyendo qué herramienta usa en cada paso.} \\[4pt]
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+1 & Describa, paso a paso, qué ocurre desde que un paciente llega hasta que se cierra su atención, incluyendo qué herramienta usa en cada paso. & 
 \begin{enumerate}[nosep,leftmargin=*,topsep=0pt]
   \item \textit{Llegada:} Extrae ficha física archivada (preparada el día previo) o abre ficha nueva levantando datos de filiación y antecedentes médicos dirigidos.
   \item \textit{Espera y consulta:} Verifica cita en Google Calendar; tras $\approx$5 min de espera el paciente entra al gabinete donde el doctor atiende y completa el odontograma físico.
   \item \textit{Salida:} Con orden verbal o borrador del doctor, coordina cobro, anota abono/saldo en la hoja auxiliar y agenda la siguiente cita en Google Calendar según el color de cada especialista.
   \item \textit{Digitalización:} En la mañana (09:30--11:30) o tarde (17:00--20:00), transcribe los datos del papel al Excel ($\approx$5 min por paciente nuevo; $\approx$2 min por subsecuente).
 \end{enumerate}
-\textbf{Herramienta principal:} Ficha física para registro clínico, Google Calendar para citas y Excel para historial digital. \\
-\hline
-\textbf{¿En qué punto del proceso, o en qué momentos del día, suele acumularse más demora o espera de pacientes?} \\[4pt]
-Al inicio, durante el interrogatorio de antecedentes y patologías en recepción, por la inhibición y falta de privacidad de los pacientes frente a otros en sala de espera; la demora se traslada al gabinete cuando el doctor debe re-interrogar. \\
-\hline
-\textbf{¿Cómo interactúa con la hoja de cálculo que replica el Formulario 033? ¿Registra los datos durante la consulta o al finalizar la jornada?} \\[4pt]
-No registra durante la consulta. Transcribe por bloques: 90 a 120 minutos diarios dedicados a pasar en limpio del papel al Excel, al mediodía o al finalizar la jornada. \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 2 — PROBLEMAS} \\
-\hline
-\textbf{¿Qué errores o reprocesos ocurren con más frecuencia (datos perdidos, doble registro, citas cruzadas)?} \\[4pt]
-Duplicidad y solapamiento de recordatorios manuales en Google Calendar; citas cruzadas por confirmaciones externas fuera de horario vía celular corporativo; necesidad de corregir antecedentes porque el paciente los niega en recepción y los confiesa dentro del sillón dental. \\
-\hline
-\textbf{¿Qué información necesita y no encuentra disponible cuando la necesita?} \\[4pt]
-Códigos CIE-10 (prefijos K0 y K1) que no memoriza y debe buscar manualmente en una hoja física de referencia rápida; historial inmediato de tratamientos pausados o fases de tratamiento en pacientes que llegan sin cita previa. \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 3 — NORMATIVA} \textit{(exclusivo personal médico)} \\
-\hline
-\textbf{¿Qué requisitos del Formulario 033 o del Acuerdo 5216-A le generan más carga o dudas de cumplimiento?} \\[4pt]
-N/A --- Exclusivo para personal médico. \\
-\hline
-\end{longtable}
+\textbf{Herramienta principal:} Ficha física para registro clínico, Google Calendar para citas y Excel para historial digital. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La recepción demanda una continua manipulación de carpetas impresas y una posterior retranscripción manual a archivos de cálculo.} \\ \hline
+\end{tabularx}
+\end{table}
 
-Los resultados obtenidos de la entrevista a la secretaria evidencian que el modelo actual de agendamiento manual y las notificaciones asíncronas generan constantes reprocesos, duplicidad de citas e inconsistencias en la disponibilidad horaria. Paralelamente, la tarea diferida de digitalizar las historias clínicas desde el papel hacia hojas de cálculo exige un elevado volumen de horas al finalizar la jornada, lo que retrasa sistemáticamente la disponibilidad de la información en tiempo real para el equipo médico.
+\begin{table}[H]
+\centering
+\caption{Entrevista 2 — Pregunta 2: Cuellos de botella y demoras en recepción}
+\label{tab:ent2_q2}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+2 & ¿En qué punto del proceso, o en qué momentos del día, suele acumularse más demora o espera de pacientes? & Al inicio, durante el interrogatorio de antecedentes y patologías en recepción, por la inhibición y falta de privacidad de los pacientes frente a otros en sala de espera; la demora se traslada al gabinete cuando el doctor debe re-interrogar. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La falta de privacidad en sala de espera inhibe al paciente y provoca una segunda toma de antecedentes dentro del sillón dental.} \\ \hline
+\end{tabularx}
+\end{table}
 
-% ---- FICHA 3 ----
-\textbf{Entrevista a la Odontóloga de Planta}
+\begin{table}[H]
+\centering
+\caption{Entrevista 2 — Pregunta 3: Carga de tiempo en digitalización de datos}
+\label{tab:ent2_q3}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+3 & ¿Cómo interactúa con la hoja de cálculo que replica el Formulario 033? ¿Registra los datos durante la consulta o al finalizar la jornada? & No registra durante la consulta. Transcribe por bloques: 90 a 120 minutos diarios dedicados a pasar en limpio del papel al Excel, al mediodía o al finalizar la jornada. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La transcripción en lote consume entre hora y media y dos horas diarias de trabajo dedicado a la digitalización en diferido.} \\ \hline
+\end{tabularx}
+\end{table}
 
-\medskip\fontsize{10}{12}\selectfont
-\begin{longtable}{|p{\fichawidth}|}
+\begin{table}[H]
+\centering
+\caption{Entrevista 2 — Pregunta 4: Inconsistencias y reprocesos en la agenda}
+\label{tab:ent2_q4}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
 \hline
-\cellcolor{gray!20}\textbf{INSTRUMENTO 1 — GUIÓN DE ENTREVISTA SEMIESTRUCTURADA} \\[-2pt]
-\cellcolor{gray!20}Diagnóstico de Procesos (OE1) | Centro Odontológico Bellidental \\[-2pt]
-\cellcolor{gray!20}\textbf{ENTREVISTA 3: La Doctora de Planta} \\
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+4 & ¿Qué errores o reprocesos ocurren con más frecuencia (datos perdidos, doble registro, citas cruzadas)? & Duplicidad y solapamiento de recordatorios manuales en Google Calendar; citas cruzadas por confirmaciones externas fuera de horario vía celular corporativo; necesidad de corregir antecedentes porque el paciente los niega en recepción y los confiesa dentro del sillón dental. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} El manejo de múltiples canales informales de mensajería genera solapamientos frecuentes en la agenda de la clínica.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 2 — Pregunta 5: Información faltante y consultas frecuentes}
+\label{tab:ent2_q5}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
 \hline
-\cellcolor{gray!10}\textbf{DATOS DE APLICACIÓN} \\
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+5 & ¿Qué información necesita y no encuentra disponible cuando la necesita? & Códigos CIE-10 (prefijos K0 y K1) que no memoriza y debe buscar manualmente en una hoja física de referencia rápida; historial inmediato de tratamientos pausados o fases de tratamiento en pacientes que llegan sin cita previa. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La búsqueda manual de códigos normativos e historiales pausados retrasa la atención inmediata en recepción.} \\ \hline
+\end{tabularx}
+\end{table}
+
+
+% ================================================================
+% ENTREVISTA 3: LA ODONTÓLOGA DE PLANTA
+% ================================================================
+\subsection*{Entrevista 3: La Doctora de Planta}
+
+\begin{table}[H]
+\centering
+\caption{Datos informativos de la Entrevista 3: Odontóloga General de Planta}
+\label{tab:ent3_datos}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{|>{\bfseries}p{3.8cm}|X|}
 \hline
-Aplicado a: \textbf{[x]}~Doctora de planta \quad \mbox{[~]}~Secretaria \\
-Fecha: 15/09/2026 \quad Hora inicio: 13:00 \quad Hora fin: 13:20 \\
+Instrumento & \textbf{INSTRUMENTO 1 — GUIÓN DE ENTREVISTA SEMIESTRUCTURADA} \\ \hline
+Sección & \textbf{DATOS DE APLICACIÓN} \\ \hline
+Aplicado a & \textbf{[x]} Doctora de planta \quad \mbox{[~]} Secretaria \\ \hline
+Fecha & 15/09/2026 \\ \hline
+Hora de inicio & 13:00 \\ \hline
+Hora de fin & 13:20 \\ \hline
+Sección & \textbf{DATOS GENERALES} \\ \hline
+Rol / cargo & Odontóloga General de Planta \\ \hline
+Tiempo en la función & Profesional de planta (estimado 1--2 años) \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 3 — Pregunta 1: Flujo de atención clínica presencial}
+\label{tab:ent3_q1}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
 \hline
-\cellcolor{gray!10}\textbf{DATOS GENERALES} \\
-\hline
-\textbf{Rol / cargo:} \enspace Odontóloga General de Planta \\
-\textbf{Tiempo en la función:} \enspace Profesional de planta (estimado 1--2 años) \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 1 — PROCESO ACTUAL} \\
-\hline
-\textbf{Describa, paso a paso, qué ocurre desde que un paciente llega hasta que se cierra su atención, incluyendo qué herramienta usa en cada paso.} \\[4pt]
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+1 & Describa, paso a paso, qué ocurre desde que un paciente llega hasta que se cierra su atención, incluyendo qué herramienta usa en cada paso. & 
 \begin{enumerate}[nosep,leftmargin=*,topsep=0pt]
   \item \textit{Ingreso:} Recibe la ficha física con los datos demográficos básicos que tomó la secretaria.
   \item \textit{Consulta:} Re-interroga antecedentes médicos (omitidos en recepción por pudor); diagnostica y marca manualmente el odontograma en papel (rojo: tratamiento a realizar, azul: ejecutado).
   \item \textit{Tratamiento y prescripción:} Ejecuta el procedimiento dental ($\approx$30 min). Llena manualmente la receta médica y anota el código diagnóstico.
   \item \textit{Cierre:} Indica verbalmente el procedimiento a la secretaria para el cobro y entrega la ficha para transcripción posterior.
 \end{enumerate}
-\textbf{Herramienta principal:} Ficha clínica en papel y guía documental de simbología clínica. \\
-\hline
-\textbf{¿En qué punto del proceso, o en qué momentos del día, suele acumularse más demora o espera de pacientes?} \\[4pt]
-En la toma de antecedentes médicos duplicada dentro del gabinete (por falta de sinceridad del paciente en recepción) y en el tiempo muerto que implica redactar a mano las recetas médicas y posologías para cada paciente. \\
-\hline
-\textbf{¿Cómo interactúa con la hoja de cálculo que replica el Formulario 033? ¿Registra los datos durante la consulta o al finalizar la jornada?} \\[4pt]
-No interactúa directamente con el Excel durante la atención clínica; documenta únicamente en la ficha física en papel para no desatender al paciente, dejando la digitación en manos de la secretaria al final del día. \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 2 — PROBLEMAS} \\
-\hline
-\textbf{¿Qué errores o reprocesos ocurren con más frecuencia (datos perdidos, doble registro, citas cruzadas)?} \\[4pt]
-Omisión de antecedentes patológicos graves al ingreso que obligan a cambiar el plan de tratamiento sobre la marcha; errores de transcripción o interpretación de los trazos del odontograma físico al ser digitalizados por la secretaria; citas cruzadas que generan aglomeración en sala de espera. \\
-\hline
-\textbf{¿Qué información necesita y no encuentra disponible cuando la necesita?} \\[4pt]
-El vademécum/catálogo rápido de fármacos con sus dosis predeterminadas para no redactarlas manualmente; disponibilidad en tiempo real del estado de tratamientos pausados de pacientes subsecuentes cuando la ficha física aún no ha sido desarchivada. \\
-\hline
-\cellcolor{gray!10}\textbf{BLOQUE 3 — NORMATIVA} \textit{(exclusivo personal médico)} \\
-\hline
-\textbf{¿Qué requisitos del Formulario 033 o del Acuerdo 5216-A le generan más carga o dudas de cumplimiento?} \\[4pt]
-La obligatoriedad de asentar el odontograma geométrico oficial del MSP de forma análoga sin una herramienta digital directa en el sillón; la exigencia de codificación exacta CIE-10 (K02, etc.) en cada diagnóstico y receta médica, lo cual incrementa el tiempo administrativo por encima del tiempo de atención odontológica. \\
-\hline
-\end{longtable}
+\textbf{Herramienta principal:} Ficha clínica en papel y guía documental de simbología clínica. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} El trabajo odontológico depende exclusivamente del soporte físico y del traspaso verbal de información hacia la secretaria.} \\ \hline
+\end{tabularx}
+\end{table}
 
-La entrevista a la odontóloga de planta ratifica la ineficiencia generada por la duplicidad en la toma de antecedentes médicos debido a la falta de privacidad en el área de recepción. Adicionalmente, el registro manual de prescripciones y codificaciones normativas consume una porción significativa del tiempo de consulta, mientras que la falta de un catálogo farmacológico integrado y la inaccesibilidad a historiales previos sin solicitar el expediente físico limitan drásticamente la fluidez del proceso clínico.
+\begin{table}[H]
+\centering
+\caption{Entrevista 3 — Pregunta 2: Tiempos muertos y cuellos de botella clínicos}
+\label{tab:ent3_q2}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+2 & ¿En qué punto del proceso, o en qué momentos del día, suele acumularse más demora o espera de pacientes? & En la toma de antecedentes médicos duplicada dentro del gabinete (por falta de sinceridad del paciente en recepción) y en el tiempo muerto que implica redactar a mano las recetas médicas y posologías para cada paciente. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La reevaluación de antecedentes y la confección de recetas manuscritas consumen una porción relevante de la consulta.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 3 — Pregunta 3: Modalidad de registro de la información}
+\label{tab:ent3_q3}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+3 & ¿Cómo interactúa con la hoja de cálculo que replica el Formulario 033? ¿Registra los datos durante la consulta o al finalizar la jornada? & No interactúa directamente con el Excel durante la atención clínica; documenta únicamente en la ficha física en papel para no desatender al paciente, dejando la digitación en manos de la secretaria al final del día. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} El personal odontológico prioriza el contacto directo con el paciente, delegando por completo el registro digital.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 3 — Pregunta 4: Incidencias de transcripción y antecedentes}
+\label{tab:ent3_q4}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+4 & ¿Qué errores o reprocesos ocurren con más frecuencia (datos perdidos, doble registro, citas cruzadas)? & Omisión de antecedentes patológicos graves al ingreso que obligan a cambiar el plan de tratamiento sobre la marcha; errores de transcripción o interpretación de los trazos del odontograma físico al ser digitalizados por la secretaria; citas cruzadas que generan aglomeración en sala de espera. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La transcripción diferida de trazos manuscritos induce a errores de interpretación en la historia clínica digital.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 3 — Pregunta 5: Herramientas farmacológicas e historial oportuno}
+\label{tab:ent3_q5}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+5 & ¿Qué información necesita y no encuentra disponible cuando la necesita? & El vademécum/catálogo rápido de fármacos con sus dosis predeterminadas para no redactarlas manualmente; disponibilidad en tiempo real del estado de tratamientos pausados de pacientes subsecuentes cuando la ficha física aún no ha sido desarchivada. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La inaccesibilidad inmediata a historiales y catálogos de medicamentos afecta la eficiencia de la prescripción.} \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Entrevista 3 — Pregunta 6: Exigencias normativas del odontograma y CIE-10}
+\label{tab:ent3_q6}
+\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{|c|>{\bfseries}p{4cm}|X|}
+\hline
+\textbf{N°} & \textbf{Pregunta} & \textbf{Respuesta} \\ \hline
+6 & ¿Qué requisitos del Formulario 033 o del Acuerdo 5216-A le generan más carga o dudas de cumplimiento? & La obligatoriedad de asentar el odontograma geométrico oficial del MSP de forma análoga sin una herramienta digital directa en el sillón; la exigencia de codificación exacta CIE-10 (K02, etc.) en cada diagnóstico y receta médica, lo cual incrementa el tiempo administrativo por encima del tiempo de atención odontológica. \\ \hline
+\multicolumn{3}{|>{\raggedright\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep-2\arrayrulewidth\relax}|}{\textbf{Conclusión:} La codificación manuscrita obligatoria y el trazado físico del odontograma elevan la carga de trabajo en el sillón dental.} \\ \hline
+\end{tabularx}
+\end{table}
