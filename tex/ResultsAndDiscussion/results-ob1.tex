@@ -1,158 +1,404 @@
+\subsection{Análisis del flujo de información clínico-administrativa}
 
-\subsection{Proceso de atención al paciente y actualización de información}
+La gestión clínico-administrativa del Centro Odontológico Bellidental se apoya en registros de papel, una hoja de cálculo y una agenda en Google Calendar, que se alimentan entre sí mediante transcripción manual y comunicación verbal. Para analizarla, esta sección define primero la unidad de análisis y los registros involucrados, describe después el flujo modelado en BPMN 2.0 y, finalmente, identifica los puntos críticos que concentran tiempo, retrabajo o riesgo de error.
 
-La gestión clínico-administrativa por paciente en el Centro Odontológico Bellidental se realiza mediante un esquema tradicional basado en soportes de papel, hojas de cálculo independientes y canales informales de comunicación. Este flujo de trabajo se subdivide en dos componentes principales, de los cuales se excluye de forma explícita el tiempo clínico de la consulta: la Etapa 1: Gestión en la atención, que corresponde a lo que ocurre con el paciente presente (diagrama 1, $T_{E1} = 6{,}3$ min), y la Etapa 2: Gestión documental diferida, referente al tratamiento posterior de los datos de esa misma atención (diagrama 2, $T_{E2} = 7{,}32$ min).
+\subsubsection{Unidad de análisis: el ciclo completo de atención}
 
-\subsubsection{Análisis del proceso actual}
+La unidad de análisis de esta investigación es el ciclo completo de atención, entendido como el conjunto de actividades administrativas que genera una atención a un paciente, desde su llegada al centro hasta que la información de esa atención queda registrada en el Formulario 033 y en el historial digital. En consecuencia, en este documento las expresiones \emph{por paciente} y \emph{por ciclo completo de atención} se refieren a la misma unidad: una atención.
 
-En la operatividad diaria de la clínica, la atención del paciente y el manejo de su historial clínico se desarrollan en las siguientes etapas:
+El ciclo se compone de dos etapas que tratan la misma información en momentos distintos:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Etapa 1 — Gestión en la atención:} actividades que se realizan con el paciente presente, desde su recepción hasta el cierre administrativo de la consulta y el agendamiento de la próxima cita.
+    \item \textbf{Etapa 2 — Gestión documental diferida:} actividades que se realizan después de la atención, en bloques de menor afluencia, para trasladar la información de esa misma atención a los registros definitivos.
+\end{itemize}
+
+El criterio que distingue ambas etapas es el momento en que se ejecutan y no el lugar, ya que las dos involucran a la recepción. El tiempo de gestión administrativa por ciclo completo de atención ($TGA$) se define como la suma de los tiempos de ambas etapas, según la ecuación~\eqref{eq:tga}:
+
+\begin{equation}
+TGA = T_{E1} + T_{E2} = (T_1 + T_2 + T_3) + (T_4 + T_5)
+\label{eq:tga}
+\end{equation}
+
+Donde $T_1$, $T_2$ y $T_3$ corresponden a los tramos administrativos de la Etapa 1, y $T_4$ y $T_5$, a los de la Etapa 2, descritos en la Tabla~\ref{tab:tramos_tga}. Se excluye el tiempo de atención clínica (procedimiento en el sillón dental), debido a que no constituye gestión administrativa y no es objeto de reducción por parte del sistema propuesto. Tampoco se incluyen el registro inicial de la ficha de pacientes nuevos ni la preparación de fichas del día siguiente, que no fueron cronometrados; por ello, el $TGA$ constituye una estimación conservadora del tiempo real de gestión.
+
+\subsubsection{Actores y registros involucrados}
+
+En el flujo intervienen tres actores. La secretaria concentra la recepción, el registro inicial, el cobro, el agendamiento, la mensajería con pacientes y la transcripción de fichas, y se describe a sí misma como polifuncional. La Odontóloga de planta realiza la anamnesis clínica, el diagnóstico y los procedimientos. El Odontólogo Principal y Director atiende pacientes y coordina la operación del centro.
+
+La información de cada atención se registra en cuatro soportes, resumidos en la Tabla~\ref{tab:registros}. La ficha rápida es un registro físico de trabajo que no reemplaza a la historia clínica oficial, pero es el único soporte que se llena durante la atención.
+
+\begin{table}[H]
+\centering
+\caption{Registros utilizados en el ciclo completo de atención}
+\label{tab:registros}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{|p{2.6cm}|p{1.6cm}|X|p{2.4cm}|}
+\hline
+\textbf{Registro} & \textbf{Soporte} & \textbf{Contenido} & \textbf{Momento} \\ \hline
+Ficha rápida & Papel & Encabezado institucional; datos de filiación y antecedentes; odontograma (rojo: por realizar, azul: realizado); tabla de control clínico-financiero (fecha, diagnóstico, tratamiento, profesional, abono, saldo) & Etapa 1 \\ \hline
+Formulario 033 & Papel & Historia clínica única de odontología del MSP: filiación, antecedentes, odontograma y registro de tratamientos & Etapa 2 \\ \hline
+Historial digital & Excel & Réplica del Formulario 033: filiación, antecedentes, odontograma en formato tabular (condición por pieza dental 11--48), código CIE-10, tratamiento, medicación, abono y saldo & Etapa 2 \\ \hline
+Agenda & Google Calendar & Citas por profesional, diferenciadas por colores & Etapas 1 y 2 \\ \hline
+\end{tabularx}
+\end{table}
+
+Como se observa, una misma atención se registra tres veces: en la ficha rápida, en el Formulario 033 y en el historial digital. Solo el primer registro se realiza durante la atención.
+
+\subsubsection{Etapa 1: gestión en la atención}
+
+La Figura~\ref{fig:bpmn1} modela la Etapa 1 con tres carriles: Paciente, Secretaria y Odontólogo/a. Su desarrollo es el siguiente:
 
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Recepción e inicio de atención:} Al ingresar el paciente, la secretaria verifica su registro. Si es un usuario nuevo, se abre una ficha física preliminar de papel para anotar los datos de filiación y antecedentes médicos básicos. Si es un paciente recurrente, se busca su carpeta en el archivo de recepción.
-    
-    \item \textbf{Verificación de agendamiento:} La secretaria confirma la cita en la aplicación Google Calendar, donde los turnos están organizados por colores según el profesional asignado. Al mismo tiempo, atiende las solicitudes de confirmación y cambio de citas que ingresan por WhatsApp al teléfono corporativo.
-    
-    \item \textbf{Atención clínica y anamnesis:} El paciente ingresa al consultorio y el odontólogo recibe la ficha física. Debido a que la información inicial suele ser concisa, el profesional reinterroga al paciente sobre sus antecedentes de salud. Posterior a la revisión clínica, dibuja a mano el odontograma en el Formulario 033 oficial del Ministerio de Salud Pública, aplicando la convención de color rojo para tratamientos pendientes y azul para los ejecutados.
-    
-    \item \textbf{Procedimiento y prescripción médica:} Finalizada la intervención, si el paciente requiere medicación, el odontólogo escribe la receta a mano, indicando el fármaco, la dosis y el código diagnóstico de la Clasificación Internacional de Enfermedades. Al terminar, comunica verbalmente a la secretaria los procedimientos efectuados y le entrega la ficha con las notas manuscritas.
-    
-    \item \textbf{Cierre de atención y agendamiento:} En recepción, la secretaria realiza el cobro, registra en una hoja auxiliar los valores pagados y saldos pendientes, acuerda la fecha del próximo turno y lo asigna en Google Calendar.
-    
-    \item \textbf{Actualización diferida de fichas:} La secretaria no digita la información en tiempo real durante la consulta. En el bloque vespertino o al cierre del día, dedica entre 120 y 180 minutos a recopilar las fichas diarias. En esta etapa transcribe manualmente las notas y el odontograma al Formulario 033 físico definitivo y registra los datos administrativos en una hoja de cálculo en Microsoft Excel.
-\end{enumerate}
+    \item \textbf{Recepción y verificación de la cita.} La secretaria recibe al paciente y verifica su cita en Google Calendar.
 
-Cabe destacar que en los diagramas BPMN que modelan estos procesos (Figuras~\ref{fig:bpmn1} y \ref{fig:bpmn2}) se representan únicamente las actividades que concentran tiempo, retrabajo o riesgo de error. Se han omitido los pasos de menor incidencia, como el llenado del encabezado institucional, la firma de la receta y de la tabla de control, o la coordinación de casos especiales por parte del odontólogo especialista.
+    \item \textbf{Ficha rápida.} Si el paciente es nuevo, la secretaria abre una ficha rápida y registra sus datos de filiación (nombres, edad, fecha de nacimiento y cédula) y sus antecedentes patológicos mediante opciones dirigidas (hipertensión, diabetes, asma, gastritis, tiroides, entre otras). Este interrogatorio se realiza en recepción, frente a otros pacientes. Si el paciente es subsecuente, la secretaria toma la ficha rápida que seleccionó y ordenó el día anterior según la agenda. Cuando el paciente llega sin cita previa, su ficha no está preparada y debe buscarse en el archivo físico.
+
+    \item \textbf{Traspaso al consultorio.} La secretaria entrega la ficha rápida al profesional y le comunica verbalmente los antecedentes declarados.
+
+    \item \textbf{Anamnesis y odontograma.} El profesional realiza la anamnesis clínica, en la que suele confirmar o corregir antecedentes que el paciente no declaró en recepción. El odontograma se registra en la ficha rápida con la siguiente convención: rojo para lo pendiente y azul para lo realizado; un cuadro para caries simple y dos para caries compleja. Lo completa la Odontóloga de planta o la secretaria bajo dictado del profesional, apoyada en la familiaridad que ha adquirido con la simbología. La observación evidenció que el Director no completa personalmente el odontograma, a diferencia de lo declarado en su entrevista (Tabla~\ref{tab:ent1}, P1).
+
+    \item \textbf{Tratamiento y prescripción.} El profesional ejecuta el procedimiento. Si se requiere medicación, dicta el fármaco y la posología; la secretaria puede rellenar el formato de receta si el profesional lo delega, y la receta se entrega al paciente. Al terminar, el profesional informa verbalmente a la secretaria el tratamiento realizado.
+
+    \item \textbf{Registro del tratamiento.} En recepción, la secretaria anota en la tabla de control clínico-financiero de la ficha rápida la fecha, el diagnóstico, el tratamiento y el profesional que atendió.
+
+    \item \textbf{Cobro.} La secretaria cobra y registra el abono y el saldo en la misma tabla.
+
+    \item \textbf{Agendamiento.} Si se requiere una próxima cita, la secretaria consulta la disponibilidad en Google Calendar y la asigna.
+
+    \item \textbf{Archivo.} La secretaria archiva la ficha rápida, que queda pendiente de transcripción para la Etapa 2.
+\end{enumerate}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{img/bpmn1.png}
-    \caption{Etapa 1: Gestión en la atención.}
+    \caption{Etapa 1 del ciclo completo de atención: gestión en la atención}
     \label{fig:bpmn1}
 \end{figure}
+
+De forma concurrente a este flujo, la secretaria atiende mensajes de WhatsApp de manera intermitente: confirmaciones de citas, consultas de precios, abonos y horarios. Esta actividad no se modela como secuencia porque no sigue un orden fijo, sino que interrumpe las tareas de ambas etapas; por ello se representa como una anotación en el carril de la Secretaria. La secretaria atiende entre 26 y 50 mensajes diarios sobre cotizaciones y horarios, y destina entre 31 y 60 minutos a confirmar citas (Tabla~\ref{tab:instrumento2}, P1 y P2). Su análisis se desarrolla en la sección de necesidades de comunicación.
+
+\subsubsection{Etapa 2: gestión documental diferida}
+
+La Figura~\ref{fig:bpmn2} modela la Etapa 2, ejecutada únicamente por la secretaria en bloques de menor afluencia, principalmente en la tarde. Se inicia con un evento temporizado y comprende las siguientes actividades:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Recopilación.} La secretaria reúne las fichas rápidas de las atenciones del día.
+
+    \item \textbf{Transcripción de cada ficha.} Por cada ficha se ejecuta un subproceso multi-instancia. Primero, la secretaria interpreta el odontograma manuscrito con apoyo de una guía documental de simbología elaborada por la Odontóloga de planta. Luego transcribe la información a dos registros de forma independiente, representados con una compuerta paralela:
+    \begin{itemize}
+        \item \textit{Rama A — Formulario 033 físico:} datos de filiación y antecedentes, odontograma dibujado con el código de colores y figuras, y la tabla de control clínico-financiero completa.
+        \item \textit{Rama B — Historial digital en Excel:} los mismos datos de filiación y antecedentes; el odontograma convertido a formato tabular, en el que cada condición (movilidad, recesión, caries simple, compuesta o compleja, piezas calzadas, perdidas o por extraer, endodoncia y sellante realizados o por realizar) se registra por pieza dental (11 a 48); además del código CIE-10, el tratamiento, la medicación, el abono y el saldo.
+    \end{itemize}
+    Una vez completadas ambas ramas, archiva la ficha rápida.
+
+    \item \textbf{Preparación del día siguiente.} La secretaria revisa en Google Calendar las citas del día siguiente y prepara las fichas rápidas de esos pacientes, en la medida en que el bloque lo permite.
+\end{enumerate}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{img/bpmn2.png}
-    \caption{Etapa 2: Gestión documental diferida.}
+    \caption{Etapa 2 del ciclo completo de atención: gestión documental diferida}
     \label{fig:bpmn2}
 \end{figure}
 
-El diagnóstico del flujo de trabajo evidencia aspectos críticos en la operatividad, el registro de información y el cumplimiento normativo. A partir de los instrumentos de recolección de datos, se identifican las siguientes problemáticas en la gestión clínico-administrativa:
+Ambas etapas forman un ciclo cerrado: la ficha rápida archivada al final de la Etapa 1 es la entrada de la Etapa 2, y las fichas preparadas al final de la Etapa 2 son las que la secretaria utiliza al día siguiente para recibir a los pacientes subsecuentes en la Etapa 1. Por ello, no se trata de dos procesos independientes, sino de dos momentos del tratamiento de la misma información.
 
-\begin{itemize}
-    \item \textbf{Etapa 1: Gestión en la atención:} La acumulación de mensajes diarios en WhatsApp al inicio de la jornada genera demoras en la recepción. En el ámbito clínico, la confección manual de recetas y la búsqueda física de códigos diagnósticos restan tiempo a la atención. Según los datos de la ficha de observación, este tramo administrativo directo consume en promedio 6{,}3 minutos por paciente.
-    
-    \item \textbf{Etapa 2: Gestión documental diferida:} Representa el principal cuello de botella administrativo. La secretaria requiere retranscribir las fichas físicas al Formulario 033 y a una hoja de cálculo. La observación directa determinó que esta gestión documental diferida consume 7{,}32 minutos por ficha, sumando aproximadamente 190 minutos por jornada, lo que desvincula la atención presencial de la actualización del sistema informático y retrasa la disponibilidad de las historias clínicas.
-\end{itemize}
+\subsubsection{Tiempos del ciclo completo de atención}
 
-Considerando ambas etapas ($T_{E1}$ y $T_{E2}$), el tiempo total destinado a la gestión administrativa por paciente asciende a 13{,}62 minutos, lo que evidencia la necesidad de optimización. Además, la falta de un sistema unificado origina las siguientes inconsistencias, errores y reprocesos:
+La Tabla~\ref{tab:tramos_tga} vincula cada tramo medido en la ficha de observación con las actividades de los diagramas.
 
-\begin{itemize}
-    \item \textbf{Cruces de agenda:} Ocurren duplicidades de turnos cuando los odontólogos confirman o modifican citas directamente con los pacientes por llamadas o mensajes personales, sin que la secretaria lo registre oportunamente en la agenda central.
-    
-    \item \textbf{Errores de transcripción:} El traspaso de datos desde las fichas preliminares al Formulario 033 definitivo y al archivo de Excel expone el historial clínico a errores de interpretación de la caligrafía o de la simbología del odontograma.
-    
-    \item \textbf{Falta de privacidad:} La recolección de antecedentes de salud en la sala de espera inhibe a algunos pacientes de declarar enfermedades o alergias. Esto obliga al odontólogo a repetir el cuestionario en el consultorio, prolongando la consulta.
-\end{itemize}
+\begin{table}[H]
+\centering
+\caption{Tramos del tiempo de gestión administrativa por ciclo completo de atención (pretest, $n = 78$)}
+\label{tab:tramos_tga}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{|c|p{3.4cm}|X|c|}
+\hline
+\textbf{Tramo} & \textbf{Nombre} & \textbf{Actividades del diagrama} & \textbf{Prom. (min)} \\ \hline
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Etapa 1 — Gestión en la atención}} \\ \hline
+$T_1$ & Registro posconsulta & Elaboración de la receta y registro del tratamiento en la tabla de control & 3,40 \\ \hline
+$T_2$ & Registro del pago & Cobro y registro de abono y saldo & 1,60 \\ \hline
+$T_3$ & Agendamiento & Asignación de la próxima cita en Google Calendar & 1,30 \\ \hline
+\multicolumn{3}{|r|}{\textbf{Subtotal $T_{E1}$}} & \textbf{6,30} \\ \hline
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Etapa 2 — Gestión documental diferida}} \\ \hline
+$T_4$ & Transcripción al Formulario 033 & Interpretación del odontograma y rama A & 3,94 \\ \hline
+$T_5$ & Digitalización & Rama B: transcripción al historial digital en Excel & 3,38 \\ \hline
+\multicolumn{3}{|r|}{\textbf{Subtotal $T_{E2}$}} & \textbf{7,32} \\ \hline
+\multicolumn{3}{|r|}{\textbf{$TGA$}} & \textbf{13,62} \\ \hline
+\end{tabularx}
+\end{table}
 
-\subsubsection{Análisis normativo}
+La Etapa 2 representa el 53,7\,\% del $TGA$ y, por sí sola, consume en promedio 190 minutos por jornada (Tabla~\ref{tab:resumen_obs_parte_b}), valor superior a los 120 a 180 minutos declarados por la secretaria (Tabla~\ref{tab:ent2}, P3). Dentro de la Etapa 1, el registro posconsulta ($T_1$) es el tramo más extenso, con el 25,0\,\% del $TGA$. Con un promedio de 26 atenciones por jornada observada, el $TGA$ equivale a una carga administrativa conjunta estimada de 354 minutos diarios, distribuida entre la secretaria y los profesionales.
 
-El manejo actual de la información presenta vulnerabilidades frente a la legislación ecuatoriana. El sistema de información de la clínica está condicionado por tres referentes legales y normativos, frente a los cuales se identifican brechas de cumplimiento:
+Como indicadores complementarios, que no forman parte del $TGA$, la observación registró una espera previa a la atención de 6,2 minutos y un retraso de 7,4 minutos respecto a la hora programada (Tabla~\ref{tab:resumen_obs_parte_a}).
 
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Formulario 033 y Acuerdo Ministerial 5216-A:} Esta normativa exige el registro secuencial, completo y legible del diagnóstico, tratamiento, evolución y prescripciones, incluyendo el odontograma y los códigos CIE-10, simultáneo a la atención del paciente. En la práctica actual, el odontograma se dibuja a mano y se retranscribe de manera diferida, y los códigos CIE-10 se buscan en una matriz física. Esto genera duplicidad de registros, riesgo de errores por mala interpretación de la caligrafía y disponibilidad limitada del historial para consultas inmediatas.
-    
-    \item \textbf{Reglamentos de la Historia Clínica Electrónica (Acuerdos 0009-2017 y 00115-2021):} Aplican a los establecimientos que emplean sistemas informáticos para la historia clínica y exigen principios de seguridad, integridad, exactitud, confidencialidad, no repudio y disponibilidad, requiriendo credenciales únicas por usuario. Actualmente, la clínica emplea expedientes de papel con firma manuscrita y una hoja de Excel como copia digital carente de controles de acceso individualizados. Esto impide garantizar la inalterabilidad de los datos, evidenciando la necesidad de implementar autenticación por roles, trazabilidad de registros (auditoría) y respaldos automáticos seguros.
-    
-    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP):} La legislación establece que los datos de salud conforman una categoría especial que requiere medidas rigurosas de seguridad, exactitud y confidencialidad. En la clínica, la falta de privacidad en recepción al recolectar antecedentes, el almacenamiento físico de fichas y el uso de mensajería comercial sin controles cifrados exponen la información a vulnerabilidades. Además, el Artículo 31 de la LOPDP demanda el consentimiento expreso del titular para tratar sus datos de salud. Dado que la clínica coordina citas por WhatsApp, se incurre en una brecha legal, pues no se cuenta con un aviso de privacidad ni consentimiento formal.
-\end{itemize}
+\subsubsection{Puntos críticos del flujo}
 
-Estas brechas se traducen en requerimientos de cumplimiento obligatorio para el sistema propuesto: integración de un odontograma digital y un catálogo CIE-10, aseguramiento del registro simultáneo, autenticación por usuario con auditoría, y la inclusión de un aviso de privacidad de aceptación explícita para el uso del agente conversacional.
-
-\subsubsection{Requerimientos del sistema}
-
-Los requerimientos se levantaron a partir del análisis del proceso actual, las entrevistas al personal y las normativas aplicables. Se clasifican en funcionales, que describen lo que el sistema debe hacer, y no funcionales, que describen las condiciones de calidad bajo las que debe operar.
-
-La Tabla~\ref{tab:requerimientos} detalla estos requerimientos. Se asignó prioridad alta a aquellos indispensables para resolver los problemas clínicos o exigidos por ley, y prioridad media a los que mejoran la operatividad.
+A partir de los diagramas, los tiempos medidos y los instrumentos aplicados, se identifican los puntos críticos que concentran tiempo, retrabajo o riesgo de error (Tabla~\ref{tab:puntos_criticos}).
 
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\begin{longtable}{|c|p{9.5cm}|c|}
-\caption{Requerimientos funcionales y no funcionales del sistema}
-\label{tab:requerimientos} \\
+\begin{longtable}{|c|p{3.2cm}|p{2.2cm}|p{4.4cm}|p{3.2cm}|}
+\caption{Puntos críticos del ciclo completo de atención}
+\label{tab:puntos_criticos} \\
 \hline
-\textbf{ID} & \textbf{Requerimiento} & \textbf{Prioridad} \\ \hline
+\textbf{N°} & \textbf{Punto crítico} & \textbf{Ubicación} & \textbf{Evidencia} & \textbf{Efecto} \\ \hline
 \endfirsthead
 \hline
-\textbf{ID} & \textbf{Requerimiento} & \textbf{Prioridad} \\ \hline
+\textbf{N°} & \textbf{Punto crítico} & \textbf{Ubicación} & \textbf{Evidencia} & \textbf{Efecto} \\ \hline
 \endhead
 \hline
 \endfoot
 
-\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Requerimientos funcionales}} \\ \hline
+PC1 & Triple registro de la misma atención & Etapa 2, ramas A y B ($T_4$, $T_5$) & 7,32 min por atención y 190 min por jornada (Tabla~\ref{tab:resumen_obs_parte_b}); tareas en lote con interrupciones por llamadas y mensajes & Mayor concentración de tiempo del ciclo; historial disponible solo después de la jornada \\ \hline
 
-RF01 & Historia clínica digital que replique el Formulario 033 del MSP campo por campo, sin variaciones, y que pueda imprimirse con todos los campos definidos. & Alta \\ \hline
+PC2 & Interpretación de trazos manuscritos por personal no clínico & Etapa 2, interpretación del odontograma & Errores de transcripción del odontograma (Tabla~\ref{tab:ent3}, P4); demoras al interpretar letra manuscrita (observación) & Riesgo de inexactitud en el Formulario 033 y en el historial digital \\ \hline
 
-RF02 & Odontograma digital interactivo: al seleccionar la pieza (11 a 48) y la cara se despliegan las opciones diagnósticas, usando rojo para lo pendiente y azul para lo ejecutado. & Alta \\ \hline
+PC3 & Registro del odontograma por personal no clínico & Etapa 1, anamnesis y odontograma & La secretaria completa el odontograma de la ficha rápida bajo dictado del profesional; el Director declaró completarlo personalmente (Tabla~\ref{tab:ent1}, P1), lo que no se constató en la observación & Información clínica registrada por personal ajeno a la cadena sanitaria \\ \hline
 
-RF03 & Catálogo CIE-10 con buscador predictivo por texto o por prefijo (K0, K1), para evitar redigitación manual. & Alta \\ \hline
+PC4 & Prescripción y codificación manuscritas & Etapa 1, $T_1$ & 3,4 min, tramo más extenso de la Etapa 1 (Tabla~\ref{tab:resumen_obs_parte_a}); búsqueda de códigos CIE-10 en hoja física y falta de catálogo de fármacos (Tablas~\ref{tab:ent1}, \ref{tab:ent2} y \ref{tab:ent3}, P5 y P6) & Tiempo administrativo dentro de la consulta \\ \hline
 
-RF04 & Catálogo precargado de tratamientos y de fármacos con posología predefinida. & Alta \\ \hline
+PC5 & Antecedentes recogidos sin privacidad y repetidos & Etapa 1, ficha rápida y anamnesis & El paciente omite antecedentes en recepción y los declara en el sillón (Tabla~\ref{tab:ent2}, P2 y P4; Tabla~\ref{tab:ent3}, P1, P2 y P4) & Doble interrogatorio y cambios del plan de tratamiento sobre la marcha \\ \hline
 
-RF05 & Receta electrónica con autocompletado de fármaco y posología, asociada al código CIE-10 e impresa con espacio para firma. & Alta \\ \hline
+PC6 & Historial no disponible de inmediato & Etapa 1, ficha rápida (paciente sin cita) & Demora para ubicar tratamientos pausados cuando la ficha no fue preparada (Tablas~\ref{tab:ent1}, \ref{tab:ent2} y \ref{tab:ent3}, P5) & Búsqueda física en archivo durante la atención \\ \hline
 
-RF06 & Consulta inmediata del historial, antecedentes y estado de tratamientos de cualquier paciente, con registro de antecedentes directamente en el consultorio. & Alta \\ \hline
+PC7 & Agenda alimentada por canales paralelos & Etapa 1, agendamiento ($T_3$) & Citas confirmadas por WhatsApp personal o celular sin registro en Google Calendar (Tabla~\ref{tab:ent1}, P4; Tabla~\ref{tab:ent2}, P4); dos conflictos en el último mes (Tabla~\ref{tab:instrumento2}, P5); citas cruzadas (Tabla~\ref{tab:ent3}, P4) & Cruces de citas, aglomeración y retraso de 7,4 min respecto a la hora programada \\ \hline
 
-RF07 & Agenda centralizada que conserve la lógica de colores de Google Calendar e impida cruces de citas. & Alta \\ \hline
-
-RF08 & Registro de cobros con abono y saldo por sesión, y emisión de comprobante. & Media \\ \hline
-
-RF09 & Agente conversacional en WhatsApp que agenda, reprograma y cancela citas consultando la agenda centralizada, y que admite que un familiar gestione la cita. & Alta \\ \hline
-
-RF10 & Recordatorios automáticos previos a la cita, con solicitud de confirmación o reprogramación. & Alta \\ \hline
-
-RF11 & Respuesta automática sobre horarios de atención, precios y formas de pago, derivando a la secretaria en casos complejos. & Media \\ \hline
-
-RF12 & Aviso de privacidad y aceptación explícita del paciente antes de tratar sus datos por medio del agente en su primera interacción. & Alta \\ \hline
-
-\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Requerimientos no funcionales}} \\ \hline
-
-RNF01 & Persistencia de los datos: respaldos automáticos periódicos, exportación en formato abierto y ausencia de eliminación física de registros clínicos. & Alta \\ \hline
-
-RNF02 & Seguridad y confidencialidad: credenciales únicas, roles de acceso (secretaria, odontólogo), comunicación cifrada y ausencia de datos clínicos sensibles en las respuestas del agente. & Alta \\ \hline
-
-RNF03 & Auditoría: bitácora con usuario, fecha y hora de creación y modificación de cada registro o cita. & Alta \\ \hline
-
-RNF04 & Disponibilidad y contingencia: acceso durante el horario de atención y agente disponible fuera de él. Ante una falla, la atención continúa con registro manual. & Media \\ \hline
-
-RNF05 & Usabilidad: interfaz sencilla y eficiente que permita registrar durante la consulta sin desatender al paciente. & Alta \\ \hline
+PC8 & Secretaria polifuncional & Etapas 1 y 2 & Mensajería intermitente de 26 a 50 mensajes diarios (Tabla~\ref{tab:instrumento2}, P1); interrupciones observadas durante la transcripción & Fragmentación de las tareas y aumento del tiempo de transcripción \\ \hline
 
 \end{longtable}
 \endgroup
 
-\subsubsection{Análisis para el agente conversacional}
+En síntesis, el principal factor de tiempo del ciclo es que la información de una atención se registra durante la consulta en un soporte provisional y debe transcribirse después a dos registros definitivos. Esta estructura explica la mayor parte del $TGA$ (PC1), introduce riesgos de exactitud (PC2 y PC3) y retrasa la disponibilidad del historial (PC6). A ello se suman el tiempo de prescripción y codificación manual dentro de la consulta (PC4), la repetición del interrogatorio de antecedentes (PC5) y una agenda que no concentra todas las citas (PC7), en un contexto en el que la secretaria atiende simultáneamente la recepción, la mensajería y la transcripción (PC8). Las implicaciones normativas de PC2 y PC3 se analizan en la sección siguiente, y el conjunto de puntos críticos se traduce en los requerimientos del sistema presentados al final del capítulo.
 
-El diseño e implementación del agente conversacional en WhatsApp responde a las necesidades de comunicación específicas detectadas en la encuesta a pacientes y a la saturación de mensajería reportada por recepción. La Tabla~\ref{tab:necesidades_comunicacion} resume los aspectos evaluados y la función requerida para el agente.
+\subsection{Análisis normativo}
+
+El flujo descrito en la sección anterior trata información clínica y datos personales de salud, por lo que se contrasta con tres marcos normativos: la regulación de la historia clínica única y electrónica, el reglamento de manejo de información confidencial del Sistema Nacional de Salud y la Ley Orgánica de Protección de Datos Personales (LOPDP). Para cada uno se identifican las disposiciones aplicables, la situación observada y su implicación para el sistema propuesto.
+
+\subsubsection{Historia clínica única y electrónica}
+
+El Reglamento para el Manejo de la Historia Clínica Única (Acuerdo Ministerial 00115-2021) regula la historia clínica en soporte físico y electrónico, y reconoce a ambos igual valor funcional \cite{msp2021hcu}. En odontología, su formulario es el 033. En Bellidental, el registro oficial existe en papel y en Excel, pero ninguno se completa durante la atención: ambos se elaboran en la Etapa 2, por transcripción de la ficha rápida (PC1). Esto compromete el derecho del paciente a una historia clínica redactada en términos precisos y completos, reconocido en el artículo 7, literal f, de la Ley Orgánica de Salud, debido al riesgo de error en cada transcripción (PC2).
+
+El Reglamento para el Manejo de la Historia Clínica Electrónica (Acuerdo Ministerial 0009-2017) se aplica de forma complementaria en lo que no se contraponga a la norma de 2021, ya que no consta su derogatoria expresa \cite{msp2017hce}. Este reglamento exige que la historia clínica electrónica esté certificada con la firma electrónica del profesional (art. 3), que se rija por principios como integridad, confidencialidad, exactitud, no repudio y disponibilidad (art. 7), y que su impresión contenga todos los campos del formulario, aunque el formato difiera (art. 11). Mientras no se implemente la firma electrónica, se admiten credenciales únicas por usuario asignadas formalmente (Disposición Transitoria Segunda), y ante una falla del sistema debe continuarse con el registro manual (Disposición General Única).
+
+El historial en Excel no cumple estas condiciones: carece de firma electrónica, de credenciales individuales y de trazabilidad. Por ello, la clínica se encuentra en la situación de la Disposición Transitoria Primera, que permite el registro manual a los establecimientos sin sistemas informáticos. En consecuencia, más que un incumplimiento actual, estas disposiciones constituyen exigencias de diseño que el sistema deberá satisfacer desde su implementación.
+
+\subsubsection{Manejo de información confidencial}
+
+El Reglamento para el Manejo de Información Confidencial en el Sistema Nacional de Salud (Acuerdo Ministerial 5216-A) incluye entre los documentos con información de salud a las tarjetas de registro de atenciones con diagnóstico y tratamiento (art. 7) \cite{msp5216a}. Por tanto, la ficha rápida, el Formulario 033 y el historial en Excel son documentos confidenciales. Frente a este reglamento se identifican las siguientes brechas:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Integridad entre soportes.} El artículo 3 exige que la información no se altere, independientemente de los procesos de migración entre soportes. El triple registro de cada atención implica dos migraciones manuales, cuyo riesgo de alteración se evidenció en los errores de transcripción del odontograma (PC1 y PC2).
+
+    \item \textbf{Personal autorizado.} El artículo 14 limita el manejo de la historia clínica al personal de la cadena sanitaria, y el artículo 27 restringe el acceso del personal de agendamiento y recepción a los datos de identificación. En la práctica, la secretaria registra el odontograma bajo dictado y transcribe la historia clínica completa (PC3 y Etapa 2). Además, el artículo 38 dispone que los datos clínicos se mantengan separados de los de identificación, mientras que el Excel los reúne en un mismo archivo sin distinción de acceso.
+
+    \item \textbf{Acceso y trazabilidad.} El artículo 15 exige claves de acceso personales para los documentos electrónicos, y el artículo 8, la trazabilidad del uso de la historia clínica. El Excel no permite identificar quién registró o modificó cada dato.
+
+    \item \textbf{Privacidad en la atención.} Los artículos 24 y 25 exigen que la información de salud se trate en un entorno privado. La toma de antecedentes en la sala de espera (PC5) y su comunicación verbal en recepción no cumplen esta condición.
+
+    \item \textbf{Terceros.} El artículo 22 exige autorización explícita del paciente para informar a sus acompañantes. Dado que el 14,3\,\% de los pacientes coordinó su última cita mediante un familiar (Tabla~\ref{tab:p8_frecuencia}), cualquier canal automatizado debe limitarse a la gestión de la cita, sin revelar información clínica.
+
+    \item \textbf{Rotulación.} El artículo 33 y la Disposición General Primera exigen la leyenda ``CONFIDENCIAL'' en los documentos con datos de identificación y salud, condición que deberán cumplir los documentos impresos por el sistema.
+\end{itemize}
+
+\subsubsection{Protección de datos personales}
+
+La LOPDP clasifica los datos de salud como categoría especial y define el tratamiento de forma amplia: incluye recolectar, registrar, conservar, consultar y comunicar datos \cite{lopdp2021}. Por ello, todas las funciones previstas para el agente conversacional (agendar, recordar y confirmar citas) constituyen tratamiento de datos personales.
+
+El consentimiento expreso para tratar datos de salud (art. 31) admite como excepción la prestación de servicios sanitarios bajo secreto profesional, por lo que el registro clínico de la atención no depende de él. Sin embargo, el agente introduce una plataforma de mensajería de terceros y trata datos fuera de la consulta. Esto justifica informar al paciente mediante un aviso de privacidad con aceptación explícita y limitar el agente a los datos de identificación y de la cita, en coherencia con el artículo 27 del Acuerdo 5216-A. A ello se suman el principio de exactitud (art. 10, lit. h), afectado por la transcripción diferida (PC2), y el principio de seguridad (art. 10, lit. j), que exige medidas técnicas de protección. Finalmente, el derecho a no ser objeto de decisiones basadas únicamente en valoraciones automatizadas implica que el agente no debe resolver asuntos clínicos y debe derivarlos al personal.
+
+\subsubsection{Síntesis de brechas normativas}
+
+La Tabla~\ref{tab:brechas_normativas} resume las brechas identificadas y su implicación para el diseño del sistema.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\begin{longtable}{|c|p{3.0cm}|p{4.2cm}|p{5.2cm}|}
+\caption{Brechas normativas e implicaciones para el sistema}
+\label{tab:brechas_normativas} \\
+\hline
+\textbf{N°} & \textbf{Norma} & \textbf{Situación observada} & \textbf{Implicación para el sistema} \\ \hline
+\endfirsthead
+\hline
+\textbf{N°} & \textbf{Norma} & \textbf{Situación observada} & \textbf{Implicación para el sistema} \\ \hline
+\endhead
+\hline
+\endfoot
+BN1 & AM 00115-2021; LOS art. 7 lit. f & Historia clínica oficial elaborada por transcripción diferida (PC1, PC2) & Registro único del Formulario 033 durante la atención \\ \hline
+BN2 & AM 0009-2017 art. 11 & Formulario 033 dibujado a mano & Impresión con todos los campos del formulario \\ \hline
+BN3 & AM 5216-A art. 3 & Tres soportes y dos migraciones manuales & Eliminación de la transcripción entre soportes \\ \hline
+BN4 & AM 5216-A arts. 14 y 27 & Secretaria registra el odontograma y transcribe la historia (PC3) & Roles diferenciados: datos clínicos solo editables por el odontólogo \\ \hline
+BN5 & AM 0009-2017 Trans. 2.ª; AM 5216-A arts. 8 y 15 & Excel sin credenciales ni trazabilidad & Credenciales únicas y bitácora de auditoría \\ \hline
+BN6 & AM 5216-A arts. 24 y 25 & Antecedentes recogidos en sala de espera (PC5) & Registro de antecedentes en el consultorio \\ \hline
+BN7 & AM 5216-A art. 22 & Citas coordinadas por familiares & Agente sin información clínica; gestión de terceros limitada a la cita \\ \hline
+BN8 & AM 5216-A art. 33 & Documentos sin rotulación & Leyenda ``CONFIDENCIAL'' en documentos impresos \\ \hline
+BN9 & LOPDP art. 31; derecho a la información & Coordinación por WhatsApp sin aviso de privacidad & Aviso de privacidad con aceptación explícita en el agente \\ \hline
+BN10 & LOPDP art. 10 lit. j & Mensajería comercial sin controles definidos & Comunicación cifrada y minimización de datos en el agente \\ \hline
+BN11 & AM 0009-2017 Disp. Gral. Única & --- & Contingencia con registro manual ante fallas \\ \hline
+\end{longtable}
+\endgroup
+
+En síntesis, la principal brecha normativa no es la ausencia de un sistema digital, sino que la información clínica se registra en un soporte provisional y se migra después, por personal no clínico y sin controles de acceso, a los registros oficiales. Esta brecha coincide con el principal factor de tiempo identificado en el análisis del flujo (PC1), de modo que una misma solución, el registro único durante la atención por el profesional, atiende tanto la eficiencia como el cumplimiento normativo. Las implicaciones de la Tabla~\ref{tab:brechas_normativas} se incorporan a los requerimientos del sistema al final del capítulo.
+
+\subsection{Necesidades de comunicación con el paciente}
+
+Para determinar qué funciones debe asumir el agente conversacional, las necesidades de comunicación se analizaron en tres pasos, siguiendo la distinción entre necesidades de los interesados y requerimientos del sistema propia de la ingeniería de requerimientos \cite{iso29148}. Primero, se identificaron las necesidades mediante la triangulación de la carga operativa reportada por el personal (Instrumentos 1 y 2) y la percepción de los pacientes (Instrumento 3). Segundo, se evaluó la viabilidad de automatizar cada necesidad a partir de la aceptación de los pacientes y de las restricciones normativas identificadas en la sección anterior. Tercero, las necesidades automatizables se tradujeron en intenciones del agente, que constituyen la base de su diseño.
+
+\subsubsection{Identificación de necesidades}
+
+La Tabla~\ref{tab:necesidades} presenta las necesidades identificadas. Cada una se sustenta en la coincidencia entre un problema operativo y su percepción por parte de los pacientes.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\begin{longtable}{|c|p{3.0cm}|p{4.8cm}|p{4.6cm}|}
+\caption{Necesidades de comunicación con el paciente}
+\label{tab:necesidades} \\
+\hline
+\textbf{N°} & \textbf{Necesidad} & \textbf{Evidencia del personal} & \textbf{Evidencia de los pacientes} \\ \hline
+\endfirsthead
+\hline
+\textbf{N°} & \textbf{Necesidad} & \textbf{Evidencia del personal} & \textbf{Evidencia de los pacientes} \\ \hline
+\endhead
+\hline
+\endfoot
+N1 & Información inmediata sobre horarios, precios y formas de pago & 26 a 50 mensajes diarios sobre cotizaciones y horarios (Tabla~\ref{tab:instrumento2}, P1); respuesta superior a 46 min en alta afluencia (P3); 20 a 30 mensajes sin leer a primera hora (Tabla~\ref{tab:ent1}, P2) & El 60,0\,\% percibe que la respuesta por WhatsApp tarda más de lo esperado (Tabla~\ref{tab:p2_frecuencia}) \\ \hline
+N2 & Agendamiento y reprogramación sobre una disponibilidad única & Citas confirmadas por canales paralelos (Tabla~\ref{tab:ent1}, P4; Tabla~\ref{tab:ent2}, P4); 2 conflictos de horario en el último mes (Tabla~\ref{tab:instrumento2}, P5) & El 50,5\,\% no encontró con facilidad un horario disponible (Tabla~\ref{tab:p1_frecuencia}) \\ \hline
+N3 & Recordatorio y confirmación de la cita & 31 a 60 min diarios para confirmar citas (Tabla~\ref{tab:instrumento2}, P2); 3 a 5 inasistencias semanales (P4) & El 46,6\,\% ha olvidado o confundido su cita (Tabla~\ref{tab:p3_frecuencia}); el 53,3\,\% considera que un recordatorio le habría evitado un problema (Tabla~\ref{tab:p4_frecuencia}) \\ \hline
+N4 & Coexistencia del agente con los canales presencial y de terceros & La secretaria agenda presencialmente al cierre de cada atención (Etapa 1) & El 43,8\,\% coordinó su última cita en recepción y el 14,3\,\% mediante un familiar (Tabla~\ref{tab:p8_frecuencia}); el 35,2\,\% no está dispuesto a agendar con un asistente (Tabla~\ref{tab:p5_frecuencia}) \\ \hline
+N5 & Atención humana para consultas fuera del alcance automatizado & Secretaria polifuncional que concentra todas las consultas (PC8) & Consultas clínicas o que involucran datos sensibles, restringidas por BN7 y BN10 \\ \hline
+\end{longtable}
+\endgroup
+
+Las necesidades N1 a N3 reflejan una misma situación desde ambos lados: la secretaria no logra atender a tiempo un volumen alto de mensajes repetitivos y de confirmaciones, y los pacientes perciben demoras, dificultad para agendar y olvidos. En cambio, N4 y N5 no describen funciones que el agente deba cubrir, sino límites de su alcance. N4 indica que la mayoría de las citas se coordina fuera de WhatsApp, por lo que el agente debe operar sobre la misma agenda que la recepción y no como un canal independiente. N5 indica que una parte de las consultas debe seguir a cargo del personal.
+
+\subsubsection{Viabilidad de automatización}
+
+Se consideró automatizable una necesidad cuando más de la mitad de los pacientes manifestó su disposición a resolverla mediante un asistente automatizado y no existía una restricción normativa que lo impidiera. La Tabla~\ref{tab:viabilidad} presenta el resultado.
 
 \begin{table}[H]
 \centering
-\caption{Necesidades de comunicación del paciente y funciones del agente}
-\label{tab:necesidades_comunicacion}
+\caption{Viabilidad de automatización de las necesidades de comunicación}
+\label{tab:viabilidad}
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\linewidth}{|p{3.5cm}|p{3.8cm}|X|}
+\begin{tabularx}{\linewidth}{|c|p{3.2cm}|p{3.2cm}|X|}
 \hline
-\textbf{Aspecto evaluado} & \textbf{Resultado (Pacientes)} & \textbf{Función del agente} \\ \hline
-Facilidad para agendar & 50{,}5\,\% indicó que no fue fácil & Mostrar disponibilidad de horarios y permitir agendar de forma autónoma. \\ \hline
-Respuesta lenta por WhatsApp & 60{,}0\,\% lo considera tardío & Responder de inmediato consultas frecuentes, a cualquier hora. \\ \hline
-Olvido de la cita & 46{,}6\,\% ha olvidado su cita & Enviar recordatorios con fecha, hora y profesional. \\ \hline
-Utilidad del recordatorio & 53{,}3\,\% lo considera muy útil & Pedir confirmación o reprogramación mediante el recordatorio. \\ \hline
-Uso del asistente & 58{,}1\,\% está dispuesto a usarlo & Integrar flujos de agendamiento, reprogramación y cancelación. \\ \hline
-Consulta de servicios & $>$ 60\,\% prefiere consultar datos & Brindar información predefinida sobre servicios, precios y horarios. \\ \hline
-Canal de la cita & Presencial (43{,}8\,\%), WhatsApp (29{,}5\,\%), Familiar (14{,}3\,\%) & Operar por WhatsApp admitiendo la gestión por parte de un tercero (familiar). \\ \hline
+\textbf{N°} & \textbf{Aceptación} & \textbf{Restricción normativa} & \textbf{Decisión} \\ \hline
+N1 & 62,8\,\% precios y pagos; 61,9\,\% horarios (Tablas~\ref{tab:p6_frecuencia} y \ref{tab:p7_frecuencia}) & Ninguna & Automatizar con información predefinida \\ \hline
+N2 & 58,1\,\% (Tabla~\ref{tab:p5_frecuencia}) & BN9: aviso de privacidad & Automatizar sobre la agenda centralizada, previa aceptación del aviso \\ \hline
+N3 & 53,3\,\% (Tabla~\ref{tab:p4_frecuencia}) & BN10: minimización de datos & Automatizar con datos de la cita, sin información clínica \\ \hline
+N4 & --- & BN7: terceros & Agenda única para todos los canales; gestión por familiares limitada a la cita \\ \hline
+N5 & --- & BN7, BN10; LOPDP: decisiones automatizadas & No automatizar; derivar al personal \\ \hline
 \end{tabularx}
 \end{table}
 
-Estos resultados evidencian que el agente automatizado es una alternativa viable y bien recibida por la mayoría de los pacientes. Al delegar consultas repetitivas de información y la gestión rutinaria de citas al asistente, se reduce la carga de mensajería al inicio de la jornada (que presentaba entre 20 y 30 mensajes sin leer) y se minimiza el riesgo de citas cruzadas.
+La aceptación es mayoritaria en todos los casos, aunque no unánime. El 35,2\,\% que no está dispuesto a agendar con un asistente confirma que el agente debe complementar, y no reemplazar, la atención presencial y la de la secretaria. Debe precisarse, además, que el agente puede hacer visible y accesible la disponibilidad, pero no incrementa la capacidad de atención; por ello, su efecto sobre la dificultad para encontrar horario (N2) dependerá también de los cupos disponibles.
+
+\subsubsection{Intenciones del agente conversacional}
+
+Las necesidades automatizables se traducen en las intenciones que el agente debe reconocer y atender (Tabla~\ref{tab:intenciones}). Adicionalmente, en la primera interacción de cada paciente, el agente debe presentar el aviso de privacidad y obtener su aceptación antes de tratar sus datos (BN9).
+
+\begin{table}[H]
+\centering
+\caption{Intenciones del agente derivadas de las necesidades de comunicación}
+\label{tab:intenciones}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{|c|p{3.4cm}|X|c|}
+\hline
+\textbf{ID} & \textbf{Intención} & \textbf{Descripción} & \textbf{Origen} \\ \hline
+I1 & Consultar horarios & Informar los horarios de atención del centro & N1 \\ \hline
+I2 & Consultar precios y pagos & Informar precios referenciales de servicios y formas de pago & N1 \\ \hline
+I3 & Agendar cita & Mostrar la disponibilidad de la agenda centralizada y registrar la cita, incluso cuando la solicita un familiar & N2, N4 \\ \hline
+I4 & Reprogramar o cancelar & Modificar o anular una cita existente sobre la misma agenda & N2 \\ \hline
+I5 & Confirmar asistencia & Enviar el recordatorio previo y registrar la confirmación, reprogramación o cancelación & N3 \\ \hline
+I6 & Derivar al personal & Transferir a la secretaria las consultas clínicas, de saldos o no reconocidas & N5 \\ \hline
+\end{tabularx}
+\end{table}
+
+En síntesis, el agente responde a tres necesidades con aceptación mayoritaria (información, agendamiento y recordatorios) y está acotado por otras dos: la agenda debe ser compartida con la recepción y las consultas clínicas o sensibles deben derivarse al personal. Estas intenciones constituyen el insumo para el diseño de la arquitectura del agente y se formalizan como requerimientos en la sección siguiente.
+\subsection{Requerimientos del sistema}
+
+Los requerimientos del sistema constituyen el resultado del análisis desarrollado en este capítulo. Se derivan de los puntos críticos del flujo (PC, Tabla~\ref{tab:puntos_criticos}), las brechas normativas (BN, Tabla~\ref{tab:brechas_normativas}) y las necesidades de comunicación (N, Tabla~\ref{tab:necesidades}), junto con las intenciones del agente (I, Tabla~\ref{tab:intenciones}). Se clasifican en funcionales, que describen lo que el sistema debe hacer, y no funcionales, que establecen las condiciones de calidad bajo las que debe operar \cite{iso29148}.
+
+Se asignó prioridad \textbf{alta} a los requerimientos que inciden en algún tramo del $TGA$, implementan la gestión automatizada de citas o responden a una brecha normativa, y prioridad \textbf{media} a los que mejoran el servicio sin cumplir ninguna de estas condiciones. La columna \emph{Origen} de la Tabla~\ref{tab:requerimientos} registra la trazabilidad de cada requerimiento.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\begin{longtable}{|c|p{8.2cm}|p{2.6cm}|c|}
+\caption{Requerimientos funcionales y no funcionales del sistema}
+\label{tab:requerimientos} \\
+\hline
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prioridad} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prioridad} \\ \hline
+\endhead
+\hline
+\endfoot
+
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Requerimientos funcionales — Gestión clínico-administrativa}} \\ \hline
+
+RF01 & Historia clínica digital que registre todos los campos del Formulario 033 en un único registro durante la atención, sin transcripción posterior. & PC1; BN1, BN3 & Alta \\ \hline
+
+RF02 & Impresión del Formulario 033 con todos sus campos y la leyenda ``CONFIDENCIAL'' en el margen superior. & BN2, BN8 & Alta \\ \hline
+
+RF03 & Odontograma digital: al seleccionar la pieza (11 a 48) y la cara, se despliegan las opciones diagnósticas, con rojo para lo pendiente y azul para lo realizado. Solo el rol de odontólogo puede editarlo. & PC2, PC3; BN4 & Alta \\ \hline
+
+RF04 & Catálogo CIE-10 con búsqueda predictiva por texto o por prefijo (K0, K1). & PC4 & Alta \\ \hline
+
+RF05 & Catálogo precargado de tratamientos y de fármacos con posología predefinida. & PC4 & Alta \\ \hline
+
+RF06 & Receta electrónica con autocompletado de fármaco y posología, asociada al código CIE-10, impresa con espacio para firma y con la leyenda ``CONFIDENCIAL''. & PC4; BN8 & Alta \\ \hline
+
+RF07 & Registro de antecedentes patológicos por el profesional en el consultorio. & PC5; BN6 & Alta \\ \hline
+
+RF08 & Consulta inmediata del historial, los antecedentes y el estado de los tratamientos de cualquier paciente, incluidos los que acuden sin cita. & PC6 & Alta \\ \hline
+
+RF09 & Agenda centralizada por profesional, diferenciada por colores, que impida cruces de citas y sea la única fuente de disponibilidad para la recepción, los profesionales y el agente. & PC7; N2, N4 & Alta \\ \hline
+
+RF10 & Registro de cobros con abono y saldo por sesión, a partir del tratamiento registrado por el profesional, y emisión de comprobante. & PC1 & Alta \\ \hline
+
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Requerimientos funcionales — Agente conversacional}} \\ \hline
+
+RF11 & Presentación del aviso de privacidad y registro de la aceptación explícita del paciente en su primera interacción, antes de tratar sus datos. & BN9 & Alta \\ \hline
+
+RF12 & Agendamiento, reprogramación y cancelación de citas por WhatsApp sobre la agenda centralizada, incluso cuando la gestiona un familiar, sin revelarle información clínica. & PC7, PC8; N2, N4; BN7; I3, I4 & Alta \\ \hline
+
+RF13 & Envío de recordatorios automáticos previos a la cita, con opción de confirmar, reprogramar o cancelar, y registro de la respuesta en la agenda. & N3; I5 & Alta \\ \hline
+
+RF14 & Respuesta automática sobre horarios de atención, precios referenciales y formas de pago. & PC8; N1; I1, I2 & Media \\ \hline
+
+RF15 & Derivación a la secretaria de las consultas clínicas, de saldos o no reconocidas, con notificación al personal. & N5; BN7; I6 & Alta \\ \hline
+
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Requerimientos no funcionales}} \\ \hline
+
+RNF01 & Control de acceso: credenciales únicas por usuario y roles diferenciados. El odontólogo registra datos clínicos; la secretaria accede a identificación, agenda y cobros. Las credenciales operan como mecanismo de autenticación mientras no se implemente la firma electrónica. & PC3; BN4, BN5 & Alta \\ \hline
+
+RNF02 & Auditoría: bitácora con usuario, fecha y hora de creación y modificación de cada registro clínico y cita. & BN5 & Alta \\ \hline
+
+RNF03 & Confidencialidad del agente: comunicación cifrada, tratamiento limitado a datos de identificación y de la cita, y ausencia de información clínica en sus respuestas. & BN7, BN10 & Alta \\ \hline
+
+RNF04 & Integridad y conservación: respaldos automáticos periódicos, exportación en formato abierto y ausencia de eliminación física de registros clínicos. & BN3 & Alta \\ \hline
+
+RNF05 & Disponibilidad y contingencia: sistema disponible durante el horario de atención y agente disponible fuera de él. Ante una falla, la atención continúa con registro manual. & N1; BN11 & Alta \\ \hline
+
+RNF06 & Usabilidad: registro de la atención durante la consulta, en pocos pasos y sin desatender al paciente. & PC1, PC4 & Alta \\ \hline
+
+\end{longtable}
+\endgroup
+
+Los requerimientos cubren la totalidad de los puntos críticos, las brechas normativas y las necesidades identificadas. Con respecto al $TGA$, RF01 y RF03 apuntan a eliminar la Etapa 2 ($T_4$ y $T_5$), al registrar la información una sola vez durante la atención. RF04 a RF06 inciden en el registro posconsulta ($T_1$), RF10 en el registro del pago ($T_2$), y RF09 y RF12 en el agendamiento ($T_3$). Estos efectos se verificarán en la evaluación del sistema mediante la comparación de los mismos tramos.
+
+Los requerimientos RF11 a RF15 y RNF03 definen el alcance funcional del agente conversacional y constituyen el insumo para el diseño de su arquitectura, desarrollado en el capítulo siguiente.
