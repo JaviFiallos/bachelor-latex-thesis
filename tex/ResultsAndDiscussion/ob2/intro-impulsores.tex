@@ -1,0 +1,89 @@
+El Objetivo 1 caracterizó el flujo clínico-administrativo, sus puntos críticos, las brechas normativas y las necesidades de comunicación con el paciente. Este objetivo traduce esos resultados en decisiones de diseño. Para ello, define la estructura lógica del agente, sus componentes funcionales, los mecanismos de integración con la plataforma de mensajería y el esquema de despliegue tecnológico. Como el agente opera sobre la agenda centralizada (N4 y RF07), también se diseña el sistema que lo contiene. Diagnosticar el flujo antes de implementar una solución permite anticipar barreras de adopción \cite{staras2021using}.
+
+\subsubsection{Impulsores arquitectónicos}
+
+Los impulsores arquitectónicos son los requerimientos, atributos de calidad y restricciones que condicionan la arquitectura de un sistema \cite{cervantes2016designing}. La Tabla~\ref{tab:ob2_impulsores} traza cada evidencia del análisis hasta el requerimiento que origina y la implicación que tiene para el diseño.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|p{0.27\linewidth}|p{0.11\linewidth}|p{0.16\linewidth}|p{0.34\linewidth}|}
+\caption{Trazabilidad de los impulsores arquitectónicos}
+\label{tab:ob2_impulsores} \\
+\hline
+\textbf{Evidencia} & \textbf{Origen} & \textbf{Requerimiento} & \textbf{Implicación arquitectónica} \\ \hline
+\endfirsthead
+\hline
+\textbf{Evidencia} & \textbf{Origen} & \textbf{Requerimiento} & \textbf{Implicación arquitectónica} \\ \hline
+\endhead
+\hline
+\endfoot
+26 a 50 mensajes diarios sobre cotizaciones y horarios (Tabla~\ref{tab:instrumento2}, P1); 62,9\,\% y 61,9\,\% aceptan consultar precios y horarios por un asistente (Tablas~\ref{tab:p6_frecuencia} y \ref{tab:p7_frecuencia}) & N1; PC8 & RF10 & Información predefinida desde la configuración y el catálogo \\ \hline
+Respuestas superiores a 46 min en horario de alta afluencia (Tabla~\ref{tab:instrumento2}, P3); 60,0\,\% percibe demora (Tabla~\ref{tab:p2_frecuencia}) & N1 & RNF05 & Respuesta inmediata del agente en todo horario, incluso fuera de la jornada de recepción \\ \hline
+2 conflictos de horario en el último mes (Tabla~\ref{tab:instrumento2}, P5); 50,5\,\% no encontró un horario con facilidad (Tabla~\ref{tab:p1_frecuencia}) & N2; PC7 & RF07, RF11 & Agenda única con validación anticruce compartida por recepción y agente \\ \hline
+58,1\,\% agendaría o reprogramaría una cita por un asistente (Tabla~\ref{tab:p5_frecuencia}) & N2 & RF11, RF12 & Operaciones de agendar y reprogramar expuestas por la agenda \\ \hline
+31 a 60 min diarios confirmando citas y entre 3 y 5 citas semanales no concretadas (Tabla~\ref{tab:instrumento2}, P2 y P4); 46,7\,\% olvidó o confundió su cita (Tabla~\ref{tab:p3_frecuencia}); 53,3\,\% indica que un recordatorio le habría evitado un problema (Tabla~\ref{tab:p4_frecuencia}) & N3 & RF14 & Tarea programada de recordatorios con respuesta para confirmar, cancelar o reprogramar \\ \hline
+43,8\,\% coordinó su última cita en recepción y 14,3\,\% por medio de un familiar (Tabla~\ref{tab:p8_frecuencia}); 35,2\,\% no está dispuesto a agendar mediante un asistente (Tabla~\ref{tab:p5_frecuencia}) & N4 & RF07 & Una sola agenda para todos los canales; identificación por teléfono que admite varios pacientes por número \\ \hline
+Consultas clínicas y de saldo que exceden los datos permitidos al agente (Tabla~\ref{tab:brechas_normativas}, BN7) & N5; BN7 & RF13 & Derivación a recepción; el agente complementa la atención y no la sustituye \\ \hline
+Tratamiento de datos de identificación y de contacto para citas (Tabla~\ref{tab:brechas_normativas}, BN6 y BN7) & BN6; BN7 & RF09, RNF03 & Aviso de privacidad previo; el agente no accede a módulos clínicos ni de cobros \\ \hline
+Triple registro y registro del odontograma por la secretaria (Tabla~\ref{tab:puntos_criticos}, PC1 a PC3) & PC1 a PC3; BN1 a BN3 & RF01, RF02, RNF01 & Registro clínico único en el consultorio; separación entre datos clínicos y de identificación por rol \\ \hline
+Historial en Excel sin registro de quién creó o modificó cada dato (Tabla~\ref{tab:brechas_normativas}, BN4) & BN4 & RNF02 & Registro del usuario, la fecha y la hora de cada creación y modificación \\ \hline
+Sistemas por suscripción que dejaron de funcionar tras 6 o 7 meses (Tabla~\ref{tab:ent1}, P7); preservación de la información entre soportes (BN2) & BN2 & RNF04 & Datos bajo control de la clínica, respaldos externos y exportación en formato abierto \\ \hline
+\end{longtable}
+\endgroup
+
+La Tabla~\ref{tab:ob2_atributos} define los atributos de calidad prioritarios, según la clasificación de ISO/IEC 25010 \cite{iso2011iec25010}. Cada uno se expresa como un escenario con una medida que se verificará en el Objetivo 3.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|p{0.19\linewidth}|p{0.22\linewidth}|p{0.49\linewidth}|}
+\caption{Atributos de calidad prioritarios}
+\label{tab:ob2_atributos} \\
+\hline
+\textbf{Atributo} & \textbf{Requerimiento} & \textbf{Escenario} \\ \hline
+\endfirsthead
+\hline
+\textbf{Atributo} & \textbf{Requerimiento} & \textbf{Escenario} \\ \hline
+\endhead
+\hline
+\endfoot
+Seguridad (confidencialidad, trazabilidad) & RNF01, RNF02, RNF03; RF09 & El 100\,\% de los intentos de editar datos clínicos con el rol de secretaria se rechaza; toda modificación de citas y registros clínicos queda asociada a un usuario, una fecha y una hora; el agente no devuelve información clínica \\ \hline
+Fiabilidad (disponibilidad, recuperabilidad) & RNF05, RNF04 & Un paciente escribe fuera de la jornada y recibe respuesta del agente en segundos, sin intervención de la recepción; ante la pérdida del servidor, el sistema se restaura desde el respaldo diario con una pérdida máxima de 24 horas de datos \\ \hline
+Mantenibilidad (modularidad) & RF07, RF11; restricción de un único desarrollador & Un cambio en las reglas de agendamiento se realiza en un solo módulo, sin modificar la conversación del agente \\ \hline
+Usabilidad & RNF06 & El profesional registra el tratamiento durante la consulta con búsqueda en catálogos; el registro posconsulta ($T_1$) es menor que los 3,40 min del pretest \\ \hline
+\end{longtable}
+\endgroup
+
+Por último, la Tabla~\ref{tab:ob2_restricciones} recoge las restricciones del proyecto. Limitan el alcance y el modo de despliegue, por lo que se tratan como impulsores de diseño.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|p{0.34\linewidth}|p{0.54\linewidth}|}
+\caption{Restricciones del proyecto}
+\label{tab:ob2_restricciones} \\
+\hline
+\textbf{Restricción} & \textbf{Implicación} \\ \hline
+\endfirsthead
+\hline
+\textbf{Restricción} & \textbf{Implicación} \\ \hline
+\endhead
+\hline
+\endfoot
+Un único desarrollador & Un solo frente de desarrollo a la vez; arquitectura que limite el esfuerzo de operación \\ \hline
+Periodo de julio a diciembre de 2026 y priorización MoSCoW del Objetivo 1 & Los requerimientos Debe constituyen el alcance esencial y se implementan primero; los Debería (RF13, RF14 y RNF05) son los primeros en postergarse \\ \hline
+Costo de operación bajo para la clínica (Tabla~\ref{tab:ent1}, P7) & Infraestructura mínima en un único servidor virtual, con software de código abierto y sin licencias \\ \hline
+Costo por mensaje de las plantillas de WhatsApp, necesarias para los recordatorios fuera de la ventana de 24 horas & Un único recordatorio por cita, el día anterior; la tarifa vigente para Ecuador se verifica al configurar la cuenta \\ \hline
+Despliegue en un servidor virtual (VPS) contratado a nombre de la clínica & Todo el sistema opera en un servidor bajo titularidad de la clínica; un impago interrumpe el servicio, por lo que se exige respaldo externo (RNF04) \\ \hline
+Cuenta de WhatsApp Business inicialmente del desarrollador y luego de la clínica & Las pruebas usan la cuenta del desarrollador; el paso a producción cambia solo la configuración del número \\ \hline
+\end{longtable}
+\endgroup
+
+Estos impulsores orientan la selección de la metodología de desarrollo y de la notación de modelado. Ambas decisiones se presentan en el apartado siguiente.
