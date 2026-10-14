@@ -112,6 +112,16 @@ es la variante de mayor aplicación en sistemas de información sanitarios de la
 microservicios ha sido documentada como patrón técnicamente sólido para chatbots
 de salud \cite{roca2020microservice}.
 
+\paragraph{Metodologías de desarrollo de software.}
+
+Las metodologías ágiles organizan el desarrollo en entregas incrementales con
+retroalimentación frecuente \cite{sommerville2016software}. Scrum estructura el
+trabajo en iteraciones de duración fija, con roles definidos para el equipo
+\cite{schwaber2020scrum}. \textit{Extreme Programming} (XP) establece prácticas
+técnicas, como la programación en pareja y el desarrollo guiado por pruebas
+\cite{beck2004extreme}. Kanban visualiza el flujo de trabajo en un tablero y
+limita el trabajo en curso \cite{anderson2010kanban}.
+
 \paragraph{Arquitectura de software: backend, frontend y API REST.}
 
 Una interfaz de programación de aplicaciones (API) es el mecanismo que permite
@@ -122,6 +132,15 @@ identificación uniforme de recursos \cite{ibm2024restapi}. Bajo este esquema, e
 \textit{backend} concentra la lógica de negocio y el acceso a datos, mientras que
 el \textit{frontend} presenta la información al usuario final mediante el consumo
 de esas interfaces.
+
+\paragraph{Modelado de la arquitectura: modelo C4 y UML.}
+
+El modelo C4 describe una arquitectura mediante cuatro niveles de detalle
+progresivo: contexto, contenedores, componentes y código \cite{brown2018c4}. UML
+complementa estas vistas con diagramas de secuencia, de estados y de despliegue,
+que representan el comportamiento y la distribución física del sistema
+\cite{omg2017uml}. Como alternativa, el modelo de vistas 4+1 organiza la arquitectura en
+cinco perspectivas concurrentes \cite{kruchten1995views}.
 
 \paragraph{Arquitectura de microservicios.}
 
@@ -134,6 +153,14 @@ concretamente al dominio dental en una arquitectura de cuatro microservicios
 Dentales--- con API Gateway y autenticación por token, que demostró en un
 prototipo en la nube capacidad de escalamiento automático ante incrementos de
 demanda \cite{arcila2022microservice}.
+
+\paragraph{Monolito modular.}
+
+El monolito modular es una aplicación desplegada como una única unidad, cuyo
+código se divide en módulos con interfaces públicas y sin dependencias internas
+cruzadas. Conserva la separación de responsabilidades de los microservicios sin
+el costo operativo de distribuir y coordinar servicios independientes
+\cite{richards2020fundamentals}.
 
 \paragraph{Contenedorización y despliegue: Docker.}
 
@@ -158,6 +185,14 @@ de solicitudes evitando que cada servicio implemente su propio esquema de
 credenciales \cite{auth0jwt2024introduction}; fue adoptado de forma explícita en
 el sistema de registros dental de \cite{arcila2022microservice} y en el módulo de
 reserva de citas de \cite{shaikh2026smartmedibook}.
+
+\paragraph{Diseño guiado por atributos (ADD).}
+
+El método \textit{Attribute-Driven Design} (ADD), propuesto por el
+\textit{Software Engineering Institute} (SEI), define la arquitectura a partir de
+sus impulsores arquitectónicos: los requerimientos funcionales prioritarios, los
+atributos de calidad y las restricciones del sistema. Estos impulsores guían las decisiones de diseño en
+cada iteración del método \cite{cervantes2016designing}.
 
 \paragraph{Evaluación de la calidad del software: ISO/IEC 25010.}
 
@@ -235,13 +270,13 @@ establece el marco normativo obligatorio para el manejo de información
 confidencial dentro del Sistema Nacional de Salud, disponiendo que la gestión
 documental de historias clínicas ---en formato físico o digital--- debe
 garantizar un sistema adecuado de archivo, custodia, confidencialidad y
-trazabilidad del uso de la información \cite{msp2016reglamento}.
+trazabilidad del uso de la información \cite{msp5216a}.
 
 \paragraph{Estandarización del registro clínico odontológico e indicadores de calidad.}
 
 Dentro del marco normativo dispuesto por el Ministerio de Salud Pública, la
 historia clínica única odontológica se registra en Ecuador mediante un formulario
-estandarizado del Sistema Nacional de Salud \cite{msp2016reglamento}. La
+estandarizado del Sistema Nacional de Salud \cite{msp5216a}. La
 completitud de este tipo de formularios se evalúa mediante indicadores de calidad
 de registro que combinan variables administrativas con indicadores clínicos
 propios de la especialidad, entre los que destaca el índice CPO-D (dientes
