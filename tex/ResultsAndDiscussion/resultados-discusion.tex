@@ -3,4 +3,13 @@
 % =========================================================
 \section{Resultados y Discusión}
 
+% Cuarto nivel (\paragraph) numerado y en bloque solo desde este capítulo;
+% en la fundamentación teórica \paragraph sigue siendo un encabezado en línea.
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}[block]
+  {\normalfont\fontsize{12}{14}\bfseries}
+  {\theparagraph.}{0.5em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 \input{tex/ResultsAndDiscussion/results-ob1}
+\input{tex/ResultsAndDiscussion/results-ob2}
