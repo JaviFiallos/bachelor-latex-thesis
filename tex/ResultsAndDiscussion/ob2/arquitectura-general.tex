@@ -1,0 +1,107 @@
+\subsubsection{Arquitectura general del sistema}
+
+La arquitectura se describe con el modelo C4 en dos niveles, de contexto y de contenedores, y con el estilo de monolito modular; el detalle de los componentes del agente conversacional se presenta en un apartado propio.
+
+\paragraph{Diagrama de contexto}
+
+El diagrama de contexto muestra el sistema como una caja central y los actores y sistemas externos que interactúan con él (Figura~\ref{fig:ob2_c4_contexto}). Los pacientes y sus familiares acceden solo a través de WhatsApp; el personal de la clínica, a través de la aplicación web.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/C4_Contexto.pdf}{\includegraphics[width=\linewidth]{img/C4_Contexto.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/C4\_Contexto.pdf}}}
+\caption{Diagrama de contexto del sistema (C4, nivel 1)}
+\label{fig:ob2_c4_contexto}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Actores y sistemas externos del diagrama de contexto}
+\label{tab:ob2_contexto}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Elemento} & \textbf{Tipo} & \textbf{Interacción} \\ \hline
+Paciente o familiar & Persona & Agenda, reprograma o consulta por WhatsApp; recibe recordatorios \\ \hline
+Secretaria & Persona & Gestiona la agenda, los pacientes y los cobros en la aplicación web \\ \hline
+Odontólogo & Persona & Registra la historia clínica, el odontograma y los tratamientos \\ \hline
+Director (administrador) & Persona & Administra los catálogos, los horarios y la configuración \\ \hline
+WhatsApp Cloud API (Meta) & Sistema externo & Transmite los mensajes del paciente mediante un webhook y entrega las respuestas y los recordatorios \\ \hline
+Google Calendar & Sistema externo & Recibe una copia de solo lectura de la agenda, con un calendario por profesional \\ \hline
+Google Drive de la clínica & Sistema externo & Almacena los respaldos cifrados de la base de datos \\ \hline
+\end{tabularx}
+\end{table}
+
+\paragraph{Diagrama de contenedores}
+
+Todos los contenedores se ejecutan en un único servidor virtual mediante Docker Compose (Figura~\ref{fig:ob2_c4_contenedores}). La API concentra la lógica del sistema, incluido el módulo del agente. El esquema de despliegue se detalla en un apartado posterior.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/C4_Contenedores.pdf}{\includegraphics[width=\linewidth]{img/C4_Contenedores.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/C4\_Contenedores.pdf}}}
+\caption{Diagrama de contenedores del sistema (C4, nivel 2)}
+\label{fig:ob2_c4_contenedores}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Contenedores del sistema}
+\label{tab:ob2_contenedores}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Contenedor} & \textbf{Tecnología} & \textbf{Responsabilidad} \\ \hline
+Proxy inverso & nginx con certificado de Let's Encrypt & Termina el cifrado en tránsito (TLS), sirve la aplicación web y expone al exterior solo \texttt{/api} y el webhook de WhatsApp \\ \hline
+Aplicación web & Angular 22.1, aplicación de una sola página & Interfaz de la secretaria, el odontólogo y el director en el navegador, sin instalación en los equipos \\ \hline
+API del sistema & Spring Boot 3.4 con Java 21 & Lógica de negocio por módulos, autenticación con JWT y motor conversacional del agente \\ \hline
+Base de datos & PostgreSQL 16 & Almacena los datos de la clínica en un esquema compartido e impide los cruces de citas \\ \hline
+Servicio de respaldo & \texttt{pg\_dump} programado en Docker & Genera un volcado diario cifrado y lo copia a Google Drive \\ \hline
+\end{tabularx}
+\end{table}
+
+\paragraph{Estilo arquitectónico: monolito modular}
+
+La API es un monolito modular: una aplicación desplegada como una única unidad, cuyo código se divide en doce módulos con interfaces públicas (Figura~\ref{fig:ob2_modulos}). La Tabla~\ref{tab:ob2_modulos} resume la responsabilidad de cada módulo, la interfaz que expone y sus dependencias.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Modulos.pdf}{\includegraphics[width=\linewidth]{img/Modulos.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/Modulos.pdf}}}
+\caption{Módulos de la API y sus dependencias por interfaz pública}
+\label{fig:ob2_modulos}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Módulos del monolito modular}
+\label{tab:ob2_modulos}
+\fontsize{8}{10}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{1.7cm}|}
+\hline
+\textbf{Módulo} & \textbf{Responsabilidad} & \textbf{Interfaz pública} & \textbf{Depende de} & \textbf{Requerimientos} \\ \hline
+\texttt{identity} & Usuarios, roles y autenticación con JWT & Ninguna & Ninguno & RNF01 \\ \hline
+\texttt{patients} & Datos de identificación, consentimiento e historial inmediato & \texttt{PatientDirectory} & Ninguno & RF06, RF09 \\ \hline
+\texttt{professionals} & Profesionales, especialidades y horarios & \texttt{ProfessionalDirectory} & Ninguno & RF07 \\ \hline
+\texttt{clinicalrecords} & Historia clínica y antecedentes & \texttt{ClinicalRecordDirectory} & \texttt{patients} & RF01 \\ \hline
+\texttt{appointments} & Agenda única, validación anticruce y reprogramación & \texttt{AppointmentScheduler} & \texttt{patients}, \texttt{professionals} & RF07, RF11, RF12 \\ \hline
+\texttt{clinical} & Atenciones y diagnósticos con CIE-10 & \texttt{ClinicalDirectory} & \texttt{appointments} & RF01, RF03 \\ \hline
+\texttt{odontogram} & Odontograma por pieza y cara & Ninguna & \texttt{clinical}, \texttt{patients} & RF02 \\ \hline
+\texttt{treatments} & Catálogo de tratamientos y precios & \texttt{TreatmentDirectory} & Ninguno & RF04 \\ \hline
+\texttt{prescriptions} & Recetas y su impresión & Ninguna & \texttt{clinical}, \texttt{treatments} & RF04, RF05 \\ \hline
+\texttt{billing} & Abonos, saldo calculado y comprobante interno & \texttt{BillingDirectory} & \texttt{clinical}, \texttt{treatments} & RF08 \\ \hline
+\texttt{calendar} & Copia de solo lectura en Google Calendar & Ninguna & \texttt{appointments} (eventos) & RF07 \\ \hline
+\texttt{whatsapp} & Motor conversacional del agente, webhook y recordatorios & Ninguna (webhook de entrada) & \texttt{patients}, \texttt{professionals}, \texttt{appointments}, \texttt{treatments} (solo precios) & RF09--RF14; RNF03; RNF05 \\ \hline
+\end{tabularx}
+\end{table}
+
+Las dependencias de \texttt{clinicalrecords}, \texttt{appointments}, \texttt{clinical} y \texttt{odontogram} corresponden al código implementado. Las de \texttt{treatments}, \texttt{prescriptions}, \texttt{billing}, \texttt{calendar} y \texttt{whatsapp} son de diseño. La auditoría (RNF02) es transversal y no constituye un módulo.
+
+Los módulos no se importan entre sí, salvo a través de su interfaz pública. Los cambios relevantes, como la creación o la reprogramación de una cita, se comunican mediante eventos de dominio, que alimentan la sincronización con Google Calendar y la programación de recordatorios. El módulo del agente no depende de los módulos clínicos ni de cobros. Así, un cambio en las reglas de agendamiento no altera la conversación, como establece el atributo de mantenibilidad de la Tabla~\ref{tab:ob2_atributos}.
+
+El monolito modular conserva la separación de responsabilidades de los microservicios sin su costo operativo \cite{richards2020fundamentals}. Los antecedentes que distribuyen cada capacidad en un servicio independiente \cite{roca2020microservice,arcila2022microservice} muestran la modularidad como principio, y el sistema la conserva. Con un único desarrollador y un único servidor, la distribución añadiría despliegues, comunicación de red y monitoreo por servicio sin un beneficio proporcional. El sistema conserva también la extensión sin modificar el núcleo: un módulo nuevo, como el del agente, se incorpora mediante su interfaz pública. Como en el prototipo de \cite{arcila2022microservice}, la autenticación se realiza con JWT.
+
+Existe un matiz: los módulos comparten el esquema de la base de datos. Un cambio de tabla puede, por tanto, afectar a más de un módulo. Esta limitación se discute en el apartado de discusión.
