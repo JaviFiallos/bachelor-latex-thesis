@@ -1,0 +1,43 @@
+@startuml secuencia_recordatorio
+title Recordatorio del día anterior y respuesta del paciente
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+autonumber
+
+participant "Tarea programada\n(cada 5 min)" as Tarea
+participant "Motor conversacional" as Motor
+participant "WhatsApp Cloud API\n(Meta)" as Meta
+actor "Paciente" as Paciente
+participant "AppointmentScheduler" as Agenda
+database "appointment_reminders" as Recordatorios
+
+Tarea -> Recordatorios : busca pendientes con envío vencido
+Recordatorios --> Tarea : recordatorios pendientes
+Tarea -> Motor : envía recordatorio
+Motor -> Meta : plantilla utility con botones\nConfirmar, Cancelar y Reprogramar
+Meta -> Paciente : recordatorio
+Motor -> Recordatorios : estado ENVIADO e identificador del mensaje
+Paciente -> Meta : pulsa un botón
+Meta -> Motor : evento firmado con la respuesta
+Motor -> Recordatorios : registra la respuesta
+
+alt Confirmar
+  Motor -> Agenda : confirma la cita
+  Motor -> Meta : confirmación
+  Meta -> Paciente : cita confirmada
+else Cancelar
+  Motor -> Agenda : cancela la cita (libera el horario)
+  Motor -> Meta : cancelación
+  Meta -> Paciente : cita cancelada
+else Reprogramar
+  Motor -> Meta : abre el flujo de reprogramación
+  Meta -> Paciente : opciones de horario
+  note right of Motor
+    Cancelar o reprogramar solo hasta 2 h antes.
+    Después, derivación a recepción.
+    Si el paciente abandona, la cita no cambia.
+  end note
+end
+@enduml
