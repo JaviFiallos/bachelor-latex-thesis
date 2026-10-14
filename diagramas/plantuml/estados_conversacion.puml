@@ -1,0 +1,62 @@
+@startuml estados_conversacion
+title Estados de la conversación con el agente
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam state {
+  RoundCorner 8
+}
+hide empty description
+
+[*] --> Aviso : primer mensaje
+[*] --> Recordatorio : botón del recordatorio
+
+state "Aviso de privacidad" as Aviso
+state "Identificación" as Identificacion
+state "Menú" as Menu
+state "Información" as Informacion
+state "Agendar" as Agendar
+state "Reprogramar" as Reprogramar
+state "Confirmación" as Confirmacion
+state "Derivación a recepción" as Derivar
+state "Respuesta al recordatorio" as Recordatorio
+state "Fin" as Fin
+
+Aviso --> Identificacion : acepta
+Aviso --> Fin : no acepta
+
+Identificacion --> Identificacion : varios pacientes:\npide la cédula
+Identificacion --> Menu : paciente identificado
+Identificacion --> Derivar : sin paciente o no confirma
+
+Menu --> Informacion : horarios o precios
+Menu --> Agendar : agendar
+Menu --> Reprogramar : reprogramar
+Menu --> Derivar : hablar con recepción
+
+Informacion --> Menu : otra consulta
+
+Agendar --> Confirmacion : horario elegido
+Agendar --> Derivar : límite de citas alcanzado
+
+Reprogramar --> Confirmacion : horario elegido
+Reprogramar --> Derivar : menos de 2 h
+
+Confirmacion --> Agendar : conflicto en agendamiento
+Confirmacion --> Reprogramar : conflicto en reprogramación
+Confirmacion --> Fin : cita registrada
+
+Recordatorio --> Fin : confirmar o cancelar
+Recordatorio --> Reprogramar : reprogramar
+
+Derivar --> Fin : horario y enlace de recepción
+Fin --> [*]
+
+note as NotaTransversal
+  Desde cualquier estado:
+  palabra clínica, consulta de saldo
+  o texto no reconocido: derivación
+  30 min sin actividad: caducidad
+end note
+@enduml

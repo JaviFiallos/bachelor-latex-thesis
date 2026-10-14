@@ -1,0 +1,43 @@
+@startuml secuencia_agendar
+title Agendamiento de una cita por WhatsApp
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+autonumber
+
+actor "Paciente" as Paciente
+participant "WhatsApp Cloud API\n(Meta)" as Meta
+participant "Webhook" as Webhook
+participant "Motor conversacional" as Motor
+participant "PatientDirectory" as Pacientes
+participant "AppointmentScheduler" as Agenda
+database "Base de datos" as BD
+
+Paciente -> Meta : elige "Agendar" del menú
+Meta -> Webhook : evento firmado
+Webhook -> Webhook : valida la firma
+Webhook -> Motor : mensaje entrante
+Motor -> Pacientes : pacientes activos del teléfono
+Pacientes --> Motor : paciente identificado
+Motor -> Agenda : consulta citas activas (límites)
+Agenda --> Motor : cupos disponibles
+Motor -> Meta : lista de especialidad, profesional, día y hora
+Meta -> Paciente : opciones
+Paciente -> Meta : elige profesional, día y hora
+Meta -> Webhook : evento firmado
+Webhook -> Motor : selección
+Motor -> Agenda : agendar cita (origen agente)
+Agenda -> BD : registrar cita pendiente
+alt horario ocupado (restricción de exclusión)
+  BD --> Agenda : conflicto
+  Agenda --> Motor : horario no disponible
+  Motor -> Meta : informa y ofrece otros horarios
+  Meta -> Paciente : nuevas opciones
+else horario libre
+  BD --> Agenda : cita guardada
+  Agenda --> Motor : cita creada
+  Motor -> Meta : confirma fecha, hora y profesional
+  Meta -> Paciente : confirmación
+end
+@enduml
