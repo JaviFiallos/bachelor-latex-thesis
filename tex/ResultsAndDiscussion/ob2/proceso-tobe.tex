@@ -1,0 +1,94 @@
+\subsubsection{Proceso propuesto}
+
+El proceso propuesto se modela en BPMN 2.0 como contraparte de los diagramas del Objetivo 1 (Figuras~\ref{fig:bpmn1}, \ref{fig:bpmn2} y \ref{fig:bpmn_comunicacion}). Se presentan dos diagramas: el ciclo completo de atención con el sistema y la comunicación con el paciente mediante el agente conversacional.
+
+\paragraph{Ciclo completo de atención con el sistema}
+
+El sistema reemplaza las Etapas 1 y 2 por un único flujo. La información se registra una sola vez durante la atención, a cargo del odontólogo, y la secretaria se limita al registro de llegada, a la filiación de pacientes nuevos, al cobro y al agendamiento. La Figura~\ref{fig:ob2_tobe_atencion} modela el flujo con los carriles Paciente, Secretaria y Odontólogo/a, con las siguientes actividades:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Llegada y filiación.} La secretaria registra la llegada del paciente en la agenda centralizada. Si no tiene cita, se crea una en un horario libre. Para un paciente nuevo, registra sus datos de filiación. Los antecedentes ya no se toman en recepción.
+
+    \item \textbf{Apertura y registro clínico.} El odontólogo abre la atención, revisa el historial del paciente y registra la anamnesis, los antecedentes y el odontograma por pieza y cara.
+
+    \item \textbf{Tratamiento, diagnóstico y receta.} El odontólogo registra el diagnóstico CIE-10 y los procedimientos desde los catálogos. Si se requiere medicación, genera la receta desde el catálogo y la imprime para su firma.
+
+    \item \textbf{Cierre.} El odontólogo cierra la atención. Los tratamientos y valores quedan disponibles para el cobro.
+
+    \item \textbf{Cobro.} La secretaria cobra y registra el abono. El saldo se calcula automáticamente.
+
+    \item \textbf{Agendamiento.} Si se requiere, la secretaria asigna la siguiente cita en la agenda centralizada.
+\end{enumerate}
+
+\begin{sidewaysfigure}
+    \centering
+    \IfFileExists{img/ToBe_Atencion.pdf}{\includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/ToBe_Atencion.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: exportar diagramas/bpmn/ToBe\_Atencion.bpmn a img/ToBe\_Atencion.pdf}}}
+    \caption{Ciclo completo de atención con el sistema propuesto}
+    \label{fig:ob2_tobe_atencion}
+\end{sidewaysfigure}
+
+En el diseño se elimina la Etapa 2: la historia clínica digital, con los campos del Formulario 033, queda registrada al cerrar la atención, por lo que la transcripción de la ficha rápida y la preparación de fichas del día siguiente dejan de ser necesarias. La secretaria no edita datos clínicos (BN3) y solo ve los tratamientos y sus valores para el cobro (RNF01).
+
+\paragraph{Comunicación con el paciente mediante el agente conversacional}
+
+Las Figuras~\ref{fig:ob2_tobe_comunicacion_p1} y \ref{fig:ob2_tobe_comunicacion_p2} modelan la comunicación con el paciente mediante el agente conversacional, con los carriles Paciente o familiar, Agente conversacional, Secretaria y Odontólogo/a. Las tareas del agente son tareas de servicio, es decir, automáticas. Por su extensión, el modelo se divide en dos partes: la primera comprende el acceso, la consulta general y la solicitud de cita; la segunda, la confirmación de citas y la derivación, que se inicia con las consultas derivadas desde la primera parte. El flujo se agrupa en cuatro categorías:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Acceso y consulta general.} El agente presenta el aviso de privacidad en la primera interacción y registra la aceptación explícita (RF09). Responde horarios, precios y formas de pago sin intervención del personal (N1).
+
+    \item \textbf{Solicitud de cita.} El agente identifica al paciente por su teléfono y, si está registrado, ofrece los horarios disponibles y registra la cita en la agenda centralizada (RF11, RF12, N2). Las citas solicitadas por otro canal son registradas por la secretaria o por el odontólogo en la misma agenda (N4).
+
+    \item \textbf{Confirmación de citas.} El día previo a la cita, el agente envía un recordatorio con las opciones Confirmar, Cancelar o Reprogramar (RF14, N3). Una cita sin respuesta queda sin confirmar y visible para recepción.
+
+    \item \textbf{Derivación.} Las consultas clínicas, de saldo o no reconocidas se derivan al personal (RF13, N5).
+\end{itemize}
+
+\begin{sidewaysfigure}
+    \centering
+    \IfFileExists{img/ToBe_Comunicacion_P1.pdf}{\includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/ToBe_Comunicacion_P1.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: exportar diagramas/bpmn/ToBe\_Comunicacion\_P1.bpmn a img/ToBe\_Comunicacion\_P1.pdf}}}
+    \caption{Comunicación con el paciente mediante el agente conversacional, parte 1: acceso, consulta general y solicitud de cita}
+    \label{fig:ob2_tobe_comunicacion_p1}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}
+    \centering
+    \IfFileExists{img/ToBe_Comunicacion_P2.pdf}{\includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/ToBe_Comunicacion_P2.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: exportar diagramas/bpmn/ToBe\_Comunicacion\_P2.bpmn a img/ToBe\_Comunicacion\_P2.pdf}}}
+    \caption{Comunicación con el paciente mediante el agente conversacional, parte 2: confirmación de citas y derivación}
+    \label{fig:ob2_tobe_comunicacion_p2}
+\end{sidewaysfigure}
+
+\paragraph{Comparación del proceso actual y propuesto}
+
+La Tabla~\ref{tab:ob2_asis_tobe} contrasta cada tramo del $TGA$ y cada necesidad de comunicación con su tratamiento en el proceso propuesto.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|p{0.19\linewidth}|p{0.24\linewidth}|p{0.33\linewidth}|p{0.14\linewidth}|}
+\caption{Comparación del proceso actual y propuesto por tramo}
+\label{tab:ob2_asis_tobe} \\
+\hline
+\textbf{Tramo o necesidad} & \textbf{Actual} & \textbf{Propuesto} & \textbf{Punto crítico atendido} \\ \hline
+\endfirsthead
+\hline
+\textbf{Tramo o necesidad} & \textbf{Actual} & \textbf{Propuesto} & \textbf{Punto crítico atendido} \\ \hline
+\endhead
+\hline
+\endfoot
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Ciclo completo de atención}} \\ \hline
+$T_1$ Registro posconsulta (3,40 min) & Receta manuscrita y registro del tratamiento en la tabla de control, tras el aviso verbal & Receta generada desde catálogos por el odontólogo durante la atención; el tratamiento queda registrado al cerrarla (RF03 a RF05) & PC1, PC4 \\ \hline
+$T_2$ Registro del pago (1,60 min) & Cobro y registro manual de abono y saldo & Cobro sobre tratamientos y valores ya registrados; saldo calculado (RF08) & PC1 \\ \hline
+$T_3$ Agendamiento (1,30 min) & Asignación manual en Google Calendar & Asignación en la agenda centralizada, única fuente de disponibilidad; Google Calendar se mantiene como copia de solo lectura (RF07, RF11) & PC7 \\ \hline
+$T_4$ Transcripción al Formulario 033 (3,94 min) & Interpretación del odontograma manuscrito y transcripción & Eliminado: la historia clínica se registra durante la atención (RF01, RF02) & PC1, PC2, PC3 \\ \hline
+$T_5$ Digitalización (3,38 min) & Transcripción de la misma información al historial en Excel & Eliminado: no existe una segunda transcripción & PC1, PC2 \\ \hline
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Comunicación con el paciente}} \\ \hline
+Información (N1) & Respuesta manual de la secretaria por WhatsApp, con demora percibida & Respuesta automática sobre horarios, precios y formas de pago (RF10) & PC8 \\ \hline
+Solicitud de cita (N2, N4) & Agendamiento por WhatsApp, presencial, por familiar o por el WhatsApp del profesional, sin una agenda única & Agendamiento por el agente o por recepción, siempre sobre la agenda centralizada (RF07, RF11, RF12) & PC7, PC8 \\ \hline
+Confirmación (N3) & Confirmación manual con cada paciente, de 31 a 60 min diarios & Recordatorio automático el día previo, con Confirmar, Cancelar o Reprogramar (RF14) & PC8 \\ \hline
+Derivación (N5) & Consultas clínicas y de saldo atendidas por la secretaria entre sus demás tareas & Consultas clínicas, de saldo o no reconocidas derivadas al personal (RF13) & PC8 \\ \hline
+\end{longtable}
+\endgroup
+
+Los efectos del proceso propuesto sobre el $TGA$ son hipótesis de diseño. El Objetivo 3 los verificará midiendo los mismos tramos, de $T_1$ a $T_5$.
