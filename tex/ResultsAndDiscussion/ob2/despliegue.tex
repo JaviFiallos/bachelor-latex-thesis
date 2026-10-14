@@ -1,0 +1,132 @@
+\subsubsection{Esquema de despliegue tecnológico}
+
+El sistema y el agente conversacional comparten una única infraestructura. El agente agrega solo el webhook de WhatsApp, un número de WhatsApp propio y la plataforma de Meta.
+
+\paragraph{Diagrama de despliegue}
+
+La Figura~\ref{fig:ob2_despliegue} muestra los nodos del despliegue y los caminos de comunicación entre ellos. Los servicios se empaquetan como contenedores \cite{docker2024containers}. La Tabla~\ref{tab:ob2_nodos} describe el contenido y la responsabilidad de cada nodo.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Despliegue.pdf}{\includegraphics[width=\linewidth]{img/Despliegue.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar según diagramas/drawio/ESPECIFICACION-despliegue.md y exportar a img/Despliegue.pdf}}}
+\caption{Diagrama de despliegue del sistema y del agente (UML)}
+\label{fig:ob2_despliegue}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Nodos del diagrama de despliegue}
+\label{tab:ob2_nodos}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{4.4cm}|}
+\hline
+\textbf{Nodo} & \textbf{Contenido} & \textbf{Responsabilidad} \\ \hline
+Equipos de la clínica & Navegador web en los equipos de recepción y consultorios, en la red local o en internet & Acceden a la aplicación web por HTTPS; no requieren instalación \\ \hline
+Servidor virtual (VPS) & Docker Compose con cuatro contenedores: proxy inverso nginx (sirve la aplicación web), API Spring Boot (incluye el módulo del agente), PostgreSQL 16 y servicio de respaldo (Tabla~\ref{tab:ob2_contenedores}) & Ejecuta todo el sistema en un único servidor \\ \hline
+Meta (WhatsApp Cloud API) & Número de WhatsApp de la clínica y plantillas de mensajes aprobadas & Transmite los mensajes al webhook por HTTPS y entrega respuestas y recordatorios; procesa los mensajes como encargado del tratamiento \\ \hline
+Google (Calendar) & Calendario de solo lectura por profesional & Recibe la copia de la agenda \\ \hline
+Almacenamiento externo (Google Drive de la clínica) & Respaldos cifrados de la base de datos & Conserva una copia fuera del servidor, bajo la cuenta de la clínica \\ \hline
+\end{tabularx}
+\end{table}
+
+\textit{Nota:} el agente agrega tres elementos a la infraestructura compartida: el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp exclusivo y las plantillas de mensajes aprobadas por Meta. Estas últimas se usan en los recordatorios fuera de la ventana de 24 horas.
+
+\paragraph{Entornos}
+
+El despliegue se organiza en tres entornos (Tabla~\ref{tab:ob2_entornos}). Las pruebas usan la cuenta de WhatsApp del desarrollador; la producción, la cuenta de la clínica.
+
+\begin{table}[H]
+\centering
+\caption{Entornos de despliegue}
+\label{tab:ob2_entornos}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.4cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Entorno} & \textbf{WhatsApp} & \textbf{Infraestructura} & \textbf{Datos} \\ \hline
+Desarrollo & Número de prueba de Meta, con un máximo de cinco destinatarios registrados & Equipo local con Docker Compose & Ficticios \\ \hline
+Pruebas & Número real en la cuenta del desarrollador & VPS & De prueba \\ \hline
+Producción & Cuenta y número de la clínica & VPS contratado a nombre de la clínica & Reales de la clínica \\ \hline
+\end{tabularx}
+\end{table}
+
+El paso de pruebas a producción cambia solo la configuración. La verificación de la empresa ante Meta eleva los límites de envío de mensajes y no modifica el diseño.
+
+\paragraph{Respaldo y continuidad}
+
+La Tabla~\ref{tab:ob2_respaldo} define la política de respaldo. Esta política atiende la persistencia de los datos (RNF04) y la continuidad de la atención (RNF05).
+
+\begin{table}[H]
+\centering
+\caption{Política de respaldo y continuidad}
+\label{tab:ob2_respaldo}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
+\hline
+\textbf{Elemento} & \textbf{Política} & \textbf{Requerimiento} \\ \hline
+Volcado de la base de datos & Diario y cifrado; se copia fuera del servidor a Google Drive de la clínica & RNF04 \\ \hline
+Retención & Valor configurable & RNF04 \\ \hline
+Exportación & Completa, en formato abierto (CSV y SQL); la genera el administrador & RNF04 \\ \hline
+Restauración & Procedimiento documentado y probado antes de la puesta en producción; pérdida máxima de 24 horas de datos & RNF04 \\ \hline
+Eliminación & Sin eliminación física de registros clínicos; anulación lógica & RNF04 \\ \hline
+Contingencia & Ficha rápida en papel durante la caída del sistema; carga de los datos al restablecerse & RNF05 \\ \hline
+\end{tabularx}
+\end{table}
+
+\paragraph{Riesgos y mitigaciones}
+
+La Tabla~\ref{tab:ob2_riesgos} identifica los riesgos del despliegue en un servidor virtual, sus efectos y sus mitigaciones.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|p{0.27\linewidth}|p{0.31\linewidth}|p{0.30\linewidth}|}
+\caption{Riesgos del despliegue y mitigaciones}
+\label{tab:ob2_riesgos} \\
+\hline
+\textbf{Riesgo} & \textbf{Efecto} & \textbf{Mitigación} \\ \hline
+\endfirsthead
+\hline
+\textbf{Riesgo} & \textbf{Efecto} & \textbf{Mitigación} \\ \hline
+\endhead
+\hline
+\endfoot
+Impago o cierre de la cuenta del VPS & Interrupción total del sistema y del agente & Cuenta a nombre de la clínica; respaldo externo y exportación en formato abierto, que permiten migrar a otro servidor \\ \hline
+Caída de internet en la clínica & El personal no accede al sistema mientras dure la caída; el agente sigue atendiendo a los pacientes & Ficha rápida en papel y carga posterior de los datos al restablecer la conexión \\ \hline
+Pérdida del servidor & Pérdida de los datos posteriores al último respaldo (hasta 24 horas) y suspensión durante la restauración & Restauración desde el respaldo diario, con procedimiento probado; copia fuera del servidor \\ \hline
+Datos de salud alojados por un tercero & Tratamiento de datos de salud fuera del control directo de la clínica & Contrato de encargado del tratamiento con el proveedor del VPS; verificar la ubicación del servidor y la transferencia internacional según la LOPDP \cite{lopdp2021} \\ \hline
+Bloqueo o suspensión de la cuenta de WhatsApp & El agente deja de responder y los recordatorios no se envían & Uso del canal oficial, plantillas aprobadas por Meta y derivación a recepción \\ \hline
+Agotamiento de recursos del servidor & Lentitud o caída de los contenedores & Límites de memoria por contenedor; consumo estimado entre 0,6 y 1 GB de RAM en total, que se mide en las pruebas \\ \hline
+\end{longtable}
+\endgroup
+
+\textbf{Cambio frente al Objetivo 1.} El despliegue en un servidor virtual modifica una condición del Objetivo 1. Con una instalación local, el sistema funciona sin internet para el personal de la clínica. En el VPS, en cambio, el personal depende de la conexión de la clínica. La ficha rápida en papel y la carga posterior compensan esa dependencia. El agente no depende de la red de la clínica, por lo que sigue atendiendo a los pacientes.
+
+\paragraph{Alternativa de instalación local}
+
+Si la clínica no contrata un servidor virtual, el sistema se instala en el equipo de recepción. Ese equipo cumple el rol del VPS, y el mismo archivo de Docker Compose sirve a ambas modalidades. La Tabla~\ref{tab:ob2_local} resume las diferencias.
+
+\begin{table}[H]
+\centering
+\caption{Diferencias entre el servidor virtual y la instalación local}
+\label{tab:ob2_local}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Elemento} & \textbf{Servidor virtual (VPS)} & \textbf{Instalación local} \\ \hline
+Servidor & VPS contratado a nombre de la clínica & Equipo de recepción, encendido de forma permanente \\ \hline
+Webhook & Proxy inverso nginx con Let's Encrypt & Túnel de Cloudflare que expone solo el webhook \\ \hline
+Respaldos & Volcado diario en Google Drive de la clínica & Volcado diario en un disco externo, separado del equipo \\ \hline
+Disponibilidad & Permanente, sujeta a la conexión de la clínica & Limitada al encendido del equipo; el agente no responde con el equipo apagado \\ \hline
+Uso sin internet & No & Sí, para la recepción y los consultorios en la red local \\ \hline
+\end{tabularx}
+\end{table}
