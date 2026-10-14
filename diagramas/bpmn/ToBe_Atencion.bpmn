@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_ToBe_Atencion" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:dataStore id="DataStore_Agenda" name="Agenda centralizada" />
+  <bpmn:dataStore id="DataStore_Pacientes" name="Registro de pacientes" />
+  <bpmn:dataStore id="DataStore_HC" name="Historia clínica digital" />
+  <bpmn:dataStore id="DataStore_Cobros" name="Registro de cobros" />
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_1" name="Ciclo completo de atención con el sistema" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Paciente" name="Paciente">
+        <bpmn:flowNodeRef>Start_Llega</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Secretaria" name="Secretaria">
+        <bpmn:flowNodeRef>Task_CheckIn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Nuevo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Filiacion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Conv1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Cobrar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Cita</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Agendar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Conv3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Atencion</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Odonto" name="Odontólogo/a">
+        <bpmn:flowNodeRef>Task_Abrir</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Registrar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Tratar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Receta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Receta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Conv2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Cerrar</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Llega" name="Paciente llega al consultorio" />
+    <bpmn:userTask id="Task_CheckIn" name="Buscar al paciente y registrar su llegada en la agenda">
+      <bpmn:dataOutputAssociation id="DOA_CheckIn"><bpmn:targetRef>DSRef_Agenda1</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Nuevo" name="¿Paciente nuevo?" />
+    <bpmn:userTask id="Task_Filiacion" name="Registrar datos de filiación">
+      <bpmn:dataOutputAssociation id="DOA_Filiacion"><bpmn:targetRef>DSRef_Pacientes</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Conv1" />
+    <bpmn:userTask id="Task_Abrir" name="Abrir la atención y revisar el historial del paciente">
+      <bpmn:property id="Property_Abrir" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DIA_Abrir"><bpmn:sourceRef>DSRef_HC1</bpmn:sourceRef><bpmn:targetRef>Property_Abrir</bpmn:targetRef></bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Registrar" name="Registrar anamnesis, antecedentes y odontograma">
+      <bpmn:dataOutputAssociation id="DOA_Registrar"><bpmn:targetRef>DSRef_HC1</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Tratar" name="Ejecutar tratamiento y registrar diagnóstico CIE-10 y procedimientos">
+      <bpmn:dataOutputAssociation id="DOA_Tratar"><bpmn:targetRef>DSRef_HC2</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Receta" name="¿Requiere receta?" />
+    <bpmn:userTask id="Task_Receta" name="Generar receta desde el catálogo e imprimirla">
+      <bpmn:dataOutputAssociation id="DOA_Receta"><bpmn:targetRef>DORef_Receta</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Conv2" />
+    <bpmn:userTask id="Task_Cerrar" name="Cerrar la atención">
+      <bpmn:dataOutputAssociation id="DOA_Cerrar"><bpmn:targetRef>DSRef_HC3</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Cobrar" name="Cobrar y registrar el abono">
+      <bpmn:dataOutputAssociation id="DOA_Cobrar"><bpmn:targetRef>DSRef_Cobros</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Cita" name="¿Requiere próxima cita?" />
+    <bpmn:userTask id="Task_Agendar" name="Agendar la siguiente cita en la agenda centralizada">
+      <bpmn:dataOutputAssociation id="DOA_Agendar"><bpmn:targetRef>DSRef_Agenda2</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Conv3" />
+    <bpmn:endEvent id="End_Atencion" name="Atención cerrada y registrada" />
+
+    <bpmn:dataStoreReference id="DSRef_Agenda1" name="Agenda centralizada" dataStoreRef="DataStore_Agenda" />
+    <bpmn:dataStoreReference id="DSRef_Pacientes" name="Registro de pacientes" dataStoreRef="DataStore_Pacientes" />
+    <bpmn:dataStoreReference id="DSRef_HC1" name="Historia clínica digital" dataStoreRef="DataStore_HC" />
+    <bpmn:dataStoreReference id="DSRef_HC2" name="Historia clínica digital" dataStoreRef="DataStore_HC" />
+    <bpmn:dataStoreReference id="DSRef_HC3" name="Historia clínica digital" dataStoreRef="DataStore_HC" />
+    <bpmn:dataStoreReference id="DSRef_Cobros" name="Registro de cobros" dataStoreRef="DataStore_Cobros" />
+    <bpmn:dataStoreReference id="DSRef_Agenda2" name="Agenda centralizada" dataStoreRef="DataStore_Agenda" />
+    <bpmn:dataObject id="DataObject_Receta" />
+    <bpmn:dataObjectReference id="DORef_Receta" name="Receta (PDF)" dataObjectRef="DataObject_Receta" />
+
+    <bpmn:sequenceFlow id="F1" sourceRef="Start_Llega" targetRef="Task_CheckIn" />
+    <bpmn:sequenceFlow id="F2" sourceRef="Task_CheckIn" targetRef="GW_Nuevo" />
+    <bpmn:sequenceFlow id="F3" name="Sí" sourceRef="GW_Nuevo" targetRef="Task_Filiacion" />
+    <bpmn:sequenceFlow id="F4" name="No" sourceRef="GW_Nuevo" targetRef="GW_Conv1" />
+    <bpmn:sequenceFlow id="F5" sourceRef="Task_Filiacion" targetRef="GW_Conv1" />
+    <bpmn:sequenceFlow id="F6" sourceRef="GW_Conv1" targetRef="Task_Abrir" />
+    <bpmn:sequenceFlow id="F7" sourceRef="Task_Abrir" targetRef="Task_Registrar" />
+    <bpmn:sequenceFlow id="F8" sourceRef="Task_Registrar" targetRef="Task_Tratar" />
+    <bpmn:sequenceFlow id="F9" sourceRef="Task_Tratar" targetRef="GW_Receta" />
+    <bpmn:sequenceFlow id="F10" name="Sí" sourceRef="GW_Receta" targetRef="Task_Receta" />
+    <bpmn:sequenceFlow id="F11" name="No" sourceRef="GW_Receta" targetRef="GW_Conv2" />
+    <bpmn:sequenceFlow id="F12" sourceRef="Task_Receta" targetRef="GW_Conv2" />
+    <bpmn:sequenceFlow id="F13" sourceRef="GW_Conv2" targetRef="Task_Cerrar" />
+    <bpmn:sequenceFlow id="F14" sourceRef="Task_Cerrar" targetRef="Task_Cobrar" />
+    <bpmn:sequenceFlow id="F15" sourceRef="Task_Cobrar" targetRef="GW_Cita" />
+    <bpmn:sequenceFlow id="F16" name="Sí" sourceRef="GW_Cita" targetRef="Task_Agendar" />
+    <bpmn:sequenceFlow id="F17" name="No" sourceRef="GW_Cita" targetRef="GW_Conv3" />
+    <bpmn:sequenceFlow id="F18" sourceRef="Task_Agendar" targetRef="GW_Conv3" />
+    <bpmn:sequenceFlow id="F19" sourceRef="GW_Conv3" targetRef="End_Atencion" />
+
+    <bpmn:textAnnotation id="TA_WalkIn"><bpmn:text>Sin cita previa: se crea una cita en un horario libre</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="A_WalkIn" sourceRef="Task_CheckIn" targetRef="TA_WalkIn" />
+    <bpmn:textAnnotation id="TA_Filiacion"><bpmn:text>Los antecedentes ya no se toman en recepción (PC5)</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="A_Filiacion" sourceRef="Task_Filiacion" targetRef="TA_Filiacion" />
+    <bpmn:textAnnotation id="TA_Odonto"><bpmn:text>Odontograma por pieza y cara: rojo = pendiente, azul = realizado (RF02)</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="A_Odonto" sourceRef="Task_Registrar" targetRef="TA_Odonto" />
+    <bpmn:textAnnotation id="TA_Cerrar"><bpmn:text>Reemplaza el aviso verbal a recepción: tratamientos y valores quedan disponibles para el cobro</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="A_Cerrar" sourceRef="Task_Cerrar" targetRef="TA_Cerrar" />
+    <bpmn:textAnnotation id="TA_Cobrar"><bpmn:text>Recepción ve tratamientos y valores, sin diagnósticos (BN3); saldo calculado</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="A_Cobrar" sourceRef="Task_Cobrar" targetRef="TA_Cobrar" />
+    <bpmn:textAnnotation id="TA_Agendar"><bpmn:text>El sistema replica la cita en Google Calendar y programa el recordatorio</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="A_Agendar" sourceRef="Task_Agendar" targetRef="TA_Agendar" />
+    <bpmn:textAnnotation id="TA_Fin"><bpmn:text>Sin Etapa 2: la historia clínica digital, con los campos del Formulario 033, queda registrada al cerrar la atención (T4 y T5)</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="A_Fin" sourceRef="End_Atencion" targetRef="TA_Fin" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2380" height="610" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Paciente_di" bpmnElement="Lane_Paciente" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2350" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Secretaria_di" bpmnElement="Lane_Secretaria" isHorizontal="true">
+        <dc:Bounds x="190" y="190" width="2350" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Odonto_di" bpmnElement="Lane_Odonto" isHorizontal="true">
+        <dc:Bounds x="190" y="450" width="2350" height="240" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Start_Llega_di" bpmnElement="Start_Llega">
+        <dc:Bounds x="240" y="117" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="285" y="115" width="140" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CheckIn_di" bpmnElement="Task_CheckIn">
+        <dc:Bounds x="300" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Nuevo_di" bpmnElement="GW_Nuevo" isMarkerVisible="true">
+        <dc:Bounds x="450" y="295" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="432" y="262" width="86" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Filiacion_di" bpmnElement="Task_Filiacion">
+        <dc:Bounds x="550" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Conv1_di" bpmnElement="GW_Conv1" isMarkerVisible="true">
+        <dc:Bounds x="690" y="295" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Abrir_di" bpmnElement="Task_Abrir">
+        <dc:Bounds x="790" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Registrar_di" bpmnElement="Task_Registrar">
+        <dc:Bounds x="940" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Tratar_di" bpmnElement="Task_Tratar">
+        <dc:Bounds x="1090" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Receta_di" bpmnElement="GW_Receta" isMarkerVisible="true">
+        <dc:Bounds x="1240" y="495" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1222" y="550" width="86" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Receta_di" bpmnElement="Task_Receta">
+        <dc:Bounds x="1340" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Conv2_di" bpmnElement="GW_Conv2" isMarkerVisible="true">
+        <dc:Bounds x="1490" y="495" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Cerrar_di" bpmnElement="Task_Cerrar">
+        <dc:Bounds x="1580" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Cobrar_di" bpmnElement="Task_Cobrar">
+        <dc:Bounds x="1730" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Cita_di" bpmnElement="GW_Cita" isMarkerVisible="true">
+        <dc:Bounds x="1880" y="295" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1860" y="262" width="90" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Agendar_di" bpmnElement="Task_Agendar">
+        <dc:Bounds x="1990" y="280" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Conv3_di" bpmnElement="GW_Conv3" isMarkerVisible="true">
+        <dc:Bounds x="2140" y="295" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Atencion_di" bpmnElement="End_Atencion">
+        <dc:Bounds x="2230" y="302" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2205" y="345" width="86" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="DSRef_Agenda1_di" bpmnElement="DSRef_Agenda1">
+        <dc:Bounds x="325" y="205" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="380" y="217" width="70" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DSRef_Pacientes_di" bpmnElement="DSRef_Pacientes">
+        <dc:Bounds x="575" y="205" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="630" y="217" width="70" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DSRef_HC1_di" bpmnElement="DSRef_HC1">
+        <dc:Bounds x="890" y="610" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="815" y="622" width="70" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DSRef_HC2_di" bpmnElement="DSRef_HC2">
+        <dc:Bounds x="1165" y="610" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1220" y="622" width="70" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DSRef_HC3_di" bpmnElement="DSRef_HC3">
+        <dc:Bounds x="1605" y="610" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1530" y="622" width="70" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DORef_Receta_di" bpmnElement="DORef_Receta">
+        <dc:Bounds x="1372" y="600" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1413" y="618" width="60" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DSRef_Cobros_di" bpmnElement="DSRef_Cobros">
+        <dc:Bounds x="1755" y="205" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1810" y="217" width="70" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DSRef_Agenda2_di" bpmnElement="DSRef_Agenda2">
+        <dc:Bounds x="2015" y="205" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2070" y="217" width="70" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="TA_WalkIn_di" bpmnElement="TA_WalkIn">
+        <dc:Bounds x="280" y="380" width="170" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TA_Filiacion_di" bpmnElement="TA_Filiacion">
+        <dc:Bounds x="545" y="370" width="150" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TA_Odonto_di" bpmnElement="TA_Odonto">
+        <dc:Bounds x="965" y="600" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TA_Cerrar_di" bpmnElement="TA_Cerrar">
+        <dc:Bounds x="1700" y="600" width="220" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TA_Cobrar_di" bpmnElement="TA_Cobrar">
+        <dc:Bounds x="1550" y="375" width="170" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TA_Agendar_di" bpmnElement="TA_Agendar">
+        <dc:Bounds x="1990" y="375" width="180" height="55" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TA_Fin_di" bpmnElement="TA_Fin">
+        <dc:Bounds x="2290" y="285" width="230" height="70" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="F1_di" bpmnElement="F1">
+        <di:waypoint x="258" y="153" /><di:waypoint x="258" y="320" /><di:waypoint x="300" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_di" bpmnElement="F2">
+        <di:waypoint x="400" y="320" /><di:waypoint x="450" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F3_di" bpmnElement="F3">
+        <di:waypoint x="500" y="320" /><di:waypoint x="550" y="320" />
+        <bpmndi:BPMNLabel><dc:Bounds x="515" y="302" width="20" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F4_di" bpmnElement="F4">
+        <di:waypoint x="475" y="345" /><di:waypoint x="475" y="435" /><di:waypoint x="715" y="435" /><di:waypoint x="715" y="345" />
+        <bpmndi:BPMNLabel><dc:Bounds x="482" y="395" width="20" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F5_di" bpmnElement="F5">
+        <di:waypoint x="650" y="320" /><di:waypoint x="690" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F6_di" bpmnElement="F6">
+        <di:waypoint x="740" y="320" /><di:waypoint x="840" y="320" /><di:waypoint x="840" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F7_di" bpmnElement="F7">
+        <di:waypoint x="890" y="520" /><di:waypoint x="940" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F8_di" bpmnElement="F8">
+        <di:waypoint x="1040" y="520" /><di:waypoint x="1090" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F9_di" bpmnElement="F9">
+        <di:waypoint x="1190" y="520" /><di:waypoint x="1240" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F10_di" bpmnElement="F10">
+        <di:waypoint x="1290" y="520" /><di:waypoint x="1340" y="520" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1305" y="502" width="20" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F11_di" bpmnElement="F11">
+        <di:waypoint x="1265" y="495" /><di:waypoint x="1265" y="465" /><di:waypoint x="1515" y="465" /><di:waypoint x="1515" y="495" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1380" y="450" width="20" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F12_di" bpmnElement="F12">
+        <di:waypoint x="1440" y="520" /><di:waypoint x="1490" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F13_di" bpmnElement="F13">
+        <di:waypoint x="1540" y="520" /><di:waypoint x="1580" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
+        <di:waypoint x="1680" y="520" /><di:waypoint x="1780" y="520" /><di:waypoint x="1780" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F15_di" bpmnElement="F15">
+        <di:waypoint x="1830" y="320" /><di:waypoint x="1880" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F16_di" bpmnElement="F16">
+        <di:waypoint x="1930" y="320" /><di:waypoint x="1990" y="320" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1950" y="302" width="20" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F17_di" bpmnElement="F17">
+        <di:waypoint x="1905" y="345" /><di:waypoint x="1905" y="440" /><di:waypoint x="2165" y="440" /><di:waypoint x="2165" y="345" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1912" y="392" width="20" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F18_di" bpmnElement="F18">
+        <di:waypoint x="2090" y="320" /><di:waypoint x="2140" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F19_di" bpmnElement="F19">
+        <di:waypoint x="2190" y="320" /><di:waypoint x="2230" y="320" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="DOA_CheckIn_di" bpmnElement="DOA_CheckIn">
+        <di:waypoint x="350" y="280" /><di:waypoint x="350" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DOA_Filiacion_di" bpmnElement="DOA_Filiacion">
+        <di:waypoint x="600" y="280" /><di:waypoint x="600" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DIA_Abrir_di" bpmnElement="DIA_Abrir">
+        <di:waypoint x="900" y="610" /><di:waypoint x="865" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DOA_Registrar_di" bpmnElement="DOA_Registrar">
+        <di:waypoint x="955" y="560" /><di:waypoint x="930" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DOA_Tratar_di" bpmnElement="DOA_Tratar">
+        <di:waypoint x="1150" y="560" /><di:waypoint x="1180" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DOA_Receta_di" bpmnElement="DOA_Receta">
+        <di:waypoint x="1390" y="560" /><di:waypoint x="1390" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DOA_Cerrar_di" bpmnElement="DOA_Cerrar">
+        <di:waypoint x="1630" y="560" /><di:waypoint x="1630" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DOA_Cobrar_di" bpmnElement="DOA_Cobrar">
+        <di:waypoint x="1780" y="280" /><di:waypoint x="1780" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DOA_Agendar_di" bpmnElement="DOA_Agendar">
+        <di:waypoint x="2040" y="280" /><di:waypoint x="2040" y="255" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="A_WalkIn_di" bpmnElement="A_WalkIn">
+        <di:waypoint x="350" y="360" /><di:waypoint x="350" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Filiacion_di" bpmnElement="A_Filiacion">
+        <di:waypoint x="600" y="360" /><di:waypoint x="600" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Odonto_di" bpmnElement="A_Odonto">
+        <di:waypoint x="1010" y="560" /><di:waypoint x="1010" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Cerrar_di" bpmnElement="A_Cerrar">
+        <di:waypoint x="1680" y="550" /><di:waypoint x="1705" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Cobrar_di" bpmnElement="A_Cobrar">
+        <di:waypoint x="1730" y="345" /><di:waypoint x="1720" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Agendar_di" bpmnElement="A_Agendar">
+        <di:waypoint x="2040" y="360" /><di:waypoint x="2040" y="375" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Fin_di" bpmnElement="A_Fin">
+        <di:waypoint x="2266" y="320" /><di:waypoint x="2290" y="320" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
