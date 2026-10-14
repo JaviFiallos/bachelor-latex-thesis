@@ -1,0 +1,76 @@
+\subsubsection{Metodología de desarrollo y marcos de modelado}
+
+La selección se realiza mediante dos tamices: los criterios imperativos (cumple o no cumple) descartan toda alternativa que incumpla uno de ellos, y los criterios deseables, ponderados por peso porcentual y puntuados de 1 (bajo) a 3 (alto), determinan la alternativa con mayor total ponderado. Este método se reutiliza en la selección de tecnologías.
+
+\paragraph{Metodología de desarrollo}
+
+Se evalúan Scrum \cite{schwaber2020scrum}, XP \cite{beck2004extreme}, Kanban \cite{anderson2010kanban} y el modelo en cascada \cite{sommerville2016software}. El criterio imperativo exige entregas incrementales, porque el sistema debe medirse en funcionamiento dentro del periodo de la investigación. Los criterios deseables expresan necesidades del proyecto; su peso refleja la restricción que los origina (Tabla~\ref{tab:ob2_restricciones}): la ejecución por un único desarrollador recibe el mayor peso, seguida del tiempo acotado, que exige responder a cambios de prioridad y limitar el esfuerzo de gestión.
+
+\begin{table}[H]
+\centering
+\caption{Evaluación de metodologías de desarrollo mediante dos tamices}
+\label{tab:ob2_matriz_metodologia}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|}
+\hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{Scrum} & \textbf{XP} & \textbf{Kanban} & \textbf{Cascada} \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterio imperativo (primer tamiz)}} \\ \hline
+Entregas incrementales que permitan medir el sistema en funcionamiento dentro del periodo & --- & Cumple & Cumple & Cumple & No cumple \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios deseables (segundo tamiz)}} \\ \hline
+Adaptable a un único desarrollador, sin roles de equipo & 30\,\% & 1 & 1 & 3 & --- \\ \hline
+Respuesta a cambios de prioridad durante el desarrollo (MoSCoW, retroalimentación de la clínica) & 25\,\% & 2 & 3 & 3 & --- \\ \hline
+Bajo esfuerzo de gestión del proceso & 25\,\% & 1 & 2 & 3 & --- \\ \hline
+Visibilidad del avance para el tutor y la clínica & 20\,\% & 3 & 2 & 2 & --- \\ \hline
+\textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{1,65} & \textbf{1,95} & \textbf{2,80} & --- \\ \hline
+\end{tabularx}
+\end{table}
+
+El modelo en cascada concentra la validación al final del desarrollo, lo que retrasa la medición y acumula el riesgo; por ello no supera el primer tamiz. Scrum supone un equipo con roles definidos y eventos periódicos, y XP se apoya en prácticas de equipo, como la programación en pareja y el cliente en sitio; ambas pierden puntuación en adaptabilidad y esfuerzo de gestión. Scrum aventaja a Kanban en visibilidad, gracias a sus revisiones al final de cada iteración.
+
+Se adopta Kanban con un tablero de cuatro columnas (Pendiente, En desarrollo, En pruebas y Terminado) y un límite de una tarea en curso. El detalle de las tarjetas se presenta en el plan de desarrollo.
+
+\paragraph{Marcos de modelado}
+
+El marco de modelado debe separar el sistema del agente en niveles de detalle distintos y ser comprensible para el personal de la clínica. Se comparan, de forma cualitativa, el modelo C4 \cite{brown2018c4} con UML \cite{omg2017uml}, el modelo de vistas 4+1 \cite{kruchten1995views} con UML y UML sin un marco adicional (Tabla~\ref{tab:ob2_matriz_modelado}).
+
+\begin{table}[H]
+\centering
+\caption{Evaluación de marcos de modelado}
+\label{tab:ob2_matriz_modelado}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Criterio} & \textbf{C4 + UML} & \textbf{Vistas 4+1 con UML} & \textbf{Solo UML} \\ \hline
+Niveles de detalle explícitos para separar sistema y agente & Sí: contexto, contenedores y componentes & Parcial: vistas paralelas sin niveles de detalle & Parcial: paquetes y componentes sin jerarquía definida \\ \hline
+Comprensible para actores no técnicos & Sí: diagrama de contexto & Parcial: escenarios y casos de uso & Parcial: diagramas técnicos \\ \hline
+Notación estándar para comportamiento y despliegue & Sí: estados, secuencia y despliegue & Sí: estados, secuencia y despliegue & Sí: estados, secuencia y despliegue \\ \hline
+Esfuerzo de elaboración para un desarrollador & Medio: añade tres diagramas C4 & Medio-alto: hasta cinco vistas & Bajo \\ \hline
+\textbf{Resultado} & \textbf{Seleccionada} & Descartada & Descartada \\ \hline
+\end{tabularx}
+\end{table}
+
+Se adopta C4 para la estructura, en sus niveles de contexto, contenedores y componentes, y UML para los estados, las secuencias y el despliegue. Los procesos se mantienen en BPMN 2.0 por continuidad con el análisis del Objetivo 1. La Tabla~\ref{tab:ob2_artefactos} relaciona cada artefacto de diseño con su notación y con el apartado en el que se presenta.
+
+\begin{table}[H]
+\centering
+\caption{Notación de los artefactos de diseño}
+\label{tab:ob2_artefactos}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{5.0cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Artefacto} & \textbf{Notación} & \textbf{Apartado} \\ \hline
+Proceso propuesto & BPMN 2.0 & Proceso propuesto \\ \hline
+Contexto y contenedores & C4, niveles 1 y 2 & Arquitectura general del sistema \\ \hline
+Componentes del agente & C4, nivel 3 & Arquitectura del agente conversacional \\ \hline
+Modelo de datos & Diagrama entidad-relación & Modelo de datos \\ \hline
+Estados de la cita y de la conversación & UML de estados & Modelo de datos; arquitectura del agente conversacional \\ \hline
+Interacción con WhatsApp & UML de secuencia & Arquitectura del agente conversacional \\ \hline
+Despliegue & UML de despliegue & Esquema de despliegue tecnológico \\ \hline
+\end{tabularx}
+\end{table}
