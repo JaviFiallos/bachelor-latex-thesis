@@ -80,7 +80,7 @@ La API es un monolito modular: una aplicación desplegada como una única unidad
 \fontsize{8}{10}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{1.7cm}|}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{1.7cm}|}
 \hline
 \textbf{Módulo} & \textbf{Responsabilidad} & \textbf{Interfaz pública} & \textbf{Depende de} & \textbf{Requerimientos} \\ \hline
 \texttt{identity} & Usuarios, roles y autenticación con JWT & Ninguna & Ninguno & RNF01 \\ \hline
@@ -94,7 +94,7 @@ La API es un monolito modular: una aplicación desplegada como una única unidad
 \texttt{prescriptions} & Recetas y su impresión & Ninguna & \texttt{clinical}, \texttt{treatments} & RF04, RF05 \\ \hline
 \texttt{billing} & Abonos, saldo calculado y comprobante interno & \texttt{BillingDirectory} & \texttt{clinical}, \texttt{treatments} & RF08 \\ \hline
 \texttt{calendar} & Copia de solo lectura en Google Calendar & Ninguna & \texttt{appointments} (eventos) & RF07 \\ \hline
-\texttt{whatsapp} & Motor conversacional del agente, webhook y recordatorios & Ninguna (webhook de entrada) & \texttt{patients}, \texttt{professionals}, \texttt{appointments}, \texttt{treatments} (solo precios) & RF09--RF14; RNF03; RNF05 \\ \hline
+\texttt{whatsapp} & Motor conversacional del agente, webhook y recordatorios & Ninguna (webhook de entrada) & \texttt{patients}, \texttt{professionals}, \texttt{appointments}, \texttt{treatments} (solo precios) & RF09 a RF14, RNF03 y RNF05 \\ \hline
 \end{tabularx}
 \end{table}
 
