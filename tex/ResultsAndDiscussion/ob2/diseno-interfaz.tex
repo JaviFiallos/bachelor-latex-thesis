@@ -1,0 +1,79 @@
+\subsubsection{Diseño de la interfaz}
+
+La interfaz de la aplicación web se diseñó en tres pasos: la paleta de colores con sus componentes, los mockups de baja fidelidad en Excalidraw y un prototipo visual en HTML. Las pantallas cubren las acciones principales de cada rol identificadas en el Objetivo 1: para la secretaria, la agenda y la atención en recepción; para el odontólogo, sus citas y el registro de la atención.
+
+\paragraph{Paleta de colores}
+
+La paleta se deriva del logo del Centro Odontológico Bellidental, de un único azul (\texttt{\#143F76}). A partir de él se construyó una escala de azules, desde el tono más profundo para la barra lateral y los títulos hasta el casi blanco de los fondos. Como contraparte se eligieron tonos cálidos fuertes y antagonistas (ámbar, terracota, verde azulado e índigo), reservados para las acciones principales y los estados de la cita (Figura~\ref{fig:ob2_paleta}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Paleta_Colores.png}
+\caption{Paleta de colores derivada del azul del logo}
+\label{fig:ob2_paleta}
+\end{figure}
+
+La Figura~\ref{fig:ob2_componentes} estandariza los componentes: los estados de la cita (agendada, confirmada, en espera, en atención, atendida, no asistió y cancelada) llevan siempre color y etiqueta, y el color del profesional nunca indica estado; cada pantalla tiene una sola acción principal en dorado; los mensajes de error, advertencia y éxito, así como las alertas clínicas del paciente, comparten colores y estilos en toda la aplicación.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Paleta_Componentes_Estilos.png}
+\caption{Estados de la cita, botones, mensajes y navegación con la paleta}
+\label{fig:ob2_componentes}
+\end{figure}
+
+\paragraph{Mockups}
+
+Los mockups fijan la distribución de cada pantalla antes del prototipo: la barra lateral por rol, el buscador de pacientes y la próxima cita en la cabecera. En la agenda de la secretaria (Figura~\ref{fig:ob2_mockup_agenda}), cada cita se marca con el color del profesional (RF07); en la atención del odontólogo (Figura~\ref{fig:ob2_mockup_atencion}), los datos del paciente, los antecedentes y el odontograma ocupan una sola pantalla, en reemplazo de la ficha rápida y su transcripción (PC1 a PC3).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{img/Mockup_Agenda_Secretaria.png}
+\caption{Mockup de la agenda de la secretaria}
+\label{fig:ob2_mockup_agenda}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{img/Mockup_Atencion_Odontologo.png}
+\caption{Mockup de la atención del odontólogo}
+\label{fig:ob2_mockup_atencion}
+\end{figure}
+
+\paragraph{Prototipo visual}
+
+El prototipo en HTML aplica la paleta y los componentes sobre las pantallas de los mockups. La agenda de la secretaria (Figura~\ref{fig:ob2_proto_agenda}) muestra una columna por profesional con validación de cruces y el estado de cada cita, incluidas las agendadas por el agente y las que quedan sin confirmar (RF07, N2 a N4); responde al 50,5\,\% de pacientes que no encontró un horario con facilidad (Tabla~\ref{tab:p1_frecuencia}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Prototipo_Agenda_Secretaria.png}
+\caption{Prototipo de la agenda de la secretaria}
+\label{fig:ob2_proto_agenda}
+\end{figure}
+
+En recepción, la ficha del paciente (Figura~\ref{fig:ob2_proto_recepcion}) reúne sus citas y el estado de cuenta con abono, saldo y comprobante (RF08). Los antecedentes, el odontograma y los diagnósticos no se muestran a la secretaria (RNF01, BN3).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Mockup_Atencion_Secretaria.png}
+\caption{Prototipo de la atención de la secretaria: citas y estado de cuenta del paciente}
+\label{fig:ob2_proto_recepcion}
+\end{figure}
+
+El odontólogo organiza su jornada en un tablero por estado de la cita: agendadas, en espera, en atención y atendidas (Figura~\ref{fig:ob2_proto_citas}). Desde él inicia la atención de pacientes con cita o sin ella (RF06).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Prototipo_Citas_Odontologo.png}
+\caption{Prototipo de las citas del odontólogo}
+\label{fig:ob2_proto_citas}
+\end{figure}
+
+La atención (Figura~\ref{fig:ob2_proto_atencion}) presenta las alertas clínicas del paciente y el odontograma: al seleccionar la pieza y la cara se despliegan las condiciones, en rojo lo pendiente y en azul lo realizado (RF02). La atención se cierra con una sola acción, en pocos pasos y durante la consulta (RNF06).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Prototipo_Atencion_Odontologo.png}
+\caption{Prototipo de la atención del odontólogo con el odontograma}
+\label{fig:ob2_proto_atencion}
+\end{figure}
