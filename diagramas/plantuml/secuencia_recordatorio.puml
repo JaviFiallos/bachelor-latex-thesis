@@ -1,52 +1,37 @@
 @startuml secuencia_recordatorio
-
-skinparam monochrome true
 skinparam shadowing false
+skinparam backgroundColor white
 skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam sequenceMessageAlign center
+skinparam ArrowColor #555555
+skinparam sequence {
+  LifeLineBorderColor #999999
+  ParticipantBorderColor #6C8EBF
+  ParticipantBackgroundColor #DAE8FC
+  ActorBorderColor #D79B00
+  ActorBackgroundColor #FFE6CC
+  GroupBorderColor #999999
+}
 autonumber
+hide footbox
 
-participant "Tarea programada\n(cada 5 min)" as Tarea
-database "appointment_reminders" as Recordatorios
-participant "Motor conversacional" as Motor
-participant "Webhook" as Webhook
-participant "WhatsApp Cloud API\n(Meta)" as Meta
-actor "Paciente" as Paciente
-participant "AppointmentScheduler" as Agenda
+participant "Agente" as A #D5E8D4
+participant "WhatsApp" as W #F5F5F5
+actor "Paciente" as P
+participant "Agenda" as G
 
-note over Tarea, Recordatorios
-  El recordatorio solo existe si el teléfono
-  del paciente aceptó el aviso en el agente
-end note
-
-Tarea -> Recordatorios : busca pendientes con envío vencido
-Recordatorios --> Tarea : recordatorios pendientes
-Tarea -> Motor : envía recordatorio
-Motor -> Meta : plantilla utility con botones\nConfirmar, Cancelar y Reprogramar
-Meta -> Paciente : recordatorio
-Motor -> Recordatorios : estado SENT e identificador del mensaje
-Paciente -> Meta : pulsa un botón
-Meta -> Webhook : evento firmado con la respuesta
-Webhook -> Webhook : valida la firma
-Webhook -> Motor : respuesta
-Motor -> Recordatorios : registra la respuesta
-
+A -> W : plantilla del día anterior
+W -> P : Confirmar / Cancelar / Reprogramar
+P -> W : pulsa un botón
+W -> A : webhook
 alt Confirmar
-  Motor -> Agenda : confirma la cita
-  Motor -> Meta : confirmación
-  Meta -> Paciente : cita confirmada
-else Cancelar (hasta 2 h antes)
-  Motor -> Agenda : cancela la cita (libera el horario)
-  Motor -> Meta : cancelación
-  Meta -> Paciente : cita cancelada
-else Reprogramar (hasta 2 h antes)
-  Motor -> Meta : abre el flujo de reprogramación
-  Meta -> Paciente : opciones de horario
-else Cancelar o reprogramar con menos de 2 h
-  Motor -> Meta : derivación con horario y enlace de recepción
-  Meta -> Paciente : contactar a recepción
+  A -> G : confirmar cita
+else Cancelar
+  A -> G : cancelar cita
+else Reprogramar
+  A -> P : nuevos horarios
 end
-note right of Motor
-  Si el paciente abandona la reprogramación,
-  la cita no cambia.
-end note
+A -> P : respuesta
+note over A, P : Solo pacientes con aviso aceptado.\nCancelar o reprogramar hasta 2 h antes.
 @enduml

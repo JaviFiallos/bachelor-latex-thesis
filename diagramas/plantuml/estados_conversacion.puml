@@ -1,64 +1,41 @@
 @startuml estados_conversacion
 !pragma layout smetana
-
-skinparam monochrome true
 skinparam shadowing false
+skinparam backgroundColor white
 skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam ArrowColor #555555
 skinparam state {
-  RoundCorner 8
+  RoundCorner 12
+  BackgroundColor #D5E8D4
+  BorderColor #82B366
+  BackgroundColor<<derivar>> #FFE6CC
+  BorderColor<<derivar>> #D79B00
+  BackgroundColor<<recordatorio>> #DAE8FC
+  BorderColor<<recordatorio>> #6C8EBF
 }
 hide empty description
+hide stereotype
 
 state "Aviso de privacidad" as Aviso
 state "Identificación" as Identificacion
 state "Menú" as Menu
 state "Información" as Informacion
-state "Agendar" as Agendar
-state "Reprogramar" as Reprogramar
-state "Confirmación" as Confirmacion
-state "Derivación a recepción" as Derivar
-state "Respuesta al recordatorio" as Recordatorio
-state "Fin" as Fin
+state "Agendar o reprogramar" as Cita
+state "Recordatorio" as Recordatorio <<recordatorio>>
+state "Derivar a recepción" as Derivar <<derivar>>
 
 [*] --> Aviso : primer mensaje
-[*] --> Identificacion : aviso ya aceptado
-[*] --> Recordatorio : botón del recordatorio\n(solo teléfonos con aviso aceptado)
-
+[*] --> Recordatorio : día anterior
 Aviso --> Identificacion : acepta
-Aviso --> Fin : no acepta
-
-Identificacion --> Identificacion : varios pacientes:\npide la cédula
-Identificacion --> Menu : paciente identificado
-Identificacion --> Derivar : sin paciente o no confirma
-
-Menu --> Informacion : horarios o precios
-Menu --> Agendar : agendar
-Menu --> Reprogramar : reprogramar
-Menu --> Derivar : hablar con recepción
-
-Informacion --> Menu : otra consulta
-
-Agendar --> Confirmacion : horario elegido
-Agendar --> Derivar : límite de citas alcanzado\no sin horarios disponibles
-
-Reprogramar --> Confirmacion : horario elegido
-Reprogramar --> Derivar : menos de 2 h
-
-Confirmacion --> Agendar : conflicto en agendamiento
-Confirmacion --> Reprogramar : conflicto en reprogramación
-Confirmacion --> Fin : cita registrada
-
-Recordatorio --> Fin : confirmar o cancelar
-Recordatorio --> Reprogramar : reprogramar
-Recordatorio --> Derivar : cancelar o reprogramar\ncon menos de 2 h
-
-Derivar --> Fin : horario y enlace de recepción
-Fin --> [*]
-
-note as NotaTransversal
-  Desde cualquier estado:
-  palabra clínica, consulta de saldo
-  o texto no reconocido: derivación
-  30 min sin actividad: caducidad
-end note
+Identificacion --> Menu
+Menu --> Informacion
+Menu --> Cita
+Menu --> Derivar
+Cita --> [*] : cita registrada
+Informacion --> [*]
+Derivar --> [*]
+Recordatorio --> Cita : reprogramar
+Recordatorio --> [*] : confirmar / cancelar
+Identificacion --> Derivar : no registrado
 @enduml
