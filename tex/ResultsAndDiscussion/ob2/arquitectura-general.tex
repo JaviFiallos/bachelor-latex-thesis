@@ -1,6 +1,6 @@
 \subsubsection{Arquitectura general del sistema}
 
-La arquitectura se describe con el modelo C4 en dos niveles, de contexto y de contenedores, y con el estilo de monolito modular; el detalle de los componentes del agente conversacional se presenta en un apartado propio.
+La estructura se describe con el modelo C4 \cite{brown2018c4} en los niveles de contexto y de contenedores; el comportamiento y el despliegue, con UML \cite{omg2017uml}. Los componentes del agente conversacional se presentan en un apartado propio.
 
 \paragraph{Diagrama de contexto}
 
@@ -39,7 +39,7 @@ La aplicación web se ejecuta en el navegador de cada usuario; los demás conten
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/C4_Contenedores.png}{\includegraphics[width=\linewidth]{img/C4_Contenedores.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/C4\_Contenedores.pdf}}}
+\IfFileExists{diagramas/drawio/Contenedores_C4_2.png}{\includegraphics[width=\linewidth]{diagramas/drawio/Contenedores_C4_2.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/C4\_Contenedores.pdf}}}
 \caption{Diagrama de contenedores del sistema (C4, nivel 2)}
 \label{fig:ob2_c4_contenedores}
 \end{figure}
@@ -64,44 +64,64 @@ Servicio de respaldo & \texttt{pg\_dump} programado en Docker & Genera un volcad
 
 \paragraph{Estilo arquitectónico: monolito modular}
 
-La API es un monolito modular: una aplicación desplegada como una única unidad, cuyo código se divide en doce módulos con interfaces públicas (Figura~\ref{fig:ob2_modulos}). La Tabla~\ref{tab:ob2_modulos} resume la responsabilidad de cada módulo, la interfaz que expone y sus dependencias.
+La API se organiza como un monolito modular: una sola aplicación, desplegada como una unidad, cuyo código se divide en módulos por área funcional \cite{richards2020fundamentals}. Los antecedentes separan cada capacidad en un microservicio \cite{roca2020microservice,arcila2022microservice}. En una clínica pequeña, con un único desarrollador y un único servidor, esa separación añadiría despliegues, comunicación por red y monitoreo por servicio, una complejidad sin beneficio proporcional. De \cite{roca2020microservice} se conserva la idea de añadir capacidades sin modificar el núcleo, y de \cite{arcila2022microservice}, la autenticación con JWT.
+
+La Figura~\ref{fig:ob2_modulos} agrupa los módulos esenciales y muestra cómo se comunican. La Tabla~\ref{tab:ob2_modulos} resume qué hace cada uno.
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/Modulos.png}{\includegraphics[width=\linewidth]{img/Modulos.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/Modulos.pdf}}}
-\caption{Módulos de la API y sus dependencias por interfaz pública}
+\begin{tikzpicture}[
+    font=\footnotesize, >={Stealth[length=2mm]},
+    grupo/.style={draw, rounded corners=4pt, line width=0.8pt, align=center, inner sep=6pt, text width=#1},
+    flecha/.style={->, draw=black!65, line width=0.6pt},
+    evento/.style={->, draw=black!65, line width=0.6pt, dashed},
+    et/.style={font=\scriptsize, fill=white, inner sep=1.5pt}
+]
+    \node[grupo=3.9cm, fill=dSistemaF, draw=dSistemaB] (agenda) at (0,2.7)
+        {\textbf{Agenda}\\[2pt] Citas y regla anticruce\\ Copia en Google Calendar};
+    \node[grupo=3.9cm, fill=dSistemaF, draw=dSistemaB] (base) at (0,0)
+        {\textbf{Base}\\[2pt] Identidad y acceso\\ Pacientes\\ Profesionales y horarios};
+    \node[grupo=3.5cm, fill=dClinicoF, draw=dClinicoB] (clin) at (5.0,1.35)
+        {\textbf{Clínico y cobros}\\[2pt] Historia y atención\\ Odontograma\\ Tratamientos y recetas\\ Cobros};
+    \node[grupo=2.6cm, fill=dAgenteF, draw=dAgenteB] (agente) at (-5.6,1.35)
+        {\textbf{Agente}\\[2pt] Conversación\\ por WhatsApp\\ Recordatorios};
+
+    \draw[flecha] (agenda) -- node[et] {usa} (base);
+    \draw[flecha] ([yshift=8pt]clin.west) -- node[et] {usa} (agenda.east);
+    \draw[flecha] ([yshift=-8pt]clin.west) -- node[et] {usa} (base.east);
+    \draw[flecha] ([yshift=14pt]agente.east) -- node[et, sloped, above=1pt, fill=none] {agenda citas} ([yshift=4pt]agenda.west);
+    \draw[evento] ([yshift=-6pt]agenda.west) -- node[et, sloped, below=1pt, fill=none] {eventos de cita} ([yshift=4pt]agente.east);
+    \draw[flecha] ([yshift=-12pt]agente.east) -- node[et, sloped, below=1pt, fill=none] {identifica} (base.west);
+
+    \node[font=\scriptsize\itshape, text=black!70, align=center, below=3pt of agente] {Sin acceso a datos\\clínicos (RNF03)};
+
+    \node[draw=dExternoB, dashed, fill=dExternoF, rounded corners=3pt, minimum height=0.6cm,
+          minimum width=13.6cm, font=\footnotesize\bfseries] at (0,-1.6) {Base de datos compartida (PostgreSQL)};
+
+    \draw[flecha] (-6.8,-2.35) -- ++(0.8,0) node[right, font=\scriptsize, text=black] {llamada por interfaz pública};
+    \draw[evento] (-1.4,-2.35) -- ++(0.8,0) node[right, font=\scriptsize, text=black] {evento de dominio};
+\end{tikzpicture}
+\caption{Módulos esenciales de la API y su comunicación}
 \label{fig:ob2_modulos}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Módulos del monolito modular}
+\caption{Módulos esenciales del monolito modular}
 \label{tab:ob2_modulos}
-\fontsize{8}{10}\selectfont
+\fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{1.7cm}|}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.2cm}|}
 \hline
-\textbf{Módulo} & \textbf{Responsabilidad} & \textbf{Interfaz pública} & \textbf{Depende de} & \textbf{RF/RNF} \\ \hline
-\texttt{identity} & Usuarios, roles y autenticación con JWT & Ninguna & Ninguno & RNF01 \\ \hline
-\texttt{patients} & Datos de identificación e historial inmediato & \texttt{PatientDirectory} & Ninguno & RF06 \\ \hline
-\texttt{professionals} & Profesionales, especialidades y horarios & \texttt{ProfessionalDirectory} & Ninguno & RF07 \\ \hline
-\texttt{clinicalrecords} & Historia clínica y antecedentes & \texttt{ClinicalRecordDirectory} & \texttt{patients} & RF01 \\ \hline
-\texttt{appointments} & Agenda única, validación anticruce y reprogramación & \texttt{AppointmentScheduler} & \texttt{patients}, \texttt{professionals} & RF07, RF11, RF12 \\ \hline
-\texttt{clinical} & Atenciones y diagnósticos con CIE-10 & \texttt{ClinicalDirectory} & \texttt{appointments}, \texttt{clinicalrecords} & RF01, RF03 \\ \hline
-\texttt{odontogram} & Odontograma por pieza y cara & Ninguna & \texttt{clinical}, \texttt{patients} & RF02 \\ \hline
-\texttt{treatments} & Catálogo de tratamientos y precios & \texttt{TreatmentDirectory} & Ninguno & RF04 \\ \hline
-\texttt{prescriptions} & Recetas y su impresión & Ninguna & \texttt{clinical} & RF04, RF05 \\ \hline
-\texttt{billing} & Abonos, saldo calculado y comprobante interno & \texttt{BillingDirectory} & \texttt{clinical}, \texttt{treatments}, \texttt{patients} & RF08 \\ \hline
-\texttt{calendar} & Copia de solo lectura en Google Calendar & Ninguna & \texttt{appointments} (eventos), \texttt{professionals} & RF07 \\ \hline
-\texttt{whatsapp} & Motor conversacional del agente, aviso de privacidad, webhook y recordatorios & Ninguna (webhook de entrada) & \texttt{patients}, \texttt{professionals}, \texttt{appointments}, \texttt{treatments} (solo precios) & RF09 a RF14, RNF03, RNF05 \\ \hline
+\textbf{Módulo} & \textbf{Qué hace} & \textbf{Requerimiento} \\ \hline
+Identidad y acceso & Usuarios, roles e inicio de sesión & RNF01 \\ \hline
+Pacientes y profesionales & Datos de identificación, profesionales y horarios & RF06, RF07 \\ \hline
+Agenda & Citas sin cruces, reprogramación y copia en Google Calendar & RF07, RF11, RF12 \\ \hline
+Clínico & Historia clínica, odontograma, tratamientos y recetas & RF01 a RF05 \\ \hline
+Cobros & Abonos y saldo por sesión & RF08 \\ \hline
+Agente & Conversación por WhatsApp, aviso de privacidad y recordatorios & RF09 a RF14 \\ \hline
 \end{tabularx}
 \end{table}
 
-Los módulos \texttt{identity}, \texttt{patients}, \texttt{professionals}, \texttt{clinicalrecords}, \texttt{appointments}, \texttt{clinical} y \texttt{odontogram} ya tienen código; los demás y sus dependencias son de diseño. La tabla usa nombres funcionales: en el código, el paquete reservado para el agente y la sincronización se denomina \texttt{notifications}, y existe además un paquete \texttt{dashboard} para indicadores. La auditoría (RNF02) es transversal y no constituye un módulo.
-
-Los módulos no invocan los servicios de otro módulo, salvo a través de su interfaz pública. Los cambios relevantes, como la creación o la reprogramación de una cita, se comunican mediante eventos de dominio, que alimentan la sincronización con Google Calendar y la programación de recordatorios. El módulo del agente no depende de los módulos clínicos ni de cobros. Así, un cambio en las reglas de agendamiento no altera la conversación, como establece el atributo de mantenibilidad de la Tabla~\ref{tab:ob2_atributos}.
-
-El monolito modular separa responsabilidades en el código y evita el costo operativo de distribuirlas en servicios \cite{richards2020fundamentals}. Los antecedentes distribuyen cada capacidad en un servicio independiente \cite{roca2020microservice,arcila2022microservice}; con un único desarrollador y un único servidor, esa distribución añadiría despliegues, comunicación de red y monitoreo por servicio sin un beneficio proporcional. De \cite{roca2020microservice} se toma la incorporación de capacidades sin modificar el núcleo: el módulo del agente se añade mediante interfaces públicas. Como en el prototipo de \cite{arcila2022microservice}, la autenticación se realiza con JWT.
-
-La separación no es completa: los módulos comparten el esquema de la base de datos y la capa de persistencia, de modo que un cambio de tabla puede afectar a más de un módulo. Esta limitación se discute en el apartado de discusión.
+Cada módulo expone una interfaz pública y no accede al interior de los demás. Los cambios de la agenda, como crear o reprogramar una cita, se publican como eventos que alimentan la copia en Google Calendar y los recordatorios. Así, un cambio en las reglas de agendamiento no altera la conversación del agente (Tabla~\ref{tab:ob2_atributos}). La auditoría (RNF02) es transversal y no forma un módulo. La separación no es completa: los módulos comparten la base de datos, de modo que un cambio de tabla puede afectar a más de uno.

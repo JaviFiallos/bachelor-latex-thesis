@@ -81,6 +81,8 @@ Límites: caja punteada **VPS · Docker Compose** con nginx, API, PostgreSQL y R
 
 ## 3. Módulos de la API (simplificado)
 
+> **Reemplazado:** la figura `fig:ob2_modulos` ahora se dibuja en TikZ dentro de `arquitectura-general.tex`, con nombres funcionales en español. Esta especificación queda solo como referencia.
+
 Sin interfaces, sin responsabilidades. Cuatro grupos de color con los nombres de los módulos dentro, y **solo cinco flechas entre grupos**.
 
 | Grupo (caja) | Color | Módulos (texto) |

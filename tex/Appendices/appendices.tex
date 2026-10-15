@@ -29,3 +29,46 @@
 \caption{Esquema metodológico.}
 \label{fig:esquema-metodologico}
 \end{figure}
+
+\newpage
+\textbf{Anexo 4. Modelo de datos completo}
+
+La Figura~\ref{fig:ob2_er} presenta el diagrama entidad-relación completo y la Tabla~\ref{tab:ob2_tablas_modulo} agrupa sus tablas.
+
+\begin{sidewaysfigure}[p]
+    \centering
+    \IfFileExists{img/ER_Bellidental.pdf}{\includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/ER_Bellidental.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: exportar el diagrama de dbdiagram.io a img/ER\_Bellidental.pdf}}}
+    \caption{Diagrama entidad-relación completo}
+    \label{fig:ob2_er}
+\end{sidewaysfigure}
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.42\linewidth}|>{\raggedright\arraybackslash}p{0.22\linewidth}|}
+\caption{Tablas del modelo de datos por grupo}
+\label{tab:ob2_tablas_modulo} \\
+\hline
+\textbf{Grupo} & \textbf{Tablas} & \textbf{Requerimientos} \\ \hline
+\endfirsthead
+\hline
+\textbf{Grupo} & \textbf{Tablas} & \textbf{Requerimientos} \\ \hline
+\endhead
+\hline
+\endfoot
+Identidad y acceso & \texttt{users}, \texttt{roles}, \texttt{permissions}, \texttt{role\_permissions}, \texttt{user\_roles} & RNF01, RNF02; BN4 \\ \hline
+Profesionales y horarios & \texttt{professionals}, \texttt{specialties}, \texttt{professional\_specialties}, \texttt{professional\_schedules} & RF07, RF11 \\ \hline
+Pacientes & \texttt{patients} & RF01, RF06 \\ \hline
+Historia clínica y antecedentes & \texttt{clinical\_records}, \texttt{medical\_history\_conditions}, \texttt{medical\_history\_entries} & RF01, RF06; BN5 \\ \hline
+Agenda & \texttt{appointments} & RF07, RF11, RF12, RF14 \\ \hline
+Atención clínica & \texttt{encounters}, \texttt{encounter\_diagnoses}, \texttt{icd10\_codes} & RF01, RF03 \\ \hline
+Odontograma & \texttt{teeth}, \texttt{tooth\_surfaces}, \texttt{dental\_conditions}, \texttt{dental\_condition\_symbols}, \texttt{dental\_findings} & RF02; BN3 \\ \hline
+Tratamientos & \texttt{treatment\_catalog}, \texttt{performed\_treatments} & RF04, RF08, RF10 \\ \hline
+Recetas & \texttt{medications}, \texttt{medication\_presets}, \texttt{prescriptions}, \texttt{prescription\_items} & RF04, RF05 \\ \hline
+Cobros & \texttt{payments} & RF08 \\ \hline
+Agente conversacional & \texttt{privacy\_consents}, \texttt{appointment\_reminders} & RF09, RF14; BN6, BN7 \\ \hline
+Auditoría & \texttt{revision\_info} y tablas \texttt{*\_aud} (implementación posterior) & RNF02; BN4 \\ \hline
+\end{longtable}
+\endgroup
