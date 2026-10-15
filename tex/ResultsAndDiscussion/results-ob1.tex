@@ -73,14 +73,12 @@ La Figura~\ref{fig:bpmn1} modela la Etapa 1 mediante los carriles Paciente, Secr
     \item \textbf{Archivo.} La secretaria archiva la ficha rápida, que queda pendiente de transcripción.
 \end{enumerate}
 
-\begin{landscape}
-\begin{figure}[H]
+\begin{sidewaysfigure}
     \centering
-    \includegraphics[width=\linewidth]{img/GestionAdministrativa_P1.pdf}
+    \includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/GestionAdministrativa_P1.pdf}
     \caption{Etapa 1 del ciclo completo de atención: gestión en la atención}
     \label{fig:bpmn1}
-\end{figure}
-\end{landscape}
+\end{sidewaysfigure}
 
 %De forma concurrente, la secretaria atiende mensajes de WhatsApp sobre confirmación de citas, precios, abonos y horarios. Esta actividad no se modela como secuencia, ya que carece de un orden fijo e interrumpe las tareas de ambas etapas, por lo que se representa como una anotación en el carril de la Secretaria. Su volumen alcanza entre 26 y 50 mensajes diarios sobre cotizaciones y horarios, a los que se suman entre 31 y 60 minutos diarios de confirmación de citas (Tabla~\ref{tab:instrumento2}, P1 y P2). Su análisis se desarrolla en la sección de necesidades de comunicación.
 
@@ -101,14 +99,12 @@ La Figura~\ref{fig:bpmn2} modela la Etapa 2, ejecutada por la secretaria en peri
     \item \textbf{Preparación del día siguiente.} La secretaria revisa la agenda del día siguiente y prepara las fichas rápidas correspondientes, en la medida en que el tiempo disponible lo permite.
 \end{enumerate}
 
-\begin{landscape}
-\begin{figure}[H]
+\begin{sidewaysfigure}
     \centering
-    \includegraphics[width=\linewidth]{img/GestionAdministrativa_P2.pdf}
+    \includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/GestionAdministrativa_P2.pdf}
     \caption{Etapa 2 del ciclo completo de atención: gestión documental diferida}
     \label{fig:bpmn2}
-\end{figure}
-\end{landscape}
+\end{sidewaysfigure}
 
 Ambas etapas conforman un ciclo cerrado: la ficha archivada al final de la Etapa 1 constituye la entrada de la Etapa 2, y las fichas preparadas al final de esta se utilizan al día siguiente en la Etapa 1. Se trata, por tanto, de dos momentos del procesamiento de una misma información.
 
@@ -247,14 +243,12 @@ Las necesidades de comunicación se analizaron conforme a la distinción entre n
 
 La Figura~\ref{fig:bpmn_comunicacion} modela en BPMN 2.0 la comunicación entre el paciente y el centro tal como se realiza actualmente. El modelo comprende tres flujos que se inician de forma independiente y convergen en la secretaria: la consulta de información sobre horarios, precios y formas de pago; la solicitud de citas, que ingresa por WhatsApp, de forma presencial, por medio de un familiar o mediante el WhatsApp personal de los profesionales, este último sin registro en Google Calendar; y la confirmación de las citas del día siguiente, que la secretaria realiza manualmente con cada paciente. Las anotaciones del diagrama sitúan sobre cada flujo la evidencia operativa recogida en los instrumentos y las necesidades que de ella se derivan.
 
-\begin{landscape}
-\begin{figure}[H]
+\begin{sidewaysfigure}
     \centering
-    \includegraphics[width=\linewidth]{img/Comunicacion_Paciente.pdf}
+    \includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/Comunicacion_Paciente.pdf}
     \caption{Flujo actual de comunicación con el paciente}
     \label{fig:bpmn_comunicacion}
-\end{figure}
-\end{landscape}
+\end{sidewaysfigure}
 
 El diagrama evidencia que la secretaria atiende en paralelo los tres flujos de comunicación, además de las actividades del ciclo completo de atención (PC8), y que la agenda no es la única fuente de disponibilidad (PC7).
 
