@@ -1,100 +1,30 @@
-# Especificación de diagrama: esquema de despliegue tecnológico
+# Especificación: despliegue (UML, simplificado)
 
-Diagrama del apartado "Esquema de despliegue tecnológico" (Objetivo 2). Es un diagrama de despliegue UML que se dibuja en draw.io y se exporta en PDF vectorial a `img/`:
+| Salida | Figura |
+|---|---|
+| `img/Despliegue.pdf` | `fig:ob2_despliegue` |
 
-| Diagrama | Archivo de salida | Figura en LaTeX |
+Paleta y reglas: las de `ESPECIFICACION-arquitectura-general.md`. Tres zonas en columnas; solo nombres e íconos, **sin artefactos ni descripciones**. El detalle (tamaño del VPS, puertos, dominio, claves) está en la tabla de nodos.
+
+## Zonas y nodos
+
+| Zona (izquierda → derecha) | Nodos (forma de cubo `«device»` o nube) | Color |
 |---|---|---|
-| Despliegue UML | `img/Despliegue.pdf` | `fig:ob2_despliegue` |
+| **Usuarios** | Equipos de la clínica (navegador) · Teléfono del paciente (WhatsApp) | Persona |
+| **VPS de la clínica** | Caja punteada "Docker Compose" con: nginx · API Spring Boot (franja verde "Agente") · PostgreSQL · Respaldo | Contenedor / BD |
+| **Servicios en la nube** | WhatsApp (Meta) · Google Calendar · Google Drive | Externo |
 
-Archivo fuente sugerido: `diagramas/drawio/despliegue.drawio`, con la biblioteca de íconos incluida.
+## Flechas (seis)
 
-## Notas de estilo
+| Flecha | Etiqueta |
+|---|---|
+| Equipos de la clínica → nginx | HTTPS |
+| Teléfono del paciente ↔ WhatsApp | Mensajes |
+| WhatsApp → nginx | Webhook HTTPS |
+| API → WhatsApp | Respuestas |
+| API → Google Calendar | Agenda |
+| Respaldo → Google Drive | Respaldo cifrado |
 
-- Colores sobrios, legibles en escala de grises (mismos criterios que `ESPECIFICACION-arquitectura-general.md`):
-  - Nodo de hardware (equipo, servidor): forma de cubo, relleno `#F2F2F2`, borde `#333333`.
-  - Nodo de entorno de ejecución (Docker, contenedor): relleno `#D9D9D9`, borde `#333333`.
-  - Artefacto desplegado: forma de documento o rectángulo con el estereotipo `«artifact»`, relleno blanco, borde `#333333`.
-  - Nodo externo (Meta, Google): borde `#666666` punteado.
-  - Límite (VPS, Docker Compose): sin relleno, borde `#666666` punteado.
-  - Elementos agregados por el agente: borde grueso (3 px) y nota "Agregado por el agente".
-- Cada nodo lleva el estereotipo UML entre `«»` en la primera línea, el nombre en negrita y, debajo, la tecnología entre corchetes.
-- Íconos: SVG monocromos de devicon.dev o simpleicons.org, guardados en una biblioteca propia de draw.io (Biblioteca → Nueva biblioteca). Tamaño 40 a 50 px. Convertir a escala de grises antes de guardarlos.
-- Tipografía sans-serif (Arial o Helvetica), 10 a 12 pt para los nombres y 9 pt para las etiquetas de las flechas.
-- Fondo blanco, sin sombras ni degradados. Ancho máximo de la figura: el ancho del texto (14,5 cm).
-- Exportar en PDF con "Transparent Background" desactivado y "Crop" activado. Verificar que el PDF sea vectorial (los textos deben poder seleccionarse).
-- Las relaciones se dibujan con línea continua. Los eventos (envío de eventos del webhook) se dibujan punteados. Cada flecha lleva una etiqueta con la acción y, entre paréntesis, el protocolo.
+Las flechas internas del VPS (nginx → API → PostgreSQL ← Respaldo) se dibujan cortas y sin etiqueta.
 
----
-
-## Título sugerido
-
-Sistema de información de Bellidental: despliegue.
-
-## Elementos
-
-### Nodos de hardware (forma de cubo, `«device»`)
-
-| Nodo | Estereotipo | Tecnología | Contenido o artefactos | Ícono sugerido |
-|---|---|---|---|---|
-| Equipos de la clínica | `«device»` | Navegador web | Sin artefacto propio: el navegador ejecuta la SPA que entrega nginx. Equipos de recepción, consultorios y dirección | Ícono de computadora portátil (forma "Laptop" de draw.io) |
-| Dispositivo del paciente | `«device»` | Aplicación de WhatsApp | Envía mensajes al número del agente y recibe respuestas y recordatorios | Ícono de teléfono móvil (forma "Mobile" de draw.io) |
-| Servidor virtual (VPS) | `«device»` | Linux, 2 vCPU y 4 GB de RAM; contratado a nombre de la clínica | Contiene el nodo Docker Compose. Solo los puertos 80 y 443 abiertos | Ícono de servidor (forma "Server" de draw.io) |
-
-### Entorno de ejecución dentro del VPS
-
-| Nodo | Estereotipo | Tecnología | Artefacto desplegado | Ícono sugerido |
-|---|---|---|---|---|
-| Docker Compose | `«execution environment»` | Docker y Docker Compose | Ninguno (agrupa los cuatro contenedores) | Docker (devicon: `docker-original`) |
-| Proxy inverso y servidor web | `«execution environment»` | nginx con Let's Encrypt (renovación automática) | Artefactos: configuración de TLS y rutas (`/api` y webhook) y archivos de la aplicación web (SPA Angular) | nginx (devicon: `nginx-original`); candado para Let's Encrypt (simpleicons.org: `letsencrypt`) |
-| API del sistema | `«execution environment»` | Spring Boot 3.5, Java 21 | Artefacto: `bellidental-api.jar`, con el módulo del agente | Spring (devicon: `spring-original`) |
-| Base de datos | `«execution environment»` | PostgreSQL 16 | Artefacto: esquema `bellidental` en el volumen `postgres_data` | PostgreSQL (devicon: `postgresql-original`) |
-| Servicio de respaldo | `«execution environment»` | `pg_dump` programado | Artefacto: script de volcado cifrado diario | Ícono de Docker, o ninguno |
-
-### Nodos externos
-
-| Nodo | Estereotipo | Tecnología | Artefacto o contenido | Ícono sugerido |
-|---|---|---|---|---|
-| Meta (WhatsApp Cloud API) | `«cloud»` | Plataforma de Meta | Artefacto: plantillas de mensajes aprobadas. Número de WhatsApp de la clínica | WhatsApp (simpleicons.org: `whatsapp`); Meta (simpleicons.org: `meta`) |
-| Google (Calendar) | `«cloud»` | Google Calendar API | Artefacto: calendario por profesional (solo lectura) | Google Calendar (simpleicons.org: `googlecalendar`) |
-| Almacenamiento externo | `«cloud»` | Google Drive de la clínica | Artefacto: respaldos cifrados de la base de datos (la clave la custodia el director, fuera del servidor y de Drive) | Google Drive (simpleicons.org: `googledrive`) |
-| Dominio de la clínica | `«cloud»` (DNS) | Dominio a nombre de la clínica | Resuelve al VPS; lo usan el certificado y la URL del webhook registrada en Meta | Ícono de globo |
-
-## Relaciones
-
-| Origen → destino | Etiqueta | Protocolo | Tipo de línea |
-|---|---|---|---|
-| Equipos de la clínica → Proxy inverso | Descarga la SPA y llama a `/api` | HTTPS (443) | Continua |
-| Dispositivo del paciente → Meta (WhatsApp Cloud API) | Envía y recibe mensajes | WhatsApp | Continua; agregada por el agente |
-| Meta (WhatsApp Cloud API) → Proxy inverso | Envía eventos del webhook | HTTPS (443) | Punteada; agregada por el agente |
-| Proxy inverso → API del sistema | Reenvía `/api` y el webhook | HTTP interno | Continua |
-| API del sistema → Base de datos | Lee y escribe datos | Spring Data JPA (TCP 5432) | Continua |
-| API del sistema → Meta (WhatsApp Cloud API) | Envía respuestas y recordatorios | API HTTPS | Continua; agregada por el agente |
-| API del sistema → Google (Calendar) | Envía la copia de la agenda | API HTTPS | Continua |
-| Servicio de respaldo → Base de datos | Genera el volcado (`pg_dump`) | TCP 5432 | Continua |
-| Servicio de respaldo → Almacenamiento externo | Sube la copia cifrada | API HTTPS | Continua |
-
-## Límites y agrupaciones
-
-- **Servidor virtual (VPS)**: caja punteada que contiene el nodo Docker Compose. Su título incluye la nota "contratado a nombre de la clínica".
-- **Docker Compose**: caja punteada anidada dentro del VPS que agrupa los cuatro contenedores (proxy inverso, API, base de datos y servicio de respaldo).
-- Los equipos de la clínica, el dispositivo del paciente, Meta, Google, el almacenamiento externo y el dominio quedan fuera del VPS.
-- La aplicación web se dibuja una sola vez, como artefacto del proxy inverso, porque nginx sirve sus archivos; se ejecuta en el navegador de los equipos de la clínica.
-- Los equipos de la clínica, el dispositivo del paciente y los nodos externos quedan a la izquierda y a la derecha del VPS, respectivamente.
-
-## Agregados por el agente
-
-Destacar con borde grueso y una nota junto a cada elemento:
-
-- Relación Meta → Proxy inverso: nota "Webhook por HTTPS (exigido por Meta)".
-- Dispositivo del paciente y su relación con Meta.
-- Nodo Meta: nota "Número de WhatsApp exclusivo del agente y plantillas aprobadas (recordatorios fuera de la ventana de 24 horas)".
-- Artefacto `bellidental-api.jar`: nota "Incluye el módulo del agente; sin acceso a módulos clínicos ni de cobros".
-
-## Leyenda
-
-Nodo de hardware (cubo) · Entorno de ejecución (rectángulo gris) · Artefacto (rectángulo blanco con `«artifact»`) · Nodo externo (rectángulo punteado) · Límite VPS y Docker Compose (caja punteada) · Relación (flecha continua con protocolo) · Evento (flecha punteada) · Elemento agregado por el agente (borde grueso).
-
-## Entregables
-
-1. Un archivo draw.io (`diagramas/drawio/despliegue.drawio`) con la biblioteca de íconos incluida.
-2. Un PDF vectorial en `img/Despliegue.pdf`. Al existir, la figura del apartado se muestra automáticamente (la compilación usa `\IfFileExists`).
+Elementos del agente (franja "Agente", flechas de WhatsApp) en verde para distinguirlos.
