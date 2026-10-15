@@ -4,6 +4,8 @@
 |---|---|
 | `img/C4_Componentes_Agente.pdf` | `fig:ob2_c4_componentes` |
 
+> Uso actual: figura de integración del agente (apartado «Mecanismos de integración»). La estructura lógica y los componentes funcionales se dibujan en TikZ.
+
 Paleta y reglas: las de `ESPECIFICACION-arquitectura-general.md`. Solo nombres en las cajas, **sin descripciones ni tecnologías**. Nueve cajas en total.
 
 ## Elementos
