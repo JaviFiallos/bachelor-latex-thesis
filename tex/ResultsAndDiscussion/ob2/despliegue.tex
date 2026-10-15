@@ -4,11 +4,11 @@ El sistema y el agente conversacional comparten una única infraestructura.
 
 \paragraph{Diagrama de despliegue}
 
-La Figura~\ref{fig:ob2_despliegue} muestra los nodos del despliegue y los caminos de comunicación entre ellos. Los servicios se empaquetan como contenedores \cite{docker2024containers}. La Tabla~\ref{tab:ob2_nodos} describe el contenido y la responsabilidad de cada nodo.
+La Figura~\ref{fig:ob2_despliegue} muestra los nodos del despliegue y cómo se comunican. Los servicios se empaquetan como contenedores \cite{docker2024containers}, y la Tabla~\ref{tab:ob2_nodos} resume la función de cada nodo.
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/Despliegue.png}{\includegraphics[width=\linewidth]{img/Despliegue.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar según diagramas/drawio/ESPECIFICACION-despliegue.md y exportar a img/Despliegue.pdf}}}
+\IfFileExists{diagramas/drawio/Despliegue.png}{\includegraphics[width=\linewidth]{diagramas/drawio/Despliegue.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar según diagramas/drawio/ESPECIFICACION-despliegue.md y exportar a img/Despliegue.pdf}}}
 \caption{Diagrama de despliegue del sistema y del agente (UML)}
 \label{fig:ob2_despliegue}
 \end{figure}
@@ -20,20 +20,19 @@ La Figura~\ref{fig:ob2_despliegue} muestra los nodos del despliegue y los camino
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{4.4cm}|}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}X|}
 \hline
-\textbf{Nodo} & \textbf{Contenido} & \textbf{Responsabilidad} \\ \hline
-Equipos de la clínica & Navegador web en los equipos de recepción y consultorios, con conexión a internet; ejecuta la aplicación web & Acceden al sistema por HTTPS; no requieren instalación \\ \hline
-Dispositivo del paciente & Aplicación de WhatsApp & Envía mensajes al número del agente y recibe respuestas y recordatorios \\ \hline
-Servidor virtual (VPS) & Linux con 2 vCPU y 4 GB de RAM; Docker Compose con cuatro contenedores: nginx (proxy inverso y archivos de la aplicación web), API Spring Boot (incluye el módulo del agente), PostgreSQL 16 y servicio de respaldo (Tabla~\ref{tab:ob2_contenedores}). Solo los puertos 80 y 443 están abiertos & Ejecuta todo el sistema en un único servidor \\ \hline
-Dominio de la clínica & Nombre de dominio registrado a nombre de la clínica & Identifica el servidor en el certificado de Let's Encrypt, de renovación automática, y en la URL del webhook registrada en Meta \\ \hline
-Meta (WhatsApp Cloud API) & Número de WhatsApp de la clínica y plantillas de mensajes aprobadas & Transmite los mensajes al webhook por HTTPS y entrega respuestas y recordatorios; procesa los mensajes como encargado del tratamiento \\ \hline
-Google (Calendar) & Calendario de solo lectura por profesional & Recibe la copia de la agenda \\ \hline
-Almacenamiento externo (Google Drive de la clínica) & Respaldos cifrados de la base de datos & Conserva una copia fuera del servidor, bajo la cuenta de la clínica \\ \hline
+\textbf{Nodo} & \textbf{Función} \\ \hline
+Equipos de la clínica & Usan la aplicación web desde el navegador, sin instalación \\ \hline
+Teléfono del paciente & Conversa con el agente y recibe recordatorios por WhatsApp \\ \hline
+Servidor virtual (VPS) & Ejecuta con Docker Compose el proxy nginx, la API con el agente, PostgreSQL y el respaldo \\ \hline
+WhatsApp Cloud API (Meta) & Entrega los mensajes al webhook y envía las respuestas \\ \hline
+Google Calendar & Recibe la copia de la agenda \\ \hline
+Google Drive de la clínica & Guarda los respaldos cifrados fuera del servidor \\ \hline
 \end{tabularx}
 \end{table}
 
-\textit{Nota:} el agente agrega tres elementos a la infraestructura compartida: el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp exclusivo y las plantillas de mensajes aprobadas por Meta, que se usan en los recordatorios fuera de la ventana de 24 horas. La aplicación web no es un contenedor propio: nginx sirve sus archivos y se ejecuta en el navegador.
+El agente solo añade a esta infraestructura el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp propio y las plantillas aprobadas por Meta.
 
 \paragraph{Entornos}
 
@@ -56,30 +55,6 @@ Producción & Cuenta y número de la clínica & VPS contratado a nombre de la cl
 \end{table}
 
 El paso de pruebas a producción cambia la configuración del número y exige aprobar de nuevo las plantillas y el nombre visible en la cuenta de la clínica; el diseño no cambia. La verificación de la empresa ante Meta eleva los límites de envío \cite{meta2026limits}.
-
-\paragraph{Respaldo y continuidad}
-
-La Tabla~\ref{tab:ob2_respaldo} define la política de respaldo. Esta política atiende la persistencia de los datos (RNF04) y la continuidad de la atención (RNF05).
-
-\begin{table}[H]
-\centering
-\caption{Política de respaldo y continuidad}
-\label{tab:ob2_respaldo}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
-\hline
-\textbf{Elemento} & \textbf{Política} & \textbf{Requerimiento} \\ \hline
-Volcado de la base de datos & Diario y cifrado; se copia fuera del servidor a Google Drive de la clínica & RNF04 \\ \hline
-Clave de cifrado de los respaldos & La custodia el director, fuera del servidor y de Google Drive & RNF04 \\ \hline
-Retención & Valor configurable & RNF04 \\ \hline
-Exportación & Completa, en formato abierto (CSV y SQL); la genera el administrador & RNF04 \\ \hline
-Restauración & Procedimiento documentado y probado antes de la puesta en producción; pérdida máxima de 24 horas de datos & RNF04 \\ \hline
-Eliminación & Sin eliminación física de registros clínicos; anulación lógica & RNF04 \\ \hline
-Contingencia & Ficha rápida en papel durante la caída del sistema; carga de los datos al restablecerse & RNF05 \\ \hline
-\end{tabularx}
-\end{table}
 
 \paragraph{Riesgos y mitigaciones}
 

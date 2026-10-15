@@ -1,6 +1,6 @@
 \subsubsection{Plan de desarrollo}
 
-El plan traduce los requerimientos priorizados en tarjetas de un tablero Kanban, ordenadas por dependencia. Cada tarjeta corresponde, en general, a un módulo y se cierra con sus pruebas.
+El plan traduce los requerimientos priorizados en tarjetas de un tablero Kanban, ordenadas por dependencia. Cada tarjeta corresponde, en general, a un módulo (Tabla~\ref{tab:ob2_modulos}) y se cierra con sus pruebas.
 
 La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las tres tarjetas en negrita corresponden al agente conversacional. A octubre de 2026 están terminadas las seis primeras; las nueve restantes están pendientes.
 
@@ -21,20 +21,20 @@ La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las tres tarjetas 
 \hline
 \endfoot
 
-1. Identidad y autenticación & \texttt{identity} & RNF01 & Debe & --- & Terminada \\ \hline
-2. Profesionales y pacientes & \texttt{professionals}, \texttt{patients} & RF06 (parcial), RF07 (base) & Debe & 1 & Terminada \\ \hline
-3. Historia clínica y antecedentes & \texttt{clinicalrecords} & RF01 & Debe & 2 & Terminada \\ \hline
-4. Agenda y horarios & \texttt{appointments} & RF07 & Debe & 2 & Terminada \\ \hline
-5. Atención clínica y CIE-10 & \texttt{clinical} & RF01, RF03, RF06 & Debe & 3, 4 & Terminada \\ \hline
-6. Odontograma & \texttt{odontogram} & RF02 & Debe & 5 & Terminada \\ \hline
-7. Tratamientos & \texttt{treatments} & RF04 & Debe & 5, 6 & Pendiente \\ \hline
-8. Recetas & \texttt{prescriptions} & RF04, RF05 & Debe & 5 & Pendiente \\ \hline
-9. Cobros y comprobante & \texttt{billing} & RF08 & Debe & 7 & Pendiente \\ \hline
+1. Identidad y autenticación & Identidad y acceso & RNF01 & Debe & --- & Terminada \\ \hline
+2. Profesionales y pacientes & Pacientes y profesionales & RF06 (parcial), RF07 (base) & Debe & 1 & Terminada \\ \hline
+3. Historia clínica y antecedentes & Clínico & RF01 & Debe & 2 & Terminada \\ \hline
+4. Agenda y horarios & Agenda & RF07 & Debe & 2 & Terminada \\ \hline
+5. Atención clínica y CIE-10 & Clínico & RF01, RF03, RF06 & Debe & 3, 4 & Terminada \\ \hline
+6. Odontograma & Clínico & RF02 & Debe & 5 & Terminada \\ \hline
+7. Tratamientos & Clínico & RF04 & Debe & 5, 6 & Pendiente \\ \hline
+8. Recetas & Clínico & RF04, RF05 & Debe & 5 & Pendiente \\ \hline
+9. Cobros y comprobante & Cobros & RF08 & Debe & 7 & Pendiente \\ \hline
 10. Auditoría & Transversal & RNF02 & Debe & 9 & Pendiente \\ \hline
-11. Sincronización con Google Calendar &\texttt{calendar} & RF07 & Debe & 4 & Pendiente \\ \hline
-\textbf{12. Agente: núcleo, aviso, información y derivación} & \texttt{whatsapp} & RF09, RF10, RF13, RNF03, RNF05 & Debe y Debería & 4 & Pendiente \\ \hline
-\textbf{13. Agente: agendar y reprogramar} & \texttt{whatsapp} & RF11, RF12 & Debe & 12 & Pendiente \\ \hline
-\textbf{14. Agente: recordatorios} & \texttt{whatsapp} & RF14 & Debería & 13 & Pendiente \\ \hline
+11. Sincronización con Google Calendar &Agenda & RF07 & Debe & 4 & Pendiente \\ \hline
+\textbf{12. Agente: núcleo, aviso, información y derivación} & Agente & RF09, RF10, RF13, RNF03, RNF05 & Debe y Debería & 4 & Pendiente \\ \hline
+\textbf{13. Agente: agendar y reprogramar} & Agente & RF11, RF12 & Debe & 12 & Pendiente \\ \hline
+\textbf{14. Agente: recordatorios} & Agente & RF14 & Debería & 13 & Pendiente \\ \hline
 15. Respaldos y exportación & Servicio de respaldo & RNF04 & Debe & Todas & Pendiente \\ \hline
 \end{longtable}
 \endgroup
@@ -59,51 +59,3 @@ Anticruce & Restricción de cruces de citas por profesional, verificada por la A
 Clínica (Objetivo 3) & Recorrido de los flujos con el personal del centro & Los tramos $T_1$ a $T_5$ se comparan con la línea base del pretest \\ \hline
 \end{tabular}
 \end{table}
-
-\paragraph{Funcionalidades fuera del alcance}
-
-Las siguientes funcionalidades quedan fuera del alcance esencial. La Tabla~\ref{tab:ob2_fuera_alcance} explica el motivo de cada exclusión y propone su tratamiento como trabajo futuro.
-
-\begin{table}[H]
-\centering
-\caption{Funcionalidades fuera del alcance esencial}
-\label{tab:ob2_fuera_alcance}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.33\linewidth}|>{\raggedright\arraybackslash}p{0.33\linewidth}|}
-\hline
-\textbf{Funcionalidad} & \textbf{Motivo} & \textbf{Tratamiento} \\ \hline
-Impresión del Formulario 033 & La historia digital reemplaza el registro en papel; no es requisito del alcance esencial & Plantilla de impresión sobre la historia digital \\ \hline
-Alta de pacientes nuevos por el agente & La ficha exige datos de filiación que se validan en recepción; el agente solo identifica pacientes ya registrados (RNF03) & Alta asistida con validación en recepción \\ \hline
-Recordatorio el mismo día & Cada cita tiene un único recordatorio, el día anterior, por el costo de las plantillas & Evaluar el costo por mensaje antes de incorporarlo \\ \hline
-Firma electrónica & Requiere certificado de firma y un costo adicional & Firma digital del recetario, tras evaluar su costo \\ \hline
-Interoperabilidad HL7 FHIR & No es requisito del Objetivo 1; añade una capa de mapeo a estándares & Mapeo de la historia clínica si se requiere intercambio con otros sistemas \\ \hline
-Facturación electrónica & El comprobante es interno y no tiene validación ante el SRI & Integración con el SRI, previa verificación de las obligaciones del centro \\ \hline
-Gestión de usuarios y permisos por interfaz & Los roles son fijos por diseño (RNF01) & Administración de cuentas desde la aplicación \\ \hline
-\end{tabular}
-\end{table}
-
-\paragraph{Relación con la evaluación}
-
-La Tabla~\ref{tab:ob2_enlace_obj3} relaciona cada tramo del TGA (Tabla~\ref{tab:tramos_tga}) con las tarjetas que lo atacan y su línea base. Cada tramo se medirá como tiempo promedio con la ficha de observación del pretest.
-
-\begin{table}[H]
-\centering
-\caption{Tramos del TGA atacados por las tarjetas y su línea base}
-\label{tab:ob2_enlace_obj3}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{|>{\raggedright\arraybackslash}p{0.38\linewidth}|>{\raggedright\arraybackslash}p{0.26\linewidth}|>{\raggedright\arraybackslash}p{0.20\linewidth}|}
-\hline
-\textbf{Tramo del TGA} & \textbf{Tarjetas que lo atacan} & \textbf{Línea base (min)} \\ \hline
-$T_1$ Registro posconsulta & 5, 7 y 8 & 3,40 \\ \hline
-$T_2$ Registro del pago & 9 & 1,60 \\ \hline
-$T_3$ Agendamiento & 4 y 13 & 1,30 \\ \hline
-$T_4$ Transcripción al Formulario 033 & 3 y 6 & 3,94 \\ \hline
-$T_5$ Digitalización & 3 y 6 & 3,38 \\ \hline
-\end{tabular}
-\end{table}
-
-Los efectos sobre los tramos se verificarán en el Objetivo 3.
