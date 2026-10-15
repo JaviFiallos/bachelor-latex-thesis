@@ -34,16 +34,16 @@ Las figuras de estados y de secuencia se generan desde PlantUML (`diagramas/plan
 
 | Nombre | Capa | Tipo C4 | Tecnología | Responsabilidad | Ícono o forma sugerida |
 |---|---|---|---|---|---|
-| Paciente o familiar | Externo | Persona | — | Escribe desde WhatsApp | Ícono de persona |
+| Paciente | Externo | Persona | — | Escribe desde WhatsApp | Ícono de persona |
 | WhatsApp Cloud API | Externo | Sistema externo | Meta | Transmite los eventos del webhook y entrega los mensajes | WhatsApp (simpleicons.org) |
-| Webhook de WhatsApp | Canal | Componente | Controlador HTTP (Spring Web MVC) | Responde al desafío de verificación, valida la firma `X-Hub-Signature-256` y entrega el mensaje al motor | Forma "Componente" |
+| Webhook de WhatsApp | Canal | Componente | Controlador HTTP (Spring Web MVC) | Comprueba el token y devuelve `hub.challenge` al registrar la URL; valida la firma `X-Hub-Signature-256` y entrega el mensaje al motor | Forma "Componente" |
 | Cliente de WhatsApp Cloud API | Canal | Componente | Cliente HTTP (Graph API) | Envía texto, listas, botones y plantillas; registra el identificador del mensaje | Forma "Componente" |
 | Motor de pasos | Conversación | Componente | Máquina de estados (Java) | Decide la respuesta según el paso, la entrada y el estado; aplica las reglas de derivación | Forma "Componente" |
 | Almacén de estado | Conversación | Componente | Caché en memoria (Caffeine) | Guarda el paso actual, el paciente identificado, la selección parcial y la marca de derivación; caduca a los 30 min por teléfono | Forma "Componente" (cilindro) |
 | Identificación de pacientes | Conversación | Componente | Servicio | Busca pacientes activos por teléfono en formato E.164 y valida la cédula cuando hay varios | Forma "Componente" |
-| Consentimiento de privacidad | Conversación | Componente | Servicio | Registra la aceptación del aviso con su versión y su fecha | Forma "Componente" |
+| Consentimiento de privacidad | Conversación | Componente | Servicio | Registra la aceptación del aviso con su versión y su fecha; la aceptación habilita los recordatorios | Forma "Componente" |
 | Flujo de información | Conversación | Componente | Servicio | Responde horarios y formas de pago desde la configuración, y precios desde el catálogo | Forma "Componente" |
-| Flujo de agendamiento y reprogramación | Conversación | Componente | Servicio | Ofrece horarios, registra la cita o su reprogramación | Forma "Componente" |
+| Flujo de agendamiento y reprogramación | Conversación | Componente | Servicio | Ofrece horarios, registra la cita o su reprogramación y aplica la respuesta del recordatorio (confirmar, cancelar o reprogramar) | Forma "Componente" |
 | Derivación a recepción | Conversación | Componente | Servicio | Arma el mensaje con el horario de atención y el enlace de recepción | Forma "Componente" |
 | PatientDirectory | Dominio | Componente de otro módulo | Interfaz pública del módulo de pacientes | Consulta pacientes por teléfono | Forma "Componente" con borde blanco |
 | ProfessionalDirectory | Dominio | Componente de otro módulo | Interfaz pública del módulo de profesionales | Consulta profesionales y especialidades | Ídem |
@@ -51,9 +51,9 @@ Las figuras de estados y de secuencia se generan desde PlantUML (`diagramas/plan
 | TreatmentDirectory (solo precios) | Dominio | Componente de otro módulo | Interfaz pública del módulo de tratamientos | Entrega precios referenciales en solo lectura | Ídem |
 | Configuración de la clínica | Dominio | Componente | Propiedades de la aplicación | Horarios, formas de pago, número de recepción y hora del recordatorio | Forma "Componente" |
 | Programador de recordatorios | Tareas programadas | Componente | Tarea programada, cada 5 min | Busca recordatorios vencidos y envía la plantilla de categoría utility | Forma "Componente" (reloj) |
-| Receptor de eventos de cita | Tareas programadas | Componente | Escucha de eventos de dominio | Crea el recordatorio al crear una cita activa; lo cancela al cancelar o reprogramar | Forma "Componente" |
-| Repositorio de consentimientos | Persistencia | Componente | Acceso a datos (JDBC) | Guarda y consulta la tabla `privacy_consents` | Forma "Componente" |
-| Repositorio de recordatorios | Persistencia | Componente | Acceso a datos (JDBC) | Guarda y consulta la tabla `appointment_reminders` | Forma "Componente" |
+| Receptor de eventos de cita | Tareas programadas | Componente | Escucha de eventos de dominio | Crea el recordatorio al crear una cita activa, solo si el teléfono del paciente aceptó el aviso; lo cancela al cancelar o reprogramar | Forma "Componente" |
+| Repositorio de consentimientos | Persistencia | Componente | Spring Data JPA | Guarda y consulta la tabla `privacy_consents` | Forma "Componente" |
+| Repositorio de recordatorios | Persistencia | Componente | Spring Data JPA | Guarda y consulta la tabla `appointment_reminders` | Forma "Componente" |
 | Base de datos | Persistencia | Contenedor | PostgreSQL 16 | Almacena los datos de la clínica; aplica la restricción de exclusión de citas | PostgreSQL (devicon) |
 
 Notas sobre los elementos:
@@ -66,7 +66,8 @@ Notas sobre los elementos:
 
 | Origen → destino | Etiqueta | Protocolo o tipo |
 |---|---|---|
-| Paciente o familiar → WhatsApp Cloud API | Envía mensajes | WhatsApp |
+| Paciente → WhatsApp Cloud API | Envía mensajes y pulsa botones | WhatsApp |
+| WhatsApp Cloud API → Paciente | Entrega respuestas y recordatorios | WhatsApp |
 | WhatsApp Cloud API → Webhook de WhatsApp | Transmite los eventos (firmados) | HTTPS POST |
 | Webhook de WhatsApp → Motor de pasos | Entrega el mensaje validado | Llamada interna |
 | Motor de pasos → Almacén de estado | Lee y escribe el paso | Llamada interna |
@@ -75,25 +76,28 @@ Notas sobre los elementos:
 | Motor de pasos → Flujo de información | Ejecuta la rama elegida | Llamada interna |
 | Motor de pasos → Flujo de agendamiento y reprogramación | Ejecuta la rama elegida | Llamada interna |
 | Motor de pasos → Derivación a recepción | Ejecuta la derivación | Llamada interna |
+| Motor de pasos → Repositorio de recordatorios | Registra la respuesta al recordatorio | Spring Data JPA |
 | Motor de pasos → Cliente de WhatsApp Cloud API | Solicita el envío | Llamada interna |
 | Cliente de WhatsApp Cloud API → WhatsApp Cloud API | Envía texto, listas, botones y plantillas | API HTTPS |
 | Identificación de pacientes → PatientDirectory | Busca pacientes por teléfono | Interfaz pública |
-| Flujo de agendamiento y reprogramación → AppointmentScheduler | Consulta límites; registra o reprograma citas | Interfaz pública |
+| Flujo de agendamiento y reprogramación → ProfessionalDirectory | Consulta especialidades, profesionales y horarios | Interfaz pública |
+| Flujo de agendamiento y reprogramación → AppointmentScheduler | Consulta límites; registra, confirma, cancela o reprograma citas | Interfaz pública |
 | Flujo de información → TreatmentDirectory | Consulta precios | Interfaz pública (solo lectura) |
 | Flujo de información → Configuración de la clínica | Lee horarios y formas de pago | Lectura |
 | Derivación a recepción → Configuración de la clínica | Lee el número de recepción | Lectura |
-| Programador de recordatorios → Repositorio de recordatorios | Lee pendientes y registra el envío | JDBC |
+| Programador de recordatorios → Repositorio de recordatorios | Lee pendientes y registra el envío | Spring Data JPA |
 | Programador de recordatorios → Cliente de WhatsApp Cloud API | Envía la plantilla | Llamada interna |
-| Receptor de eventos de cita → AppointmentScheduler | Recibe los eventos de cita | Evento de dominio (punteada) |
-| Receptor de eventos de cita → Repositorio de recordatorios | Crea o cancela recordatorios | JDBC |
-| Consentimiento de privacidad → Repositorio de consentimientos | Guarda la aceptación | JDBC |
-| Repositorios → Base de datos | Lee y escribe | JDBC (TCP 5432) |
+| AppointmentScheduler → Receptor de eventos de cita | Publica eventos de cita (creada, cancelada, reprogramada) | Evento de dominio (punteada) |
+| Receptor de eventos de cita → Repositorio de consentimientos | Verifica la aceptación del teléfono | Spring Data JPA |
+| Receptor de eventos de cita → Repositorio de recordatorios | Crea o cancela recordatorios | Spring Data JPA |
+| Consentimiento de privacidad → Repositorio de consentimientos | Guarda la aceptación | Spring Data JPA |
+| Repositorios → Base de datos | Lee y escribe | Spring Data JPA (TCP 5432) |
 
 **Importante:** no dibujar ninguna flecha desde el agente hacia módulos clínicos ni de cobros.
 
 ### Disposición sugerida
 
-- **Izquierda:** Paciente o familiar y WhatsApp Cloud API, fuera del límite del agente.
+- **Izquierda:** Paciente y WhatsApp Cloud API, fuera del límite del agente.
 - **Centro izquierdo:** capa Canal (Webhook y Cliente de WhatsApp).
 - **Centro:** capa Conversación, con el Motor de pasos en el medio y los flujos alrededor.
 - **Derecha:** capa Dominio (PatientDirectory, ProfessionalDirectory, AppointmentScheduler, TreatmentDirectory, configuración). Ubicar a la derecha, fuera de la capa, la caja de módulos clínicos y de cobros, sin conexiones.

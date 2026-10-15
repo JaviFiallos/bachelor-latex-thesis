@@ -1,15 +1,15 @@
 \subsubsection{Modelo de datos}
 
-El modelo relacional deriva del Formulario 033, de la ficha rápida y de los requerimientos del Objetivo 1. Se organiza en doce módulos, cada uno con tablas propias y vínculos explícitos entre ellos.
+El modelo relacional deriva del Formulario 033, de la ficha rápida y de los requerimientos del Objetivo 1. Se organiza en doce grupos de tablas, con vínculos explícitos entre ellos; los grupos se aproximan a los módulos de la API, pero no coinciden uno a uno.
 
 \begin{sidewaysfigure}[p]
     \centering
     \IfFileExists{img/ER_Bellidental.pdf}{\includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/ER_Bellidental.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: exportar el diagrama de dbdiagram.io a img/ER\_Bellidental.pdf}}}
-    \caption{Diagrama entidad-relación por módulos}
+    \caption{Diagrama entidad-relación por grupos de tablas}
     \label{fig:ob2_er}
 \end{sidewaysfigure}
 
-La Tabla~\ref{tab:ob2_tablas_modulo} asigna cada una de las 32 tablas a su módulo y relaciona cada módulo con los requerimientos que atiende.
+La Tabla~\ref{tab:ob2_tablas_modulo} asigna cada una de las 32 tablas a su grupo y relaciona cada grupo con los requerimientos que atiende.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -17,13 +17,13 @@ La Tabla~\ref{tab:ob2_tablas_modulo} asigna cada una de las 32 tablas a su módu
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
 \begin{longtable}{|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.42\linewidth}|>{\raggedright\arraybackslash}p{0.22\linewidth}|}
-\caption{Tablas por módulo del modelo de datos}
+\caption{Tablas por grupo del modelo de datos}
 \label{tab:ob2_tablas_modulo} \\
 \hline
-\textbf{Módulo} & \textbf{Tablas} & \textbf{Requerimientos} \\ \hline
+\textbf{Grupo} & \textbf{Tablas} & \textbf{Requerimientos} \\ \hline
 \endfirsthead
 \hline
-\textbf{Módulo} & \textbf{Tablas} & \textbf{Requerimientos} \\ \hline
+\textbf{Grupo} & \textbf{Tablas} & \textbf{Requerimientos} \\ \hline
 \endhead
 \hline
 \endfoot
@@ -34,15 +34,15 @@ Historia clínica y antecedentes & \texttt{clinical\_records}, \texttt{medical\_
 Agenda & \texttt{appointments} & RF07, RF11, RF12, RF14 \\ \hline
 Atención clínica & \texttt{encounters}, \texttt{encounter\_diagnoses}, \texttt{icd10\_codes} & RF01, RF03 \\ \hline
 Odontograma & \texttt{teeth}, \texttt{tooth\_surfaces}, \texttt{dental\_conditions}, \texttt{dental\_condition\_symbols}, \texttt{dental\_findings} & RF02; BN3 \\ \hline
-Tratamientos & \texttt{treatment\_catalog}, \texttt{performed\_treatments} & RF04, RF08 \\ \hline
+Tratamientos & \texttt{treatment\_catalog}, \texttt{performed\_treatments} & RF04, RF08, RF10 \\ \hline
 Recetas & \texttt{medications}, \texttt{medication\_presets}, \texttt{prescriptions}, \texttt{prescription\_items} & RF04, RF05 \\ \hline
 Cobros & \texttt{payments} & RF08 \\ \hline
-Agente conversacional & \texttt{privacy\_consents}, \texttt{appointment\_reminders} & RF09, RF10, RF14; BN6, BN7 \\ \hline
-Auditoría & \texttt{revision\_info} & RNF02; BN4 \\ \hline
+Agente conversacional & \texttt{privacy\_consents}, \texttt{appointment\_reminders} & RF09, RF14; BN6, BN7 \\ \hline
+Auditoría & \texttt{revision\_info} y tablas \texttt{*\_aud} (implementación posterior) & RNF02; BN4 \\ \hline
 \end{longtable}
 \endgroup
 
-Las tablas de la agenda y del agente concentran las reglas que comparten la recepción y el bot. La Tabla~\ref{tab:ob2_tablas_principales} resume sus campos clave y las reglas de diseño que los gobiernan.
+Las tablas de la agenda y del agente concentran las reglas que comparten la recepción y el agente. La Tabla~\ref{tab:ob2_tablas_principales} resume sus campos clave y las reglas de diseño que los gobiernan.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -60,12 +60,12 @@ Las tablas de la agenda y del agente concentran las reglas que comparten la rece
 \endhead
 \hline
 \endfoot
-\texttt{patients} & \texttt{document\_type}, \texttt{document\_number}, \texttt{birth\_date}, \texttt{phone\_e164} & El tipo y el número de documento y la fecha de nacimiento son obligatorios. El teléfono está en formato E.164 y no es único, porque un número puede pertenecer a varios pacientes de una familia. \\ \hline
+\texttt{patients} & \texttt{document\_type}, \texttt{document\_number}, \texttt{birth\_date}, \texttt{phone\_e164} & El tipo y el número de documento y la fecha de nacimiento son obligatorios. El teléfono está en formato E.164 y no es único, porque varios pacientes pueden compartir un número. \\ \hline
 \texttt{appointments} & \texttt{patient\_id}, \texttt{professional\_id}, \texttt{start\_at}, \texttt{end\_at}, \texttt{status}, \texttt{source}, \texttt{rescheduled\_from\_id} & Los estados son pendiente, confirmada, atendida, cancelada, no asistió y reprogramada. El origen distingue la recepción, el profesional, el paciente sin turno previo y el agente. Una restricción de exclusión impide que dos citas del mismo profesional se crucen; las citas canceladas, no asistidas o reprogramadas no bloquean el horario. \texttt{rescheduled\_from\_id} enlaza la cita nueva con la original. \\ \hline
 \texttt{professional\_schedules} & \texttt{professional\_id}, \texttt{weekday}, \texttt{specific\_date}, \texttt{start\_time}, \texttt{end\_time}, \texttt{available} & El horario semanal se repite cada semana (\texttt{weekday}, de 1 a 7). Una fecha puntual puede registrar un turno especial o una excepción. Varias filas por día permiten turnos de mañana y de tarde. Si \texttt{available} es falso, el profesional no atiende ese día. \\ \hline
-\texttt{privacy\_consents} & \texttt{phone\_e164}, \texttt{patient\_id}, \texttt{notice\_version}, \texttt{accepted\_at} & Registra la aceptación del aviso de privacidad por número de teléfono, antes de que exista la ficha del paciente. \texttt{patient\_id} se completa después y \texttt{notice\_version} conserva la versión aceptada. \\ \hline
+\texttt{privacy\_consents} & \texttt{phone\_e164}, \texttt{patient\_id}, \texttt{notice\_version}, \texttt{accepted\_at} & Registra la aceptación del aviso de privacidad por número de teléfono, antes de que exista la ficha del paciente. \texttt{patient\_id} se completa después y \texttt{notice\_version} conserva la versión aceptada. Solo los teléfonos con aceptación reciben recordatorios. \\ \hline
 \texttt{appointment\_reminders} & \texttt{appointment\_id}, \texttt{kind}, \texttt{scheduled\_at}, \texttt{status}, \texttt{wa\_message\_id}, \texttt{response} & Solo puede haber un recordatorio pendiente por cita y tipo. \texttt{status} registra el envío y \texttt{response} la respuesta del paciente: confirmar, cancelar o reprogramar. \\ \hline
-\texttt{users} & \texttt{username}, \texttt{email}, \texttt{password\_hash}, \texttt{is\_system}, \texttt{active} & El usuario técnico del agente (\texttt{is\_system} en verdadero) identifica las acciones del bot, pero no inicia sesión. \\ \hline
+\texttt{users} & \texttt{username}, \texttt{email}, \texttt{password\_hash}, \texttt{is\_system}, \texttt{active} & El usuario técnico del agente (\texttt{is\_system} en verdadero) identifica las acciones del agente, pero no inicia sesión. \\ \hline
 \end{longtable}
 \endgroup
 
@@ -87,10 +87,10 @@ La Tabla~\ref{tab:ob2_principios} recoge cinco principios que sustentan el model
 \endhead
 \hline
 \endfoot
-Separación entre datos clínicos y de identificación & Los datos clínicos se guardan en tablas distintas de la identificación del paciente. Solo el rol de odontólogo puede editarlos; la recepción accede a identificación, agenda y cobros. & BN3; RNF01; AM 5216-A, arts. 14, 27 y 38 \\ \hline
+Separación entre datos clínicos y de identificación & Los datos del Formulario 033 se guardan en tablas distintas de la identificación del paciente. Solo el rol de odontólogo puede editarlos; la recepción accede a identificación, agenda y cobros. La tabla \texttt{patients} conserva datos ajenos al formulario, como el grupo sanguíneo y las observaciones de la ficha rápida. & BN3; RNF01; AM 5216-A, arts. 14 y 27 \\ \hline
 Anulación lógica & Las tablas clínicas y de cobros no admiten borrado físico. Cada registro anulado conserva la marca de anulación (\texttt{voided\_at}) y, en atenciones, tratamientos y cobros, el motivo (\texttt{void\_reason}). & RNF04; BN2 \\ \hline
-Saldo calculado & El saldo es la suma de los tratamientos no anulados menos la suma de los pagos no anulados. No se almacena. & RF08 \\ \hline
-Trazabilidad & La tabla \texttt{revision\_info} registra el usuario y la fecha de cada revisión. Las citas, los pagos y la apertura de la historia clínica registran a su autor. & RNF02; BN4 \\ \hline
+Saldo calculado & El saldo de cada sesión es la suma de precio por cantidad de sus tratamientos no anulados menos los pagos no anulados asociados a ella; el saldo del paciente acumula sus sesiones. No se almacena. & RF08 \\ \hline
+Trazabilidad & Las citas, los pagos y la apertura de la historia clínica registran a su autor. El historial de cambios se diseña con Hibernate Envers: \texttt{revision\_info} guarda el usuario y la fecha de cada revisión, y una tabla \texttt{*\_aud} por entidad auditada (citas, pacientes, historia, atenciones, diagnósticos, hallazgos, tratamientos, recetas y pagos) guarda cada versión. Estas tablas se implementan después y no se muestran en el diagrama entidad-relación. & RNF02; BN4 \\ \hline
 Edad e índices CPO/ceo calculados & La edad se calcula desde \texttt{birth\_date} hasta la fecha de la atención. Los índices CPO y ceo se obtienen de los hallazgos del odontograma y no se almacenan. & RF01 \\ \hline
 \end{longtable}
 \endgroup
@@ -105,7 +105,7 @@ La Figura~\ref{fig:ob2_estados_cita} muestra los estados de la cita y las transi
         font=\footnotesize,
         >={Stealth[length=2mm]},
         estado/.style={rectangle, rounded corners=2pt, draw, minimum width=2.8cm, minimum height=0.9cm, align=center},
-        final/.style={estado, double, double distance=1.5pt},
+        final/.style={estado, fill=gray!15},
         etiqueta/.style={font=\scriptsize, align=center, inner sep=1pt}
     ]
         % Estado inicial
@@ -126,13 +126,13 @@ La Figura~\ref{fig:ob2_estados_cita} muestra los estados de la cita y las transi
         % Transiciones
         \draw[->] (ini) -- (pend.west);
         \draw[->] (pend.south) -- node[left, etiqueta] {confirmar} (conf.north);
-        \draw[->] (grupo.east) -- node[pos=0.75, sloped, above, etiqueta] {reprogramar} (rep.west);
+        \draw[->] (grupo.east) -- node[pos=0.75, sloped, above, etiqueta] {reprogramar\\(sin llegada)} (rep.west);
         \draw[->] (grupo.east) -- node[pos=0.75, sloped, above, etiqueta] {no asistió\\(sin llegada)} (noa.west);
         \draw[->] (grupo.east) -- node[pos=0.75, sloped, below, etiqueta] {atender\\(con llegada)} (ate.west);
         \draw[->] (grupo.east) -- node[pos=0.75, sloped, below, etiqueta] {cancelar} (can.west);
     \end{tikzpicture}
-    \caption{Estados de la cita y transiciones según el registro de llegada}
+    \caption{Estados de la cita y transiciones según el registro de llegada (en gris, estados finales)}
     \label{fig:ob2_estados_cita}
 \end{figure}
 
-La reprogramación crea una nueva cita en estado pendiente, vinculada a la original. El agente recorre los mismos estados que la recepción.
+La reprogramación crea una nueva cita en estado pendiente, vinculada a la original. Las citas creadas por el agente siguen los mismos estados que las de la recepción.

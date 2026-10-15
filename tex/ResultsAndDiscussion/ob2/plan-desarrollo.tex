@@ -1,8 +1,8 @@
 \subsubsection{Plan de desarrollo}
 
-El plan traduce los requerimientos priorizados en tarjetas de un tablero Kanban, ordenadas por dependencia. Cada tarjeta corresponde a un módulo y se cierra con sus pruebas.
+El plan traduce los requerimientos priorizados en tarjetas de un tablero Kanban, ordenadas por dependencia. Cada tarjeta corresponde, en general, a un módulo y se cierra con sus pruebas.
 
-La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las tres tarjetas en negrita corresponden al agente conversacional. Al 2026-10 están terminadas las seis primeras; las nueve restantes están pendientes.
+La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las tres tarjetas en negrita corresponden al agente conversacional. A octubre de 2026 están terminadas las seis primeras; las nueve restantes están pendientes.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -10,7 +10,7 @@ La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las tres tarjetas 
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
 \begin{longtable}{|p{0.24\linewidth}|p{0.17\linewidth}|p{0.17\linewidth}|p{0.10\linewidth}|p{0.09\linewidth}|p{0.10\linewidth}|}
-\caption{Tarjetas del tablero Kanban, con sus requerimientos, prioridad, dependencias y estado al 2026-10}
+\caption{Tarjetas del tablero Kanban, con sus requerimientos, prioridad, dependencias y estado a octubre de 2026}
 \label{tab:ob2_tarjetas} \\
 \hline
 \textbf{Tarjeta} & \textbf{Módulo} & \textbf{Requerimientos} & \textbf{Prioridad} & \textbf{Depende de} & \textbf{Estado} \\ \hline
@@ -53,9 +53,9 @@ A la fecha, el backend cuenta con 30 clases de prueba: 13 de integración y 17 u
 \begin{tabular}{|>{\raggedright\arraybackslash}p{0.17\linewidth}|>{\raggedright\arraybackslash}p{0.34\linewidth}|>{\raggedright\arraybackslash}p{0.37\linewidth}|}
 \hline
 \textbf{Nivel} & \textbf{Alcance} & \textbf{Criterio} \\ \hline
-Integración & Endpoints de cada módulo sobre una base de datos real en contenedor & Un flujo principal y un caso de fallo clave por tarjeta, como el rechazo de una cita en un horario ocupado \\ \hline
+Integración & Endpoints de los módulos críticos (agenda, historia clínica, atención y odontograma) sobre una base de datos real en contenedor & Un flujo principal y un caso de fallo clave por módulo, como el rechazo de una cita en un horario ocupado \\ \hline
 Unitaria & Reglas puras: estados de la cita, cálculo de horarios, reglas del agente y máquina de pasos del agente & Se prueban las transiciones permitidas y las rechazadas, sin acceso a la base de datos \\ \hline
-Anticruce & Restricción de cruces de citas por profesional, verificada por la API sobre la base de datos & Un intento de cita solapada se rechaza mientras la cita existente no se cancele; la reprogramación a un horario ocupado también se rechaza \\ \hline
+Anticruce & Restricción de cruces de citas por profesional, verificada por la API sobre la base de datos & Un intento de cita solapada se rechaza mientras la cita existente no se cancele. La reprogramación pasa por la misma restricción; su prueba sobre un horario ocupado se añade con la tarjeta 13 \\ \hline
 Clínica (Objetivo 3) & Recorrido de los flujos con el personal del centro & Los tramos $T_1$ a $T_5$ se comparan con la línea base del pretest \\ \hline
 \end{tabular}
 \end{table}
@@ -75,8 +75,7 @@ Las siguientes funcionalidades quedan fuera del alcance esencial. La Tabla~\ref{
 \hline
 \textbf{Funcionalidad} & \textbf{Motivo} & \textbf{Tratamiento} \\ \hline
 Impresión del Formulario 033 & La historia digital reemplaza el registro en papel; no es requisito del alcance esencial & Plantilla de impresión sobre la historia digital \\ \hline
-Citas gestionadas por terceros & Requiere permisos por usuario, que el alcance no incluye (RNF01) & Cuentas por profesional con permisos sobre la agenda \\ \hline
-Alta de pacientes nuevos por el agente & Exige cédula y fecha de nacimiento, datos que el agente no trata (RNF03) & Alta asistida con validación en recepción \\ \hline
+Alta de pacientes nuevos por el agente & La ficha exige datos de filiación que se validan en recepción; el agente solo identifica pacientes ya registrados (RNF03) & Alta asistida con validación en recepción \\ \hline
 Recordatorio el mismo día & Cada cita tiene un único recordatorio, el día anterior, por el costo de las plantillas & Evaluar el costo por mensaje antes de incorporarlo \\ \hline
 Firma electrónica & Requiere certificado de firma y un costo adicional & Firma digital del recetario, tras evaluar su costo \\ \hline
 Interoperabilidad HL7 FHIR & No es requisito del Objetivo 1; añade una capa de mapeo a estándares & Mapeo de la historia clínica si se requiere intercambio con otros sistemas \\ \hline
@@ -87,23 +86,23 @@ Gestión de usuarios y permisos por interfaz & Los roles son fijos por diseño (
 
 \paragraph{Relación con la evaluación}
 
-La Tabla~\ref{tab:ob2_enlace_obj3} relaciona cada tramo del TGA (Tabla~\ref{tab:tramos_tga}) con las tarjetas que lo atacan. Los tramos se medirán con la ficha de observación del pretest.
+La Tabla~\ref{tab:ob2_enlace_obj3} relaciona cada tramo del TGA (Tabla~\ref{tab:tramos_tga}) con las tarjetas que lo atacan y su línea base. Cada tramo se medirá como tiempo promedio con la ficha de observación del pretest.
 
 \begin{table}[H]
 \centering
-\caption{Tramos del TGA atacados por las tarjetas y forma de medición}
+\caption{Tramos del TGA atacados por las tarjetas y su línea base}
 \label{tab:ob2_enlace_obj3}
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.20\linewidth}|>{\raggedright\arraybackslash}p{0.42\linewidth}|}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.38\linewidth}|>{\raggedright\arraybackslash}p{0.26\linewidth}|>{\raggedright\arraybackslash}p{0.20\linewidth}|}
 \hline
-\textbf{Tramo del TGA} & \textbf{Tarjetas que lo atacan} & \textbf{Cómo se medirá} \\ \hline
-$T_1$ Registro posconsulta & 5, 7 y 8 & Tiempo promedio con la ficha de observación del pretest; línea base de 3,40 min \\ \hline
-$T_2$ Registro del pago & 9 & Tiempo promedio con la ficha de observación del pretest; línea base de 1,60 min \\ \hline
-$T_3$ Agendamiento & 4, 11 y 13 & Tiempo promedio con la ficha de observación del pretest; línea base de 1,30 min \\ \hline
-$T_4$ Transcripción al Formulario 033 & 3 y 6 & Tiempo promedio con la ficha de observación del pretest; línea base de 3,94 min \\ \hline
-$T_5$ Digitalización & 3 y 6 & Tiempo promedio con la ficha de observación del pretest; línea base de 3,38 min \\ \hline
+\textbf{Tramo del TGA} & \textbf{Tarjetas que lo atacan} & \textbf{Línea base (min)} \\ \hline
+$T_1$ Registro posconsulta & 5, 7 y 8 & 3,40 \\ \hline
+$T_2$ Registro del pago & 9 & 1,60 \\ \hline
+$T_3$ Agendamiento & 4 y 13 & 1,30 \\ \hline
+$T_4$ Transcripción al Formulario 033 & 3 y 6 & 3,94 \\ \hline
+$T_5$ Digitalización & 3 y 6 & 3,38 \\ \hline
 \end{tabular}
 \end{table}
 

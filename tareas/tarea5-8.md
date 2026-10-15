@@ -115,8 +115,31 @@ Verificado sin problemas: 32 tablas, campos y reglas vs `schema.dbml`; restricci
 
 ## Decisiones pendientes del autor
 1. **Spring Boot 3.4** (posible fin de soporte OSS): ¿actualizar a 3.5/4.0 o justificar la versión?
+Revise la documentacion y si voy a actualizarla no menciones esto solo redacta que la usare, voy a actualizarla a 3.5.x.
 2. **Art. 38 del AM 5216-A:** añadirlo a BN3 en `results-ob1.tex` (recomendado; el texto normativo ya lo invoca) o quitarlo del modelo de datos.
+Quitalo del modelo de datos
 3. **`blood_type` y `admin_notes`:** ¿se mueven a la historia clínica o se justifica que queden en la tabla de pacientes?
+Si esos datos no corresponden a la ficha clinica se quedan en pacientes
 4. **Tablas `*_aud`:** ¿se añaden a `schema.dbml` o solo se mencionan en una nota?
+Si las tablas d eauditoria tengo pensadas implentarlas despues
 5. **Contenedores:** ¿un solo nginx (proxy + archivos de la SPA) o un contenedor web separado?
+un solo Nginx (proxy + archivos de la SPA)
 6. **Nombres de paquetes:** el código tiene `notifications`/`dashboard`; la tesis usa `whatsapp`, `calendar`, etc. ¿Renombrar en el código o dejar una nota?
+No los renombres deja una nota
+
+
+---
+
+## Correcciones aplicadas (2026-10-14, según las decisiones del autor)
+- **Spring Boot 3.5** en texto y especificaciones (sin mencionar la actualización).
+- **Art. 38** quitado del modelo de datos (principio de separación: arts. 14 y 27).
+- **`blood_type` y `admin_notes`** se quedan en `patients`, como datos ajenos al Formulario 033 (nota en `tab:ob2_principios`).
+- **Tablas `*_aud`:** solo nota (implementación posterior, fuera del ER); `schema.dbml` sin cambios.
+- **Un solo nginx** (proxy + archivos de la SPA); la SPA se ejecuta en el navegador; cuatro contenedores Docker.
+- **Paquetes:** nota de nombres (`notifications`, `dashboard`) en la tabla de módulos y en la especificación; código sin renombrar.
+- Matriz backend: Django 3 en pruebas, Spring 3 en auditoría → 2,40 vs 2,30; la experiencia se declara decisiva (sin ella ganaría Django).
+- Origen y justificación de pesos en las tres matrices; frontend vinculado a RF01/RNF06/RF02/RF07; licencia uniforme en BD (MongoDB cae solo por integridad referencial).
+- Motor conversacional: criterios reformulados; Botpress (en la nube) y Dialogflow no superan el primer tamiz → Módulo propio 2,60 · n8n 2,20 · Rasa 1,60.
+- Tudor Car como revisión de alcance; costo por plantilla; webhook evaluado de forma cualitativa (explicado); Cloudflare gratuito y descifra el tráfico; RAM de un modelo local; RF completos en `tab:ob2_stack_agente`.
+- Dependencias: clinical → clinicalrecords, calendar → professionals, billing → patients; sin prescriptions → treatments; `privacy_consents` en `whatsapp`; persistencia compartida; Roca citado por la extensión sin tocar el núcleo.
+- Modelo de datos: «doce grupos de tablas», RF10 en Tratamientos, Envers descrito como diseño, saldo por sesión, «agente» en lugar de «bot», estados finales en gris y «(sin llegada)» en reprogramar.

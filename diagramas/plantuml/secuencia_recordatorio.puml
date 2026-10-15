@@ -1,5 +1,4 @@
 @startuml secuencia_recordatorio
-title Recordatorio del día anterior y respuesta del paciente
 
 skinparam monochrome true
 skinparam shadowing false
@@ -7,37 +6,47 @@ skinparam defaultFontName Arial
 autonumber
 
 participant "Tarea programada\n(cada 5 min)" as Tarea
+database "appointment_reminders" as Recordatorios
 participant "Motor conversacional" as Motor
+participant "Webhook" as Webhook
 participant "WhatsApp Cloud API\n(Meta)" as Meta
 actor "Paciente" as Paciente
 participant "AppointmentScheduler" as Agenda
-database "appointment_reminders" as Recordatorios
+
+note over Tarea, Recordatorios
+  El recordatorio solo existe si el teléfono
+  del paciente aceptó el aviso en el agente
+end note
 
 Tarea -> Recordatorios : busca pendientes con envío vencido
 Recordatorios --> Tarea : recordatorios pendientes
 Tarea -> Motor : envía recordatorio
 Motor -> Meta : plantilla utility con botones\nConfirmar, Cancelar y Reprogramar
 Meta -> Paciente : recordatorio
-Motor -> Recordatorios : estado ENVIADO e identificador del mensaje
+Motor -> Recordatorios : estado SENT e identificador del mensaje
 Paciente -> Meta : pulsa un botón
-Meta -> Motor : evento firmado con la respuesta
+Meta -> Webhook : evento firmado con la respuesta
+Webhook -> Webhook : valida la firma
+Webhook -> Motor : respuesta
 Motor -> Recordatorios : registra la respuesta
 
 alt Confirmar
   Motor -> Agenda : confirma la cita
   Motor -> Meta : confirmación
   Meta -> Paciente : cita confirmada
-else Cancelar
+else Cancelar (hasta 2 h antes)
   Motor -> Agenda : cancela la cita (libera el horario)
   Motor -> Meta : cancelación
   Meta -> Paciente : cita cancelada
-else Reprogramar
+else Reprogramar (hasta 2 h antes)
   Motor -> Meta : abre el flujo de reprogramación
   Meta -> Paciente : opciones de horario
-  note right of Motor
-    Cancelar o reprogramar solo hasta 2 h antes.
-    Después, derivación a recepción.
-    Si el paciente abandona, la cita no cambia.
-  end note
+else Cancelar o reprogramar con menos de 2 h
+  Motor -> Meta : derivación con horario y enlace de recepción
+  Meta -> Paciente : contactar a recepción
 end
+note right of Motor
+  Si el paciente abandona la reprogramación,
+  la cita no cambia.
+end note
 @enduml

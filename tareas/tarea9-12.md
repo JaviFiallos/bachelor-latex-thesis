@@ -112,10 +112,34 @@ Verificado sin problemas: conteos de pruebas (30 clases, 118 métodos), estado d
 
 ### Decisiones pendientes del autor (tareas 9–12)
 1. **Aceptación para recordatorios:** ¿se registra en recepción al filiar o solo se recuerda a quien aceptó por WhatsApp?
+Solo se lo recuerda a quien acepto por whatsapp
 2. **Valores de las reglas** (2 h, 1 por especialidad, 3 por teléfono, 14 días): ¿se validan con la clínica?
+Si me parecen bien los valores
 3. **VPS frente a la P7 del Director:** ¿se mantiene? De ser así, actualizar §1 y la decisión sobre el servidor en `IMPLEMENTATION-PLAN.md` del backend, que aún dicen «PC de recepción».
+Si se mantien el vps, no modifiques nada en el backen ya lo hare yo tu solo plasmalo en el documento
 4. **Prueba piloto del Objetivo 3:** ¿con la cuenta del desarrollador y datos reales? Eso lo convierte en encargado del tratamiento.
+Esto no lo menciones aun
 5. **Proveedor y región del VPS** y la base de la transferencia internacional.
+
 6. **«Citas por terceros»:** qué significa y si se mantiene fuera del alcance.
+Son citas que pueden ser agendadas por familiares no relizada por el propio paciente, y si queda fuera es mas ni siquiera lo menciones, me parece que eso lo borre del obj 1 quedan rescoldos pero en general no  deb mencionarse
 
 Las decisiones pendientes de las tareas 5–8 están en `tareas/tarea5-8.md`.
+
+---
+
+## Correcciones aplicadas (2026-10-14, según las decisiones del autor)
+- **Recordatorios solo a teléfonos con aviso aceptado en el agente:** tabla de componentes, `privacy_consents`, mecanismos (opt-in de Meta), seguridad, cobertura, limitaciones, especificación del agente, estados, secuencia del recordatorio y anotación del BPMN P2.
+- **Reglas del agente** (2 h, 1 por especialidad, 3 por teléfono, 14 días) se mantienen; se aclara que aplican solo a las citas del agente. La regla de 2 h cubre cancelar y reprogramar.
+- **VPS frente a P7:** párrafo reescrito («Cambio frente a la instalación local prevista inicialmente») con la tensión, cuatro mitigaciones y RNF05 condicionado. Backend sin cambios.
+- **Piloto del Objetivo 3:** no se menciona.
+- **Proveedor y región del VPS:** sin respuesta; el texto se mantiene genérico (acuerdo de encargado y régimen de transferencia internacional de la LOPDP).
+- **Citas por terceros:** eliminadas (fila de fuera de alcance, carril «Paciente / Familiar» → «Paciente» en BPMN P1, actor del C4, «por familiar» en proceso to-be e impulsores, N4 en el Objetivo 1).
+- Frase de los «cuatro elementos»; columna «Origen»; firma atribuida a RNF03/BN7; citas a Meta (`meta2026optin`, `meta2026pricing`, `meta2026limits`, nuevas en `fundamentacion_teorica.bib`); tope fijado por Meta; número exclusivo como decisión de diseño; Shaikh corregido; terceros encargados (Meta, Google, VPS).
+- Despliegue: dispositivo del paciente, dominio, VPS 2 vCPU/4 GB, puertos 80/443, renovación del certificado, custodia de la clave, túnel en desarrollo, matiz del paso a producción, canal alterno, disponibilidad «continua».
+- Plan: integración en módulos críticos, prueba de reprogramación sobre horario ocupado con la tarjeta 13, «a octubre de 2026», columna «Línea base (min)», T3 sin la tarjeta 11.
+- Discusión: RF01 y RF06 parciales (6 implementados, 3 parciales), RNF02 y RNF05 corregidos, PC3, modularidad matizada, cuatro limitaciones nuevas, trabajos futuros unificados con la tabla de exclusiones.
+- Figuras: renderizadas con PlantUML (1.2025.4, SVG → PDF vectorial) `img/Estados_Conversacion.pdf`, `img/Secuencia_Agendar.pdf`, `img/Secuencia_Recordatorio.pdf`; BPMN P1 y P2 regenerados desde el SVG.
+- Compilación: 0 errores, 0 referencias/citas indefinidas, 145 páginas; sin cajas desbordadas en el Objetivo 2.
+
+**Pendiente (requiere draw.io / dbdiagram.io):** `C4_Contexto`, `C4_Contenedores`, `Modulos`, `C4_Componentes_Agente`, `Despliegue`, `ER_Bellidental`.

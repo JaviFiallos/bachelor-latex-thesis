@@ -2,7 +2,7 @@
 
 \paragraph{Cobertura de los requerimientos}
 
-La Tabla~\ref{tab:ob2_cobertura} asocia cada requerimiento del Objetivo 1 con el componente o la decisión de diseño que lo atiende, y registra su estado a octubre de 2026 según el plan de desarrollo. Seis requerimientos están implementados, uno de ellos de forma parcial, y los catorce restantes están diseñados. Los implementados corresponden a las tarjetas terminadas del tablero Kanban y los diseñados, a las tarjetas pendientes. El requerimiento RNF06 no se asigna a ninguna tarjeta; su cumplimiento se verifica en el Objetivo 3.
+La Tabla~\ref{tab:ob2_cobertura} asocia cada requerimiento del Objetivo 1 con el componente o la decisión de diseño que lo atiende, y registra su estado a octubre de 2026 según el plan de desarrollo. Seis requerimientos están implementados, tres de ellos de forma parcial, y los catorce restantes están diseñados. Los implementados corresponden a las tarjetas terminadas del tablero Kanban y los diseñados, a las tarjetas pendientes. El requerimiento RNF06 no se asigna a ninguna tarjeta; su cumplimiento se verifica en el Objetivo 3.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -21,25 +21,25 @@ La Tabla~\ref{tab:ob2_cobertura} asocia cada requerimiento del Objetivo 1 con el
 \hline
 \endfoot
 
-RF01. Historia clínica digital & Módulo de historia clínica y antecedentes, con el registro de la atención en un único registro & Proceso propuesto; Modelo de datos & Implementado \\ \hline
+RF01. Historia clínica digital & Módulo de historia clínica y antecedentes, con el registro de la atención en un único registro; faltan los tratamientos y la receta del Formulario 033 (tarjetas 7 y 8) & Proceso propuesto; Modelo de datos & Implementado (parcial) \\ \hline
 RF02. Odontograma digital & Módulo del odontograma por pieza y cara, con edición restringida al rol de odontólogo & Modelo de datos & Implementado \\ \hline
 RF03. Catálogo CIE-10 predictivo & Módulo de atención clínica con el catálogo CIE-10 y búsqueda por similitud en PostgreSQL & Selección de tecnologías; Modelo de datos & Implementado \\ \hline
 RF04. Catálogos de tratamientos y de fármacos & Módulos de tratamientos y recetas, con catálogos precargados y posología predefinida & Arquitectura general del sistema; Modelo de datos & Diseñado \\ \hline
 RF05. Receta imprimible & Módulo de recetas, generada desde los catálogos y asociada al código CIE-10 & Arquitectura general del sistema; Proceso propuesto & Diseñado \\ \hline
-RF06. Consulta inmediata del historial & Módulo de pacientes y de historia clínica, con acceso a pacientes que acuden sin cita & Arquitectura general del sistema & Implementado \\ \hline
+RF06. Consulta inmediata del historial & Módulo de pacientes y de historia clínica, con acceso a pacientes que acuden sin cita; faltan el resumen clínico y el estado de los tratamientos & Arquitectura general del sistema & Implementado (parcial) \\ \hline
 RF07. Agenda centralizada & Módulo de citas con restricción de exclusión en PostgreSQL; la copia en Google Calendar está pendiente & Modelo de datos; Selección de tecnologías & Implementado (parcial) \\ \hline
 RF08. Cobros con saldo y comprobante & Módulo de cobros, con saldo calculado a partir de los tratamientos y pagos no anulados & Modelo de datos & Diseñado \\ \hline
-RF09. Aviso de privacidad & Componente de aviso de privacidad y registro de consentimientos, previo a la ficha del paciente & Arquitectura del agente conversacional & Diseñado \\ \hline
+RF09. Aviso de privacidad & Componente de aviso de privacidad y registro de consentimientos, previo a la ficha del paciente; la aceptación habilita los recordatorios & Arquitectura del agente conversacional & Diseñado \\ \hline
 RF10. Respuesta automática & Componente de información, con horarios, formas de pago y precios en solo lectura & Arquitectura del agente conversacional & Diseñado \\ \hline
 RF11. Agendamiento por WhatsApp & Componente de agendamiento, que usa la misma operación transaccional que la recepción & Arquitectura del agente conversacional; Proceso propuesto & Diseñado \\ \hline
 RF12. Reprogramación por WhatsApp & Componente de reprogramación; la cita original queda enlazada con la nueva & Arquitectura del agente conversacional; Modelo de datos & Diseñado \\ \hline
 RF13. Derivación a recepción & Componente de derivación, con el horario y el enlace a la recepción & Arquitectura del agente conversacional & Diseñado \\ \hline
-RF14. Recordatorio con respuesta & Tarea programada con plantilla de categoría utility y respuestas para confirmar, cancelar o reprogramar & Arquitectura del agente conversacional; Modelo de datos & Diseñado \\ \hline
+RF14. Recordatorio con respuesta & Tarea programada con plantilla de categoría utility y respuestas para confirmar, cancelar o reprogramar, solo para teléfonos con aviso aceptado & Arquitectura del agente conversacional; Modelo de datos & Diseñado \\ \hline
 RNF01. Control de acceso & Módulo de identidad con autenticación mediante JWT y roles diferenciados & Arquitectura general del sistema & Implementado \\ \hline
-RNF02. Trazabilidad & Campos de auditoría y tabla de revisión; el historial de cambios está pendiente & Modelo de datos & Diseñado \\ \hline
+RNF02. Trazabilidad & Autor de citas, pagos e historia; historial de cambios con Hibernate Envers (\texttt{revision\_info} y tablas \texttt{*\_aud}), sin implementar & Modelo de datos & Diseñado \\ \hline
 RNF03. Minimización de datos en el agente & El agente no accede a módulos clínicos ni de cobros; solo trata datos de identificación y de la cita & Arquitectura del agente conversacional & Diseñado \\ \hline
 RNF04. Propiedad y persistencia de los datos & Base de datos bajo control de la clínica, respaldo diario cifrado, exportación abierta y anulación lógica & Esquema de despliegue tecnológico; Modelo de datos & Diseñado \\ \hline
-RNF05. Disponibilidad & Agente en funcionamiento fuera del horario de atención, con contenedores en el servidor virtual & Esquema de despliegue tecnológico & Diseñado \\ \hline
+RNF05. Disponibilidad & Sistema disponible en el horario de atención, sujeto a la conexión de la clínica, y agente fuera de él, ambos en el servidor virtual & Esquema de despliegue tecnológico & Diseñado \\ \hline
 RNF06. Usabilidad & Catálogos con búsqueda para registrar la atención durante la consulta & Proceso propuesto & Diseñado \\ \hline
 \end{longtable}
 \endgroup
@@ -65,21 +65,21 @@ La Tabla~\ref{tab:ob2_contraste} contrasta las decisiones de diseño con los est
 \hline
 \endfoot
 
-Roca \cite{roca2020microservice}; Arcila \cite{arcila2022microservice} & Arquitecturas de microservicios en contenedores, validadas con prototipo; Arcila autentica mediante JWT a través de un API Gateway & Monolito modular, con interfaces públicas por módulo y autenticación mediante JWT & La modularidad se conserva sin el costo operativo de distribuir los servicios en un único equipo de desarrollo \\ \hline
+Roca \cite{roca2020microservice}; Arcila \cite{arcila2022microservice} & Arquitecturas de microservicios en contenedores, validadas con prototipo; Arcila autentica mediante JWT a través de un API Gateway & Monolito modular, con interfaces públicas por módulo y autenticación mediante JWT & La modularidad se mantiene en el código con menor costo operativo, aunque los módulos comparten esquema y persistencia \\ \hline
 Shaikh \cite{shaikh2026smartmedibook} & Sistema de reserva que previene la doble reserva en la aplicación; validación funcional con cinco casos de prueba & Restricción de exclusión en PostgreSQL, que aplica la misma regla a la recepción y al agente & La garantía no depende de que cada canal implemente la validación \\ \hline
 Alejandrino \cite{alejandrino2023dental} & Chatbot con reglas y procesamiento de lenguaje natural para agendar citas; reducción del tiempo administrativo del 68,75\,\% proyectada, no medida & Menú con palabras clave y derivación a recepción; el tiempo se medirá en el Objetivo 3 & La cifra del antecedente es una proyección de plan y no sustituye la medición \\ \hline
 Hindelang \cite{hindelang2024chatbots} & Revisión de 18 estudios sobre chatbots para la anamnesis; barreras de privacidad y desempeño insuficiente en situaciones clínicas complejas & Reglas de alcance acotado; las consultas clínicas, de saldo o no reconocidas se derivan a recepción & Las barreras identificadas se atienden limitando el agente y no con procesamiento de texto libre \\ \hline
 Tudor Car \cite{tudorcar2020conversational} & Revisión de alcance de 47 estudios; menor abandono en chatbots de mensajería masiva; ningún estudio midió la carga del personal & Agente sobre WhatsApp Cloud API; la carga del personal se mide en el Objetivo 3 & El vacío identificado es el que la medición de los tramos del ciclo busca cubrir \\ \hline
 Hmadchayyapum \cite{hmadchayyapum2025line} & Chatbot en LINE para reservar y consultar citas dentales; usabilidad de 4,20 sobre 5,00; no midió el tiempo administrativo & Funciones de reserva e información sobre WhatsApp, con recordatorios y reprogramación & Confirma la viabilidad de la función en mensajería; el efecto sobre el tiempo sigue sin medirse \\ \hline
 Wong-Pérez \cite{wongperez2023hl7} & Revisión sistemática del estándar HL7, con HL7 FHIR como la variante de mayor aplicación & HL7 FHIR no se adopta en el alcance esencial; el modelo relacional propio se mantiene & La interoperabilidad queda como trabajo futuro, con un mapeo de la historia clínica si se requiere \\ \hline
-Martínez \cite{martinez2022proteccion} & Análisis de la LOPDP en la historia clínica electrónica; la Contraloría documentó la ausencia de pistas de auditoría identificables & Registro del usuario, la fecha y la hora de creación y modificación de los registros & La trazabilidad se diseña desde el modelo de datos; su implementación queda pendiente \\ \hline
+Martínez \cite{martinez2022proteccion} & Análisis de la LOPDP en la historia clínica electrónica; la Contraloría documentó la ausencia de pistas de auditoría identificables & Historial de cambios con el usuario y la fecha de cada revisión & La trazabilidad se diseña desde el modelo de datos; su implementación queda pendiente \\ \hline
 Staras \cite{staras2021using} & Tutorial de cuatro pasos para analizar el flujo clínico antes de una intervención de eHealth & Análisis del flujo antes del diseño, con observación y triangulación en el Objetivo 1 & Diagnosticar el flujo permite anticipar barreras operativas y de aceptación del personal \\ \hline
 \end{longtable}
 \endgroup
 
 \paragraph{Síntesis del diseño}
 
-El diseño responde a los puntos críticos del flujo por tres vías. El registro único durante la atención (RF01 y RF02) elimina la Etapa 2 y, con ello, la transcripción entre soportes que concentra el mayor tiempo del ciclo (PC1) y los errores en la lectura del odontograma (PC2 y PC3). Los catálogos (RF03 a RF05) reducen la prescripción y la codificación manuales (PC4), y la agenda única con restricción anticruce (RF07) atiende los cruces de citas (PC7). Para las necesidades de comunicación, el agente (RF09 a RF14) responde consultas de información, agenda y reprograma citas, envía recordatorios dentro de los datos permitidos por la norma, y deriva a recepción las consultas clínicas (N5).
+El diseño responde a los puntos críticos del flujo por tres vías. El registro único durante la atención (RF01 y RF02) elimina la Etapa 2 y, con ello, la transcripción entre soportes que concentra el mayor tiempo del ciclo (PC1), los errores en la lectura del odontograma (PC2) y su registro por la secretaria (PC3). Los catálogos (RF03 a RF05) reducen la prescripción y la codificación manuales (PC4), y la agenda única con restricción anticruce (RF07) atiende los cruces de citas (PC7). Para las necesidades de comunicación, el agente (RF09 a RF14) responde consultas de información, agenda y reprograma citas, envía recordatorios dentro de los datos permitidos por la norma, y deriva a recepción las consultas clínicas (N5).
 
 Como hipótesis de diseño, se espera que $T_4$ y $T_5$ dejen de existir como tramos, lo que elimina 7,32 min de los 13,62 min del $TGA$, y que $T_1$, $T_2$ y $T_3$ disminuyan frente a sus líneas base de 3,40, 1,60 y 1,30 min. La carga de la secretaria se reduciría en los mensajes repetitivos y en las confirmaciones, que hoy suman entre 26 y 50 mensajes y entre 31 y 60 min diarios. El agente no amplía los cupos disponibles: facilita el acceso a la disponibilidad existente y complementa, sin sustituir, la atención de la recepción. Estas magnitudes deben confirmarse o refutarse con la medición de los mismos tramos en el Objetivo 3.
 
@@ -90,13 +90,19 @@ El diseño presenta las siguientes limitaciones, que condicionan la interpretaci
 \begin{itemize}[leftmargin=*]
     \item \textbf{Esquema compartido.} Los módulos comparten el esquema y la capa de persistencia de la base de datos; un cambio de tabla puede afectar a más de un módulo.
 
-    \item \textbf{Dependencia de internet y del proveedor.} El servidor virtual depende de la conexión de la clínica y de la continuidad de un proveedor. Un corte de internet afecta al personal, y un impago, a todo el sistema. Ambos riesgos se mitigan con respaldo externo, exportación en formato abierto y ficha rápida en papel.
+    \item \textbf{Dependencia de internet y del proveedor.} El servidor virtual depende de la conexión de la clínica y de un proveedor externo, que el Director prefería evitar (Entrevista 1, P7). Un corte de internet afecta al personal, y un impago, a todo el sistema. Ambos riesgos se mitigan con respaldo externo, exportación en formato abierto, migración con el mismo Docker Compose y ficha rápida en papel.
+
+    \item \textbf{Servidor único.} Todo el sistema opera en un solo servidor; su caída detiene la aplicación y el agente hasta la restauración desde el respaldo.
+
+    \item \textbf{Terceros fuera del país.} Meta, Google y el proveedor del servidor tratan datos fuera del Ecuador, bajo acuerdos de encargado y el régimen de transferencia internacional de la LOPDP.
+
+    \item \textbf{Alcance de los recordatorios.} Solo reciben recordatorio los pacientes que aceptaron el aviso de privacidad en el agente; quienes agendan en recepción sin haber escrito al agente no los reciben.
 
     \item \textbf{Pacientes registrados.} El agente solo atiende a pacientes ya registrados; sin coincidencia por teléfono, deriva a recepción.
 
     \item \textbf{Cuenta de WhatsApp.} Las pruebas se realizan con la cuenta del desarrollador. El comportamiento con el número de la clínica se verifica solo después del cambio de configuración.
 
-    \item \textbf{Auditoría.} El historial de cambios está diseñado, pero su implementación está pendiente. El diseño vigente registra el usuario y la fecha de cada revisión.
+    \item \textbf{Auditoría.} El historial de cambios con Hibernate Envers está diseñado, pero sin implementar; hoy solo se registra el autor de citas, pagos y apertura de la historia clínica.
 
     \item \textbf{Validación.} Las decisiones de diseño son hipótesis hasta que se contrasten con el personal en el Objetivo 3.
 
@@ -105,15 +111,6 @@ El diseño presenta las siguientes limitaciones, que condicionan la interpretaci
 
 \paragraph{Trabajos futuros}
 
-Los siguientes temas quedan fuera del alcance esencial y se proponen como trabajo futuro:
-
-\begin{itemize}[leftmargin=*]
-    \item Impresión del Formulario 033 a partir de la historia clínica digital.
-    \item Alta de pacientes nuevos por el agente, con validación en recepción, tras incorporar los datos que hoy no trata.
-    \item Recordatorio el mismo día de la cita, previa evaluación de su costo por mensaje.
-    \item Firma electrónica del recetario, previa evaluación del certificado requerido y de su costo.
-    \item Interoperabilidad mediante HL7 FHIR, con un mapeo de la historia clínica para el intercambio con otros sistemas.
-    \item Migración a una cuenta de WhatsApp verificada de la clínica, que eleva los límites de envío.
-\end{itemize}
+Las siete funcionalidades de la Tabla~\ref{tab:ob2_fuera_alcance} se proponen como trabajo futuro, con el tratamiento indicado en ella. Se añade la verificación de la empresa ante Meta, que eleva los límites de envío del agente.
 
 La implementación del diseño, desarrollada en el Objetivo 3, permitirá medir los tramos del $TGA$ y la carga del personal en condiciones reales de operación. La evaluación de esas medidas contrastará las hipótesis planteadas y validará las decisiones de diseño.
