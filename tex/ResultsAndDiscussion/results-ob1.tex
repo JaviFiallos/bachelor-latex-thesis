@@ -1,4 +1,4 @@
-\subsection{Objetivo 1: análisis del flujo, requerimientos y necesidades de comunicación}
+\subsection{Análisis del flujo, requerimientos y necesidades de comunicación}
 
 \subsubsection{Análisis del flujo de información clínico-administrativa}
 
@@ -73,12 +73,16 @@ La Figura~\ref{fig:bpmn1} modela la Etapa 1 mediante los carriles Paciente, Secr
     \item \textbf{Archivo.} La secretaria archiva la ficha rápida, que queda pendiente de transcripción.
 \end{enumerate}
 
-\begin{sidewaysfigure}
+\afterpage{%
+\begin{landscape}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/GestionAdministrativa_P1.pdf}
+    \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{img/GestionAdministrativa_P1.pdf}
     \caption{Etapa 1 del ciclo completo de atención: gestión en la atención}
     \label{fig:bpmn1}
-\end{sidewaysfigure}
+\end{figure}
+\end{landscape}
+}
 
 %De forma concurrente, la secretaria atiende mensajes de WhatsApp sobre confirmación de citas, precios, abonos y horarios. Esta actividad no se modela como secuencia, ya que carece de un orden fijo e interrumpe las tareas de ambas etapas, por lo que se representa como una anotación en el carril de la Secretaria. Su volumen alcanza entre 26 y 50 mensajes diarios sobre cotizaciones y horarios, a los que se suman entre 31 y 60 minutos diarios de confirmación de citas (Tabla~\ref{tab:instrumento2}, P1 y P2). Su análisis se desarrolla en la sección de necesidades de comunicación.
 
@@ -99,12 +103,16 @@ La Figura~\ref{fig:bpmn2} modela la Etapa 2, ejecutada por la secretaria en peri
     \item \textbf{Preparación del día siguiente.} La secretaria revisa la agenda del día siguiente y prepara las fichas rápidas correspondientes, en la medida en que el tiempo disponible lo permite.
 \end{enumerate}
 
-\begin{sidewaysfigure}
+\afterpage{%
+\begin{landscape}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/GestionAdministrativa_P2.pdf}
+    \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{img/GestionAdministrativa_P2.pdf}
     \caption{Etapa 2 del ciclo completo de atención: gestión documental diferida}
     \label{fig:bpmn2}
-\end{sidewaysfigure}
+\end{figure}
+\end{landscape}
+}
 
 Ambas etapas conforman un ciclo cerrado: la ficha archivada al final de la Etapa 1 constituye la entrada de la Etapa 2, y las fichas preparadas al final de esta se utilizan al día siguiente en la Etapa 1. Se trata, por tanto, de dos momentos del procesamiento de una misma información.
 
@@ -243,12 +251,16 @@ Las necesidades de comunicación se analizaron conforme a la distinción entre n
 
 La Figura~\ref{fig:bpmn_comunicacion} modela en BPMN 2.0 la comunicación entre el paciente y el centro tal como se realiza actualmente. El modelo comprende tres flujos que se inician de forma independiente y convergen en la secretaria: la consulta de información sobre horarios, precios y formas de pago; la solicitud de citas, que ingresa por WhatsApp, de forma presencial, por medio de un familiar o mediante el WhatsApp personal de los profesionales, este último sin registro en Google Calendar; y la confirmación de las citas del día siguiente, que la secretaria realiza manualmente con cada paciente. Las anotaciones del diagrama sitúan sobre cada flujo la evidencia operativa recogida en los instrumentos y las necesidades que de ella se derivan.
 
-\begin{sidewaysfigure}
+\afterpage{%
+\begin{landscape}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth,height=0.9\textwidth,keepaspectratio]{img/Comunicacion_Paciente.pdf}
+    \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{img/Comunicacion_Paciente.pdf}
     \caption{Flujo actual de comunicación con el paciente}
     \label{fig:bpmn_comunicacion}
-\end{sidewaysfigure}
+\end{figure}
+\end{landscape}
+}
 
 El diagrama evidencia que la secretaria atiende en paralelo los tres flujos de comunicación, además de las actividades del ciclo completo de atención (PC8), y que la agenda no es la única fuente de disponibilidad (PC7).
 
@@ -402,3 +414,5 @@ RNF06 & Usabilidad que permita registrar la atención durante la consulta, en po
 \endgroup
 
 Los requerimientos responden a los puntos críticos, las brechas normativas y las necesidades identificadas. En relación con el $TGA$, RF01 y RF02 apuntan a eliminar la Etapa 2 al registrar la información una sola vez durante la atención; RF03 a RF05 inciden en $T_1$, RF08 en $T_2$, y RF07 y RF11 en $T_3$. Estos efectos se verificarán en la evaluación del sistema mediante la medición de los mismos tramos. Los requerimientos RF09 a RF14 y RNF03 definen el alcance del agente conversacional y constituyen el insumo para el diseño de su arquitectura. RF14, RF13 y RNF05 se priorizan como ``Debería'' frente al tiempo disponible para el desarrollo, sin afectar el alcance esencial del sistema.
+
+Quedan fuera del alcance la impresión del Formulario 033, el registro de pacientes nuevos por el agente, un segundo recordatorio el mismo día de la cita, la firma y la facturación electrónicas, la interoperabilidad con HL7 FHIR y la administración de usuarios desde la aplicación. Se proponen como trabajo futuro.
