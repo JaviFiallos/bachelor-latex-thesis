@@ -34,7 +34,7 @@ Sistemas por suscripción que dejaron de funcionar tras 6 o 7 meses (Tabla~\ref{
 \end{longtable}
 \endgroup
 
-La Tabla~\ref{tab:ob2_atributos} define los atributos de calidad prioritarios, según la clasificación de ISO/IEC 25010 \cite{iso2011iec25010}. Cada uno se expresa como un escenario con una medida que se verificará en el Objetivo 3.
+La Tabla~\ref{tab:ob2_atributos} define los atributos de calidad prioritarios, según la clasificación de ISO/IEC 25010 \cite{iso2011iec25010}, la misma que \cite{arcila2022microservice} empleó para verificar la disponibilidad de su arquitectura dental. Cada atributo se expresa como un escenario medible.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -59,31 +59,4 @@ Usabilidad & RNF06 & El profesional registra el tratamiento durante la consulta 
 \end{longtable}
 \endgroup
 
-Por último, la Tabla~\ref{tab:ob2_restricciones} recoge las restricciones del proyecto. Limitan el alcance y el modo de despliegue, por lo que se tratan como impulsores de diseño.
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.34\linewidth}|p{0.54\linewidth}|}
-\caption{Restricciones del proyecto}
-\label{tab:ob2_restricciones} \\
-\hline
-\textbf{Restricción} & \textbf{Implicación} \\ \hline
-\endfirsthead
-\hline
-\textbf{Restricción} & \textbf{Implicación} \\ \hline
-\endhead
-\hline
-\endfoot
-Un único desarrollador & Un solo frente de desarrollo a la vez; arquitectura que limite el esfuerzo de operación \\ \hline
-Periodo de julio a diciembre de 2026 y priorización MoSCoW del Objetivo 1 & Los requerimientos Debe constituyen el alcance esencial y se implementan primero; los Debería (RF13, RF14 y RNF05) son los primeros en postergarse \\ \hline
-Costo de operación bajo para la clínica (Tabla~\ref{tab:ent1}, P7) & Infraestructura mínima en un único servidor virtual, con software de código abierto y sin licencias \\ \hline
-Costo por mensaje de las plantillas de WhatsApp, necesarias para los recordatorios fuera de la ventana de 24 horas & Un único recordatorio por cita, el día anterior; la tarifa vigente para Ecuador se verifica al configurar la cuenta \\ \hline
-Despliegue en un servidor virtual (VPS) contratado a nombre de la clínica & Todo el sistema opera en un servidor bajo titularidad de la clínica; un impago interrumpe el servicio, por lo que se exige respaldo externo (RNF04) \\ \hline
-Cuenta de WhatsApp Business inicialmente del desarrollador y luego de la clínica & Las pruebas usan la cuenta del desarrollador; el paso a producción cambia la configuración del número y exige aprobar de nuevo las plantillas \\ \hline
-\end{longtable}
-\endgroup
-
-Estos impulsores orientan la selección de la metodología de desarrollo y de la notación de modelado. Ambas decisiones se presentan en el apartado siguiente.
+A estos impulsores se suman tres restricciones del proyecto: un único desarrollador, un plazo acotado (julio a diciembre de 2026) y un bajo costo de operación para la clínica. Las restricciones dan peso a los criterios con los que se seleccionan la metodología y las tecnologías.
