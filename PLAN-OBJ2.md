@@ -81,7 +81,7 @@ Leyenda: ✅ listo para redactar · 💬 requiere sesión de preguntas · 📥 e
 
 ### 4.2.4 Selección de tecnologías
 - **a) Sistema ✅**: tres matrices de dos tamices (imperativos de RNF01, RNF02, RF07, RNF04; deseables: experiencia, ecosistema, consumo de recursos).
-  - Backend: Spring Boot 3.4 / Java 21 vs Django vs Laravel vs NestJS.
+  - Backend: Spring Boot 3.5 / Java 21 vs Django vs Laravel vs NestJS.
   - Frontend: Angular vs React vs Vue.
   - BD: PostgreSQL 16 vs MySQL vs MongoDB.
 - **b) Agente 💬**: cuatro decisiones, pendientes de sesión:

@@ -15,7 +15,7 @@
     </bpmn:collaboration>
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:laneSet id="LaneSet_1">
-      <bpmn:lane id="Lane_Paciente" name="Paciente / Familiar">
+      <bpmn:lane id="Lane_Paciente" name="Paciente">
         <bpmn:flowNodeRef>Start_Msg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Start_Otro</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -116,7 +116,7 @@
     <bpmn:sequenceFlow id="F16" sourceRef="Task_Horarios" targetRef="Task_RegCita" />
     <bpmn:sequenceFlow id="F17" sourceRef="Task_RegCita" targetRef="End_CitaBot" />
     <bpmn:sequenceFlow id="F18" sourceRef="Start_Otro" targetRef="GW_Canal" />
-    <bpmn:sequenceFlow id="F19" name="Presencial, familiar o teléfono" sourceRef="GW_Canal" targetRef="Task_SecAgenda" />
+    <bpmn:sequenceFlow id="F19" name="Presencial o teléfono" sourceRef="GW_Canal" targetRef="Task_SecAgenda" />
     <bpmn:sequenceFlow id="F20" sourceRef="Task_SecAgenda" targetRef="End_Sec" />
     <bpmn:sequenceFlow id="F21" name="WhatsApp personal del profesional" sourceRef="GW_Canal" targetRef="Task_OdoAgenda" />
     <bpmn:sequenceFlow id="F22" sourceRef="Task_OdoAgenda" targetRef="End_Odo" />

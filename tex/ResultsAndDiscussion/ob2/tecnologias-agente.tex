@@ -1,8 +1,8 @@
 \paragraph{Tecnologías del agente conversacional}
 
-Las tecnologías del agente se seleccionan con el mismo método de dos tamices. Los criterios imperativos derivan de los requerimientos del agente (Tabla~\ref{tab:requerimientos}) y de las brechas normativas; los pesos de los criterios deseables, de las restricciones del proyecto (Tabla~\ref{tab:ob2_restricciones}). Se evalúan cuatro decisiones: el canal de acceso a WhatsApp, el motor conversacional, el enfoque de comprensión de los mensajes y la exposición del webhook en el servidor virtual.
+Las tecnologías del agente se seleccionan con el mismo método de dos tamices. Los criterios imperativos derivan de los requerimientos del agente (Tabla~\ref{tab:requerimientos}) y de las brechas normativas; los pesos de los criterios deseables, de las restricciones del proyecto (Tabla~\ref{tab:ob2_restricciones}). Se evalúan cuatro decisiones: el canal de acceso a WhatsApp, el motor conversacional, el enfoque de comprensión de los mensajes y la exposición del webhook en el servidor virtual. Las tres primeras se resuelven con los dos tamices; la cuarta, de forma cualitativa, porque sus opciones cumplen el mismo requisito de Meta y solo difieren en su operación.
 
-\textbf{Acceso a WhatsApp.} Las librerías no oficiales, como Baileys y whatsapp-web.js, emulan el cliente de WhatsApp Web y no están autorizadas por Meta. Su uso incumple los términos de servicio y expone el número de la clínica a bloqueo, por lo que no supera el primer tamiz. Entre los canales autorizados se comparan WhatsApp Cloud API, con acceso directo a Meta, y un proveedor intermediario oficial (BSP), como Twilio (Tabla~\ref{tab:ob2_matriz_whatsapp}). Las revisiones sobre agentes conversacionales en salud asocian la mensajería masiva con menor abandono \cite{tudorcar2020conversational}, y un sistema de reserva de servicios dentales en LINE muestra que la función es viable en una plataforma de mensajería \cite{hmadchayyapum2025line}. El costo se paga en cada mensaje y recibe el mayor peso; la facilidad de configuración es un esfuerzo único y recibe el menor.
+\textbf{Acceso a WhatsApp.} Las librerías no oficiales, como Baileys y whatsapp-web.js, emulan el cliente de WhatsApp Web y no están autorizadas por Meta. Su uso incumple los términos de servicio y expone el número de la clínica a bloqueo, por lo que no supera el primer tamiz. Entre los canales autorizados se comparan WhatsApp Cloud API, con acceso directo a Meta, y un proveedor intermediario oficial (BSP), como Twilio (Tabla~\ref{tab:ob2_matriz_whatsapp}). Una revisión de alcance sobre agentes conversacionales en salud asocia la mensajería masiva con menor abandono \cite{tudorcar2020conversational}, y un sistema de reserva de servicios dentales en LINE muestra que la función es viable en una plataforma de mensajería \cite{hmadchayyapum2025line}. El costo se paga por cada plantilla enviada, es decir, por cada recordatorio, y recibe el mayor peso; la facilidad de configuración es un esfuerzo único y recibe el menor.
 
 \begin{table}[H]
 \centering
@@ -27,7 +27,7 @@ Facilidad de configuración para un único desarrollador (restricción de un ún
 
 WhatsApp Cloud API obtiene el mayor total. El BSP gana en facilidad de configuración, pero agrega un recargo por mensaje y un tercero que trata los datos de los pacientes.
 
-\textbf{Motor conversacional.} El motor debe validar los cruces de citas y los límites de agendamiento en la misma transacción que la recepción (RF07, RF11), y no debe enviar el texto del paciente a un servicio externo adicional (BN7). Dialogflow no cumple ninguno de los dos criterios: envía ese texto a un servicio de terceros y depende de un servicio de pago que la clínica no controla (RNF04). Las demás alternativas se comparan con un módulo propio dentro del backend (Tabla~\ref{tab:ob2_matriz_motor}). La validación y el aprendizaje de una plataforma adicional reciben los mayores pesos, porque la agenda es el núcleo del agente y el desarrollo lo ejecuta una sola persona.
+\textbf{Motor conversacional.} El motor no debe enviar el texto del paciente a un servicio externo adicional (BN7) ni depender de un servicio de pago que la clínica no controla (RNF04). Dialogflow y Botpress no superan este tamiz: Dialogflow es un servicio de Google, y Botpress se ofrece hoy como servicio en la nube, con su versión autoalojable (v12) discontinuada. Las demás alternativas se comparan con un módulo propio dentro del backend (Tabla~\ref{tab:ob2_matriz_motor}). Conviene que las reglas de agenda residan en un único lugar y que el desarrollador opere el menor número de servicios; por eso esos dos criterios reciben los mayores pesos.
 
 \begin{table}[H]
 \centering
@@ -38,23 +38,23 @@ WhatsApp Cloud API obtiene el mayor total. El BSP gana en facilidad de configura
 \setlength{\tabcolsep}{3pt}
 \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.9cm}|>{\centering\arraybackslash}p{1.9cm}|>{\centering\arraybackslash}p{1.9cm}|>{\centering\arraybackslash}p{1.9cm}|>{\centering\arraybackslash}p{1.9cm}|}
 \hline
-\textbf{Criterio} & \textbf{Peso} & \textbf{Módulo propio (Spring Boot)} & \textbf{n8n autoalojado} & \textbf{Botpress} & \textbf{Rasa} & \textbf{Dialogflow} \\ \hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{Módulo propio (Spring Boot)} & \textbf{n8n autoalojado} & \textbf{Rasa} & \textbf{Botpress (en la nube)} & \textbf{Dialogflow} \\ \hline
 \multicolumn{7}{|l|}{\cellcolor{gray!10}\textbf{Criterios imperativos (primer tamiz)}} \\ \hline
-Sin envío del texto del paciente a un servicio externo adicional (BN7) & --- & Cumple & Cumple & Cumple & Cumple & No cumple \\ \hline
-Sin dependencia de un servicio de pago que la clínica no controla (RNF04) & --- & Cumple & Cumple & Cumple & Cumple & No cumple \\ \hline
+Sin envío del texto del paciente a un servicio externo adicional (BN7) & --- & Cumple & Cumple & Cumple & No cumple & No cumple \\ \hline
+Sin dependencia de un servicio de pago que la clínica no controla (RNF04) & --- & Cumple & Cumple & Cumple & No cumple & No cumple \\ \hline
 \multicolumn{7}{|l|}{\cellcolor{gray!10}\textbf{Criterios deseables (segundo tamiz)}} \\ \hline
-Validación de cruces y límites en la misma transacción que la recepción (RF07, RF11) & 25\,\% & 3 & 1 & 1 & 1 & --- \\ \hline
-Consumo de recursos en el servidor compartido (restricción de costo) & 15\,\% & 3 & 2 & 1 & 1 & --- \\ \hline
-Rapidez de construcción y edición visual de flujos & 20\,\% & 1 & 3 & 3 & 2 & --- \\ \hline
-Aprendizaje de una plataforma adicional (restricción de un único desarrollador) & 25\,\% & 3 & 2 & 1 & 1 & --- \\ \hline
-Cambios en las reglas de agendamiento sin modificar la conversación (Tabla~\ref{tab:ob2_atributos}) & 15\,\% & 3 & 1 & 2 & 2 & --- \\ \hline
-\textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,60} & \textbf{1,80} & \textbf{1,55} & \textbf{1,35} & \textbf{---} \\ \hline
+Reglas de agenda en un único lugar, sin duplicarlas en el motor (RF07, RF11) & 25\,\% & 3 & 2 & 2 & --- & --- \\ \hline
+Consumo de recursos en el servidor compartido (restricción de costo) & 15\,\% & 3 & 2 & 1 & --- & --- \\ \hline
+Rapidez de construcción y edición visual de flujos (restricción de plazo) & 20\,\% & 1 & 3 & 2 & --- & --- \\ \hline
+Servicios adicionales que operar y actualizar (restricción de un único desarrollador) & 25\,\% & 3 & 2 & 1 & --- & --- \\ \hline
+Cambios en las reglas de agendamiento sin modificar la conversación (Tabla~\ref{tab:ob2_atributos}) & 15\,\% & 3 & 2 & 2 & --- & --- \\ \hline
+\textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,60} & \textbf{2,20} & \textbf{1,60} & \textbf{---} & \textbf{---} \\ \hline
 \end{tabularx}
 \end{table}
 
-El módulo propio obtiene el mayor total. n8n y Botpress aventajan en rapidez de construcción y edición visual de flujos, pero ambos añaden un servicio que debe mantenerse y pueden duplicar reglas de negocio fuera del dominio.
+El módulo propio obtiene el mayor total. n8n aventaja en rapidez de construcción y edición visual de flujos y podría invocar la API para validar las citas, pero añade un servicio que debe operarse y reparte la lógica de la conversación entre dos herramientas.
 
-\textbf{Enfoque de comprensión.} El agente atiende las tres necesidades con aceptación mayoritaria (N1 a N3) y deriva las consultas clínicas y de saldos a recepción (N5). Un modelo de lenguaje alojado por terceros incumple el criterio imperativo de BN7. Un modelo local sería inviable con los recursos del servidor virtual, por lo que no se evalúa por separado. Una revisión sistemática de chatbots para la anamnesis reporta desempeño insuficiente en situaciones clínicas complejas y barreras de privacidad \cite{hindelang2024chatbots}, mientras que un chatbot para una clínica dental combina reglas con procesamiento de lenguaje natural \cite{alejandrino2023dental}. Se comparan así un menú con palabras clave y derivación frente a un procesamiento de lenguaje natural por intenciones (Tabla~\ref{tab:ob2_matriz_comprension}).
+\textbf{Enfoque de comprensión.} El agente atiende las tres necesidades con aceptación mayoritaria (N1 a N3) y deriva las consultas clínicas y de saldos a recepción (N5). Un modelo de lenguaje alojado por terceros incumple el criterio imperativo de BN7. Un modelo local de unos 7\,000 millones de parámetros, aun comprimido, ocupa unos 4 GB de memoria, toda la del servidor virtual previsto, por lo que no se evalúa por separado. Una revisión sistemática de chatbots para la anamnesis reporta desempeño insuficiente en situaciones clínicas complejas y barreras de privacidad \cite{hindelang2024chatbots}, mientras que un chatbot para una clínica dental combina reglas con procesamiento de lenguaje natural \cite{alejandrino2023dental}. Se comparan así un menú con palabras clave y derivación frente a un procesamiento de lenguaje natural por intenciones (Tabla~\ref{tab:ob2_matriz_comprension}).
 
 \begin{table}[H]
 \centering
@@ -77,9 +77,9 @@ Costo de operación (restricción de costo) & 25\,\% & 3 & 2 & --- \\ \hline
 \end{tabularx}
 \end{table}
 
-El menú con palabras clave obtiene el mayor total y se complementa con la derivación a recepción. El procesamiento por intenciones gana en flexibilidad ante texto libre, pero exige datos de entrenamiento que el proyecto no dispone y ofrece un comportamiento menos verificable.
+El menú con palabras clave obtiene el mayor total y se complementa con la derivación a recepción. El procesamiento por intenciones gana en flexibilidad ante texto libre, pero exige datos de entrenamiento de los que el proyecto no dispone y ofrece un comportamiento menos verificable.
 
-\textbf{Exposición del webhook.} Meta exige una URL pública con HTTPS, que cifra la comunicación en tránsito, para recibir los mensajes. Se comparan de forma cualitativa tres opciones (Tabla~\ref{tab:ob2_webhook}). Cloudflare Tunnel y ngrok establecen una conexión saliente desde el equipo, pero añaden un tercero en la ruta de los mensajes.
+\textbf{Exposición del webhook.} Meta exige una URL pública con HTTPS, que cifra la comunicación en tránsito, para recibir los mensajes. Se comparan de forma cualitativa tres opciones (Tabla~\ref{tab:ob2_webhook}). Cloudflare Tunnel y ngrok establecen una conexión saliente desde el equipo, pero añaden un tercero que descifra los mensajes en su red.
 
 \begin{table}[H]
 \centering
@@ -93,8 +93,9 @@ El menú con palabras clave obtiene el mayor total y se complementa con la deriv
 \textbf{Criterio} & \textbf{Proxy inverso (nginx) con Let's Encrypt} & \textbf{Cloudflare Tunnel} & \textbf{ngrok} \\ \hline
 HTTPS con certificado válido exigido por Meta & Sí; certificado gratuito de renovación automática & Sí; certificado del proveedor & Sí; certificado del proveedor \\ \hline
 Dependencias adicionales & Ninguna; nginx ya forma parte del despliegue & Cuenta y cliente de un tercero & Cuenta y cliente de un tercero \\ \hline
+Tercero que descifra los mensajes en tránsito (BN7) & No & Sí, en la red del proveedor & Sí, en la red del proveedor \\ \hline
 Estabilidad de la URL & Dominio propio y fijo & Estable con un dominio propio & Depende de la configuración de la cuenta \\ \hline
-Costo & Sin costo adicional al servidor & Bajo & Bajo; depende del plan \\ \hline
+Costo & Sin costo adicional al servidor & Sin costo en el plan gratuito & Bajo; depende del plan \\ \hline
 \textbf{Uso en el proyecto} & \textbf{Seleccionado para el servidor virtual} & Alternativa para la instalación local & Solo desarrollo \\ \hline
 \end{tabularx}
 \end{table}
@@ -113,8 +114,8 @@ La Tabla~\ref{tab:ob2_stack_agente} resume las decisiones del agente y los reque
 \begin{tabularx}{\linewidth}{|p{3.4cm}|p{4.6cm}|X|}
 \hline
 \textbf{Decisión} & \textbf{Selección} & \textbf{Requerimiento o brecha atendida} \\ \hline
-Acceso a WhatsApp & WhatsApp Cloud API (Meta) & RF10, RF14; BN7 \\ \hline
-Motor conversacional & Módulo propio en Spring Boot & RF07, RF11; RNF03 \\ \hline
+Acceso a WhatsApp & WhatsApp Cloud API (Meta) & RF09 a RF14; BN7 \\ \hline
+Motor conversacional & Módulo propio en Spring Boot & RF07, RF11, RF12, RF14; RNF03 \\ \hline
 Comprensión de los mensajes & Menú con palabras clave y derivación & RF10, RF13; N5; BN7 \\ \hline
 Exposición del webhook & Proxy inverso nginx con Let's Encrypt & HTTPS exigido por Meta; RNF05 \\ \hline
 \end{tabularx}

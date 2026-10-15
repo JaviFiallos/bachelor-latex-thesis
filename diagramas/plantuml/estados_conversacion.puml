@@ -1,5 +1,5 @@
 @startuml estados_conversacion
-title Estados de la conversación con el agente
+!pragma layout smetana
 
 skinparam monochrome true
 skinparam shadowing false
@@ -8,9 +8,6 @@ skinparam state {
   RoundCorner 8
 }
 hide empty description
-
-[*] --> Aviso : primer mensaje
-[*] --> Recordatorio : botón del recordatorio
 
 state "Aviso de privacidad" as Aviso
 state "Identificación" as Identificacion
@@ -22,6 +19,10 @@ state "Confirmación" as Confirmacion
 state "Derivación a recepción" as Derivar
 state "Respuesta al recordatorio" as Recordatorio
 state "Fin" as Fin
+
+[*] --> Aviso : primer mensaje
+[*] --> Identificacion : aviso ya aceptado
+[*] --> Recordatorio : botón del recordatorio\n(solo teléfonos con aviso aceptado)
 
 Aviso --> Identificacion : acepta
 Aviso --> Fin : no acepta
@@ -38,7 +39,7 @@ Menu --> Derivar : hablar con recepción
 Informacion --> Menu : otra consulta
 
 Agendar --> Confirmacion : horario elegido
-Agendar --> Derivar : límite de citas alcanzado
+Agendar --> Derivar : límite de citas alcanzado\no sin horarios disponibles
 
 Reprogramar --> Confirmacion : horario elegido
 Reprogramar --> Derivar : menos de 2 h
@@ -49,6 +50,7 @@ Confirmacion --> Fin : cita registrada
 
 Recordatorio --> Fin : confirmar o cancelar
 Recordatorio --> Reprogramar : reprogramar
+Recordatorio --> Derivar : cancelar o reprogramar\ncon menos de 2 h
 
 Derivar --> Fin : horario y enlace de recepción
 Fin --> [*]

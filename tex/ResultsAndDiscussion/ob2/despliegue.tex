@@ -1,6 +1,6 @@
 \subsubsection{Esquema de despliegue tecnológico}
 
-El sistema y el agente conversacional comparten una única infraestructura. El agente agrega solo el webhook de WhatsApp, un número de WhatsApp propio y la plataforma de Meta.
+El sistema y el agente conversacional comparten una única infraestructura.
 
 \paragraph{Diagrama de despliegue}
 
@@ -23,15 +23,17 @@ La Figura~\ref{fig:ob2_despliegue} muestra los nodos del despliegue y los camino
 \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{4.4cm}|}
 \hline
 \textbf{Nodo} & \textbf{Contenido} & \textbf{Responsabilidad} \\ \hline
-Equipos de la clínica & Navegador web en los equipos de recepción y consultorios, en la red local o en internet & Acceden a la aplicación web por HTTPS; no requieren instalación \\ \hline
-Servidor virtual (VPS) & Docker Compose con cuatro contenedores: proxy inverso nginx (sirve la aplicación web), API Spring Boot (incluye el módulo del agente), PostgreSQL 16 y servicio de respaldo (Tabla~\ref{tab:ob2_contenedores}) & Ejecuta todo el sistema en un único servidor \\ \hline
+Equipos de la clínica & Navegador web en los equipos de recepción y consultorios, con conexión a internet; ejecuta la aplicación web & Acceden al sistema por HTTPS; no requieren instalación \\ \hline
+Dispositivo del paciente & Aplicación de WhatsApp & Envía mensajes al número del agente y recibe respuestas y recordatorios \\ \hline
+Servidor virtual (VPS) & Linux con 2 vCPU y 4 GB de RAM; Docker Compose con cuatro contenedores: nginx (proxy inverso y archivos de la aplicación web), API Spring Boot (incluye el módulo del agente), PostgreSQL 16 y servicio de respaldo (Tabla~\ref{tab:ob2_contenedores}). Solo los puertos 80 y 443 están abiertos & Ejecuta todo el sistema en un único servidor \\ \hline
+Dominio de la clínica & Nombre de dominio registrado a nombre de la clínica & Identifica el servidor en el certificado de Let's Encrypt, de renovación automática, y en la URL del webhook registrada en Meta \\ \hline
 Meta (WhatsApp Cloud API) & Número de WhatsApp de la clínica y plantillas de mensajes aprobadas & Transmite los mensajes al webhook por HTTPS y entrega respuestas y recordatorios; procesa los mensajes como encargado del tratamiento \\ \hline
 Google (Calendar) & Calendario de solo lectura por profesional & Recibe la copia de la agenda \\ \hline
 Almacenamiento externo (Google Drive de la clínica) & Respaldos cifrados de la base de datos & Conserva una copia fuera del servidor, bajo la cuenta de la clínica \\ \hline
 \end{tabularx}
 \end{table}
 
-\textit{Nota:} el agente agrega tres elementos a la infraestructura compartida: el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp exclusivo y las plantillas de mensajes aprobadas por Meta. Estas últimas se usan en los recordatorios fuera de la ventana de 24 horas.
+\textit{Nota:} el agente agrega tres elementos a la infraestructura compartida: el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp exclusivo y las plantillas de mensajes aprobadas por Meta, que se usan en los recordatorios fuera de la ventana de 24 horas. La aplicación web no es un contenedor propio: nginx sirve sus archivos y se ejecuta en el navegador.
 
 \paragraph{Entornos}
 
@@ -47,13 +49,13 @@ El despliegue se organiza en tres entornos (Tabla~\ref{tab:ob2_entornos}). Las p
 \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.4cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}X|}
 \hline
 \textbf{Entorno} & \textbf{WhatsApp} & \textbf{Infraestructura} & \textbf{Datos} \\ \hline
-Desarrollo & Número de prueba de Meta, con un máximo de cinco destinatarios registrados & Equipo local con Docker Compose & Ficticios \\ \hline
+Desarrollo & Número de prueba de Meta, con un máximo de cinco destinatarios registrados & Equipo local con Docker Compose y un túnel (ngrok) para el webhook & Ficticios \\ \hline
 Pruebas & Número real en la cuenta del desarrollador & VPS & De prueba \\ \hline
 Producción & Cuenta y número de la clínica & VPS contratado a nombre de la clínica & Reales de la clínica \\ \hline
 \end{tabularx}
 \end{table}
 
-El paso de pruebas a producción cambia solo la configuración. La verificación de la empresa ante Meta eleva los límites de envío de mensajes y no modifica el diseño.
+El paso de pruebas a producción cambia la configuración del número y exige aprobar de nuevo las plantillas y el nombre visible en la cuenta de la clínica; el diseño no cambia. La verificación de la empresa ante Meta eleva los límites de envío \cite{meta2026limits}.
 
 \paragraph{Respaldo y continuidad}
 
@@ -70,6 +72,7 @@ La Tabla~\ref{tab:ob2_respaldo} define la política de respaldo. Esta política 
 \hline
 \textbf{Elemento} & \textbf{Política} & \textbf{Requerimiento} \\ \hline
 Volcado de la base de datos & Diario y cifrado; se copia fuera del servidor a Google Drive de la clínica & RNF04 \\ \hline
+Clave de cifrado de los respaldos & La custodia el director, fuera del servidor y de Google Drive & RNF04 \\ \hline
 Retención & Valor configurable & RNF04 \\ \hline
 Exportación & Completa, en formato abierto (CSV y SQL); la genera el administrador & RNF04 \\ \hline
 Restauración & Procedimiento documentado y probado antes de la puesta en producción; pérdida máxima de 24 horas de datos & RNF04 \\ \hline
@@ -101,13 +104,13 @@ La Tabla~\ref{tab:ob2_riesgos} identifica los riesgos del despliegue en un servi
 Impago o cierre de la cuenta del VPS & Interrupción total del sistema y del agente & Cuenta a nombre de la clínica; respaldo externo y exportación en formato abierto, que permiten migrar a otro servidor \\ \hline
 Caída de internet en la clínica & El personal no accede al sistema mientras dure la caída; el agente sigue atendiendo a los pacientes & Ficha rápida en papel y carga posterior de los datos al restablecer la conexión \\ \hline
 Pérdida del servidor & Pérdida de los datos posteriores al último respaldo (hasta 24 horas) y suspensión durante la restauración & Restauración desde el respaldo diario, con procedimiento probado; copia fuera del servidor \\ \hline
-Datos de salud alojados por un tercero & Tratamiento de datos de salud fuera del control directo de la clínica & Contrato de encargado del tratamiento con el proveedor del VPS; verificar la ubicación del servidor y la transferencia internacional según la LOPDP \cite{lopdp2021} \\ \hline
-Bloqueo o suspensión de la cuenta de WhatsApp & El agente deja de responder y los recordatorios no se envían & Uso del canal oficial, plantillas aprobadas por Meta y derivación a recepción \\ \hline
+Datos tratados por terceros fuera del Ecuador (proveedor del VPS, Meta y Google) & Tratamiento de datos personales, incluidos datos de salud en el VPS, fuera del control directo de la clínica & Acuerdo de encargado del tratamiento con cada proveedor y régimen de transferencia internacional de la LOPDP \cite{lopdp2021}; respaldos cifrados antes de salir del servidor; Meta y Google reciben solo datos de identificación y de la cita \\ \hline
+Bloqueo o suspensión de la cuenta de WhatsApp & El agente deja de responder y los recordatorios no se envían & Uso del canal oficial y plantillas aprobadas por Meta; el número de recepción queda como canal alterno \\ \hline
 Agotamiento de recursos del servidor & Lentitud o caída de los contenedores & Límites de memoria por contenedor; consumo estimado entre 0,6 y 1 GB de RAM en total, que se mide en las pruebas \\ \hline
 \end{longtable}
 \endgroup
 
-\textbf{Cambio frente al Objetivo 1.} El despliegue en un servidor virtual modifica una condición del Objetivo 1. Con una instalación local, el sistema funciona sin internet para el personal de la clínica. En el VPS, en cambio, el personal depende de la conexión de la clínica. La ficha rápida en papel y la carga posterior compensan esa dependencia. El agente no depende de la red de la clínica, por lo que sigue atendiendo a los pacientes.
+\textbf{Cambio frente a la instalación local prevista inicialmente.} En la Entrevista 1 (Tabla~\ref{tab:ent1}, P7), el Director pidió que la continuidad y la propiedad de la información no dependieran de un proveedor externo; de ahí deriva RNF04. El VPS reintroduce esa dependencia, que se mitiga con cuatro medidas: la cuenta del VPS y el dominio a nombre de la clínica, el respaldo diario bajo la cuenta de la clínica, la exportación completa en formato abierto y el mismo archivo de Docker Compose, que permite migrar a otro proveedor o a la instalación local. A cambio, el VPS mantiene el agente disponible fuera del horario sin depender de un equipo encendido en la clínica. La disponibilidad del sistema en horario de atención (RNF05) queda sujeta a la conexión de la clínica; durante una caída, la ficha rápida en papel y la carga posterior sostienen la atención.
 
 \paragraph{Alternativa de instalación local}
 
@@ -126,7 +129,7 @@ Si la clínica no contrata un servidor virtual, el sistema se instala en el equi
 Servidor & VPS contratado a nombre de la clínica & Equipo de recepción, encendido de forma permanente \\ \hline
 Webhook & Proxy inverso nginx con Let's Encrypt & Túnel de Cloudflare que expone solo el webhook \\ \hline
 Respaldos & Volcado diario en Google Drive de la clínica & Volcado diario en un disco externo, separado del equipo \\ \hline
-Disponibilidad & Permanente, sujeta a la conexión de la clínica & Limitada al encendido del equipo; el agente no responde con el equipo apagado \\ \hline
+Disponibilidad & Continua, sujeta al proveedor y, para el personal, a la conexión de la clínica & Limitada al encendido del equipo; el agente no responde con el equipo apagado \\ \hline
 Uso sin internet & No & Sí, para la recepción y los consultorios en la red local \\ \hline
 \end{tabularx}
 \end{table}

@@ -91,7 +91,7 @@
     <bpmn:sequenceFlow id="F35" name="Clínica" sourceRef="GW_Tipo" targetRef="Task_RespClin" />
     <bpmn:sequenceFlow id="F36" sourceRef="Task_RespClin" targetRef="End_Res2" />
 
-    <bpmn:textAnnotation id="TA_Record"><bpmn:text>N3: reemplaza la confirmación manual de 31-60 min/día (RF14)</bpmn:text></bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TA_Record"><bpmn:text>N3: reemplaza la confirmación manual de 31-60 min/día (RF14); solo a teléfonos con aviso aceptado (RF09)</bpmn:text></bpmn:textAnnotation>
     <bpmn:association id="A_Record" sourceRef="Task_Record" targetRef="TA_Record" />
     <bpmn:textAnnotation id="TA_Reprog"><bpmn:text>Hasta 2 h antes de la cita; después se deriva a recepción (RF12)</bpmn:text></bpmn:textAnnotation>
     <bpmn:association id="A_Reprog" sourceRef="Task_Reprog" targetRef="TA_Reprog" />

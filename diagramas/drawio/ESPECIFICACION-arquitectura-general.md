@@ -33,7 +33,7 @@ Diagramas del apartado "Arquitectura general del sistema" (Objetivo 2). Se dibuj
 
 | Nombre | Tipo C4 | Tecnología | Descripción | Ícono sugerido |
 |---|---|---|---|---|
-| Paciente o familiar | Persona | — | Agenda, reprograma o consulta por WhatsApp | Ícono de persona (forma "Actor" de draw.io) |
+| Paciente | Persona | — | Agenda, reprograma o consulta por WhatsApp; recibe recordatorios si aceptó el aviso | Ícono de persona (forma "Actor" de draw.io) |
 | Secretaria | Persona | — | Gestiona la agenda, los pacientes y los cobros | Ícono de persona |
 | Odontólogo | Persona | — | Registra la historia clínica, el odontograma y los tratamientos | Ícono de persona |
 | Director (administrador) | Persona | — | Administra catálogos, horarios y la configuración | Ícono de persona |
@@ -46,7 +46,8 @@ Diagramas del apartado "Arquitectura general del sistema" (Objetivo 2). Se dibuj
 
 | Origen → destino | Etiqueta | Protocolo |
 |---|---|---|
-| Paciente o familiar → WhatsApp Cloud API | Envía mensajes | WhatsApp |
+| Paciente → WhatsApp Cloud API | Envía mensajes | WhatsApp |
+| WhatsApp Cloud API → Paciente | Entrega respuestas y recordatorios | WhatsApp |
 | WhatsApp Cloud API → Sistema de información | Transmite los mensajes entrantes | Webhook HTTPS |
 | Sistema de información → WhatsApp Cloud API | Envía respuestas y recordatorios | API HTTPS |
 | Secretaria → Sistema de información | Gestiona agenda, pacientes y cobros | HTTPS (navegador) |
@@ -58,6 +59,13 @@ Diagramas del apartado "Arquitectura general del sistema" (Objetivo 2). Se dibuj
 ### Límites y agrupaciones
 
 - No hay límites de despliegue en este nivel. Los actores y los sistemas externos quedan fuera de la caja del sistema.
+
+### Disposición sugerida
+
+- Centro: Sistema de información.
+- Izquierda: Paciente y, entre ambos, WhatsApp Cloud API.
+- Arriba: Secretaria, Odontólogo y Director.
+- Derecha: Google Calendar y Google Drive.
 
 ### Leyenda
 
@@ -74,10 +82,10 @@ Persona (ícono) · Sistema propio (rectángulo gris) · Sistema externo (rectá
 | Nombre | Tipo C4 | Tecnología | Descripción | Ícono sugerido |
 |---|---|---|---|---|
 | Usuario de la clínica | Persona | — | Personal que accede desde un navegador | Ícono de persona |
-| Paciente o familiar | Persona | — | Escribe desde WhatsApp | Ícono de persona |
-| Proxy inverso | Contenedor | nginx con Let's Encrypt | Termina TLS, sirve la aplicación web y expone solo `/api` y el webhook | nginx (devicon: `nginx-original`); candado para Let's Encrypt (simpleicons.org: `letsencrypt`) |
-| Aplicación web | Contenedor | Angular 22.1 (SPA) | Interfaz de la clínica en el navegador | Angular (devicon: `angularjs-original`) |
-| API del sistema | Contenedor | Spring Boot 3.4 con Java 21 | Lógica de negocio por módulos, JWT y motor conversacional del agente | Spring (devicon: `spring-original`) |
+| Paciente | Persona | — | Escribe desde WhatsApp | Ícono de persona |
+| Proxy inverso y servidor web | Contenedor | nginx con Let's Encrypt | Termina TLS, sirve los archivos de la aplicación web y expone solo `/api` y el webhook | nginx (devicon: `nginx-original`); candado para Let's Encrypt (simpleicons.org: `letsencrypt`) |
+| Aplicación web | Contenedor (en el navegador) | Angular 22.1 (SPA) | Se ejecuta en el navegador del personal; no es un contenedor Docker | Angular (devicon: `angular-original`) |
+| API del sistema | Contenedor | Spring Boot 3.5 con Java 21 | Lógica de negocio por módulos, JWT y motor conversacional del agente | Spring (devicon: `spring-original`) |
 | Base de datos | Contenedor (base de datos) | PostgreSQL 16 | Almacena los datos de la clínica en un esquema compartido | PostgreSQL (devicon: `postgresql-original`) |
 | Servicio de respaldo | Contenedor | pg_dump programado en Docker | Genera un volcado diario cifrado y lo copia a Google Drive | Docker (devicon: `docker-original`) |
 | WhatsApp Cloud API | Sistema externo | Meta | Mensajería; transmite los eventos mediante webhook | WhatsApp (simpleicons.org: `whatsapp`) |
@@ -88,23 +96,31 @@ Persona (ícono) · Sistema propio (rectángulo gris) · Sistema externo (rectá
 
 | Origen → destino | Etiqueta | Protocolo |
 |---|---|---|
-| Usuario de la clínica → Aplicación web | Usa la aplicación | HTTPS (443) |
-| Paciente o familiar → WhatsApp Cloud API | Escribe | WhatsApp |
+| Usuario de la clínica → Aplicación web | Usa la aplicación | Navegador |
+| Paciente → WhatsApp Cloud API | Escribe | WhatsApp |
+| WhatsApp Cloud API → Paciente | Entrega respuestas y recordatorios | WhatsApp |
 | WhatsApp Cloud API → Proxy inverso | Envía eventos del webhook | HTTPS (443) |
-| Proxy inverso → Aplicación web | Entrega los archivos de la SPA | HTTP interno |
+| Proxy inverso → Aplicación web | Entrega los archivos de la SPA | HTTPS (443) |
 | Aplicación web → API del sistema | Llama a `/api` con JWT | HTTPS a través del proxy |
 | Proxy inverso → API del sistema | Reenvía `/api` y el webhook | HTTP interno |
-| API del sistema → Base de datos | Lee y escribe datos | JDBC (TCP 5432) |
+| API del sistema → Base de datos | Lee y escribe datos | Spring Data JPA (TCP 5432) |
 | API del sistema → WhatsApp Cloud API | Envía mensajes y recordatorios | API HTTPS |
 | API del sistema → Google Calendar | Envía la copia de la agenda | API HTTPS |
-| Servicio de respaldo → Base de datos | Lee el volcado | TCP 5432 |
+| Servicio de respaldo → Base de datos | Genera el volcado (`pg_dump`) | TCP 5432 |
 | Servicio de respaldo → Google Drive | Sube la copia cifrada | API HTTPS |
 
 ### Límites y agrupaciones
 
-- **Servidor virtual (VPS)**: caja punteada que contiene todos los contenedores. Su título incluye la nota "contratado a nombre de la clínica".
-- **Docker Compose**: caja punteada anidada dentro del VPS que agrupa los cinco contenedores (proxy, aplicación web, API, base de datos y respaldo).
+- **Servidor virtual (VPS)**: caja punteada. Su título incluye la nota "contratado a nombre de la clínica".
+- **Docker Compose**: caja punteada anidada dentro del VPS que agrupa los cuatro contenedores Docker (nginx, API, base de datos y respaldo).
+- **Navegador**: caja punteada fuera del VPS, junto al usuario de la clínica, que contiene la aplicación web (SPA).
 - Los sistemas externos y los actores quedan fuera del VPS.
+
+### Disposición sugerida
+
+- Izquierda: usuario de la clínica y su navegador con la SPA; debajo, el paciente.
+- Centro: caja del VPS con nginx arriba, la API en el medio y la base de datos y el respaldo abajo.
+- Derecha: WhatsApp Cloud API, Google Calendar y Google Drive, alineados con las flechas que reciben.
 
 ### Leyenda
 
@@ -123,7 +139,7 @@ Cada módulo es una caja con el nombre del paquete (`com.bellidental.<módulo>`)
 | Módulo | Estado | Interfaz pública | Responsabilidad |
 |---|---|---|---|
 | identity | Implementado | Ninguna | Usuarios, roles y autenticación con JWT |
-| patients | Implementado | `PatientDirectory` | Datos de identificación, consentimiento e historial |
+| patients | Implementado | `PatientDirectory` | Datos de identificación e historial inmediato |
 | professionals | Implementado | `ProfessionalDirectory` | Profesionales, especialidades y horarios |
 | clinicalrecords | Implementado | `ClinicalRecordDirectory` | Historia clínica y antecedentes |
 | appointments | Implementado | `AppointmentScheduler` | Agenda única y validación anticruce |
@@ -133,12 +149,12 @@ Cada módulo es una caja con el nombre del paquete (`com.bellidental.<módulo>`)
 | prescriptions | Planificado | Ninguna | Recetas y su impresión |
 | billing | Planificado | `BillingDirectory` | Abonos, saldo calculado y comprobante interno |
 | calendar | Planificado | Ninguna | Copia de solo lectura en Google Calendar |
-| whatsapp | Planificado | Ninguna (webhook de entrada) | Motor conversacional del agente, webhook y recordatorios |
+| whatsapp | Planificado | Ninguna (webhook de entrada) | Motor conversacional del agente, aviso de privacidad, webhook y recordatorios |
 
 ### Disposición sugerida
 
 - Ubicar en la parte superior los módulos sin dependencias (identity, patients, professionals, treatments).
-- En el centro, appointments y clinicalrecords; debajo, clinical.
+- En el centro, appointments y clinicalrecords; debajo, clinical (depende de ambos).
 - En la parte inferior, odontogram, prescriptions, billing, calendar y whatsapp.
 - Evitar cruces de flechas: las dependencias deben ir hacia arriba.
 
@@ -152,24 +168,27 @@ Las flechas solo representan dependencias por interfaz pública. Etiqueta: nombr
 | appointments → patients | `PatientDirectory` | Continua |
 | appointments → professionals | `ProfessionalDirectory` | Continua |
 | clinical → appointments | `AppointmentScheduler` | Continua |
+| clinical → clinicalrecords | `ClinicalRecordDirectory` | Continua |
 | odontogram → clinical | `ClinicalDirectory` | Continua |
 | odontogram → patients | `PatientDirectory` | Continua |
 | prescriptions → clinical | `ClinicalDirectory` | Continua |
-| prescriptions → treatments | `TreatmentDirectory` | Continua |
 | billing → clinical | `ClinicalDirectory` | Continua |
 | billing → treatments | `TreatmentDirectory` | Continua |
+| billing → patients | `PatientDirectory` | Continua |
 | whatsapp → patients | `PatientDirectory` | Continua |
 | whatsapp → professionals | `ProfessionalDirectory` | Continua |
 | whatsapp → appointments | `AppointmentScheduler` | Continua |
 | whatsapp → treatments | `TreatmentDirectory` (solo precios) | Continua |
-| appointments → calendar | Eventos de dominio | Punteada |
-| appointments → whatsapp | Eventos de dominio (recordatorios) | Punteada |
+| calendar → professionals | `ProfessionalDirectory` | Continua |
+| appointments → calendar | Publica eventos de dominio | Punteada |
+| appointments → whatsapp | Publica eventos de dominio (recordatorios) | Punteada |
 
 **Importante:** no dibujar ninguna flecha desde whatsapp hacia clinical, odontogram, prescriptions ni billing.
 
 ### Límites y agrupaciones
 
-- **API Spring Boot 3.4 (monolito modular)**: caja exterior que contiene los doce módulos. Subtítulo: "Un único despliegue".
+- **API Spring Boot 3.5 (monolito modular)**: caja exterior que contiene los doce módulos. Subtítulo: "Un único despliegue".
+- **Nota de nombres**: en el código, el paquete del agente y la sincronización se llama `notifications` y existe además `dashboard`; el diagrama usa los nombres funcionales.
 - **Persistencia compartida**: franja horizontal en la parte inferior de la caja de la API, con el texto "Entidades y repositorios compartidos (esquema único de PostgreSQL)". Conectar con una línea punteada a la base de datos del diagrama de contenedores, o simplemente rotularla.
 
 ### Destacar el agente
