@@ -14,28 +14,43 @@ skinparam state {
   BackgroundColor<<recordatorio>> #DAE8FC
   BorderColor<<recordatorio>> #6C8EBF
 }
+skinparam note {
+  BackgroundColor #F5F5F5
+  BorderColor #999999
+}
 hide empty description
 hide stereotype
 
+state aceptado <<choice>>
 state "Aviso de privacidad" as Aviso
-state "Identificación" as Identificacion
 state "Menú" as Menu
 state "Información" as Informacion
-state "Agendar o reprogramar" as Cita
+state "Identificación" as Identificacion
+state "Agendamiento" as Agendar
+state "Reprogramación" as Reprogramar
 state "Recordatorio" as Recordatorio <<recordatorio>>
-state "Derivar a recepción" as Derivar <<derivar>>
+state "Derivación a recepción" as Derivar <<derivar>>
 
-[*] --> Aviso : primer mensaje
-[*] --> Recordatorio : día anterior
-Aviso --> Identificacion : acepta
-Identificacion --> Menu
+[*] --> aceptado : mensaje del paciente
+aceptado --> Menu : aviso ya aceptado
+aceptado --> Aviso : primera vez
+Aviso --> Menu : acepta
+Aviso --> [*] : no acepta
 Menu --> Informacion
-Menu --> Cita
-Menu --> Derivar
-Cita --> [*] : cita registrada
-Informacion --> [*]
+Informacion --> Menu : volver
+Menu --> Identificacion : agendar o\nreprogramar
+Menu --> Derivar : hablar con\nrecepción
+Identificacion --> Agendar
+Identificacion --> Reprogramar
+Identificacion --> Derivar : sin coincidencia
+Agendar --> Agendar : horario ocupado
+Agendar --> [*] : cita registrada
+Reprogramar --> [*] : cita reprogramada
 Derivar --> [*]
-Recordatorio --> Cita : reprogramar
-Recordatorio --> [*] : confirmar / cancelar
-Identificacion --> Derivar : no registrado
+
+[*] --> Recordatorio : día anterior
+Recordatorio --> [*] : confirmar\no cancelar
+Recordatorio --> Reprogramar : reprogramar
+
+note "Sin respuesta en 30 min,\nla conversación se reinicia" as N1
 @enduml

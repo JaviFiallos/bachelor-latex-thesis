@@ -1,81 +1,100 @@
 \subsubsection{Arquitectura del agente conversacional}
 
-Este apartado presenta tres de los cuatro elementos del objetivo: la estructura lógica, los componentes funcionales y los mecanismos de integración, más las medidas de seguridad y cumplimiento. El cuarto, el esquema de despliegue, se trata en el apartado siguiente, porque el agente comparte la infraestructura del sistema.
+Este apartado presenta la estructura lógica, los componentes funcionales y los mecanismos de integración del agente. El esquema de despliegue se trata en el apartado siguiente, porque el agente comparte la infraestructura del sistema.
 
 \paragraph{Estructura lógica}
 
-La Figura~\ref{fig:ob2_c4_componentes} presenta los componentes del agente en el nivel 3 del modelo C4, agrupados en capas. La Tabla~\ref{tab:ob2_capas} describe la responsabilidad de cada capa.
+El agente es un módulo de la API organizado en cinco capas (Figura~\ref{fig:ob2_capas_agente}). Cada capa solo usa la inmediata inferior; el agente no accede a los módulos clínicos ni de cobros (RNF03).
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/C4_Componentes_Agente.png}{\includegraphics[width=\linewidth]{img/C4_Componentes_Agente.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar según diagramas/drawio/ESPECIFICACION-agente.md y exportar a img/C4\_Componentes\_Agente.pdf}}}
-\caption{Componentes del agente conversacional (C4, nivel 3)}
-\label{fig:ob2_c4_componentes}
+\begin{tikzpicture}[
+    font=\footnotesize, >={Stealth[length=2mm]},
+    capa/.style 2 args={draw=#2, fill=#1, rounded corners=4pt, line width=0.7pt, minimum width=14cm, minimum height=1.05cm},
+    nom/.style={anchor=west, text width=3.3cm, font=\footnotesize\bfseries, align=left},
+    pieza/.style={draw=#1, fill=white, rounded corners=2pt, minimum height=0.62cm, inner sep=4pt, font=\scriptsize},
+]
+    \node[draw=dExternoB, dashed, fill=dExternoF, rounded corners=4pt, minimum width=5cm, minimum height=0.7cm, font=\footnotesize\bfseries] (wa) at (7,1.25) {WhatsApp (Meta)};
+    \node[draw=dPersonaB, fill=dPersonaF, rounded corners=4pt, minimum height=0.7cm, font=\footnotesize\bfseries] (pac) at (1.6,1.25) {Paciente};
+    \draw[<->, black!65] (pac) -- (wa);
+
+    % Capas
+    \node[capa={dAgenteF}{dAgenteB}] (c1) at (7,0) {};
+    \node[nom] at (c1.west) {Canal};
+    \node[pieza=dAgenteB, anchor=west] (p11) at (3.7,0) {Webhook de entrada (verifica la firma)};
+    \node[pieza=dAgenteB, right=0.25cm of p11] {Envío de mensajes y plantillas};
+
+    \node[capa={dAgenteF}{dAgenteB}] (c2) at (7,-1.3) {};
+    \node[nom] at (c2.west) {Conversación};
+    \node[pieza=dAgenteB, anchor=west] (p21) at (3.7,-1.3) {Motor de pasos};
+    \node[pieza=dAgenteB, right=0.25cm of p21] (p22) {Estado por teléfono (30 min)};
+    \node[pieza=dAgenteB, right=0.25cm of p22] {Derivación a recepción};
+
+    \node[capa={dAgenteF}{dAgenteB}] (c3) at (7,-2.6) {};
+    \node[nom] at (c3.west) {Tareas programadas};
+    \node[pieza=dAgenteB, anchor=west] at (3.7,-2.6) {Recordatorios del día anterior};
+
+    \node[capa={dSistemaF}{dSistemaB}] (c4) at (7,-3.9) {};
+    \node[nom] at (c4.west) {Servicios del sistema};
+    \node[pieza=dSistemaB, anchor=west] (p41) at (3.7,-3.9) {Pacientes};
+    \node[pieza=dSistemaB, right=0.25cm of p41] (p42) {Profesionales};
+    \node[pieza=dSistemaB, right=0.25cm of p42] (p43) {Agenda};
+    \node[pieza=dSistemaB, right=0.25cm of p43] {Precios (solo lectura)};
+
+    \node[capa={dDatosF}{dDatosB}] (c5) at (7,-5.2) {};
+    \node[nom] at (c5.west) {Datos propios};
+    \node[pieza=dDatosB, anchor=west] (p51) at (3.7,-5.2) {Aceptación del aviso};
+    \node[pieza=dDatosB, right=0.25cm of p51] {Estado de los recordatorios};
+
+    \draw[<->, black!65] (wa) -- (c1.north -| wa);
+\end{tikzpicture}
+\caption{Estructura lógica del agente conversacional por capas}
+\label{fig:ob2_capas_agente}
 \end{figure}
-
-\begin{table}[H]
-\centering
-\caption{Capas lógicas del agente conversacional}
-\label{tab:ob2_capas}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}X|}
-\hline
-\textbf{Capa} & \textbf{Componentes} & \textbf{Responsabilidad} \\ \hline
-Canal & Webhook de entrada; cliente de WhatsApp Cloud API & Recibe los eventos de Meta, verifica su firma y envía respuestas, listas, botones y plantillas \\ \hline
-Conversación & Motor de pasos; estado de la conversación; derivación & Determina el paso de cada conversación y las acciones permitidas; mantiene el estado por número de teléfono \\ \hline
-Servicios de dominio & \texttt{PatientDirectory}, \texttt{ProfessionalDirectory}, \texttt{AppointmentScheduler}, \texttt{TreatmentDirectory} (solo precios) y configuración de la clínica & Identifican al paciente, consultan la disponibilidad, registran o reprograman citas y entregan precios \\ \hline
-Tareas programadas & Programador de recordatorios; receptor de eventos de cita & Programa y envía los recordatorios del día anterior a los pacientes con aviso aceptado, y registra su estado \\ \hline
-Persistencia propia & \texttt{privacy\_consents}, \texttt{appointment\_reminders} & Registra la aceptación del aviso de privacidad y el estado de cada recordatorio \\ \hline
-\end{tabularx}
-\end{table}
-
-El agente solo depende de las interfaces públicas de pacientes, profesionales y agenda, del catálogo de precios en solo lectura y de la configuración de la clínica. No accede a módulos clínicos ni de cobros (RNF03).
 
 \paragraph{Componentes funcionales}
 
-La Tabla~\ref{tab:ob2_componentes} vincula cada componente con el requerimiento que atiende, con la necesidad o brecha de origen y con la evidencia del Objetivo 1. Los límites de agendamiento se aplican solo a las citas creadas por el agente; la recepción no los tiene. La Figura~\ref{fig:ob2_estados_conversacion} muestra los estados por los que pasa una conversación.
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.15\linewidth}|p{0.08\linewidth}|p{0.09\linewidth}|p{0.20\linewidth}|p{0.33\linewidth}|}
-\caption{Componentes funcionales del agente, con su requerimiento, evidencia y reglas}
-\label{tab:ob2_componentes} \\
-\hline
-\textbf{Componente} & \textbf{RF} & \textbf{Origen} & \textbf{Evidencia} & \textbf{Reglas} \\ \hline
-\endfirsthead
-\hline
-\textbf{Componente} & \textbf{RF} & \textbf{Origen} & \textbf{Evidencia} & \textbf{Reglas} \\ \hline
-\endhead
-\hline
-\endfoot
-Aviso de privacidad & RF09 & BN6 & Tabla~\ref{tab:brechas_normativas} & Se presenta en la primera interacción. Sin aceptación explícita no se procesa ningún dato. Se guardan la versión aceptada y la fecha. La aceptación habilita también los recordatorios \\ \hline
-Identificación & RF11, RF12 & N2 & Tabla~\ref{tab:ob2_tablas_principales} & Busca pacientes activos por teléfono. Sin coincidencias, deriva. Con un paciente, pide confirmar la identidad. Con varios, pide la cédula y valida que pertenezca al grupo \\ \hline
-Menú & RF10, RF13 & N1, N5 & Tabla~\ref{tab:instrumento2}, P1 & Lista interactiva con Horarios, Precios y formas de pago, Agendar, Reprogramar y Hablar con recepción. Las palabras clínicas y de saldo derivan \\ \hline
-Información & RF10 & N1 & Tablas~\ref{tab:p2_frecuencia}, \ref{tab:p6_frecuencia} y \ref{tab:p7_frecuencia} & Horarios y formas de pago desde la configuración. Precios referenciales desde el catálogo, en solo lectura \\ \hline
-Agendamiento & RF11 & N2 & Tablas~\ref{tab:p1_frecuencia} y \ref{tab:p5_frecuencia} & Especialidad, profesional, día y hora. Horarios de los próximos 14 días y hasta 10 opciones. Una cita activa por paciente y especialidad. Hasta 3 citas activas por teléfono. Valores configurables. Ante un conflicto, ofrece otros horarios \\ \hline
-Reprogramación & RF12 & N2 & Tabla~\ref{tab:p5_frecuencia} & Solo para citas activas. Hasta 2 h antes de la cita (valor configurable); después, deriva. La cita original queda reprogramada y enlazada con la nueva \\ \hline
-Recordatorios & RF14 & N3; BN7 & Tabla~\ref{tab:instrumento2}, P2 y P4; Tablas~\ref{tab:p3_frecuencia} y \ref{tab:p4_frecuencia} & Se programa al crear una cita activa, solo si el teléfono del paciente aceptó el aviso en el agente, para el día anterior a una hora configurable. Plantilla de categoría utility con Confirmar, Cancelar y Reprogramar; cancelar y reprogramar solo hasta 2 h antes de la cita, después deriva. Solo datos de la cita \\ \hline
-Derivación & RF13 & N5; BN7 & Tabla~\ref{tab:necesidades} & Deriva consultas clínicas, de saldo y no reconocidas, y las solicitudes de hablar con recepción. Envía el horario y el enlace de recepción \\ \hline
-\end{longtable}
-\endgroup
+La Figura~\ref{fig:ob2_componentes_func} resume los ocho componentes funcionales, el requerimiento que atiende cada uno y su regla principal. Los límites de agendamiento son configurables y se aplican solo al agente; la recepción no los tiene.
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/Estados_Conversacion.pdf}{\includegraphics[width=0.7\linewidth]{img/Estados_Conversacion.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: renderizar diagramas/plantuml/estados\_conversacion.puml y exportar a img/Estados\_Conversacion.pdf}}}
+\begin{tikzpicture}[
+    tarjeta/.style 2 args={rectangle split, rectangle split parts=2, draw=#2, line width=0.7pt, rounded corners=2pt,
+        rectangle split part fill={#1,white}, text width=3.05cm, align=left, inner sep=3pt, font=\scriptsize},
+]
+    \def\dx{3.65}
+    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (0,0) {\textbf{Aviso de privacidad}\nodepart{two}\textbf{RF09.} Primera interacción; sin aceptación no se tratan datos. Habilita los recordatorios.};
+    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (\dx,0) {\textbf{Identificación}\nodepart{two}\textbf{RF11.} Busca al paciente por teléfono; si hay varios, pide la cédula. Sin coincidencia, deriva.};
+    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (2*\dx,0) {\textbf{Menú}\nodepart{two}\textbf{RF10.} Horarios, precios, agendar, reprogramar y hablar con recepción.};
+    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (3*\dx,0) {\textbf{Información}\nodepart{two}\textbf{RF10.} Horarios, formas de pago y precios referenciales.};
+    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (0,-2.5) {\textbf{Agendamiento}\nodepart{two}\textbf{RF11.} Próximos 14 días; una cita por especialidad y hasta tres por teléfono.};
+    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (\dx,-2.5) {\textbf{Reprogramación}\nodepart{two}\textbf{RF12.} Hasta 2 h antes de la cita; la nueva queda enlazada con la original.};
+    \node[tarjeta={dSistemaF}{dSistemaB}, anchor=north] at (2*\dx,-2.5) {\textbf{Recordatorios}\nodepart{two}\textbf{RF14.} El día anterior, con Confirmar, Cancelar y Reprogramar; solo datos de la cita.};
+    \node[tarjeta={dPersonaF}{dPersonaB}, anchor=north] at (3*\dx,-2.5) {\textbf{Derivación}\nodepart{two}\textbf{RF13.} Consultas clínicas, de saldo o no reconocidas pasan a recepción.};
+\end{tikzpicture}
+\caption{Componentes funcionales del agente, con su requerimiento y regla principal}
+\label{fig:ob2_componentes_func}
+\end{figure}
+
+La Figura~\ref{fig:ob2_estados_conversacion} muestra cómo se encadenan estos componentes en una conversación. El aviso solo aparece si el teléfono aún no lo aceptó, y la identificación solo se pide para agendar o reprogramar. El recordatorio inicia una conversación propia. El estado se guarda en memoria y caduca a los 30 min; un reinicio del servidor no pierde citas, porque una cita solo se registra al confirmarse.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Estados_Conversacion.pdf}{\includegraphics[width=0.8\linewidth]{img/Estados_Conversacion.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: renderizar diagramas/plantuml/estados\_conversacion.puml y exportar a img/Estados\_Conversacion.pdf}}}
 \caption{Estados de la conversación con el agente}
 \label{fig:ob2_estados_conversacion}
 \end{figure}
 
-El estado de la conversación se guarda solo en memoria, con caducidad de 30 min por número de teléfono. Un reinicio del servidor reinicia las conversaciones en curso, pero no pierde citas, porque una cita se registra únicamente al confirmarse.
-
 \paragraph{Mecanismos de integración con la plataforma de mensajería}
 
-La Tabla~\ref{tab:ob2_mecanismos} resume los mecanismos de WhatsApp Cloud API que el diseño utiliza.
+La Figura~\ref{fig:ob2_c4_componentes} muestra cómo se conectan los componentes del agente con WhatsApp y con los servicios del sistema. La Tabla~\ref{tab:ob2_mecanismos} resume los mecanismos de WhatsApp Cloud API que usa el diseño.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{diagramas/drawio/ComponentesAgente_C4_3.png}{\includegraphics[width=\linewidth]{diagramas/drawio/ComponentesAgente_C4_3.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar según diagramas/drawio/ESPECIFICACION-agente.md}}}
+\caption{Componentes del agente y su integración (C4, nivel 3)}
+\label{fig:ob2_c4_componentes}
+\end{figure}
 
 \begin{table}[H]
 \centering
@@ -84,24 +103,22 @@ La Tabla~\ref{tab:ob2_mecanismos} resume los mecanismos de WhatsApp Cloud API qu
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.0cm}|}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.2cm}|}
 \hline
-\textbf{Mecanismo} & \textbf{Función} & \textbf{Requerimiento} \\ \hline
-Verificación del webhook & Comprueba el token de verificación y devuelve \texttt{hub.challenge} al registrar la URL \cite{meta2026whatsapp} & HTTPS (Tabla~\ref{tab:ob2_webhook}) \\ \hline
-Firma de cada solicitud & Valida la cabecera \texttt{X-Hub-Signature-256} y descarta las solicitudes que no coinciden \cite{meta2026whatsapp} & RNF03; BN7 \\ \hline
-Mensajes interactivos & Listas para el menú y para elegir especialidad, profesional, día y hora; botones para responder los recordatorios & RF10, RF11, RF14 \\ \hline
-Plantillas de categoría utility & Recordatorios iniciados por la clínica, aprobados por Meta, con botones Confirmar, Cancelar y Reprogramar; se cobran por plantilla enviada \cite{meta2026pricing} & RF14; BN7 \\ \hline
-Consentimiento previo (opt-in) & Meta exige que el destinatario acepte recibir mensajes iniciados por la empresa \cite{meta2026optin}; se usa la aceptación del aviso registrada por el agente & RF09, RF14; BN6 \\ \hline
-Ventana de 24 h & Las respuestas libres se envían dentro de las 24 h posteriores al último mensaje del paciente; después, solo plantillas \cite{meta2026pricing} & RF10, RF13 \\ \hline
-Tope de destinatarios únicos por día & Límite que Meta fija para los mensajes iniciados por la empresa según el nivel de la cuenta \cite{meta2026limits}; acota los recordatorios diarios & Restricción de la cuenta \\ \hline
-Número exclusivo del agente & El agente usa un número distinto del de recepción, que queda como canal alterno ante una falla o un bloqueo del agente & Decisión de diseño \\ \hline
-Derivación por enlace wa.me & Enlace al número de recepción, con el horario de atención & RF13; N5 \\ \hline
+\textbf{Mecanismo} & \textbf{Uso en el diseño} & \textbf{Requerimiento} \\ \hline
+Webhook verificado & Token al registrar la URL y firma en cada solicitud \cite{meta2026whatsapp} & RNF03 \\ \hline
+Mensajes interactivos & Listas para el menú y la cita; botones para el recordatorio & RF10, RF11 \\ \hline
+Plantillas utility & Recordatorios iniciados por la clínica, aprobados por Meta y cobrados por envío \cite{meta2026pricing} & RF14 \\ \hline
+Consentimiento previo & Requisito de Meta para escribir primero \cite{meta2026optin}; se usa la aceptación del aviso & RF09, RF14 \\ \hline
+Ventana de 24 h & Respuestas libres solo dentro de 24 h del último mensaje; después, plantillas & RF10, RF13 \\ \hline
+Límite diario de envíos & Tope de destinatarios por día según el nivel de la cuenta \cite{meta2026limits} & RF14 \\ \hline
+Enlace wa.me & Deriva al número de recepción, distinto del número del agente & RF13 \\ \hline
 \end{tabularx}
 \end{table}
 
-\textbf{Integración con la agenda.} El agente usa la misma operación transaccional de \texttt{AppointmentScheduler} que la recepción. Si la restricción de exclusión de la base de datos rechaza la cita por conflicto, el agente informa y ofrece otros horarios. El sistema de reserva revisado \cite{shaikh2026smartmedibook} evita la doble reserva sin reportar una restricción en la base de datos; en este diseño, la garantía está en la base de datos, que aplica la misma regla a la recepción y al agente.
+\textbf{Integración con la agenda.} El agente agenda con la misma operación que la recepción. Si la base de datos rechaza la cita por un cruce, el agente ofrece otros horarios. A diferencia de \cite{shaikh2026smartmedibook}, que valida la doble reserva en la aplicación, aquí la regla está en la base de datos y vale para ambos canales.
 
-\textbf{Integración con Google Calendar.} Google Calendar recibe una copia de solo lectura de la agenda. Se actualiza con eventos de dominio, después de confirmar la transacción. El agente no escribe en Google Calendar.
+\textbf{Integración con Google Calendar.} La sincronización es unidireccional: el sistema copia cada cambio de la agenda en un calendario por profesional, que el personal consulta en solo lectura. Una edición hecha en Google Calendar no modifica la agenda, porque la agenda del sistema es la única fuente de disponibilidad (RF07) y una sincronización en ambos sentidos permitiría citas que eluden la regla anticruce (PC7).
 
 La Figura~\ref{fig:ob2_secuencia_agendar} muestra el agendamiento por WhatsApp, y la Figura~\ref{fig:ob2_secuencia_recordatorio}, el recordatorio y su respuesta.
 
@@ -118,29 +135,3 @@ La Figura~\ref{fig:ob2_secuencia_agendar} muestra el agendamiento por WhatsApp, 
 \caption{Recordatorio del día anterior y respuesta del paciente}
 \label{fig:ob2_secuencia_recordatorio}
 \end{figure}
-
-\paragraph{Seguridad y cumplimiento}
-
-La Tabla~\ref{tab:ob2_seguridad} relaciona cada medida con su implementación y con su origen, que puede ser una brecha normativa, un requerimiento o la literatura revisada.
-
-\begin{table}[H]
-\centering
-\caption{Medidas de seguridad y cumplimiento del agente}
-\label{tab:ob2_seguridad}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.2cm}|}
-\hline
-\textbf{Medida} & \textbf{Implementación} & \textbf{Origen} \\ \hline
-Aviso de privacidad con aceptación explícita & Se presenta antes de tratar datos y se registra la versión y la fecha de aceptación en \texttt{privacy\_consents}. Solo los teléfonos con aceptación reciben recordatorios. La barrera de privacidad en los chatbots clínicos \cite{hindelang2024chatbots} motiva esta medida & RF09; BN6 \\ \hline
-Minimización de datos & Solo datos de identificación y de la cita. Sin acceso a módulos clínicos ni de cobros & RNF03; BN7; AM 5216-A, art. 27 \\ \hline
-Derivación & Consultas clínicas, de saldo y no reconocidas, y solicitudes de recepción, pasan a la secretaria & RF13; N5; BN7 \\ \hline
-Trazabilidad de las acciones del agente & Usuario técnico sin inicio de sesión. Cada cita y cada respuesta de recordatorio registran su origen y su fecha. Las brechas de auditoría son frecuentes en la protección de datos de historias clínicas electrónicas \cite{martinez2022proteccion} & RNF02; BN4 \\ \hline
-Autenticidad de las solicitudes & Token de verificación del webhook y firma \texttt{X-Hub-Signature-256} en cada solicitud \cite{meta2026whatsapp} & RNF03; BN7 (LOPDP, art. 10, lit. j) \\ \hline
-Cifrado en tránsito & TLS en el proxy inverso y en la conexión con Meta. No hay cifrado de extremo a extremo hasta la clínica & RNF03; BN7 \\ \hline
-Terceros encargados y transferencia internacional & Meta (mensajes), Google (copia de la agenda con el nombre del paciente y respaldos cifrados) y el proveedor del servidor virtual tratan datos fuera del Ecuador. La clínica conserva la responsabilidad, formaliza el acuerdo de encargado con cada proveedor y aplica el régimen de transferencia internacional de la LOPDP \cite{lopdp2021} & BN6; BN7; LOPDP \\ \hline
-\end{tabularx}
-\end{table}
-
-El agente complementa la atención de la recepción y no la sustituye, porque el 35,2\,\% de los encuestados no está dispuesto a agendar por un canal automatizado (Tabla~\ref{tab:p5_frecuencia}). Tampoco amplía los cupos disponibles: facilita el acceso a la disponibilidad existente.
