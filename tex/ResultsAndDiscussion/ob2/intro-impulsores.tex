@@ -2,14 +2,14 @@ El Objetivo 1 caracterizó el flujo clínico-administrativo, sus puntos crítico
 
 \subsubsection{Impulsores arquitectónicos}
 
-Los impulsores arquitectónicos son los requerimientos, atributos de calidad y restricciones que condicionan la arquitectura de un sistema \cite{cervantes2016designing}. La Tabla~\ref{tab:ob2_impulsores} traza cada evidencia del análisis hasta el requerimiento que origina y la implicación que tiene para el diseño.
+Los impulsores arquitectónicos son los requerimientos, atributos de calidad y restricciones que condicionan la arquitectura de un sistema \cite{cervantes2016designing}. La Tabla~\ref{tab:ob2_impulsores} traza cada evidencia del análisis hasta el requerimiento que origina y su implicación en el diseño. Los datos provienen de la entrevista y el instrumento operativo (Tablas~\ref{tab:ent1} y \ref{tab:instrumento2}), la encuesta a pacientes (Tablas~\ref{tab:p1_frecuencia} a \ref{tab:p8_frecuencia}) y los puntos críticos y brechas normativas (Tablas~\ref{tab:puntos_criticos} y \ref{tab:brechas_normativas}).
 
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.27\linewidth}|p{0.11\linewidth}|p{0.16\linewidth}|p{0.34\linewidth}|}
+\begin{longtable}{|p{0.33\linewidth}|p{0.13\linewidth}|p{0.14\linewidth}|p{0.28\linewidth}|}
 \caption{Trazabilidad de los impulsores arquitectónicos}
 \label{tab:ob2_impulsores} \\
 \hline
@@ -20,17 +20,17 @@ Los impulsores arquitectónicos son los requerimientos, atributos de calidad y r
 \endhead
 \hline
 \endfoot
-26 a 50 mensajes diarios sobre cotizaciones y horarios (Tabla~\ref{tab:instrumento2}, P1); 62,9\,\% y 61,9\,\% aceptan consultar precios y horarios por un asistente (Tablas~\ref{tab:p6_frecuencia} y \ref{tab:p7_frecuencia}) & N1; PC8 & RF10 & Información predefinida desde la configuración y el catálogo \\ \hline
-Respuestas superiores a 46 min en horario de alta afluencia (Tabla~\ref{tab:instrumento2}, P3); 60,0\,\% percibe demora (Tabla~\ref{tab:p2_frecuencia}) & N1 & RNF05 & Respuesta inmediata del agente en todo horario, incluso fuera de la jornada de recepción \\ \hline
-2 conflictos de horario en el último mes (Tabla~\ref{tab:instrumento2}, P5); 50,5\,\% no encontró un horario con facilidad (Tabla~\ref{tab:p1_frecuencia}) & N2; PC7 & RF07, RF11 & Agenda única con validación anticruce compartida por recepción y agente \\ \hline
-58,1\,\% agendaría o reprogramaría una cita por un asistente (Tabla~\ref{tab:p5_frecuencia}) & N2 & RF11, RF12 & Operaciones de agendar y reprogramar expuestas por la agenda \\ \hline
-31 a 60 min diarios confirmando citas y entre 3 y 5 citas semanales no concretadas (Tabla~\ref{tab:instrumento2}, P2 y P4); 46,7\,\% olvidó o confundió su cita (Tabla~\ref{tab:p3_frecuencia}); 53,3\,\% indica que un recordatorio le habría evitado un problema (Tabla~\ref{tab:p4_frecuencia}) & N3 & RF14 & Tarea programada de recordatorios con respuesta para confirmar, cancelar o reprogramar \\ \hline
-43,8\,\% coordinó su última cita en recepción (Tabla~\ref{tab:p8_frecuencia}); 35,2\,\% no está dispuesto a agendar mediante un asistente (Tabla~\ref{tab:p5_frecuencia}) & N4 & RF07 & Una sola agenda para todos los canales; identificación por teléfono \\ \hline
-Consultas clínicas y de saldo que exceden los datos permitidos al agente (Tabla~\ref{tab:brechas_normativas}, BN7) & N5; BN7 & RF13 & Derivación a recepción; el agente complementa la atención y no la sustituye \\ \hline
-Tratamiento de datos de identificación y de contacto para citas (Tabla~\ref{tab:brechas_normativas}, BN6 y BN7) & BN6; BN7 & RF09, RNF03 & Aviso de privacidad previo; el agente no accede a módulos clínicos ni de cobros \\ \hline
-Triple registro y registro del odontograma por la secretaria (Tabla~\ref{tab:puntos_criticos}, PC1 a PC3) & PC1 a PC3; BN1 a BN3 & RF01, RF02, RNF01 & Registro clínico único en el consultorio; separación entre datos clínicos y de identificación por rol \\ \hline
-Historial en Excel sin registro de quién creó o modificó cada dato (Tabla~\ref{tab:brechas_normativas}, BN4) & BN4 & RNF02 & Registro del usuario, la fecha y la hora de cada creación y modificación \\ \hline
-Sistemas por suscripción que dejaron de funcionar tras 6 o 7 meses (Tabla~\ref{tab:ent1}, P7); preservación de la información entre soportes (BN2) & BN2 & RNF04 & Datos bajo control de la clínica, respaldos externos y exportación en formato abierto \\ \hline
+26 a 50 mensajes diarios; 62,9\,\% consultaría precios con un asistente & N1; PC8 & RF10 & Respuestas predefinidas desde el catálogo \\ \hline
+Respuestas de más de 46 min en alta afluencia & N1 & RNF05 & Agente disponible en todo horario \\ \hline
+2 cruces de citas al mes; 50,5\,\% no halló horario con facilidad & N2; PC7 & RF07, RF11 & Agenda única con validación anticruce \\ \hline
+58,1\,\% agendaría o reprogramaría con un asistente & N2 & RF11, RF12 & Agendar y reprogramar sobre la agenda \\ \hline
+31 a 60 min diarios confirmando citas; 3 a 5 inasistencias semanales & N3 & RF14 & Recordatorio con Confirmar, Cancelar o Reprogramar \\ \hline
+43,8\,\% agendó en recepción & N4 & RF07 & Una agenda para todos los canales \\ \hline
+Consultas clínicas y de saldo & N5; BN7 & RF13 & Derivación a recepción \\ \hline
+Datos personales para gestionar citas & BN6; BN7 & RF09, RNF03 & Aviso de privacidad; agente sin acceso clínico \\ \hline
+Triple registro del odontograma & PC1 a PC3; BN1 a BN3 & RF01, RF02, RNF01 & Registro clínico único; acceso por rol \\ \hline
+Historial en Excel sin autoría de cambios & BN4 & RNF02 & Usuario, fecha y hora de cada cambio \\ \hline
+Sistemas por suscripción abandonados a los 6 o 7 meses & BN2 & RNF04 & Datos bajo control de la clínica; respaldo y exportación \\ \hline
 \end{longtable}
 \endgroup
 

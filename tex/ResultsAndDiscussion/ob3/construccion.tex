@@ -1,0 +1,59 @@
+% =========================================================
+% CONSTRUCCIÓN CON EL TABLERO KANBAN (tarea O3-02)
+% QUÉ VA: evidencia de que el plan de desarrollo (Tabla tab:ob2_tarjetas) se
+%         ejecutó con Kanban: tablero real, fechas de cada tarjeta y desviaciones.
+% DATOS:
+%   - Captura del tablero real (GitHub Projects o Trello) en una fecha de corte.
+%   - Fecha de inicio y fin de cada tarjeta: sale de git log de los dos
+%     repositorios (primer y último commit asociado a la tarjeta).
+%   - Desviaciones: tarjetas divididas (p. ej., odontograma en varias entregas),
+%     tarjetas nuevas surgidas al integrar frontend y backend, cambios de orden.
+% NO VA: pruebas, nombres de paquetes, detalles de código.
+% EXTENSIÓN: 1 figura + 1 tabla + 1 párrafo de desviaciones.
+% =========================================================
+
+\subsubsection{Construcción}
+
+La construcción siguió las quince tarjetas del plan de desarrollo (Tabla~\ref{tab:ob2_tarjetas}) en el tablero Kanban, con un límite de una tarjeta en desarrollo. La Figura~\ref{fig:ob3_tablero} muestra el tablero al 16 de octubre de 2026.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Tablero_Kanban.png}{\includegraphics[width=\linewidth]{img/Ob3_Tablero_Kanban.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: captura del tablero real en img/Ob3\_Tablero\_Kanban.png}}}
+\caption{Tablero Kanban de la construcción}
+\label{fig:ob3_tablero}
+\end{figure}
+
+% TABLA: una fila por tarjeta del plan (mismos números y nombres que
+% tab:ob2_tarjetas). Columnas cortas: Tarjeta | Inicio | Fin | Días.
+% Las tarjetas del agente en negrita, igual que en el Objetivo 2.
+\begin{table}[H]
+\centering
+\caption{Ejecución de las tarjetas del plan de desarrollo}
+\label{tab:ob3_tarjetas}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\hline
+\textbf{Tarjeta} & \textbf{Inicio} & \textbf{Fin} & \textbf{Días} \\ \hline
+1. Identidad y autenticación & 08/10 & 11/10 & 4 \\ \hline
+2. Profesionales y pacientes & 09/10 & 12/10 & 4 \\ \hline
+3. Historia clínica y antecedentes & 09/10 & 12/10 & 4 \\ \hline
+4. Agenda y horarios & 09/10 & 12/10 & 4 \\ \hline
+5. Atención clínica y CIE-10 & 09/10 & 12/10 & 4 \\ \hline
+6. Odontograma & 10/10 & 12/10 & 3 \\ \hline
+7. Tratamientos & --- & --- & --- \\ \hline  % sin commits todavía
+8. Recetas & --- & --- & --- \\ \hline  % sin commits todavía
+9. Cobros y comprobante & --- & --- & --- \\ \hline  % sin commits todavía
+10. Auditoría & --- & --- & --- \\ \hline  % sin commits todavía
+11. Sincronización con Google Calendar & --- & --- & --- \\ \hline  % sin commits todavía
+\textbf{12. Agente: núcleo, aviso, información y derivación} & --- & --- & --- \\ \hline  % sin commits todavía
+\textbf{13. Agente: agendar y reprogramar} & --- & --- & --- \\ \hline  % sin commits todavía
+\textbf{14. Agente: recordatorios} & --- & --- & --- \\ \hline  % sin commits todavía
+15. Respaldos y exportación & --- & --- & --- \\ \hline  % sin commits todavía
+Historial inmediato (RF06) & --- & --- & --- \\ \hline  % sin commits todavía
+\end{tabularx}
+\end{table}
+
+Las tarjetas de la agenda y del odontograma se dividieron en varias entregas: la agenda, por los horarios y la disponibilidad; el odontograma, por la simbología del Formulario 033. Al integrar la interfaz con el servidor surgieron ajustes no previstos en pacientes, historia clínica y agenda, por lo que varias tarjetas permanecieron abiertas mientras se ajustaban sus vistas e integración, y se añadió el historial inmediato del paciente (RF06) como una tarjeta propia.
+

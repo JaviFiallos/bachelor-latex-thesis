@@ -1,0 +1,79 @@
+% =========================================================
+% IMPLEMENTACIÓN DEL SISTEMA (tarea O3-04)
+% QUÉ VA: las pantallas finales que materializan el prototipo del Obj. 2
+%         (diseno-interfaz.tex), organizadas por el ciclo de atención del
+%         proceso propuesto (Figura fig:ob2_tobe_atencion), no por módulo técnico.
+%         Cada pantalla: captura + 2-3 líneas + RF que atiende + tramo del TGA
+%         que reduce (T1, T2 o T3) o que elimina (T4, T5).
+% ORDEN SUGERIDO (sigue el BPMN to-be):
+%   1. Acceso por rol (RNF01): la secretaria y el odontólogo ven menús distintos.
+%   2. Agenda de la secretaria (RF07) + mensaje de rechazo por cruce (componente
+%      de error de la Figura fig:ob2_componentes).  → T3
+%   3. Mis citas del odontólogo (tablero por estado).
+%   4. Atención: antecedentes, diagnóstico CIE-10 (RF01, RF03).
+%   5. Odontograma (RF02).                          → elimina T4/T5
+%   6. Tratamientos y receta desde catálogos (RF04, RF05) + PDF.  → T1
+%   7. Historial inmediato (RF06).
+%   8. Cobro con abono, saldo y comprobante (RF08).  → T2
+%   9. Auditoría (RNF02): quién cambió qué y cuándo (si hay pantalla; si no, 1 línea).
+% DATOS: capturas con datos ficticios (nunca reales: LOPDP), mismo tamaño y
+%        recorte. Nombrar img/Ob3_<Pantalla>.png.
+% NO VA: componentes Angular, endpoints, clases Java.
+% EXTENSIÓN: 1 tabla de trazabilidad al inicio + figuras con 2-3 líneas cada una.
+% =========================================================
+
+\subsubsection{Implementación del sistema}
+
+Las pantallas siguen el prototipo de la interfaz (Figuras~\ref{fig:ob2_proto_agenda} a \ref{fig:ob2_proto_atencion}) y el orden del ciclo completo de atención propuesto (Figura~\ref{fig:ob2_tobe_atencion}). La Tabla~\ref{tab:ob3_pantallas} relaciona cada pantalla con el requerimiento y el tramo del $TGA$ sobre el que actúa.
+
+\begin{table}[H]
+\centering
+\caption{Pantallas del sistema, requerimientos y tramos del $TGA$}
+\label{tab:ob3_pantallas}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.0cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{2.0cm}|}
+\hline
+\textbf{Pantalla} & \textbf{Rol} & \textbf{Requerimiento} & \textbf{Tramo} \\ \hline
+Agenda & Secretaria & RF07 & $T_3$ \\ \hline
+Mis citas & Odontólogo & RF07 & --- \\ \hline
+Atención y diagnóstico & Odontólogo & RF01, RF03, RNF06 & $T_1$ \\ \hline
+Odontograma & Odontólogo & RF02 & $T_4$, $T_5$ \\ \hline
+Tratamientos y receta & Odontólogo & RF04, RF05 & $T_1$ \\ \hline
+Historial del paciente & Odontólogo & RF06 & --- \\ \hline
+Cobro y comprobante & Secretaria & RF08 & $T_2$ \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---------- Plantilla por pantalla (repetir) ----------
+\paragraph{Agenda}
+
+\textit{[2--3 líneas: una columna por profesional con su color, estados de la cita, citas del agente identificadas; al intentar una cita solapada se muestra el mensaje de error estandarizado (RF07).]}
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Agenda.png}{\includegraphics[width=\linewidth]{img/Ob3_Agenda.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: img/Ob3\_Agenda.png}}}
+\caption{Agenda de la secretaria}
+\label{fig:ob3_agenda}
+\end{figure}
+
+\paragraph{Atención del odontólogo}
+
+\textit{[2--3 líneas: antecedentes visibles al abrir la atención, diagnóstico con búsqueda CIE-10 por texto o prefijo, cierre de la atención en una sola acción (RF01, RF03, RNF06).]}
+
+\paragraph{Odontograma}
+
+\textit{[2--3 líneas: selección de pieza y cara, rojo pendiente y azul realizado, solo editable por el odontólogo (RF02, BN3). Indicar que su registro durante la atención sustituye la transcripción de la Etapa 2.]}
+
+\paragraph{Tratamientos y receta}
+
+\textit{[2--3 líneas: tratamientos y fármacos desde catálogos con posología predefinida; receta asociada al CIE-10 en PDF con espacio para firma (RF04, RF05).]}
+
+\paragraph{Historial del paciente}
+
+\textit{[1--2 líneas: consulta inmediata, incluido el paciente sin cita (RF06, PC6).]}
+
+\paragraph{Cobro y comprobante}
+
+\textit{[2--3 líneas: la secretaria ve los tratamientos y valores de la atención cerrada, registra el abono, el saldo se calcula y se emite el comprobante; no ve datos clínicos (RF08, RNF01).]}

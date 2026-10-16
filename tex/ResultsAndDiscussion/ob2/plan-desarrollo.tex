@@ -1,61 +1,73 @@
 \subsubsection{Plan de desarrollo}
 
-El plan traduce los requerimientos priorizados en tarjetas de un tablero Kanban, ordenadas por dependencia. Cada tarjeta corresponde, en general, a un módulo (Tabla~\ref{tab:ob2_modulos}) y se cierra con sus pruebas.
+El plan corresponde a la fase de construcción del enfoque RAD. Traduce los requerimientos priorizados en tarjetas de un tablero Kanban, ordenadas por dependencia. Cada tarjeta corresponde, en general, a un módulo (Tabla~\ref{tab:ob2_modulos}).
 
-La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las tres tarjetas en negrita corresponden al agente conversacional. A octubre de 2026 están terminadas las seis primeras; las nueve restantes están pendientes.
+La Figura~\ref{fig:ob2_boceto_kanban} muestra el boceto del tablero con tarjetas de ejemplo: cada una indica el módulo, los requerimientos y la prioridad, y la columna En desarrollo admite una sola tarjeta. El tablero completo se presenta en la implementación.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Boceto_Kanban.png}{\includegraphics[width=\linewidth]{img/Boceto_Kanban.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: exportar diagramas/drawio/Boceto\_Kanban.drawio a img/Boceto\_Kanban.png}}}
+\caption{Boceto del tablero Kanban con tarjetas de ejemplo}
+\label{fig:ob2_boceto_kanban}
+\end{figure}
+
+La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las tres tarjetas en negrita corresponden al agente conversacional.
 
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.24\linewidth}|p{0.17\linewidth}|p{0.17\linewidth}|p{0.10\linewidth}|p{0.09\linewidth}|p{0.10\linewidth}|}
-\caption{Tarjetas del tablero Kanban, con sus requerimientos, prioridad, dependencias y estado a octubre de 2026}
+\begin{longtable}{|p{0.28\linewidth}|p{0.19\linewidth}|p{0.19\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
+\caption{Tarjetas del tablero Kanban, con sus requerimientos, prioridad y dependencias}
 \label{tab:ob2_tarjetas} \\
 \hline
-\textbf{Tarjeta} & \textbf{Módulo} & \textbf{Requerimientos} & \textbf{Prioridad} & \textbf{Depende de} & \textbf{Estado} \\ \hline
+\textbf{Tarjeta} & \textbf{Módulo} & \textbf{Requerimientos} & \textbf{Prioridad} & \textbf{Depende de} \\ \hline
 \endfirsthead
 \hline
-\textbf{Tarjeta} & \textbf{Módulo} & \textbf{Requerimientos} & \textbf{Prioridad} & \textbf{Depende de} & \textbf{Estado} \\ \hline
+\textbf{Tarjeta} & \textbf{Módulo} & \textbf{Requerimientos} & \textbf{Prioridad} & \textbf{Depende de} \\ \hline
 \endhead
 \hline
 \endfoot
 
-1. Identidad y autenticación & Identidad y acceso & RNF01 & Debe & --- & Terminada \\ \hline
-2. Profesionales y pacientes & Pacientes y profesionales & RF06 (parcial), RF07 (base) & Debe & 1 & Terminada \\ \hline
-3. Historia clínica y antecedentes & Clínico & RF01 & Debe & 2 & Terminada \\ \hline
-4. Agenda y horarios & Agenda & RF07 & Debe & 2 & Terminada \\ \hline
-5. Atención clínica y CIE-10 & Clínico & RF01, RF03, RF06 & Debe & 3, 4 & Terminada \\ \hline
-6. Odontograma & Clínico & RF02 & Debe & 5 & Terminada \\ \hline
-7. Tratamientos & Clínico & RF04 & Debe & 5, 6 & Pendiente \\ \hline
-8. Recetas & Clínico & RF04, RF05 & Debe & 5 & Pendiente \\ \hline
-9. Cobros y comprobante & Cobros & RF08 & Debe & 7 & Pendiente \\ \hline
-10. Auditoría & Transversal & RNF02 & Debe & 9 & Pendiente \\ \hline
-11. Sincronización con Google Calendar &Agenda & RF07 & Debe & 4 & Pendiente \\ \hline
-\textbf{12. Agente: núcleo, aviso, información y derivación} & Agente & RF09, RF10, RF13, RNF03, RNF05 & Debe y Debería & 4 & Pendiente \\ \hline
-\textbf{13. Agente: agendar y reprogramar} & Agente & RF11, RF12 & Debe & 12 & Pendiente \\ \hline
-\textbf{14. Agente: recordatorios} & Agente & RF14 & Debería & 13 & Pendiente \\ \hline
-15. Respaldos y exportación & Servicio de respaldo & RNF04 & Debe & Todas & Pendiente \\ \hline
+1. Identidad y autenticación & Identidad y acceso & RNF01 & Debe & --- \\ \hline
+2. Profesionales y pacientes & Pacientes y profesionales & RF06 (parcial), RF07 (base) & Debe & 1 \\ \hline
+3. Historia clínica y antecedentes & Clínico & RF01 & Debe & 2 \\ \hline
+4. Agenda y horarios & Agenda & RF07 & Debe & 2 \\ \hline
+5. Atención clínica y CIE-10 & Clínico & RF01, RF03, RF06 & Debe & 3, 4 \\ \hline
+6. Odontograma & Clínico & RF02 & Debe & 5 \\ \hline
+7. Tratamientos & Clínico & RF04 & Debe & 5, 6 \\ \hline
+8. Recetas & Clínico & RF04, RF05 & Debe & 5 \\ \hline
+9. Cobros y comprobante & Cobros & RF08 & Debe & 7 \\ \hline
+10. Auditoría & Transversal & RNF02 & Debe & 9 \\ \hline
+11. Sincronización con Google Calendar & Agenda & RF07 & Debe & 4 \\ \hline
+\textbf{12. Agente: núcleo, aviso, información y derivación} & Agente & RF09, RF10, RF13, RNF03, RNF05 & Debe y Debería & 4 \\ \hline
+\textbf{13. Agente: agendar y reprogramar} & Agente & RF11, RF12 & Debe & 12 \\ \hline
+\textbf{14. Agente: recordatorios} & Agente & RF14 & Debería & 13 \\ \hline
+15. Respaldos y exportación & Servicio de respaldo & RNF04 & Debe & Todas \\ \hline
 \end{longtable}
 \endgroup
 
-\paragraph{Estrategia de pruebas}
-
-A la fecha, el backend cuenta con 30 clases de prueba: 13 de integración y 17 unitarias, que suman 118 métodos de prueba. Las pruebas de integración se ejecutan contra una base de datos PostgreSQL 16 en contenedor. La Tabla~\ref{tab:ob2_pruebas} define el alcance y el criterio de cada nivel.
-
-\begin{table}[H]
-\centering
-\caption{Niveles de prueba del sistema}
-\label{tab:ob2_pruebas}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{|>{\raggedright\arraybackslash}p{0.17\linewidth}|>{\raggedright\arraybackslash}p{0.34\linewidth}|>{\raggedright\arraybackslash}p{0.37\linewidth}|}
-\hline
-\textbf{Nivel} & \textbf{Alcance} & \textbf{Criterio} \\ \hline
-Integración & Endpoints de los módulos críticos (agenda, historia clínica, atención y odontograma) sobre una base de datos real en contenedor & Un flujo principal y un caso de fallo clave por módulo, como el rechazo de una cita en un horario ocupado \\ \hline
-Unitaria & Reglas puras: estados de la cita, cálculo de horarios, reglas del agente y máquina de pasos del agente & Se prueban las transiciones permitidas y las rechazadas, sin acceso a la base de datos \\ \hline
-Anticruce & Restricción de cruces de citas por profesional, verificada por la API sobre la base de datos & Un intento de cita solapada se rechaza mientras la cita existente no se cancele. La reprogramación pasa por la misma restricción; su prueba sobre un horario ocupado se añade con la tarjeta 13 \\ \hline
-Clínica (Objetivo 3) & Recorrido de los flujos con el personal del centro & Los tramos $T_1$ a $T_5$ se comparan con la línea base del pretest \\ \hline
-\end{tabular}
-\end{table}
+% \paragraph{Estrategia de pruebas}
+% 
+% A la fecha, el backend cuenta con 30 clases de prueba: 13 de integración
+% y 17 unitarias, que suman 118 métodos de prueba. Las pruebas de integración
+% se ejecutan contra una base de datos PostgreSQL 16 en contenedor.
+% La Tabla~\ref{tab:ob2_pruebas} define el alcance y el criterio de cada nivel.
+% 
+% \begin{table}[H]
+% \centering
+% \caption{Niveles de prueba del sistema}
+% \label{tab:ob2_pruebas}
+% \fontsize{9}{11}\selectfont
+% \renewcommand{\arraystretch}{1.2}
+% \setlength{\tabcolsep}{4pt}
+% \begin{tabular}{|>{\raggedright\arraybackslash}p{0.17\linewidth}|>{\raggedright\arraybackslash}p{0.34\linewidth}|>{\raggedright\arraybackslash}p{0.37\linewidth}|}
+% \hline
+% \textbf{Nivel} & \textbf{Alcance} & \textbf{Criterio} \\ \hline
+% Integración & Endpoints de los módulos críticos (agenda, historia clínica, atención y odontograma) sobre una base de datos real en contenedor & Un flujo principal y un caso de fallo clave por módulo, como el rechazo de una cita en un horario ocupado \\ \hline
+% Unitaria & Reglas puras: estados de la cita, cálculo de horarios, reglas del agente y máquina de pasos del agente & Se prueban las transiciones permitidas y las rechazadas, sin acceso a la base de datos \\ \hline
+% Anticruce & Restricción de cruces de citas por profesional, verificada por la API sobre la base de datos & Un intento de cita solapada se rechaza mientras la cita existente no se cancele. La reprogramación pasa por la misma restricción; su prueba sobre un horario ocupado se añade con la tarjeta 13 \\ \hline
+% Clínica (Objetivo 3) & Recorrido de los flujos con el personal del centro & Los tramos $T_1$ a $T_5$ se comparan con la línea base del pretest \\ \hline
+% \end{tabular}
+% \end{table}

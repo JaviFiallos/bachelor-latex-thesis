@@ -1,0 +1,35 @@
+% =========================================================
+% INTRODUCCIÓN DEL OBJETIVO 3 (tarea O3-01)
+% QUÉ VA: un párrafo que encadena Obj. 1 → Obj. 2 → Obj. 3 y anuncia las dos
+%         partes: implementación (construcción + transición) y evaluación.
+% DATOS: TGA pretest 13,62 min (Tabla tab:tramos_tga); hipótesis del diseño
+%        (discusión del Obj. 2: T4 y T5 desaparecen, T1 a T3 disminuyen).
+% EXTENSIÓN: 1 párrafo + figura opcional de la secuencia.
+% =========================================================
+
+El Objetivo 1 estableció la línea base del tiempo de gestión administrativa por ciclo completo de atención ($TGA = 13{,}62$ min, Tabla~\ref{tab:tramos_tga}) y los requerimientos del sistema; el Objetivo 2 diseñó el sistema y el agente conversacional que los atienden. Este objetivo ejecuta las fases de construcción y transición del enfoque RAD (Tabla~\ref{tab:ob2_fases_rad}): implementa el diseño, lo despliega en el centro y mide de nuevo los tramos $T_1$ a $T_5$ con el mismo instrumento para contrastar las hipótesis del diseño. La Figura~\ref{fig:ob3_secuencia} resume la secuencia entre los tres objetivos.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  fase/.style={draw, rounded corners=2pt, line width=0.6pt, align=center,
+               minimum height=1.7cm, text width=2.4cm, inner sep=3pt},
+  flecha/.style={-{Stealth[length=2.2mm]}, line width=0.7pt, draw=dExternoB},
+  obj/.style={font=\scriptsize\bfseries, text=dExternoB}
+]
+\node[fase, fill=dPersonaF, draw=dPersonaB] (diag) {\textbf{Diagnóstico}\\ $TGA$ pretest\\ RF y RNF};
+\node[fase, fill=dSistemaF, draw=dSistemaB, right=0.25cm of diag] (dis) {\textbf{Diseño}\\ arquitectura, datos e interfaz};
+\node[fase, fill=dAgenteF, draw=dAgenteB, right=0.25cm of dis] (cons) {\textbf{Construcción}\\ tablero Kanban};
+\node[fase, fill=dAgenteF, draw=dAgenteB, right=0.25cm of cons] (tran) {\textbf{Transición}\\ despliegue y capacitación};
+\node[fase, fill=dClinicoF, draw=dClinicoB, right=0.25cm of tran] (eval) {\textbf{Evaluación}\\ $TGA$ postest};
+\foreach \a/\b in {diag/dis, dis/cons, cons/tran, tran/eval} \draw[flecha] (\a) -- (\b);
+\node[obj, above=2pt of diag] {Objetivo 1};
+\node[obj, above=2pt of dis] {Objetivo 2};
+\node[obj, above=2pt of $(cons.north)!0.5!(eval.north)$] {Objetivo 3};
+\draw[flecha, dashed] (eval.south) -- ++(0,-0.45) -| node[pos=0.25, below, font=\scriptsize]{contraste pretest--postest} (diag.south);
+\end{tikzpicture}
+\caption{Secuencia de los objetivos de la investigación}
+\label{fig:ob3_secuencia}
+\end{figure}
+

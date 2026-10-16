@@ -1,0 +1,126 @@
+% =========================================================
+% EVALUACIÓN DE LA REDUCCIÓN DEL TIEMPO (tareas O3-08 y O3-09)
+% Es el núcleo del objetivo. Debe ser comparable con el pretest en TODO:
+% mismo instrumento (Instrumento 4, partes A y B), mismo observador, mismo tipo
+% de jornada (alta afluencia), mismos días de la semana, mismo número de
+% jornadas (tres) y tamaño de muestra similar (pretest n = 78).
+%
+% DATOS NECESARIOS:
+%   - Postest: fichas parte A por paciente (T1, T2, T3, espera, retraso) y
+%     registro de lote parte B por jornada (T4, T5 o tareas diferidas).
+%   - Pretest: las 78 fichas individuales (disponibles) para la prueba de
+%     muestras independientes sobre TE1. Días: martes, jueves y sábado.
+%   - Registros del sistema para los indicadores complementarios.
+% =========================================================
+
+\subsubsection{Evaluación del tiempo de gestión administrativa}
+
+\paragraph{Procedimiento}
+
+La medición postest aplicó la ficha de observación del pretest (Anexo 2, Instrumento 4) en tres jornadas de alta afluencia, \textit{[fechas]}, tras \textit{[n]} semanas de uso del sistema. Se registraron \textit{[n]} ciclos completos de atención. La Tabla~\ref{tab:ob3_definiciones} fija qué se cronometra en cada tramo con el sistema, para que el postest mida lo mismo que el pretest.
+
+% PENDIENTE DE REVISIÓN (O3-08a): el odontólogo registrará los datos de la
+% ficha rápida y los tratamientos con sus códigos, con ligeras variaciones;
+% puede sumarse tiempo a T1. Ajustar la fila T1 tras las mediciones de la
+% semana del 19/10/2026. La carga previa de pacientes (script, día anterior)
+% no se cronometra, igual que la preparación de fichas en el pretest.
+% Esta tabla es clave para la validez: el contenido de cada tramo cambia con el
+% sistema, pero su inicio y fin deben ser equivalentes. Ajustar si en la
+% práctica el flujo resultó distinto.
+\begin{table}[H]
+\centering
+\caption{Definición operativa de los tramos en el pretest y el postest}
+\label{tab:ob3_definiciones}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Tramo} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+$T_1$ Registro posconsulta & Receta manuscrita y anotación en la tabla de control & Desde el fin del acto clínico hasta cerrar la atención en el sistema, receta incluida \\ \hline
+$T_2$ Registro del pago & Cobro y anotación de abono y saldo & Cobro y registro del abono con comprobante \\ \hline
+$T_3$ Agendamiento & Asignación en Google Calendar & Asignación en la agenda del sistema \\ \hline
+$T_4$ Transcripción & Lote diario al Formulario 033 & Registro de lote si existe alguna tarea diferida; si no, 0 \\ \hline
+$T_5$ Digitalización & Lote diario al Excel & Registro de lote si existe alguna tarea diferida; si no, 0 \\ \hline
+\end{tabularx}
+\end{table}
+
+% ATENCIÓN: si el odontólogo completa campos del Formulario 033 después de la
+% consulta (p. ej., "Más del 033"), ese tiempo es gestión diferida y debe
+% cronometrarse en la parte B del postest. Declararlo protege la validez.
+
+\paragraph{Resultados por tramo}
+
+\begin{table}[H]
+\centering
+\caption{Tiempo de gestión administrativa por tramo, pretest y postest}
+\label{tab:ob3_tga}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|c|}
+\hline
+\textbf{Tramo} & \textbf{Pretest (min)} & \textbf{Postest (min)} & \textbf{Diferencia (min)} & \textbf{Reducción (\%)} \\ \hline
+$T_1$ Registro posconsulta & 3,40 & & & \\ \hline
+$T_2$ Registro del pago & 1,60 & & & \\ \hline
+$T_3$ Agendamiento & 1,30 & & & \\ \hline
+\textbf{Subtotal $T_{E1}$} & \textbf{6,30} & & & \\ \hline
+$T_4$ Transcripción & 3,94 & & & \\ \hline
+$T_5$ Digitalización & 3,38 & & & \\ \hline
+\textbf{Subtotal $T_{E2}$} & \textbf{7,32} & & & \\ \hline
+\textbf{$TGA$} & \textbf{13,62} & & & \\ \hline
+\end{tabularx}
+\end{table}
+
+% FIGURA RECOMENDADA: barras apiladas pretest vs postest (T1..T5) con pgfplots,
+% colores de la paleta común. Es la imagen que resume el objetivo.
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.9\linewidth}{\centering Pendiente: barras apiladas del $TGA$ pretest y postest por tramo (pgfplots)}}
+\caption{Composición del $TGA$ antes y después del sistema}
+\label{fig:ob3_tga_barras}
+\end{figure}
+
+\textit{[2--3 líneas: reducción total del $TGA$ en minutos y porcentaje; tramo con mayor reducción; minutos diarios liberados con 26 atenciones por jornada (pretest: 354 min).]}
+
+\paragraph{Contraste estadístico}
+
+% Hipótesis: H0: TGA_post >= TGA_pre ; H1: TGA_post < TGA_pre (unilateral, α = 0,05).
+% Las observaciones pretest y postest son pacientes distintos → muestras
+% independientes. Procedimiento:
+%   1. Normalidad de T_E1 por fase: Shapiro-Wilk.
+%   2. Si ambas son normales: t de Welch; si no: U de Mann-Whitney.
+%   3. Tamaño del efecto: d de Cohen (t) o r = Z/sqrt(N) (U).
+%   4. T_E2 se registra por jornada (lote): comparación descriptiva.
+% Herramienta: R, Python (scipy) o JASP; dejar el script o la hoja en el anexo.
+\textit{[Tabla corta: prueba aplicada, estadístico, valor p y tamaño del efecto para $T_{E1}$; 2 líneas de interpretación.]}
+
+\paragraph{Indicadores complementarios}
+
+% Fuente: registros del sistema durante el periodo de evaluación (consultas SQL
+% sobre citas y conversaciones del agente) y nueva aplicación del Instrumento 2
+% a la secretaria (mismas preguntas P1 a P5 que en el pretest).
+% Cada fila compara con su línea base del Obj. 1.
+\begin{table}[H]
+\centering
+\caption{Indicadores complementarios antes y después del sistema}
+\label{tab:ob3_indicadores}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.2cm}|}
+\hline
+\textbf{Indicador} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+Espera previa a la atención & 6,2 min & \\ \hline
+Retraso respecto a la hora programada & 7,4 min & \\ \hline
+Cruces de citas en el mes & 2 & \\ \hline
+Inasistencias semanales & 3 a 5 & \\ \hline
+Tiempo diario de confirmación de citas & 31 a 60 min & \\ \hline
+Mensajes diarios atendidos por la secretaria & 26 a 50 & \\ \hline
+Conversaciones resueltas por el agente sin derivación & --- & \textit{[\%]} \\ \hline
+Citas agendadas o reprogramadas por el agente & --- & \textit{[n]} \\ \hline
+Recordatorios respondidos (confirmar, cancelar, reprogramar) & --- & \textit{[\%]} \\ \hline
+\end{tabularx}
+\end{table}
+
+\textit{[2--3 líneas de interpretación. La usabilidad (RNF06) se valora con $T_1$: el escenario de la Tabla~\ref{tab:ob2_atributos} exige que sea menor que 3,40 min.]}

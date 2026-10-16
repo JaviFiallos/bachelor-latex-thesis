@@ -17,3 +17,25 @@ El manejo de información clínica exige además medidas de seguridad y confiden
 %La observación establece la línea base. A partir de la muestra única de 78 pacientes, se registraron 6,3 minutos de gestión administrativa durante la atención por paciente: 3,4 de registro posconsulta, 1,6 de registro del pago y 1,3 de agendamiento (Tabla~\ref{tab:resumen_obs_parte_a}). Al incorporar los 7,32 minutos de la digitalización diferida de sus registros en recepción (Tabla~\ref{tab:resumen_obs_parte_b}), la gestión administrativa pretest se estima en 13,62 minutos por paciente. Esta cifra constituye la referencia base de la investigación, obtenida del seguimiento integral del paciente desde la atención clínica hasta el procesamiento final de su historia. La evaluación posterior podrá contrastar este valor con los tiempos obtenidos después de implementar el sistema. Como antecedente, Alejandrino y Pajota proyectaron una reducción del 68,75\,\% en el tiempo de gestión administrativa de una clínica dental \cite{alejandrino2023dental}; al tratarse de una proyección, se considera únicamente como referencia.
 
 En conjunto, los resultados muestran que el registro manual, la duplicidad de tareas, los problemas de agendamiento y la saturación de la mensajería se asocian con el tiempo de gestión administrativa. La integración de la historia clínica, la agenda y un agente conversacional permitiría atender estas necesidades desde un mismo sistema y constituye la base para la elaboración del proyecto.
+
+La medición postest repetirá la ficha de observación con el mismo procedimiento del pretest. Se plantea como hipótesis que el tiempo de gestión administrativa por paciente después de implementar el sistema es menor que el registrado en el pretest ($H_1$: $TGA_{post} < TGA_{pre}$; $H_0$: $TGA_{post} \geq TGA_{pre}$), con un contraste unilateral y un nivel de significancia de 0,05. Como ambas fases registran pacientes distintos, las muestras se tratarán como independientes. La Tabla~\ref{tab:analisis_postest} resume el tratamiento de cada variable.
+% CITA PENDIENTE: referencia de metodología para Shapiro--Wilk, Welch y Mann--Whitney.
+
+\begin{table}[H]
+\centering
+\caption{Análisis previsto para la comparación pretest--postest}
+\label{tab:analisis_postest}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{2.4cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Variable} & \textbf{Unidad} & \textbf{Análisis} \\ \hline
+$T_1$, $T_2$, $T_3$ y $T_{E1}$ & Paciente & Normalidad con Shapiro--Wilk; t de Welch si ambas fases son normales, U de Mann--Whitney si no lo son \\ \hline
+Tamaño del efecto & Paciente & d de Cohen (t de Welch) o $r$ (U de Mann--Whitney) \\ \hline
+$T_4$, $T_5$ y $T_{E2}$ & Jornada & Comparación descriptiva del promedio por ficha \\ \hline
+$TGA$ & Paciente & $T_{E1} + T_{E2}$; reducción en minutos y en porcentaje \\ \hline
+\end{tabularx}
+\end{table}
+
+La Etapa 2 se registra por lote diario y no por paciente, por lo que su comparación es descriptiva. El pretest dispone de los registros individuales de los 78 pacientes, lo que permite aplicar las pruebas anteriores sobre $T_{E1}$.
