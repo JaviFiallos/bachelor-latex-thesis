@@ -80,7 +80,11 @@ La Figura~\ref{fig:ob2_estados_conversacion} muestra cómo se encadenan estos co
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/Estados_Conversacion.pdf}{\includegraphics[width=0.8\linewidth]{img/Estados_Conversacion.pdf}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: renderizar diagramas/plantuml/estados\_conversacion.puml y exportar a img/Estados\_Conversacion.pdf}}}
+\IfFileExists{diagramas/plantuml/estados_conversacion.png}{%
+  \includegraphics[width=\textwidth]{diagramas/plantuml/estados_conversacion.png}%
+}{%
+  \fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\centering Pendiente: renderizar diagramas/plantuml/estados\_conversacion.puml y exportar a img/Estados\_Conversacion.pdf}}%
+}
 \caption{Estados de la conversación con el agente}
 \label{fig:ob2_estados_conversacion}
 \end{figure}

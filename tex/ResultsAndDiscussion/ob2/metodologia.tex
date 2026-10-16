@@ -2,7 +2,7 @@
 
 La selección se realiza mediante dos tamices: los criterios imperativos (cumple o no cumple) descartan toda alternativa que incumpla uno de ellos, y los criterios deseables, ponderados por peso porcentual y puntuados de 1 (bajo) a 3 (alto), determinan la alternativa con mayor total ponderado. Este método se reutiliza en la selección de tecnologías.
 
-Se evalúan Scrum \cite{schwaber2020scrum}, XP \cite{beck2004extreme}, Kanban \cite{anderson2010kanban} y el modelo en cascada \cite{sommerville2016software}. El criterio imperativo exige entregas incrementales, porque el sistema debe medirse en funcionamiento dentro del periodo de la investigación. Los criterios deseables expresan necesidades del proyecto; su peso refleja la restricción que los origina: la ejecución por un único desarrollador recibe el mayor peso, seguida del tiempo acotado, que exige responder a cambios de prioridad y limitar el esfuerzo de gestión.
+Se evalúan Scrum \cite{schwaber2020scrum}, XP \cite{beck2004extreme}, Kanban \cite{anderson2010kanban} y el desarrollo rápido de aplicaciones (RAD) \cite{martin1991rapid}. El criterio imperativo exige entregas incrementales, porque el sistema debe medirse en funcionamiento dentro del periodo de la investigación. Los criterios deseables expresan necesidades del proyecto; su peso refleja la restricción que los origina: la ejecución por un único desarrollador recibe el mayor peso, seguida del tiempo acotado, que exige responder a cambios de prioridad, limitar el esfuerzo de gestión y validar pronto la interfaz con el personal de la clínica.
 
 \begin{table}[H]
 \centering
@@ -13,19 +13,38 @@ Se evalúan Scrum \cite{schwaber2020scrum}, XP \cite{beck2004extreme}, Kanban \c
 \setlength{\tabcolsep}{3pt}
 \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|}
 \hline
-\textbf{Criterio} & \textbf{Peso} & \textbf{Scrum} & \textbf{XP} & \textbf{Kanban} & \textbf{Cascada} \\ \hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{Scrum} & \textbf{XP} & \textbf{Kanban} & \textbf{RAD} \\ \hline
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterio imperativo (primer tamiz)}} \\ \hline
-Entregas incrementales que permitan medir el sistema en funcionamiento dentro del periodo & --- & Cumple & Cumple & Cumple & No cumple \\ \hline
+Entregas incrementales que permitan medir el sistema en funcionamiento dentro del periodo & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios deseables (segundo tamiz)}} \\ \hline
-Adaptable a un único desarrollador, sin roles de equipo & 30\,\% & 1 & 1 & 3 & --- \\ \hline
-Respuesta a cambios de prioridad durante el desarrollo (MoSCoW, retroalimentación de la clínica) & 25\,\% & 2 & 3 & 3 & --- \\ \hline
-Bajo esfuerzo de gestión del proceso & 25\,\% & 1 & 2 & 3 & --- \\ \hline
-Visibilidad del avance para el tutor y la clínica & 20\,\% & 3 & 2 & 2 & --- \\ \hline
-\textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{1,65} & \textbf{1,95} & \textbf{2,80} & --- \\ \hline
+Adaptable a un único desarrollador, sin roles de equipo & 25\,\% & 1 & 1 & 3 & 2 \\ \hline
+Respuesta a cambios de prioridad durante el desarrollo (MoSCoW, retroalimentación de la clínica) & 20\,\% & 2 & 3 & 3 & 2 \\ \hline
+Bajo esfuerzo de gestión del proceso & 20\,\% & 1 & 2 & 3 & 2 \\ \hline
+Validación temprana de la interfaz con el usuario mediante prototipos & 20\,\% & 2 & 2 & 1 & 3 \\ \hline
+Visibilidad del avance para el tutor y la clínica & 15\,\% & 3 & 2 & 2 & 2 \\ \hline
+\textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{1,70} & \textbf{1,95} & \textbf{2,45} & \textbf{2,20} \\ \hline
 \end{tabularx}
 \end{table}
 
-El modelo en cascada concentra la validación al final del desarrollo, lo que retrasa la medición y acumula el riesgo; por ello no supera el primer tamiz. Scrum supone un equipo con roles definidos y eventos periódicos, y XP se apoya en prácticas de equipo, como la programación en pareja y el cliente en sitio; ambas pierden puntuación en adaptabilidad y esfuerzo de gestión. Scrum aventaja a Kanban en visibilidad, gracias a sus revisiones al final de cada iteración.
+Las cuatro alternativas superan el primer tamiz. Scrum supone un equipo con roles definidos y eventos periódicos, y XP se apoya en prácticas de equipo, como la programación en pareja y el cliente en sitio; ambas pierden puntuación en adaptabilidad y esfuerzo de gestión. Kanban y RAD obtienen los totales más altos y sus fortalezas se complementan: RAD valida la interfaz con prototipos antes de construir, pero dedica poco esfuerzo a planificar y controlar el trabajo; Kanban ordena y limita el trabajo en curso, pero no define cómo validar la interfaz con el usuario.
 
-Se adopta Kanban con un tablero de cuatro columnas (Pendiente, En desarrollo, En pruebas y Terminado) y un límite de una tarea en curso. El detalle de las tarjetas se presenta en el plan de desarrollo.
+Por ello se adopta un enfoque híbrido. RAD estructura el proyecto en sus cuatro fases y Kanban gestiona el flujo de trabajo dentro de la construcción (Tabla~\ref{tab:ob2_fases_rad}). El equipo es reducido: el investigador, el tutor y el personal de la clínica, que valida los prototipos como usuario final. La construcción reutiliza componentes ya probados de los marcos de trabajo seleccionados, lo que acorta el desarrollo.
 
+\begin{table}[H]
+\centering
+\caption{Fases del enfoque híbrido RAD y Kanban}
+\label{tab:ob2_fases_rad}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.68\linewidth}|}
+\hline
+\textbf{Fase RAD} & \textbf{Producto en el proyecto} \\ \hline
+Planificación de requerimientos & Diagnóstico del Objetivo 1: puntos críticos, brechas normativas, necesidades y requerimientos priorizados con MoSCoW \\ \hline
+Diseño con el usuario & Paleta, mockups y prototipo visual de las pantallas principales, revisados con el personal de la clínica (Diseño de la interfaz) \\ \hline
+Construcción & Tarjetas del tablero Kanban, con límite de una tarea en curso (Plan de desarrollo) \\ \hline
+Transición & Despliegue en el servidor e implantación con el personal del centro (Objetivo 3) \\ \hline
+\end{tabular}
+\end{table}
+
+El tablero Kanban tiene cuatro columnas (Pendiente, En desarrollo, En pruebas y Terminado) y un límite de una tarea en curso, que evita abrir varios módulos a la vez. El detalle de las tarjetas se presenta en el plan de desarrollo.

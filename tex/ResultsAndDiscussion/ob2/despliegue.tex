@@ -32,11 +32,11 @@ Google Drive de la clínica & Guarda los respaldos cifrados fuera del servidor \
 \end{tabularx}
 \end{table}
 
-El agente solo añade a esta infraestructura el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp propio y las plantillas aprobadas por Meta.
+El agente solo añade a esta infraestructura el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp registrado en la Cloud API y las plantillas de mensaje aprobadas por Meta.
 
 \paragraph{Entornos}
 
-El despliegue se organiza en tres entornos (Tabla~\ref{tab:ob2_entornos}). Las pruebas usan la cuenta de WhatsApp del desarrollador; la producción, la cuenta de la clínica.
+El despliegue se organiza en dos entornos (Tabla~\ref{tab:ob2_entornos}). Ambos operan en el modo de producción básico de la Cloud API, que permite usar un número telefónico real sin la verificación de la empresa ante Meta. El desarrollo usa el número del desarrollador; la producción, el número de la recepción.
 
 \begin{table}[H]
 \centering
@@ -48,13 +48,12 @@ El despliegue se organiza en tres entornos (Tabla~\ref{tab:ob2_entornos}). Las p
 \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.4cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}p{4.0cm}|>{\raggedright\arraybackslash}X|}
 \hline
 \textbf{Entorno} & \textbf{WhatsApp} & \textbf{Infraestructura} & \textbf{Datos} \\ \hline
-Desarrollo & Número de prueba de Meta, con un máximo de cinco destinatarios registrados & Equipo local con Docker Compose y un túnel (ngrok) para el webhook & Ficticios \\ \hline
-Pruebas & Número real en la cuenta del desarrollador & VPS & De prueba \\ \hline
-Producción & Cuenta y número de la clínica & VPS contratado a nombre de la clínica & Reales de la clínica \\ \hline
+Desarrollo & Número real del desarrollador, en modo básico sin verificación de la empresa & Equipo local con Docker Compose y un túnel (ngrok) para el webhook & Ficticios \\ \hline
+Producción & Número de la recepción, en modo básico sin verificación de la empresa & VPS contratado a nombre de la clínica & Reales de la clínica \\ \hline
 \end{tabularx}
 \end{table}
 
-El paso de pruebas a producción cambia la configuración del número y exige aprobar de nuevo las plantillas y el nombre visible en la cuenta de la clínica; el diseño no cambia. La verificación de la empresa ante Meta eleva los límites de envío \cite{meta2026limits}.
+El paso de desarrollo a producción solo cambia el número configurado y exige aprobar las plantillas en la cuenta de la clínica; el diseño no cambia. El modo básico mantiene el límite inicial de envío de mensajes iniciados por la empresa, suficiente para los recordatorios diarios de la clínica. La verificación de la empresa ante Meta, que eleva ese límite, no forma parte del alcance y se plantea como recomendación.
 
 \paragraph{Riesgos y mitigaciones}
 
@@ -65,7 +64,7 @@ La Tabla~\ref{tab:ob2_riesgos} identifica los riesgos del despliegue en un servi
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.27\linewidth}|p{0.31\linewidth}|p{0.30\linewidth}|}
+\begin{longtable}{|p{0.26\linewidth}|p{0.28\linewidth}|p{0.36\linewidth}|}
 \caption{Riesgos del despliegue y mitigaciones}
 \label{tab:ob2_riesgos} \\
 \hline
@@ -76,12 +75,12 @@ La Tabla~\ref{tab:ob2_riesgos} identifica los riesgos del despliegue en un servi
 \endhead
 \hline
 \endfoot
-Impago o cierre de la cuenta del VPS & Interrupción total del sistema y del agente & Cuenta a nombre de la clínica; respaldo externo y exportación en formato abierto, que permiten migrar a otro servidor \\ \hline
-Caída de internet en la clínica & El personal no accede al sistema mientras dure la caída; el agente sigue atendiendo a los pacientes & Ficha rápida en papel y carga posterior de los datos al restablecer la conexión \\ \hline
-Pérdida del servidor & Pérdida de los datos posteriores al último respaldo (hasta 24 horas) y suspensión durante la restauración & Restauración desde el respaldo diario, con procedimiento probado; copia fuera del servidor \\ \hline
-Datos tratados por terceros fuera del Ecuador (proveedor del VPS, Meta y Google) & Tratamiento de datos personales, incluidos datos de salud en el VPS, fuera del control directo de la clínica & Acuerdo de encargado del tratamiento con cada proveedor y régimen de transferencia internacional de la LOPDP \cite{lopdp2021}; respaldos cifrados antes de salir del servidor; Meta y Google reciben solo datos de identificación y de la cita \\ \hline
-Bloqueo o suspensión de la cuenta de WhatsApp & El agente deja de responder y los recordatorios no se envían & Uso del canal oficial y plantillas aprobadas por Meta; el número de recepción queda como canal alterno \\ \hline
-Agotamiento de recursos del servidor & Lentitud o caída de los contenedores & Límites de memoria por contenedor; consumo estimado entre 0,6 y 1 GB de RAM en total, que se mide en las pruebas \\ \hline
+Impago o cierre del VPS & Caída total del sistema y del agente & Cuenta a nombre de la clínica; respaldo y exportación para migrar \\ \hline
+Caída de internet en la clínica & Personal sin acceso; el agente sigue activo & Ficha en papel y carga posterior \\ \hline
+Pérdida del servidor & Hasta 24 h de datos perdidos & Restauración desde el respaldo diario externo \\ \hline
+Datos tratados fuera del Ecuador & Datos personales fuera del control de la clínica & Contrato de encargado (LOPDP \cite{lopdp2021}); respaldos cifrados; Meta y Google solo reciben datos de la cita \\ \hline
+Suspensión de la cuenta de WhatsApp & Sin agente ni recordatorios & Plantillas aprobadas; recepción como canal alterno \\ \hline
+Agotamiento de recursos & Lentitud o caída de contenedores & Límite de memoria por contenedor (0,6 a 1 GB estimados) \\ \hline
 \end{longtable}
 \endgroup
 

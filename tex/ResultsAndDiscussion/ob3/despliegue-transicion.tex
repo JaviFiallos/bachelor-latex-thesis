@@ -1,0 +1,48 @@
+% =========================================================
+% DESPLIEGUE Y TRANSICIÓN (tarea O3-06) — fase de transición de RAD
+% QUÉ VA: lo que pasó al llevar el sistema al centro. Es la condición previa de
+%         la evaluación: sin uso estable no hay postest válido.
+% CONTENIDO:
+%   1. Despliegue: VPS (proveedor, vCPU, RAM, costo mensual), contenedores en
+%      ejecución, dominio y certificado, respaldo diario hacia Google Drive de la
+%      clínica. Contrastar con lo previsto en despliegue.tex (consumo estimado
+%      0,6-1 GB): poner el consumo medido (docker stats).
+%      Si se terminó en la instalación local, decirlo y por qué (alternativa
+%      ya prevista en tab:ob2_local).
+%   2. Carga inicial de datos: profesionales, horarios, catálogos (CIE-10,
+%      tratamientos, fármacos) y pacientes. Decidir: ¿se migran los pacientes
+%      del Excel o se registran al llegar? (afecta el tiempo de recepción en
+%      las primeras semanas). Indicar volumen cargado.
+%   3. Capacitación: fecha, duración y a quién (secretaria, odontólogos).
+%   4. Periodo de estabilización: fechas de inicio de uso real y semanas de uso
+%      antes del postest (recomendado: al menos 2 semanas). Incidencias y
+%      ajustes realizados en ese periodo.
+% EXTENSIÓN: 1 tabla de hitos (fecha | hito) + 1-2 párrafos.
+% =========================================================
+
+\subsubsection{Despliegue y transición}
+
+\textit{[2--3 líneas: el sistema se desplegó según el esquema del diseño (Figura~\ref{fig:ob2_despliegue}); recursos del servidor y consumo medido frente a lo estimado; respaldo diario verificado con una restauración.]}
+
+La Tabla~\ref{tab:ob3_hitos} resume la transición desde el despliegue hasta la medición postest.
+
+\begin{table}[H]
+\centering
+\caption{Hitos de la transición}
+\label{tab:ob3_hitos}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Fecha} & \textbf{Hito} \\ \hline
+\textit{[dd/mm/2026]} & Despliegue en producción \\ \hline
+\textit{[dd/mm/2026]} & Carga inicial: profesionales, horarios, catálogos y pacientes \\ \hline
+\textit{[dd/mm/2026]} & Capacitación del personal \\ \hline
+\textit{[dd/mm/2026]} & Inicio del uso real y del agente con el número de recepción \\ \hline
+\textit{[dd/mm/2026]} & Fin del periodo de estabilización \\ \hline
+\textit{[dd/mm/2026]} & Medición postest (tres jornadas) \\ \hline
+\end{tabularx}
+\end{table}
+
+\textit{[2--3 líneas: incidencias del periodo de estabilización y ajustes realizados antes del postest.]}

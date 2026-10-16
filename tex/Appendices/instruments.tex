@@ -201,17 +201,17 @@ Hora de llegada: \underline{\hspace{2.2cm}} \\
 \begin{tabular}{|p{0.46\linewidth}|c|c|c|}
 \hline
 \textbf{Tramo} & \textbf{Hora inicio} & \textbf{Hora fin} & \textbf{Duración (min)} \\ \hline
-T2 — Atención clínica (referencia) & & & \\ \hline
-T4 — Registro post-consulta (receta, actualización) & & & \\ \hline
-T5 — Registro de pago & & & \\ \hline
-T6 — Agendamiento próxima cita & & & \\ \hline
+Atención clínica (referencia, no se suma) & & & \\ \hline
+$T_1$ — Registro posconsulta (receta, actualización) & & & \\ \hline
+$T_2$ — Registro del pago & & & \\ \hline
+$T_3$ — Agendamiento de la próxima cita & & & \\ \hline
 \end{tabular} \\
 \hline
 \cellcolor{gray!10}\textbf{INDICADORES CALCULADOS} \\
 \hline
-Tiempo administrativo directo $(T_4 + T_5 + T_6)$: \underline{\hspace{3cm}} \\[4pt]
-Espera previa a la atención $(\text{Hora inicio } T_2 - \text{Hora de llegada})$: \underline{\hspace{3cm}} \\[4pt]
-Retraso vs.\ cita programada $(\text{Hora inicio } T_2 - \text{Hora programada})$: \underline{\hspace{3cm}} \\
+Tiempo administrativo directo $T_{E1} = T_1 + T_2 + T_3$: \underline{\hspace{3cm}} \\[4pt]
+Espera previa a la atención $(\text{Inicio de la atención} - \text{Hora de llegada})$: \underline{\hspace{3cm}} \\[4pt]
+Retraso vs.\ cita programada $(\text{Inicio de la atención} - \text{Hora programada})$: \underline{\hspace{3cm}} \\
 \hline
 \cellcolor{gray!10}\textbf{INCIDENCIAS OBSERVADAS} \\
 \hline
@@ -234,7 +234,7 @@ Retraso vs.\ cita programada $(\text{Hora inicio } T_2 - \text{Hora programada})
 \hline
 \cellcolor{gray!10}\textbf{NOTA METODOLÓGICA} \\
 \hline
-Este registro se completa una sola vez por día (no por paciente), debido a que la transcripción de historias clínicas físicas a la hoja de cálculo se realiza en bloque durante la tarde o momentos libres de la jornada. \\
+Este registro se completa una sola vez por día (no por paciente), debido a que la transcripción de historias clínicas físicas a la hoja de cálculo se realiza en bloque durante la tarde o momentos libres de la jornada. En el postest se registra en esta parte cualquier tarea diferida que persista con el sistema; si no existe, se anota 0. \\
 \hline
 \cellcolor{gray!10}\textbf{DATOS DE APLICACIÓN} \\
 \hline
@@ -244,15 +244,16 @@ Observador: \underline{\hspace{4cm}} \\
 \hline
 \cellcolor{gray!10}\textbf{REGISTRO DEL LOTE DIARIO} \\
 \hline
-\begin{tabularx}{\linewidth}{|c|c|c|c|X|}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|c|}
 \hline
-\textbf{Fecha} & \textbf{Hora inicio lote} & \textbf{Hora fin lote} & \textbf{Duración total (min)} & \textbf{N.\textsuperscript{o} pacientes transcritos} \\ \hline
-& & & & \\[12pt] \hline
+\textbf{Tramo} & \textbf{Hora inicio} & \textbf{Hora fin} & \textbf{Duración (min)} & \textbf{N.\textsuperscript{o} fichas} \\ \hline
+$T_4$ — Llenado del Formulario 033 & & & & \\[12pt] \hline
+$T_5$ — Digitalización en la hoja de cálculo & & & & \\[12pt] \hline
 \end{tabularx} \\
 \hline
 \cellcolor{gray!10}\textbf{INDICADOR DERIVADO} \\
 \hline
-Tiempo promedio de historia clínica por paciente $(\text{Duración total} \div \text{N.\textsuperscript{o} de pacientes transcritos})$: \underline{\hspace{3cm}} \\
+Tiempo diferido por paciente $T_{E2} = (T_4 + T_5) \div \text{N.\textsuperscript{o} de fichas}$: \underline{\hspace{3cm}} \\
 \hline
 \cellcolor{gray!10}\textbf{INCIDENCIAS OBSERVADAS} \\
 \hline
