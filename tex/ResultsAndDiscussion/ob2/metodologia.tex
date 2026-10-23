@@ -1,50 +1,58 @@
 \subsubsection{Metodología de desarrollo}
 
-La selección se realiza mediante dos tamices: los criterios imperativos (cumple o no cumple) descartan toda alternativa que incumpla uno de ellos, y los criterios deseables, ponderados por peso porcentual y puntuados de 1 (bajo) a 3 (alto), determinan la alternativa con mayor total ponderado. Este método se reutiliza en la selección de tecnologías.
+La selección se realiza mediante dos filtros: los criterios de eliminación (cumple o no cumple) descartan toda alternativa que incumpla uno de ellos, y los criterios de ponderación, con un peso porcentual y una puntuación de 1 (bajo) a 3 (alto), determinan la alternativa con mayor total ponderado. Este método se reutiliza en la selección de tecnologías.
 
-Se evalúan Scrum \cite{schwaber2020scrum}, XP \cite{beck2004extreme}, Kanban \cite{anderson2010kanban} y el desarrollo rápido de aplicaciones (RAD) \cite{martin1991rapid}. El criterio imperativo exige entregas incrementales, porque el sistema debe medirse en funcionamiento dentro del periodo de la investigación. Los criterios deseables expresan necesidades del proyecto; su peso refleja la restricción que los origina: la ejecución por un único desarrollador recibe el mayor peso, seguida del tiempo acotado, que exige responder a cambios de prioridad, limitar el esfuerzo de gestión y validar pronto la interfaz con el personal de la clínica.
+Se evalúan Scrum \cite{schwaber2020scrum}, XP \cite{beck2004extreme}, Kanban \cite{anderson2010kanban} y el desarrollo rápido de aplicaciones (RAD) \cite{martin1991rapid}. El criterio de eliminación exige entregas incrementales, porque el sistema debe medirse en funcionamiento dentro del periodo de la investigación. Los criterios de ponderación expresan necesidades del proyecto; su peso refleja la restricción que los origina: la ejecución por un único desarrollador recibe el mayor peso, seguida del tiempo acotado, que exige responder a cambios de prioridad, limitar el esfuerzo de gestión y validar pronto la interfaz con el personal de la clínica.
 
-\begin{table}[H]
-\centering
-\caption{Evaluación de metodologías de desarrollo mediante dos tamices}
-\label{tab:ob2_matriz_metodologia}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{3pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|}
+\caption{Evaluación de metodologías de desarrollo mediante dos filtros}
+\label{tab:ob2_matriz_metodologia} \\
 \hline
 \textbf{Criterio} & \textbf{Peso} & \textbf{Scrum} & \textbf{XP} & \textbf{Kanban} & \textbf{RAD} \\ \hline
-\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterio imperativo (primer tamiz)}} \\ \hline
+\endfirsthead
+\hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{Scrum} & \textbf{XP} & \textbf{Kanban} & \textbf{RAD} \\ \hline
+\endhead
+\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterio de eliminación (primer filtro)}} \\ \hline
 Entregas incrementales que permitan medir el sistema en funcionamiento dentro del periodo & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
-\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios deseables (segundo tamiz)}} \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
 Adaptable a un único desarrollador, sin roles de equipo & 25\,\% & 1 & 1 & 3 & 2 \\ \hline
 Respuesta a cambios de prioridad durante el desarrollo (MoSCoW, retroalimentación de la clínica) & 20\,\% & 2 & 3 & 3 & 2 \\ \hline
 Bajo esfuerzo de gestión del proceso & 20\,\% & 1 & 2 & 3 & 2 \\ \hline
 Validación temprana de la interfaz con el usuario mediante prototipos & 20\,\% & 2 & 2 & 1 & 3 \\ \hline
 Visibilidad del avance para el tutor y la clínica & 15\,\% & 3 & 2 & 2 & 2 \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{1,70} & \textbf{1,95} & \textbf{2,45} & \textbf{2,20} \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
-Las cuatro alternativas superan el primer tamiz. Scrum supone un equipo con roles definidos y eventos periódicos, y XP se apoya en prácticas de equipo, como la programación en pareja y el cliente en sitio; ambas pierden puntuación en adaptabilidad y esfuerzo de gestión. Kanban y RAD obtienen los totales más altos y sus fortalezas se complementan: RAD valida la interfaz con prototipos antes de construir, pero dedica poco esfuerzo a planificar y controlar el trabajo; Kanban ordena y limita el trabajo en curso, pero no define cómo validar la interfaz con el usuario.
+Las cuatro alternativas superan el primer filtro (Tabla~\ref{tab:ob2_matriz_metodologia}). Scrum supone un equipo con roles definidos y eventos periódicos, y XP se apoya en prácticas de equipo, como la programación en pareja y el cliente en sitio; ambas pierden puntuación en adaptabilidad y esfuerzo de gestión. Kanban y RAD obtienen los totales más altos y sus fortalezas se complementan: RAD valida la interfaz con prototipos antes de construir, pero dedica poco esfuerzo a planificar y controlar el trabajo; Kanban ordena y limita el trabajo en curso, pero no define cómo validar la interfaz con el usuario.
 
 Por ello se adopta un enfoque híbrido. RAD estructura el proyecto en sus cuatro fases y Kanban gestiona el flujo de trabajo dentro de la construcción (Tabla~\ref{tab:ob2_fases_rad}). El equipo es reducido: el investigador, el tutor y el personal de la clínica, que valida los prototipos como usuario final. La construcción reutiliza componentes ya probados de los marcos de trabajo seleccionados, lo que acorta el desarrollo.
 
-\begin{table}[H]
-\centering
-\caption{Fases del enfoque híbrido RAD y Kanban}
-\label{tab:ob2_fases_rad}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.68\linewidth}|}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.68\linewidth}|}
+\caption{Fases del enfoque híbrido RAD y Kanban}
+\label{tab:ob2_fases_rad} \\
 \hline
 \textbf{Fase RAD} & \textbf{Producto en el proyecto} \\ \hline
+\endfirsthead
+\hline
+\textbf{Fase RAD} & \textbf{Producto en el proyecto} \\ \hline
+\endhead
 Planificación de requerimientos & Diagnóstico del Objetivo 1: puntos críticos, brechas normativas, necesidades y requerimientos priorizados con MoSCoW \\ \hline
-Diseño con el usuario & Paleta, mockups y prototipo visual de las pantallas principales, revisados con el personal de la clínica (Diseño de la interfaz) \\ \hline
-Construcción & Tarjetas del tablero Kanban, con límite de una tarea en curso (Plan de desarrollo) \\ \hline
+Diseño con el usuario & Paleta y mockups de las pantallas principales, revisados con el personal de la clínica (Diseño de la interfaz) \\ \hline
+Construcción & Prototipo visual y tarjetas del tablero Kanban, con límite de una tarea en curso (Plan de desarrollo) \\ \hline
 Transición & Despliegue en el servidor e implantación con el personal del centro (Objetivo 3) \\ \hline
-\end{tabular}
-\end{table}
+\end{longtable}
+\endgroup
 
 El tablero Kanban tiene cuatro columnas (Pendiente, En desarrollo, En pruebas y Terminado) y un límite de una tarea en curso, que evita abrir varios módulos a la vez. El detalle de las tarjetas se presenta en el plan de desarrollo.

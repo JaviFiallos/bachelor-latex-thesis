@@ -29,6 +29,8 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{longtable}
+\usepackage{xltabular} % tablas con columnas X divisibles entre páginas
+\setlength{\LTcapwidth}{\linewidth}
 
 \captionsetup[table]{
     font=normalsize,
@@ -125,7 +127,7 @@
 \usepackage{pgf-pie}
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{babel,arrows.meta,positioning} % babel: evita conflictos de < > " con babel en español
-\usetikzlibrary{fit,backgrounds,shapes.multipart,calc}
+\usetikzlibrary{fit,backgrounds,shapes.multipart,shapes.geometric,calc}
 % Paleta común de los diagramas de diseño (Objetivo 2)
 \definecolor{dPersonaF}{HTML}{FFE6CC}\definecolor{dPersonaB}{HTML}{D79B00}
 \definecolor{dSistemaF}{HTML}{DAE8FC}\definecolor{dSistemaB}{HTML}{6C8EBF}

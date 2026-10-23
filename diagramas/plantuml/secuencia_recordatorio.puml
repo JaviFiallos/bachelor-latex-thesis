@@ -16,20 +16,25 @@ skinparam sequence {
 autonumber
 hide footbox
 
+participant "API del\nsistema" as API
 participant "Agente" as A #D5E8D4
 participant "WhatsApp" as W #F5F5F5
 actor "Paciente" as P
-participant "Agenda" as G
 
+A -> API : recordatorios pendientes
+API --> A : citas de mañana
 A -> W : plantilla del día anterior
 W -> P : Confirmar / Cancelar / Reprogramar
+A -> API : enviado
 P -> W : pulsa un botón
 W -> A : webhook
+A -> API : respuesta del paciente
 alt Confirmar
-  A -> G : confirmar cita
+  API --> A : cita confirmada
 else Cancelar
-  A -> G : cancelar cita
+  API --> A : cita cancelada
 else Reprogramar
+  API --> A : reprogramación solicitada
   A -> P : nuevos horarios
 end
 A -> P : respuesta

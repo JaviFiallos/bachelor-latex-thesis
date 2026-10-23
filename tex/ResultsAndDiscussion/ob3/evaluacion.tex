@@ -15,6 +15,38 @@
 
 \subsubsection{Evaluación del tiempo de gestión administrativa}
 
+\paragraph{Comparación del proceso actual y el implementado}
+
+La Tabla~\ref{tab:ob3_asis_tobe} contrasta cada tramo del $TGA$ y cada necesidad de comunicación con su tratamiento en el sistema implementado.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|p{0.24\linewidth}|p{0.25\linewidth}|p{0.29\linewidth}|p{0.12\linewidth}|}
+\caption{Comparación del proceso actual y el implementado por tramo}
+\label{tab:ob3_asis_tobe} \\
+\hline
+\textbf{Tramo o necesidad} & \textbf{Actual} & \textbf{Con el sistema} & \textbf{PC} \\ \hline
+\endfirsthead
+\hline
+\textbf{Tramo o necesidad} & \textbf{Actual} & \textbf{Con el sistema} & \textbf{PC} \\ \hline
+\endhead
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Ciclo completo de atención}} \\ \hline
+$T_1$ Registro posconsulta (3,40 min) & Receta manuscrita y registro tras aviso verbal & Receta desde catálogos durante la atención (RF03 a RF05) & PC1, PC4 \\ \hline
+$T_2$ Pago (1,60 min) & Abono y saldo manuales & Saldo calculado sobre lo registrado (RF08) & PC1 \\ \hline
+$T_3$ Agendamiento (1,30 min) & Google Calendar manual & Agenda única del sistema (RF07, RF11) & PC7 \\ \hline
+$T_4$ Transcripción (3,94 min) & Odontograma manuscrito al Formulario 033 & Eliminado (RF01, RF02) & PC1 a PC3 \\ \hline
+$T_5$ Digitalización (3,38 min) & Copia al Excel & Eliminado & PC1, PC2 \\ \hline
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Comunicación con el paciente}} \\ \hline
+Información (N1) & Respuesta manual, con demora & Respuesta automática al texto libre o al menú (RF10) & PC8 \\ \hline
+Solicitud de cita (N2, N4) & Varios canales, sin agenda única & Agente o recepción sobre la misma agenda (RF07, RF11, RF12) & PC7, PC8 \\ \hline
+Confirmación (N3) & Manual, 31 a 60 min diarios & Recordatorio el día previo (RF14) & PC8 \\ \hline
+Derivación (N5) & Atendida por la secretaria entre otras tareas & Derivación al personal (RF13) & PC8 \\ \hline
+\end{longtable}
+\endgroup
+
 \paragraph{Procedimiento}
 
 La medición postest aplicó la ficha de observación del pretest (Anexo 2, Instrumento 4) en tres jornadas de alta afluencia, \textit{[fechas]}, tras \textit{[n]} semanas de uso del sistema. Se registraron \textit{[n]} ciclos completos de atención. La Tabla~\ref{tab:ob3_definiciones} fija qué se cronometra en cada tramo con el sistema, para que el postest mida lo mismo que el pretest.
@@ -27,23 +59,27 @@ La medición postest aplicó la ficha de observación del pretest (Anexo 2, Inst
 % Esta tabla es clave para la validez: el contenido de cada tramo cambia con el
 % sistema, pero su inicio y fin deben ser equivalentes. Ajustar si en la
 % práctica el flujo resultó distinto.
-\begin{table}[H]
-\centering
-\caption{Definición operativa de los tramos en el pretest y el postest}
-\label{tab:ob3_definiciones}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\caption{Definición operativa de los tramos en el pretest y el postest}
+\label{tab:ob3_definiciones} \\
 \hline
 \textbf{Tramo} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+\endfirsthead
+\hline
+\textbf{Tramo} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+\endhead
 $T_1$ Registro posconsulta & Receta manuscrita y anotación en la tabla de control & Desde el fin del acto clínico hasta cerrar la atención en el sistema, receta incluida \\ \hline
 $T_2$ Registro del pago & Cobro y anotación de abono y saldo & Cobro y registro del abono con comprobante \\ \hline
 $T_3$ Agendamiento & Asignación en Google Calendar & Asignación en la agenda del sistema \\ \hline
 $T_4$ Transcripción & Lote diario al Formulario 033 & Registro de lote si existe alguna tarea diferida; si no, 0 \\ \hline
 $T_5$ Digitalización & Lote diario al Excel & Registro de lote si existe alguna tarea diferida; si no, 0 \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
 % ATENCIÓN: si el odontólogo completa campos del Formulario 033 después de la
 % consulta (p. ej., "Más del 033"), ese tiempo es gestión diferida y debe
@@ -51,16 +87,22 @@ $T_5$ Digitalización & Lote diario al Excel & Registro de lote si existe alguna
 
 \paragraph{Resultados por tramo}
 
-\begin{table}[H]
-\centering
-\caption{Tiempo de gestión administrativa por tramo, pretest y postest}
-\label{tab:ob3_tga}
+La Tabla~\ref{tab:ob3_tga} compara cada tramo entre el pretest y el postest, y la Figura~\ref{fig:ob3_tga_barras} muestra la composición del $TGA$.
+
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|c|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|c|}
+\caption{Tiempo de gestión administrativa por tramo, pretest y postest}
+\label{tab:ob3_tga} \\
 \hline
 \textbf{Tramo} & \textbf{Pretest (min)} & \textbf{Postest (min)} & \textbf{Diferencia (min)} & \textbf{Reducción (\%)} \\ \hline
+\endfirsthead
+\hline
+\textbf{Tramo} & \textbf{Pretest (min)} & \textbf{Postest (min)} & \textbf{Diferencia (min)} & \textbf{Reducción (\%)} \\ \hline
+\endhead
 $T_1$ Registro posconsulta & 3,40 & & & \\ \hline
 $T_2$ Registro del pago & 1,60 & & & \\ \hline
 $T_3$ Agendamiento & 1,30 & & & \\ \hline
@@ -69,8 +111,8 @@ $T_4$ Transcripción & 3,94 & & & \\ \hline
 $T_5$ Digitalización & 3,38 & & & \\ \hline
 \textbf{Subtotal $T_{E2}$} & \textbf{7,32} & & & \\ \hline
 \textbf{$TGA$} & \textbf{13,62} & & & \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
 % FIGURA RECOMENDADA: barras apiladas pretest vs postest (T1..T5) con pgfplots,
 % colores de la paleta común. Es la imagen que resume el objetivo.
@@ -101,16 +143,22 @@ $T_5$ Digitalización & 3,38 & & & \\ \hline
 % sobre citas y conversaciones del agente) y nueva aplicación del Instrumento 2
 % a la secretaria (mismas preguntas P1 a P5 que en el pretest).
 % Cada fila compara con su línea base del Obj. 1.
-\begin{table}[H]
-\centering
-\caption{Indicadores complementarios antes y después del sistema}
-\label{tab:ob3_indicadores}
+La Tabla~\ref{tab:ob3_indicadores} compara los indicadores complementarios con su línea base del Objetivo 1.
+
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.2cm}|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.2cm}|}
+\caption{Indicadores complementarios antes y después del sistema}
+\label{tab:ob3_indicadores} \\
 \hline
 \textbf{Indicador} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+\endfirsthead
+\hline
+\textbf{Indicador} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+\endhead
 Espera previa a la atención & 6,2 min & \\ \hline
 Retraso respecto a la hora programada & 7,4 min & \\ \hline
 Cruces de citas en el mes & 2 & \\ \hline
@@ -120,7 +168,7 @@ Mensajes diarios atendidos por la secretaria & 26 a 50 & \\ \hline
 Conversaciones resueltas por el agente sin derivación & --- & \textit{[\%]} \\ \hline
 Citas agendadas o reprogramadas por el agente & --- & \textit{[n]} \\ \hline
 Recordatorios respondidos (confirmar, cancelar, reprogramar) & --- & \textit{[\%]} \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
 \textit{[2--3 líneas de interpretación. La usabilidad (RNF06) se valora con $T_1$: el escenario de la Tabla~\ref{tab:ob2_atributos} exige que sea menor que 3,40 min.]}

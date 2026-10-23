@@ -31,21 +31,26 @@ En el flujo intervienen tres actores. La secretaria, que se describe a sí misma
 
 La información de cada atención se registra en los cuatro soportes descritos en la Tabla~\ref{tab:registros}. La ficha rápida es un registro físico de trabajo que no sustituye a la historia clínica oficial, aunque es el único que se completa durante la atención.
 
-\begin{table}[H]
-\centering
-\caption{Registros utilizados en el ciclo completo de atención}
-\label{tab:registros}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\linewidth}{|p{2.6cm}|p{1.6cm}|X|p{2.4cm}|}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|p{2.6cm}|p{1.6cm}|X|p{2.4cm}|}
+\caption{Registros utilizados en el ciclo completo de atención}
+\label{tab:registros} \\
 \hline
 \textbf{Registro} & \textbf{Soporte} & \textbf{Contenido} & \textbf{Momento} \\ \hline
+\endfirsthead
+\hline
+\textbf{Registro} & \textbf{Soporte} & \textbf{Contenido} & \textbf{Momento} \\ \hline
+\endhead
 Ficha rápida & Papel & Encabezado institucional, filiación, antecedentes, odontograma con código de colores y tabla de control clínico-financiero con fecha, diagnóstico, tratamiento, profesional, abono y saldo & Etapa 1 \\ \hline
 Formulario 033 & Papel & Historia clínica única de odontología del MSP: filiación, antecedentes, odontograma y registro de tratamientos & Etapa 2 \\ \hline
 Historial digital & Excel & Réplica del Formulario 033, con el odontograma en formato tabular por pieza dental, código CIE-10, tratamiento, medicación, abono y saldo & Etapa 2 \\ \hline
 Agenda & Google Calendar & Citas por profesional, diferenciadas por colores & Etapas 1 y 2 \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
 Así, cada atención se registra tres veces, y solo el primer registro ocurre durante la atención.
 
@@ -120,15 +125,20 @@ Ambas etapas conforman un ciclo cerrado: la ficha archivada al final de la Etapa
 
 La Tabla~\ref{tab:tramos_tga} relaciona cada tramo medido en la ficha de observación con las actividades de los diagramas.
 
-\begin{table}[H]
-\centering
-\caption{Tramos del tiempo de gestión administrativa por ciclo completo de atención (pretest, $n = 78$)}
-\label{tab:tramos_tga}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\linewidth}{|c|p{3.4cm}|X|c|}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|c|p{3.4cm}|X|c|}
+\caption{Tramos del tiempo de gestión administrativa por ciclo completo de atención (pretest, $n = 78$)}
+\label{tab:tramos_tga} \\
 \hline
 \textbf{Tramo} & \textbf{Nombre} & \textbf{Actividades del diagrama} & \textbf{Prom. (min)} \\ \hline
+\endfirsthead
+\hline
+\textbf{Tramo} & \textbf{Nombre} & \textbf{Actividades del diagrama} & \textbf{Prom. (min)} \\ \hline
+\endhead
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Etapa 1: gestión en la atención}} \\ \hline
 $T_1$ & Registro posconsulta & Elaboración de la receta y registro del tratamiento en la tabla de control & 3,40 \\ \hline
 $T_2$ & Registro del pago & Cobro y registro de abono y saldo & 1,60 \\ \hline
@@ -139,8 +149,8 @@ $T_4$ & Transcripción al Formulario 033 & Interpretación del odontograma y ram
 $T_5$ & Digitalización & Rama B: transcripción al historial digital & 3,38 \\ \hline
 \multicolumn{3}{|r|}{\textbf{Subtotal $T_{E2}$}} & \textbf{7,32} \\ \hline
 \multicolumn{3}{|r|}{\textbf{$TGA$}} & \textbf{13,62} \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
 La Etapa 2 representa el 53,7\,\% del $TGA$ y consume en promedio 190 minutos por jornada (Tabla~\ref{tab:resumen_obs_parte_b}), cifra superior a los 120 a 180 minutos declarados por la secretaria (Tabla~\ref{tab:ent2}, P3). En la Etapa 1, el registro posconsulta es el tramo más extenso y equivale al 25,0\,\% del $TGA$. Con un promedio de 26 atenciones por jornada, el $TGA$ supone una carga administrativa estimada de 354 minutos diarios, distribuida entre la secretaria y los profesionales.
 
@@ -164,8 +174,6 @@ La Tabla~\ref{tab:puntos_criticos} presenta los puntos críticos identificados a
 \hline
 \textbf{N°} & \textbf{Punto crítico} & \textbf{Evidencia} & \textbf{Efecto} \\ \hline
 \endhead
-\hline
-\endfoot
 PC1 & Triple registro & 7,32 min por atención; 190 min por jornada (Tabla~\ref{tab:resumen_obs_parte_b}) & Mayor consumo de tiempo \\ \hline
 PC2 & Interpretación del odontograma manuscrito & Errores de transcripción (Tabla~\ref{tab:ent3}, P4) & Registros inexactos \\ \hline
 PC3 & Odontograma registrado por la secretaria & Registro bajo dictado (Tabla~\ref{tab:ent1}, P1) & Datos clínicos fuera de la cadena sanitaria \\ \hline
@@ -229,8 +237,6 @@ La Tabla~\ref{tab:brechas_normativas} sintetiza las brechas identificadas y su i
 \hline
 \textbf{N°} & \textbf{Norma} & \textbf{Implicación para el sistema} \\ \hline
 \endhead
-\hline
-\endfoot
 BN1 & AM 00115-2021; LOS, art. 7, lit. f & Registro único del Formulario 033 durante la atención (PC1, PC2) \\ \hline
 BN2 & AM 5216-A, art. 3 & Eliminación de la transcripción entre soportes (PC1) \\ \hline
 BN3 & AM 5216-A, arts. 14 y 27 & Datos clínicos editables solo por el odontólogo (PC3) \\ \hline
@@ -272,7 +278,7 @@ La Tabla~\ref{tab:necesidades} presenta las necesidades identificadas, cada una 
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\begin{longtable}{|c|p{4.6cm}|p{8.6cm}|}
+\begin{longtable}{|c|p{4.6cm}|p{8.2cm}|}
 \caption{Necesidades de comunicación con el paciente}
 \label{tab:necesidades} \\
 \hline
@@ -281,8 +287,6 @@ La Tabla~\ref{tab:necesidades} presenta las necesidades identificadas, cada una 
 \hline
 \textbf{N°} & \textbf{Necesidad} & \textbf{Evidencia} \\ \hline
 \endhead
-\hline
-\endfoot
 N1 & Información inmediata sobre horarios, precios y pagos & PC8; el 60,0\,\% percibe demora en las respuestas por WhatsApp (Tabla~\ref{tab:p2_frecuencia}) \\ \hline
 N2 & Agendamiento sobre una disponibilidad única & PC7; el 50,5\,\% no encontró un horario con facilidad (Tabla~\ref{tab:p1_frecuencia}) \\ \hline
 N3 & Recordatorio con opciones para confirmar, cancelar o reprogramar & Entre 3 y 5 inasistencias semanales (Tabla~\ref{tab:instrumento2}, P4); el 46,7\,\% olvidó o confundió su cita (Tabla~\ref{tab:p3_frecuencia}) \\ \hline
@@ -361,8 +365,6 @@ Los requerimientos del sistema constituyen el resultado del análisis desarrolla
 \hline
 \textbf{ID} & \textbf{Requerimiento} & \textbf{Origen} & \textbf{Prioridad} \\ \hline
 \endhead
-\hline
-\endfoot
 
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Requerimientos funcionales: gestión clínico-administrativa}} \\ \hline
 

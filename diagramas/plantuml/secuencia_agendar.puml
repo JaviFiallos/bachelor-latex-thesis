@@ -21,22 +21,32 @@ hide footbox
 actor "Paciente" as P
 participant "WhatsApp" as W #F5F5F5
 participant "Agente" as A #D5E8D4
-participant "Agenda" as G
-database "Base de datos" as BD
+participant "Modelo de\nlenguaje" as L #F5F5F5
+participant "API del\nsistema" as API
+database "Base de\ndatos" as BD
 
-P -> W : "Agendar"
+P -> W : "Quiero una limpieza el martes"
 W -> A : webhook
-A -> G : horarios libres
-G --> A : opciones
-A -> P : elige día y hora
-P -> A : confirma
-A -> G : agendar cita
-G -> BD : guardar
+A -> L : texto y paso actual
+L --> A : intención y datos\n(agendar, especialidad, día)
+A -> API : identificar por teléfono
+API --> A : paciente
+A -> API : horarios libres
+API --> A : opciones
+A -> P : lista de horas
+P -> A : elige hora
+A -> P : resumen y botón Confirmar
+P -> A : Confirmar
+A -> API : registrar cita
+API -> BD : guardar
 alt horario libre
-  BD --> G : guardada
+  BD --> API : guardada
+  API --> A : cita
   A -> P : cita registrada
 else horario ocupado
-  BD --> G : conflicto
+  BD --> API : conflicto
+  API --> A : horario ocupado
   A -> P : otros horarios
 end
+note over A, L : El modelo solo interpreta; no recibe nombre,\ncédula ni historial, y no registra citas.
 @enduml

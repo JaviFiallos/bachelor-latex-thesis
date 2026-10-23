@@ -1,67 +1,23 @@
 \subsubsection{Modelo de datos}
 
-El modelo relacional deriva del Formulario 033, de la ficha rápida y de los requerimientos del Objetivo 1. Su entidad central es la \textbf{atención}: cada cita atendida genera una atención, y en ella se registran los diagnósticos, el odontograma, los tratamientos y la receta. La Figura~\ref{fig:ob2_er_atencion} muestra la atención y sus entidades vecinas; el modelo completo se presenta en el Anexo~4.
+El modelo relacional deriva del Formulario 033, de la ficha rápida y de los requerimientos del Objetivo 1. Su entidad central es la atención: cada cita atendida genera una atención, en la que se registran los diagnósticos, el odontograma, los tratamientos y la receta. El modelo completo se consolida en la implementación.
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-    font=\scriptsize, >={Stealth[length=1.8mm]},
-    ent/.style 2 args={rectangle split, rectangle split parts=2, draw=#2, line width=0.7pt,
-        rounded corners=2pt, rectangle split part fill={#1,white}, text width=3.2cm, align=left, inner sep=3pt},
-    rel/.style={draw=black!60, line width=0.6pt},
-    card/.style={font=\tiny, text=black!75, inner sep=1pt}
-]
-    % Fila 1
-    \node[ent={dSistemaF}{dSistemaB}] (pac) at (-5.2,0)
-        {\textbf{Paciente}\nodepart{two}documento\\nombres\\fecha de nacimiento\\teléfono};
-    \node[ent={dSistemaF}{dSistemaB}] (cita) at (0,0)
-        {\textbf{Cita}\nodepart{two}fecha y hora\\estado\\origen};
-    \node[ent={dSistemaF}{dSistemaB}] (prof) at (5.2,0)
-        {\textbf{Profesional}\nodepart{two}nombres\\especialidad\\horario};
-    % Fila 2
-    \node[ent={dClinicoF}{dClinicoB}] (hist) at (-5.2,-3.0)
-        {\textbf{Historia clínica}\nodepart{two}número de historia\\antecedentes\\medicación actual};
-    \node[ent={dClinicoF}{dClinicoB}, line width=1.6pt, text width=3.6cm] (aten) at (0,-3.0)
-        {\textbf{\normalsize ATENCIÓN}\nodepart{two}motivo de consulta\\signos vitales\\examen estomatognático\\planes de tratamiento};
-    \node[ent={dClinicoF}{dClinicoB}] (diag) at (5.2,-3.0)
-        {\textbf{Diagnóstico}\nodepart{two}código CIE-10\\presuntivo o definitivo};
-    % Fila 3
-    \node[ent={dDatosF}{dDatosB}, text width=3.0cm] (pago) at (-5.25,-6.2)
-        {\textbf{Pago}\nodepart{two}monto\\forma de pago\\comprobante};
-    \node[ent={dClinicoF}{dClinicoB}, text width=3.0cm] (rec) at (-1.75,-6.2)
-        {\textbf{Receta}\nodepart{two}medicamento\\dosis, frecuencia\\y duración};
-    \node[ent={dClinicoF}{dClinicoB}, text width=3.0cm] (trat) at (1.75,-6.2)
-        {\textbf{Tratamiento realizado}\nodepart{two}del catálogo\\pieza dental\\precio};
-    \node[ent={dClinicoF}{dClinicoB}, text width=3.0cm] (hall) at (5.25,-6.2)
-        {\textbf{Hallazgo (odontograma)}\nodepart{two}pieza y cara\\condición\\pendiente o realizado};
+La Tabla~\ref{tab:ob2_entidades} relaciona cada entidad con los requerimientos que atiende. Se añaden dos entidades propias del agente, vinculadas con el paciente y la cita; las guarda la API, porque el servicio del agente no accede a la base de datos, y el estado de la conversación no se almacena.
 
-    % Relaciones (1 — N)
-    \draw[rel] (pac) -- node[card, pos=0.12, above] {1} node[card, pos=0.88, above] {N} (cita);
-    \draw[rel] (prof) -- node[card, pos=0.12, above] {1} node[card, pos=0.88, above] {N} (cita);
-    \draw[rel] (pac) -- node[card, pos=0.15, right] {1} node[card, pos=0.85, right] {1} (hist);
-    \draw[rel] (cita) -- node[card, pos=0.15, right] {1} node[card, pos=0.85, right] {1} (aten);
-    \draw[rel] (aten) -- node[card, pos=0.12, above] {1} node[card, pos=0.88, above] {N} (diag);
-    \draw[rel] (aten.south) -- node[card, pos=0.15, above] {1} node[card, pos=0.9, above left] {N} (pago.north east);
-    \draw[rel] (aten.south) -- node[card, pos=0.9, left] {N} (rec.north);
-    \draw[rel] (aten.south) -- node[card, pos=0.9, right] {N} (trat.north);
-    \draw[rel] (aten.south) -- node[card, pos=0.9, above right] {N} (hall.north west);
-\end{tikzpicture}
-\caption{Entidad central del modelo de datos (atención) y sus entidades vecinas}
-\label{fig:ob2_er_atencion}
-\end{figure}
-
-La Tabla~\ref{tab:ob2_entidades} relaciona cada entidad con los requerimientos que atiende. Se añaden dos entidades propias del agente, vinculadas con el paciente y la cita.
-
-\begin{table}[H]
-\centering
-\caption{Entidades principales del modelo de datos}
-\label{tab:ob2_entidades}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
+\caption{Entidades principales del modelo de datos}
+\label{tab:ob2_entidades} \\
 \hline
 \textbf{Entidad} & \textbf{Para qué sirve} & \textbf{Requerimiento} \\ \hline
+\endfirsthead
+\hline
+\textbf{Entidad} & \textbf{Para qué sirve} & \textbf{Requerimiento} \\ \hline
+\endhead
 Paciente & Identificación y contacto; el teléfono enlaza al paciente con WhatsApp & RF06, RF11 \\ \hline
 Historia clínica & Una por paciente; antecedentes del Formulario 033 & RF01 \\ \hline
 Cita & Agenda única de recepción y agente; impide cruces por profesional & RF07, RF11, RF12 \\ \hline
@@ -74,8 +30,8 @@ Pago & Abonos; el saldo se calcula, no se guarda & RF08 \\ \hline
 \multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Entidades del agente}} \\ \hline
 Aceptación del aviso & Teléfono, versión del aviso y fecha de aceptación & RF09 \\ \hline
 Recordatorio & Envío del día anterior y respuesta del paciente & RF14 \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
 El modelo sigue cuatro principios:
 

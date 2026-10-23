@@ -10,54 +10,75 @@
 %      anulación en lugar de borrado (RNF04).
 %   4. Trazabilidad (RNF02): tablas de historial de Envers (usuario, fecha).
 % FUENTE: bellidental-backend/src/main/resources/db/migration y docs/schema.dbml.
-% CUIDADO: si el modelo final difiere del diseño, explicarlo en una línea;
-%          no reescribir el diagrama ER (ya está en el Anexo 4).
+% CUIDADO: aquí se consolida el modelo (el Obj. 2 solo lista las entidades).
+%          Si difiere del diseño, explicarlo en una línea; ER completo en el Anexo 4.
 % EXTENSIÓN: 1 tabla + 1 fragmento + 1 párrafo.
 % =========================================================
 
 \subsubsection{Base de datos}
 
-El modelo de datos (Figura~\ref{fig:ob2_er_atencion} y Anexo 4) se implementó en PostgreSQL 16 mediante migraciones versionadas con Flyway, una por módulo, de modo que la estructura se reconstruye en cualquier servidor con el mismo orden (Tabla~\ref{tab:ob3_migraciones}).
+El modelo de datos (Tabla~\ref{tab:ob2_entidades}) se implementó en PostgreSQL 16 mediante 18 migraciones versionadas con Flyway, que reconstruyen el esquema en cualquier servidor en el mismo orden. El esquema reúne 32 tablas en cinco grupos (Tabla~\ref{tab:ob3_grupos_bd}); su núcleo son el paciente, la cita y la atención, de la que dependen los registros clínicos. El diagrama completo se presenta en el Anexo~4.
 
-\begin{table}[H]
-\centering
-\caption{Migraciones de la base de datos por módulo}
-\label{tab:ob3_migraciones}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
+\caption{Grupos de tablas de la base de datos}
+\label{tab:ob3_grupos_bd} \\
 \hline
-\textbf{Módulo} & \textbf{Tablas principales} & \textbf{Requerimiento} \\ \hline
-Identidad y acceso & \textit{[usuarios, roles, permisos]} & RNF01 \\ \hline
-Pacientes y profesionales & \textit{[pacientes, profesionales, horarios]} & RF06, RF07 \\ \hline
-Agenda & \textit{[citas]} & RF07, RF11, RF12 \\ \hline
-Clínico & \textit{[historia, antecedentes, atención, diagnósticos, odontograma, tratamientos, recetas]} & RF01 a RF05 \\ \hline
-Cobros & \textit{[abonos]} & RF08 \\ \hline
-Agente & \textit{[conversaciones, aceptación del aviso, recordatorios]} & RF09 a RF14 \\ \hline
-\end{tabularx}
-\end{table}
+\textbf{Grupo} & \textbf{Tablas núcleo} & \textbf{Requerimiento} \\ \hline
+\endfirsthead
+\hline
+\textbf{Grupo} & \textbf{Tablas núcleo} & \textbf{Requerimiento} \\ \hline
+\endhead
+Identidad y personal & Usuarios, roles y permisos; profesionales, especialidades y horarios & RNF01, RF07 \\ \hline
+Pacientes y agenda & Pacientes y citas & RF06, RF07, RF11, RF12 \\ \hline
+Clínico & Historia clínica y antecedentes, atención, diagnósticos, hallazgos del odontograma, tratamientos realizados y recetas, con sus catálogos (CIE-10, tratamientos, medicamentos y condiciones dentales) & RF01 a RF05 \\ \hline
+Cobros & Pagos & RF08 \\ \hline
+Agente & Aceptación del aviso y recordatorios & RF09, RF14 \\ \hline
+\end{xltabular}
+\endgroup
 
-\paragraph{Restricción anticruce}
+\paragraph{Reglas en la base de datos}
 
-% Mostrar el fragmento real de la migración de la agenda. Para resaltar
-% sintaxis se puede añadir \usepackage{listings} en main.tex; si no, verbatim.
-La agenda impide los cruces en la propia base de datos: una restricción de exclusión rechaza dos citas activas del mismo profesional cuyos intervalos se superpongan (RF07). Así, la regla se cumple para la recepción y el agente por igual.
+Las reglas críticas se aplican en la propia base de datos, de modo que valen para cualquier canal (Tabla~\ref{tab:ob3_reglas_bd}).
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.0cm}|}
+\caption{Reglas aplicadas en la base de datos}
+\label{tab:ob3_reglas_bd} \\
+\hline
+\textbf{Mecanismo} & \textbf{Efecto} & \textbf{Requerimiento} \\ \hline
+\endfirsthead
+\hline
+\textbf{Mecanismo} & \textbf{Efecto} & \textbf{Requerimiento} \\ \hline
+\endhead
+Restricción de exclusión & Rechaza dos citas activas del mismo profesional con horarios superpuestos, sean de la recepción o del agente & RF07 \\ \hline
+Índices de trigramas & Búsqueda por similitud en el catálogo CIE-10 y en los nombres de pacientes & RF03, RF06 \\ \hline
+Disparador contra el borrado & Los pagos se anulan con motivo; nunca se eliminan & RF08, RNF04 \\ \hline
+Tablas de historial & Registran el usuario, la fecha y la hora de cada cambio en pacientes, citas y registros clínicos & RNF02 \\ \hline
+\end{xltabular}
+\endgroup
+
+La Figura~\ref{fig:ob3_exclude} muestra la restricción que impide los cruces de citas.
 
 \begin{figure}[H]
 \centering
 \begin{minipage}{0.9\linewidth}
 \small
 \begin{verbatim}
--- [Pegar aquí el fragmento EXCLUDE de la migración de la agenda]
-EXCLUDE USING gist (
-  professional_id WITH =,
-  tstzrange(start_at, end_at) WITH &&
-) WHERE (status IN (...));
+CONSTRAINT appointments_no_overlap EXCLUDE USING gist (
+    professional_id WITH =,
+    tstzrange(start_at, end_at) WITH &&
+) WHERE (status NOT IN ('CANCELLED', 'NO_SHOW', 'RESCHEDULED'))
 \end{verbatim}
 \end{minipage}
 \caption{Restricción de exclusión que impide los cruces de citas}
 \label{fig:ob3_exclude}
 \end{figure}
-
-\textit{[Por completar: 2--3 líneas sobre la separación de datos clínicos e identificación, la anulación en lugar del borrado (RNF04) y las tablas de historial que registran usuario, fecha y hora de cada cambio (RNF02).]}

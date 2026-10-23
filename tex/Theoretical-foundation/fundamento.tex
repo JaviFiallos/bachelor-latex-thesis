@@ -165,6 +165,13 @@ cruzadas. Conserva la separación de responsabilidades de los microservicios sin
 el costo operativo de distribuir y coordinar servicios independientes
 \cite{richards2020fundamentals}.
 
+\paragraph{Arquitectura de puertos y adaptadores.}
+
+La arquitectura de puertos y adaptadores, o hexagonal, aísla la lógica de una
+aplicación de sus dispositivos externos: la lógica define puertos, es decir,
+interfaces, y cada tecnología externa se conecta mediante un adaptador que puede
+sustituirse sin modificar la lógica \cite{cockburn2005hexagonal}.
+
 \paragraph{Contenedorización y despliegue: Docker.}
 
 Un contenedor es una unidad estándar de software que empaqueta el código de una
@@ -193,8 +200,8 @@ reserva de citas de \cite{shaikh2026smartmedibook}.
 
 El método \textit{Attribute-Driven Design} (ADD), propuesto por el
 \textit{Software Engineering Institute} (SEI), define la arquitectura a partir de
-sus impulsores arquitectónicos: los requerimientos funcionales prioritarios, los
-atributos de calidad y las restricciones del sistema. Estos impulsores guían las decisiones de diseño en
+sus factores de diseño (\textit{architectural drivers}): los requerimientos funcionales prioritarios, los
+atributos de calidad y las restricciones del sistema. Estos factores guían las decisiones de diseño en
 cada iteración del método \cite{cervantes2016designing}.
 
 \paragraph{Evaluación de la calidad del software: ISO/IEC 25010.}
@@ -229,6 +236,16 @@ del usuario y generando respuestas relevantes al problema planteado
 \cite{csaky2019chatbot}. Las arquitecturas de chatbot han evolucionado desde
 reglas y plantillas escritas manualmente hacia métodos estadísticos y, más
 recientemente, basados en aprendizaje profundo \cite{csaky2019chatbot}.
+
+\paragraph{Modelos de lenguaje grande (LLM).}
+
+Un modelo de lenguaje grande (\textit{Large Language Model}, LLM) es un modelo de
+aprendizaje profundo, con miles de millones de parámetros, entrenado sobre grandes
+volúmenes de texto, capaz de comprender y generar lenguaje natural y de resolver
+tareas nuevas a partir de instrucciones, sin un entrenamiento específico
+\cite{zhao2023llmsurvey}. Puede emplearse para reconocer la intención de un mensaje
+y extraer sus datos en un formato estructurado; sus respuestas, sin embargo, no son
+deterministas y pueden contener información inexacta \cite{zhao2023llmsurvey}.
 
 \paragraph{Modelado de diálogo basado en reglas: AIML.}
 

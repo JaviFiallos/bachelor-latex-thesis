@@ -14,14 +14,17 @@
 
 \subsubsection{Verificación de requerimientos}
 
-Cada requerimiento se recorrió con el personal en el sistema desplegado. La Tabla~\ref{tab:ob3_verificacion} resume su estado y la evidencia en este objetivo.
+% Estado provisional al 22/10/2026 (según los repositorios). El estado final
+% sale del recorrido de cada requerimiento con el personal en el sistema
+% desplegado, antes del postest.
+Cada requerimiento se recorrerá con el personal en el sistema desplegado. La Tabla~\ref{tab:ob3_verificacion} resume su estado y la evidencia en este objetivo.
 
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.12\linewidth}|p{0.50\linewidth}|p{0.24\linewidth}|}
+\begin{longtable}{|p{0.14\linewidth}|p{0.50\linewidth}|p{0.26\linewidth}|}
 \caption{Verificación de los requerimientos en el sistema desplegado}
 \label{tab:ob3_verificacion} \\
 \hline
@@ -30,11 +33,21 @@ Cada requerimiento se recorrió con el personal en el sistema desplegado. La Tab
 \hline
 \textbf{ID} & \textbf{Evidencia} & \textbf{Estado} \\ \hline
 \endhead
-\hline
-\endfoot
-RF01 & \textit{[Figura de la atención]} & \textit{[Cumple]} \\ \hline
-RF07 & Figuras~\ref{fig:ob3_agenda} y \ref{fig:ob3_exclude} & \textit{[Cumple]} \\ \hline
-\multicolumn{3}{|l|}{\textit{[\ldots completar RF01 a RF14 y RNF01 a RNF06]}} \\ \hline
+RF01 & Atención con los campos del Formulario 033 (Figuras~\ref{fig:ob3_atencion} y \ref{fig:ob3_form033}) & \textit{Implementado} \\ \hline
+RF02 & Odontograma por pieza y cara (Figura~\ref{fig:ob3_atencion}) & \textit{Implementado} \\ \hline
+RF03 & Búsqueda CIE-10 por similitud (Tabla~\ref{tab:ob3_reglas_bd}) & \textit{Implementado} \\ \hline
+RF04 & Catálogos de tratamientos y medicamentos con posología & \textit{Implementado} \\ \hline
+RF05 & Receta en PDF ligada al diagnóstico (Figura~\ref{fig:ob3_receta}) & \textit{Implementado} \\ \hline
+RF06 & Historial del paciente & \textit{Parcial: falta la ficha clínica} \\ \hline
+RF07 & Agenda sin cruces (Figuras~\ref{fig:ob3_agenda} y \ref{fig:ob3_exclude}) & \textit{Implementado} \\ \hline
+RF08 & Abono, saldo y comprobante (Figura~\ref{fig:ob3_cobro}) & \textit{Implementado} \\ \hline
+RF09 a RF14 & Agente (Tabla~\ref{tab:ob3_agente}) & \textit{Construido; falta conectar WhatsApp} \\ \hline
+RNF01 & Perfiles y permisos por rol & \textit{Implementado} \\ \hline
+RNF02 & Historial de cambios & \textit{Implementado} \\ \hline
+RNF03 & Interfaz interna sin datos clínicos & \textit{Implementado} \\ \hline
+RNF04 & Anulación sin borrado & \textit{Parcial: faltan respaldos y exportación} \\ \hline
+RNF05 & Servidor virtual en línea & \textit{Parcial: falta el agente} \\ \hline
+RNF06 & Registro durante la consulta & \textit{Por verificar en el postest} \\ \hline
 \end{longtable}
 \endgroup
 
