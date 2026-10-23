@@ -3,13 +3,16 @@
 % =========================================================
 \section{Resultados y Discusión}
 
-% Cuarto nivel (\paragraph) numerado y en bloque solo desde este capítulo;
-% en la fundamentación teórica \paragraph sigue siendo un encabezado en línea.
+% La numeración llega hasta el tercer nivel (3.x.y); el cuarto nivel
+% (\paragraph) se rotula con letras: a), b), c)..., reiniciadas en cada 3.x.y.
+% En la fundamentación teórica \paragraph sigue siendo un encabezado en línea.
 \setcounter{secnumdepth}{4}
+\renewcommand{\theparagraph}{\alph{paragraph})}
 \titleformat{\paragraph}[block]
   {\normalfont\fontsize{12}{14}\bfseries}
-  {\theparagraph.}{0.5em}{}
+  {\theparagraph}{0.5em}{}
 \titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 \input{tex/ResultsAndDiscussion/results-ob1}
 \input{tex/ResultsAndDiscussion/results-ob2}
+\input{tex/ResultsAndDiscussion/results-ob3}

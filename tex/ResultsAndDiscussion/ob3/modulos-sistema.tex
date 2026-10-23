@@ -1,14 +1,13 @@
 % =========================================================
 % IMPLEMENTACIÓN DEL SISTEMA (tarea O3-04)
-% QUÉ VA: las pantallas finales que materializan el prototipo del Obj. 2
-%         (diseno-interfaz.tex), organizadas por el ciclo de atención del
+% QUÉ VA: primero el prototipo visual (movido desde el Obj. 2); después, las
+%         pantallas finales que lo materializan, organizadas por el ciclo de atención del
 %         proceso propuesto (Figura fig:ob2_tobe_atencion), no por módulo técnico.
 %         Cada pantalla: captura + 2-3 líneas + RF que atiende + tramo del TGA
 %         que reduce (T1, T2 o T3) o que elimina (T4, T5).
 % ORDEN SUGERIDO (sigue el BPMN to-be):
 %   1. Acceso por rol (RNF01): la secretaria y el odontólogo ven menús distintos.
-%   2. Agenda de la secretaria (RF07) + mensaje de rechazo por cruce (componente
-%      de error de la Figura fig:ob2_componentes).  → T3
+%   2. Agenda de la secretaria (RF07) + mensaje de rechazo por cruce.  → T3
 %   3. Mis citas del odontólogo (tablero por estado).
 %   4. Atención: antecedentes, diagnóstico CIE-10 (RF01, RF03).
 %   5. Odontograma (RF02).                          → elimina T4/T5
@@ -24,56 +23,123 @@
 
 \subsubsection{Implementación del sistema}
 
-Las pantallas siguen el prototipo de la interfaz (Figuras~\ref{fig:ob2_proto_agenda} a \ref{fig:ob2_proto_atencion}) y el orden del ciclo completo de atención propuesto (Figura~\ref{fig:ob2_tobe_atencion}). La Tabla~\ref{tab:ob3_pantallas} relaciona cada pantalla con el requerimiento y el tramo del $TGA$ sobre el que actúa.
+\paragraph{Prototipo visual}
 
-\begin{table}[H]
-\centering
-\caption{Pantallas del sistema, requerimientos y tramos del $TGA$}
-\label{tab:ob3_pantallas}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.0cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{2.0cm}|}
-\hline
-\textbf{Pantalla} & \textbf{Rol} & \textbf{Requerimiento} & \textbf{Tramo} \\ \hline
-Agenda & Secretaria & RF07 & $T_3$ \\ \hline
-Mis citas & Odontólogo & RF07 & --- \\ \hline
-Atención y diagnóstico & Odontólogo & RF01, RF03, RNF06 & $T_1$ \\ \hline
-Odontograma & Odontólogo & RF02 & $T_4$, $T_5$ \\ \hline
-Tratamientos y receta & Odontólogo & RF04, RF05 & $T_1$ \\ \hline
-Historial del paciente & Odontólogo & RF06 & --- \\ \hline
-Cobro y comprobante & Secretaria & RF08 & $T_2$ \\ \hline
-\end{tabularx}
-\end{table}
-
-% ---------- Plantilla por pantalla (repetir) ----------
-\paragraph{Agenda}
-
-\textit{[2--3 líneas: una columna por profesional con su color, estados de la cita, citas del agente identificadas; al intentar una cita solapada se muestra el mensaje de error estandarizado (RF07).]}
+El prototipo en HTML aplica la paleta sobre las pantallas de los mockups (Figuras~\ref{fig:ob2_mockup_agenda} y \ref{fig:ob2_mockup_atencion}). La agenda de la secretaria (Figura~\ref{fig:ob3_proto_agenda}) muestra una columna por profesional con validación de cruces y el estado de cada cita, incluidas las agendadas por el agente y las que quedan sin confirmar (RF07, N2 a N4); responde al 50,5\,\% de pacientes que no encontró un horario con facilidad (Tabla~\ref{tab:p1_frecuencia}).
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/Ob3_Agenda.png}{\includegraphics[width=\linewidth]{img/Ob3_Agenda.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: img/Ob3\_Agenda.png}}}
-\caption{Agenda de la secretaria}
+\includegraphics[width=\linewidth]{img/Prototipo_Agenda_Secretaria.png}
+\caption{Prototipo de la agenda de la secretaria}
+\label{fig:ob3_proto_agenda}
+\end{figure}
+
+En recepción, la ficha del paciente (Figura~\ref{fig:ob3_proto_recepcion}) reúne sus citas y el estado de cuenta con abono, saldo y comprobante (RF08). Los antecedentes, el odontograma y los diagnósticos no se muestran a la secretaria (RNF01, BN3).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Mockup_Atencion_Secretaria.png}
+\caption{Prototipo de la atención de la secretaria: citas y estado de cuenta del paciente}
+\label{fig:ob3_proto_recepcion}
+\end{figure}
+
+El odontólogo organiza su jornada en un tablero por estado de la cita: agendadas, en espera, en atención y atendidas (Figura~\ref{fig:ob3_proto_citas}). Desde él inicia la atención de pacientes con cita o sin ella (RF06).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Prototipo_Citas_Odontologo.png}
+\caption{Prototipo de las citas del odontólogo}
+\label{fig:ob3_proto_citas}
+\end{figure}
+
+La atención (Figura~\ref{fig:ob3_proto_atencion}) presenta las alertas clínicas del paciente y el odontograma: al seleccionar la pieza y la cara se despliegan las condiciones, en rojo lo pendiente y en azul lo realizado (RF02). La atención se cierra con una sola acción, en pocos pasos y durante la consulta (RNF06).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Prototipo_Atencion_Odontologo.png}
+\caption{Prototipo de la atención del odontólogo con el odontograma}
+\label{fig:ob3_proto_atencion}
+\end{figure}
+
+La aplicación tiene tres perfiles: secretaria, odontólogo y director. Cada uno ve un menú propio, y el servidor rechaza las operaciones que su rol no permite (RNF01). La Tabla~\ref{tab:ob3_pantallas} relaciona las pantallas principales con el requerimiento y el tramo del $TGA$ sobre el que actúan; siguen el prototipo (Figuras~\ref{fig:ob3_proto_agenda} a \ref{fig:ob3_proto_atencion}) y el orden del ciclo completo de atención propuesto (Figura~\ref{fig:ob2_tobe_atencion}).
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{2.0cm}|}
+\caption{Pantallas del sistema, requerimientos y tramos del $TGA$}
+\label{tab:ob3_pantallas} \\
+\hline
+\textbf{Pantalla} & \textbf{Perfil} & \textbf{Requerimiento} & \textbf{Tramo} \\ \hline
+\endfirsthead
+\hline
+\textbf{Pantalla} & \textbf{Perfil} & \textbf{Requerimiento} & \textbf{Tramo} \\ \hline
+\endhead
+Agenda del día & Secretaria & RF07 & $T_3$ \\ \hline
+Ficha del paciente y cobro & Secretaria & RF06, RF08 & $T_2$ \\ \hline
+Mis citas de hoy & Odontólogo & RF07 & --- \\ \hline
+Atención y odontograma & Odontólogo & RF01 a RF03, RNF06 & $T_1$, $T_4$, $T_5$ \\ \hline
+Tratamientos y receta & Odontólogo & RF04, RF05 & $T_1$ \\ \hline
+Formulario 033 & Odontólogo & RF01 & $T_4$, $T_5$ \\ \hline
+Historial de cambios & Director & RNF02 & --- \\ \hline
+\end{xltabular}
+\endgroup
+
+\paragraph{Recepción}
+
+% 2-3 líneas por captura; datos ficticios (LOPDP).
+La agenda del día (Figura~\ref{fig:ob3_agenda}) muestra una columna por profesional con su color y el estado de cada cita; las citas creadas por el agente se distinguen por su origen. Al intentar una cita superpuesta, el sistema muestra el rechazo de la base de datos (RF07). La ficha del paciente (Figura~\ref{fig:ob3_cobro}) reúne sus citas y su estado de cuenta: los tratamientos de la atención llegan con su valor, se registra el abono, el saldo se calcula y se emite el comprobante en PDF, sin mostrar datos clínicos (RF08, RNF01).
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Agenda.png}{\includegraphics[width=\linewidth]{img/Ob3_Agenda.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: captura en img/Ob3\_Agenda.png}}}
+\caption{Agenda del día de la secretaria}
 \label{fig:ob3_agenda}
 \end{figure}
 
-\paragraph{Atención del odontólogo}
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Cobro.png}{\includegraphics[width=\linewidth]{img/Ob3_Cobro.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: captura en img/Ob3\_Cobro.png}}}
+\caption{Ficha del paciente con estado de cuenta y registro del abono}
+\label{fig:ob3_cobro}
+\end{figure}
 
-\textit{[2--3 líneas: antecedentes visibles al abrir la atención, diagnóstico con búsqueda CIE-10 por texto o prefijo, cierre de la atención en una sola acción (RF01, RF03, RNF06).]}
+\paragraph{Consultorio}
 
-\paragraph{Odontograma}
+El odontólogo organiza su jornada en un tablero por estado de la cita y abre la atención con o sin cita (Figura~\ref{fig:ob3_mis_citas}). En la atención (Figura~\ref{fig:ob3_atencion}) registra los antecedentes, el examen y los diagnósticos con búsqueda CIE-10 por texto o código (RF01, RF03), y marca el odontograma por pieza y cara en dos clics, en rojo lo pendiente y en azul lo realizado (RF02). Los tratamientos y los medicamentos se eligen de catálogos con posología predefinida, y la receta se emite en PDF con espacio para la firma (Figura~\ref{fig:ob3_receta}; RF04, RF05). El Formulario 033 se genera desde lo registrado y se imprime en el formato del MSP (Figura~\ref{fig:ob3_form033}), lo que sustituye la transcripción y la digitalización de la Etapa 2.
 
-\textit{[2--3 líneas: selección de pieza y cara, rojo pendiente y azul realizado, solo editable por el odontólogo (RF02, BN3). Indicar que su registro durante la atención sustituye la transcripción de la Etapa 2.]}
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Mis_Citas.png}{\includegraphics[width=\linewidth]{img/Ob3_Mis_Citas.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: captura en img/Ob3\_Mis\_Citas.png}}}
+\caption{Mis citas de hoy del odontólogo}
+\label{fig:ob3_mis_citas}
+\end{figure}
 
-\paragraph{Tratamientos y receta}
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Atencion.png}{\includegraphics[width=\linewidth]{img/Ob3_Atencion.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: captura en img/Ob3\_Atencion.png}}}
+\caption{Atención con antecedentes, diagnósticos y odontograma}
+\label{fig:ob3_atencion}
+\end{figure}
 
-\textit{[2--3 líneas: tratamientos y fármacos desde catálogos con posología predefinida; receta asociada al CIE-10 en PDF con espacio para firma (RF04, RF05).]}
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Receta.png}{\includegraphics[width=\linewidth]{img/Ob3_Receta.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: captura en img/Ob3\_Receta.png}}}
+\caption{Tratamientos de la atención y receta emitida}
+\label{fig:ob3_receta}
+\end{figure}
 
-\paragraph{Historial del paciente}
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Ob3_Form033.png}{\includegraphics[width=\linewidth]{img/Ob3_Form033.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: captura en img/Ob3\_Form033.png}}}
+\caption{Formulario 033 generado por el sistema}
+\label{fig:ob3_form033}
+\end{figure}
 
-\textit{[1--2 líneas: consulta inmediata, incluido el paciente sin cita (RF06, PC6).]}
+\paragraph{Dirección}
 
-\paragraph{Cobro y comprobante}
+El director, que también atiende como odontólogo, administra los usuarios y sus roles, los catálogos de tratamientos y especialidades, y consulta las estadísticas de la clínica. El historial de cambios muestra, para cada registro, quién lo modificó, cuándo y qué cambió (RNF02).
 
-\textit{[2--3 líneas: la secretaria ve los tratamientos y valores de la atención cerrada, registra el abono, el saldo se calcula y se emite el comprobante; no ve datos clínicos (RF08, RNF01).]}
+% Opcional: captura del historial de cambios o de las estadísticas.

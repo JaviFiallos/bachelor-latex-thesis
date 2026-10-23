@@ -111,7 +111,7 @@
     <bpmn:association id="A_Cerrar" sourceRef="Task_Cerrar" targetRef="TA_Cerrar" />
     <bpmn:textAnnotation id="TA_Cobrar"><bpmn:text>Recepción ve tratamientos y valores, sin diagnósticos (BN3); saldo calculado</bpmn:text></bpmn:textAnnotation>
     <bpmn:association id="A_Cobrar" sourceRef="Task_Cobrar" targetRef="TA_Cobrar" />
-    <bpmn:textAnnotation id="TA_Agendar"><bpmn:text>El sistema replica la cita en Google Calendar y programa el recordatorio</bpmn:text></bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TA_Agendar"><bpmn:text>El sistema registra la cita en la agenda única y programa el recordatorio</bpmn:text></bpmn:textAnnotation>
     <bpmn:association id="A_Agendar" sourceRef="Task_Agendar" targetRef="TA_Agendar" />
     <bpmn:textAnnotation id="TA_Fin"><bpmn:text>Sin Etapa 2: la historia clínica digital, con los campos del Formulario 033, queda registrada al cerrar la atención (T4 y T5)</bpmn:text></bpmn:textAnnotation>
     <bpmn:association id="A_Fin" sourceRef="End_Atencion" targetRef="TA_Fin" />

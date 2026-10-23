@@ -1,70 +1,79 @@
 \subsubsection{Arquitectura general del sistema}
 
-La estructura se describe con el modelo C4 \cite{brown2018c4} en los niveles de contexto y de contenedores; el comportamiento y el despliegue, con UML \cite{omg2017uml}. Los componentes del agente conversacional se presentan en un apartado propio.
+La estructura se describe con el modelo C4 \cite{brown2018c4} en los niveles de contexto y de contenedores; el comportamiento y el despliegue, con UML \cite{omg2017uml}. La arquitectura del agente conversacional se detalla en el apartado siguiente.
 
 \paragraph{Diagrama de contexto}
 
-El diagrama de contexto muestra el sistema como una caja central y los actores y sistemas externos que interactúan con él (Figura~\ref{fig:ob2_c4_contexto}). Los pacientes acceden solo a través de WhatsApp; el personal de la clínica, a través de la aplicación web.
+El diagrama de contexto muestra el sistema como una caja central y los actores y sistemas externos que interactúan con él (Figura~\ref{fig:ob2_c4_contexto} y Tabla~\ref{tab:ob2_contexto}). Los pacientes acceden solo a través de WhatsApp; el personal de la clínica, a través de la aplicación web. El proveedor del modelo de lenguaje solo recibe el texto de los mensajes.
 
 \begin{figure}[H]
 \centering
-\IfFileExists{img/C4_Contexto.png}{\includegraphics[width=0.95\linewidth]{img/C4_Contexto.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/C4\_Contexto.pdf}}}
+\includegraphics[width=0.95\linewidth]{img/Objetivo2/C4_Contexto.png}
 \caption{Diagrama de contexto del sistema (C4, nivel 1)}
 \label{fig:ob2_c4_contexto}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\caption{Actores y sistemas externos del diagrama de contexto}
-\label{tab:ob2_contexto}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|}
+\caption{Actores y sistemas externos del diagrama de contexto}
+\label{tab:ob2_contexto} \\
 \hline
 \textbf{Elemento} & \textbf{Tipo} & \textbf{Interacción} \\ \hline
+\endfirsthead
+\hline
+\textbf{Elemento} & \textbf{Tipo} & \textbf{Interacción} \\ \hline
+\endhead
 Paciente & Persona & Agenda, reprograma o consulta por WhatsApp; recibe recordatorios si aceptó el aviso de privacidad en el agente \\ \hline
 Secretaria & Persona & Gestiona la agenda, los pacientes y los cobros en la aplicación web \\ \hline
 Odontólogo & Persona & Registra la historia clínica, el odontograma y los tratamientos \\ \hline
 Director (administrador) & Persona & Administra los catálogos, los horarios y la configuración \\ \hline
 WhatsApp Cloud API (Meta) & Sistema externo & Transmite los mensajes del paciente mediante un webhook y entrega las respuestas y los recordatorios \\ \hline
-Google Calendar & Sistema externo & Recibe una copia de solo lectura de la agenda, con un calendario por profesional \\ \hline
+Proveedor del modelo de lenguaje & Sistema externo & Interpreta el texto libre del paciente; no recibe datos identificativos ni clínicos \\ \hline
 Google Drive de la clínica & Sistema externo & Almacena los respaldos cifrados de la base de datos \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
 \paragraph{Diagrama de contenedores}
 
-La aplicación web se ejecuta en el navegador de cada usuario; los demás contenedores se ejecutan en un único servidor virtual mediante Docker Compose (Figura~\ref{fig:ob2_c4_contenedores}). Un mismo nginx actúa como proxy inverso y sirve los archivos de la aplicación web. La API concentra la lógica del sistema, incluido el módulo del agente. El esquema de despliegue se detalla en un apartado posterior.
+La aplicación web se ejecuta en el navegador de cada usuario; los demás contenedores se ejecutan en un único servidor virtual mediante Docker Compose (Figura~\ref{fig:ob2_c4_contenedores} y Tabla~\ref{tab:ob2_contenedores}). El proxy inverso es la única entrada pública: dirige la aplicación web y la API, y entrega el webhook al servicio del agente. La API concentra la lógica y las reglas del sistema; el servicio del agente conversa con el paciente y opera sobre la agenda solo a través de una interfaz interna de la API, que no se expone a internet. El esquema de despliegue se detalla en un apartado posterior.
 
 \begin{figure}[H]
 \centering
-\IfFileExists{diagramas/drawio/Contenedores_C4_2.png}{\includegraphics[width=\linewidth]{diagramas/drawio/Contenedores_C4_2.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: dibujar en draw.io según diagramas/drawio/ESPECIFICACION-arquitectura-general.md y exportar a img/C4\_Contenedores.pdf}}}
+\includegraphics[width=\linewidth]{img/Objetivo2/C4_Contenedores.png}
 \caption{Diagrama de contenedores del sistema (C4, nivel 2)}
 \label{fig:ob2_c4_contenedores}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\caption{Contenedores del sistema}
-\label{tab:ob2_contenedores}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}X|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}X|}
+\caption{Contenedores del sistema}
+\label{tab:ob2_contenedores} \\
 \hline
 \textbf{Contenedor} & \textbf{Tecnología} & \textbf{Responsabilidad} \\ \hline
-Proxy inverso y servidor web & nginx con certificado de Let's Encrypt & Termina el cifrado en tránsito (TLS), sirve los archivos de la aplicación web y expone al exterior solo \texttt{/api} y el webhook de WhatsApp \\ \hline
-Aplicación web & Angular 22.1, aplicación de una sola página & Se ejecuta en el navegador de la secretaria, el odontólogo y el director, sin instalación en los equipos \\ \hline
-API del sistema & Spring Boot 3.5 con Java 21 & Lógica de negocio por módulos, autenticación con JWT y motor conversacional del agente \\ \hline
+\endfirsthead
+\hline
+\textbf{Contenedor} & \textbf{Tecnología} & \textbf{Responsabilidad} \\ \hline
+\endhead
+Proxy inverso & Caddy con certificado de Let's Encrypt & Termina el cifrado en tránsito (TLS); expone la aplicación web, \texttt{/api} y el webhook, y bloquea desde internet la interfaz interna del agente \\ \hline
+Aplicación web & Angular 22.1 servida por nginx & Se ejecuta en el navegador de la secretaria, el odontólogo y el director, sin instalación en los equipos \\ \hline
+API del sistema & Spring Boot 3.5 con Java 21 & Lógica de negocio por módulos, autenticación con JWT e interfaz interna para el agente \\ \hline
+Servicio del agente & Python (FastAPI) & Webhook de WhatsApp, máquina de estados de la conversación, interpretación con el modelo de lenguaje y envío de recordatorios; sin acceso a la base de datos \\ \hline
 Base de datos & PostgreSQL 16 & Almacena los datos de la clínica en un esquema compartido e impide los cruces de citas \\ \hline
 Servicio de respaldo & \texttt{pg\_dump} programado en Docker & Genera un volcado diario cifrado y lo copia a Google Drive \\ \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
 
-\paragraph{Estilo arquitectónico: monolito modular}
+\paragraph{Estilo arquitectónico de la API: monolito modular}
 
-La API se organiza como un monolito modular: una sola aplicación, desplegada como una unidad, cuyo código se divide en módulos por área funcional \cite{richards2020fundamentals}. Los antecedentes separan cada capacidad en un microservicio \cite{roca2020microservice,arcila2022microservice}. En una clínica pequeña, con un único desarrollador y un único servidor, esa separación añadiría despliegues, comunicación por red y monitoreo por servicio, una complejidad sin beneficio proporcional. De \cite{roca2020microservice} se conserva la idea de añadir capacidades sin modificar el núcleo, y de \cite{arcila2022microservice}, la autenticación con JWT.
+La API se organiza como un monolito modular: una sola aplicación, desplegada como una unidad, cuyo código se divide en módulos por área funcional \cite{richards2020fundamentals}. Los antecedentes separan cada capacidad en un microservicio \cite{roca2020microservice,arcila2022microservice}. En una clínica pequeña, con un único desarrollador y un único servidor, esa separación añadiría despliegues, comunicación por red y monitoreo por servicio, una complejidad sin beneficio proporcional. De \cite{roca2020microservice} se conserva la idea de añadir capacidades sin modificar el núcleo, y de \cite{arcila2022microservice}, la autenticación con JWT. El servicio del agente es el único componente fuera de la API; se separa para aislar el procesamiento del texto libre de los datos de la clínica, no por escala.
 
 La Figura~\ref{fig:ob2_modulos} agrupa los módulos esenciales y muestra cómo se comunican. La Tabla~\ref{tab:ob2_modulos} resume qué hace cada uno.
 
@@ -78,13 +87,17 @@ La Figura~\ref{fig:ob2_modulos} agrupa los módulos esenciales y muestra cómo s
     et/.style={font=\scriptsize, fill=white, inner sep=1.5pt}
 ]
     \node[grupo=3.9cm, fill=dSistemaF, draw=dSistemaB] (agenda) at (0,2.7)
-        {\textbf{Agenda}\\[2pt] Citas y regla anticruce\\ Copia en Google Calendar};
+        {\textbf{Agenda}\\[2pt] Citas y regla anticruce\\ Reprogramación};
     \node[grupo=3.9cm, fill=dSistemaF, draw=dSistemaB] (base) at (0,0)
         {\textbf{Base}\\[2pt] Identidad y acceso\\ Pacientes\\ Profesionales y horarios};
     \node[grupo=3.5cm, fill=dClinicoF, draw=dClinicoB] (clin) at (5.0,1.35)
         {\textbf{Clínico y cobros}\\[2pt] Historia y atención\\ Odontograma\\ Tratamientos y recetas\\ Cobros};
     \node[grupo=2.6cm, fill=dAgenteF, draw=dAgenteB] (agente) at (-5.6,1.35)
-        {\textbf{Agente}\\[2pt] Conversación\\ por WhatsApp\\ Recordatorios};
+        {\textbf{Interfaz del agente}\\[2pt] Aviso\\ Identificación\\ Citas con límites\\ Recordatorios};
+    \node[draw=dAgenteB, dashed, fill=white, rounded corners=4pt, line width=0.8pt, align=center,
+          inner sep=5pt, text width=2.6cm] (servicio) at (-5.6,4.1)
+        {\textbf{Servicio del agente}\\ fuera de la API};
+    \draw[flecha] (servicio) -- node[et] {interfaz interna} (agente);
 
     \draw[flecha] (agenda) -- node[et] {usa} (base);
     \draw[flecha] ([yshift=8pt]clin.west) -- node[et] {usa} (agenda.east);
@@ -105,23 +118,27 @@ La Figura~\ref{fig:ob2_modulos} agrupa los módulos esenciales y muestra cómo s
 \label{fig:ob2_modulos}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\caption{Módulos esenciales del monolito modular}
-\label{tab:ob2_modulos}
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.2cm}|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.2cm}|}
+\caption{Módulos esenciales del monolito modular}
+\label{tab:ob2_modulos} \\
 \hline
 \textbf{Módulo} & \textbf{Qué hace} & \textbf{Requerimiento} \\ \hline
+\endfirsthead
+\hline
+\textbf{Módulo} & \textbf{Qué hace} & \textbf{Requerimiento} \\ \hline
+\endhead
 Identidad y acceso & Usuarios, roles e inicio de sesión & RNF01 \\ \hline
 Pacientes y profesionales & Datos de identificación, profesionales y horarios & RF06, RF07 \\ \hline
-Agenda & Citas sin cruces, reprogramación y copia en Google Calendar & RF07, RF11, RF12 \\ \hline
+Agenda & Citas sin cruces y reprogramación & RF07, RF11, RF12 \\ \hline
 Clínico & Historia clínica, odontograma, tratamientos y recetas & RF01 a RF05 \\ \hline
 Cobros & Abonos y saldo por sesión & RF08 \\ \hline
-Agente & Conversación por WhatsApp, aviso de privacidad y recordatorios & RF09 a RF14 \\ \hline
-\end{tabularx}
-\end{table}
+Interfaz del agente & Operaciones del servicio del agente: aviso, identificación, citas con sus límites y recordatorios & RF09 a RF14 \\ \hline
+\end{xltabular}
+\endgroup
 
-Cada módulo expone una interfaz pública y no accede al interior de los demás. Los cambios de la agenda, como crear o reprogramar una cita, se publican como eventos que alimentan la copia en Google Calendar y los recordatorios. Así, un cambio en las reglas de agendamiento no altera la conversación del agente (Tabla~\ref{tab:ob2_atributos}). La auditoría (RNF02) es transversal y no forma un módulo. La separación no es completa: los módulos comparten la base de datos, de modo que un cambio de tabla puede afectar a más de uno.
+Cada módulo expone una interfaz pública y no accede al interior de los demás. Los cambios de la agenda, como crear o reprogramar una cita, se publican como eventos que programan los recordatorios. Así, un cambio en las reglas de agendamiento no altera la conversación del agente (Tabla~\ref{tab:ob2_atributos}). La auditoría (RNF02) es transversal y no forma un módulo. La separación no es completa: los módulos comparten la base de datos, de modo que un cambio de tabla puede afectar a más de uno.

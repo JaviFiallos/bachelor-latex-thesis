@@ -14,7 +14,7 @@
 
 \subsubsection{Construcción}
 
-La construcción siguió las quince tarjetas del plan de desarrollo (Tabla~\ref{tab:ob2_tarjetas}) en el tablero Kanban, con un límite de una tarjeta en desarrollo. La Figura~\ref{fig:ob3_tablero} muestra el tablero al 16 de octubre de 2026.
+La construcción siguió las quince tarjetas del plan de desarrollo (Tabla~\ref{tab:ob2_tarjetas}) en el tablero Kanban, con un límite de una tarjeta en desarrollo. Cada tarjeta abarcó el servidor y la interfaz del módulo. La Figura~\ref{fig:ob3_tablero} muestra el tablero al 22 de octubre de 2026, y la Tabla~\ref{tab:ob3_tarjetas}, las fechas de cada tarjeta.
 
 \begin{figure}[H]
 \centering
@@ -23,37 +23,44 @@ La construcción siguió las quince tarjetas del plan de desarrollo (Tabla~\ref{
 \label{fig:ob3_tablero}
 \end{figure}
 
-% TABLA: una fila por tarjeta del plan (mismos números y nombres que
-% tab:ob2_tarjetas). Columnas cortas: Tarjeta | Inicio | Fin | Días.
-% Las tarjetas del agente en negrita, igual que en el Objetivo 2.
-\begin{table}[H]
-\centering
-\caption{Ejecución de las tarjetas del plan de desarrollo}
-\label{tab:ob3_tarjetas}
+% Fechas: primer y último commit de la tarjeta en los repositorios del
+% backend, del frontend y del agente (git log). Días = días calendario.
+\begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\caption{Ejecución de las tarjetas del plan de desarrollo}
+\label{tab:ob3_tarjetas} \\
 \hline
 \textbf{Tarjeta} & \textbf{Inicio} & \textbf{Fin} & \textbf{Días} \\ \hline
+\endfirsthead
+\hline
+\textbf{Tarjeta} & \textbf{Inicio} & \textbf{Fin} & \textbf{Días} \\ \hline
+\endhead
 1. Identidad y autenticación & 08/10 & 11/10 & 4 \\ \hline
 2. Profesionales y pacientes & 09/10 & 12/10 & 4 \\ \hline
 3. Historia clínica y antecedentes & 09/10 & 12/10 & 4 \\ \hline
-4. Agenda y horarios & 09/10 & 12/10 & 4 \\ \hline
-5. Atención clínica y CIE-10 & 09/10 & 12/10 & 4 \\ \hline
+4. Agenda y horarios & 09/10 & 19/10 & 11 \\ \hline
+5. Atención clínica y CIE-10 & 09/10 & 20/10 & 12 \\ \hline
 6. Odontograma & 10/10 & 12/10 & 3 \\ \hline
-7. Tratamientos & --- & --- & --- \\ \hline  % sin commits todavía
-8. Recetas & --- & --- & --- \\ \hline  % sin commits todavía
-9. Cobros y comprobante & --- & --- & --- \\ \hline  % sin commits todavía
-10. Auditoría & --- & --- & --- \\ \hline  % sin commits todavía
-11. Sincronización con Google Calendar & --- & --- & --- \\ \hline  % sin commits todavía
-\textbf{12. Agente: núcleo, aviso, información y derivación} & --- & --- & --- \\ \hline  % sin commits todavía
-\textbf{13. Agente: agendar y reprogramar} & --- & --- & --- \\ \hline  % sin commits todavía
-\textbf{14. Agente: recordatorios} & --- & --- & --- \\ \hline  % sin commits todavía
-15. Respaldos y exportación & --- & --- & --- \\ \hline  % sin commits todavía
-Historial inmediato (RF06) & --- & --- & --- \\ \hline  % sin commits todavía
-\end{tabularx}
-\end{table}
+7. Tratamientos & 17/10 & 19/10 & 3 \\ \hline
+8. Recetas & 17/10 & 19/10 & 3 \\ \hline
+9. Cobros y comprobante & 21/10 & 22/10 & 2 \\ \hline
+10. Auditoría & 21/10 & 22/10 & 2 \\ \hline
+\textbf{11. Agente: núcleo, aviso, menú y derivación} & 18/10 & 19/10 & 2 \\ \hline
+\textbf{12. Agente: agendar y reprogramar} & 18/10 & 19/10 & 2 \\ \hline
+\textbf{13. Agente: interpretación del texto libre y urgencias} & 19/10 & 19/10 & 1 \\ \hline
+\textbf{14. Agente: recordatorios} & 18/10 & 19/10 & 2 \\ \hline
+15. Respaldos y exportación & --- & --- & --- \\ \hline
+\multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Tarjetas añadidas durante la construcción}} \\ \hline
+Formulario 033: vista e impresión & 19/10 & 20/10 & 2 \\ \hline
+Despliegue en el servidor y CI/CD & 20/10 & 21/10 & 2 \\ \hline
+Gestión de usuarios, catálogos y estadísticas del director & 21/10 & 22/10 & 2 \\ \hline
+\end{xltabular}
+\endgroup
 
-Las tarjetas de la agenda y del odontograma se dividieron en varias entregas: la agenda, por los horarios y la disponibilidad; el odontograma, por la simbología del Formulario 033. Al integrar la interfaz con el servidor surgieron ajustes no previstos en pacientes, historia clínica y agenda, por lo que varias tarjetas permanecieron abiertas mientras se ajustaban sus vistas e integración, y se añadió el historial inmediato del paciente (RF06) como una tarjeta propia.
-
+% PENDIENTE: completar la tarjeta 15 y la ficha clínica del paciente
+% (historial inmediato, RF06) cuando se terminen.
+Las tarjetas de la agenda y de la atención se extendieron en varias entregas: la agenda, por los horarios, la disponibilidad en bloques de 15 min y la duración variable de la cita; la atención, por las casillas del Formulario 033. Durante la construcción se añadieron tres tarjetas: la vista e impresión del Formulario 033, el despliegue con integración y entrega continuas, y las funciones del director (usuarios, catálogos administrables y estadísticas). Además, el cobro se habilitó también para el odontólogo desde la atención. Al 22 de octubre quedan pendientes los respaldos automáticos y la conexión del agente con WhatsApp.

@@ -1,8 +1,8 @@
-El Objetivo 1 caracterizó el flujo clínico-administrativo, sus puntos críticos, las brechas normativas y las necesidades de comunicación con el paciente. Este objetivo traduce esos resultados en decisiones de diseño. Para ello, define la estructura lógica del agente, sus componentes funcionales, los mecanismos de integración con la plataforma de mensajería y el esquema de despliegue tecnológico. Como el agente opera sobre la agenda centralizada (N4 y RF07), también se diseña el sistema que lo contiene. Diagnosticar el flujo antes de implementar una solución permite anticipar barreras de adopción \cite{staras2021using}.
+Este objetivo traduce el diagnóstico del Objetivo 1 en decisiones de diseño: la estructura lógica del agente, sus componentes funcionales, su integración con la plataforma de mensajería y el despliegue. Como el agente opera sobre la agenda centralizada (RF07), también se diseña el sistema que lo contiene.
 
-\subsubsection{Impulsores arquitectónicos}
+\subsubsection{Factores de diseño}
 
-Los impulsores arquitectónicos son los requerimientos, atributos de calidad y restricciones que condicionan la arquitectura de un sistema \cite{cervantes2016designing}. La Tabla~\ref{tab:ob2_impulsores} traza cada evidencia del análisis hasta el requerimiento que origina y su implicación en el diseño. Los datos provienen de la entrevista y el instrumento operativo (Tablas~\ref{tab:ent1} y \ref{tab:instrumento2}), la encuesta a pacientes (Tablas~\ref{tab:p1_frecuencia} a \ref{tab:p8_frecuencia}) y los puntos críticos y brechas normativas (Tablas~\ref{tab:puntos_criticos} y \ref{tab:brechas_normativas}).
+Los factores de diseño (\textit{architectural drivers}) son los requerimientos, atributos de calidad y restricciones que condicionan la arquitectura de un sistema \cite{cervantes2016designing}. La Tabla~\ref{tab:ob2_impulsores} traza cada evidencia del análisis hasta el requerimiento que origina y su implicación en el diseño. Los datos provienen de la entrevista y el instrumento operativo (Tablas~\ref{tab:ent1} y \ref{tab:instrumento2}), la encuesta a pacientes (Tablas~\ref{tab:p1_frecuencia} a \ref{tab:p8_frecuencia}) y los puntos críticos y brechas normativas (Tablas~\ref{tab:puntos_criticos} y \ref{tab:brechas_normativas}).
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -10,7 +10,7 @@ Los impulsores arquitectónicos son los requerimientos, atributos de calidad y r
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
 \begin{longtable}{|p{0.33\linewidth}|p{0.13\linewidth}|p{0.14\linewidth}|p{0.28\linewidth}|}
-\caption{Trazabilidad de los impulsores arquitectónicos}
+\caption{Trazabilidad de los factores de diseño}
 \label{tab:ob2_impulsores} \\
 \hline
 \textbf{Evidencia} & \textbf{Origen} & \textbf{Requerimiento} & \textbf{Implicación arquitectónica} \\ \hline
@@ -18,8 +18,6 @@ Los impulsores arquitectónicos son los requerimientos, atributos de calidad y r
 \hline
 \textbf{Evidencia} & \textbf{Origen} & \textbf{Requerimiento} & \textbf{Implicación arquitectónica} \\ \hline
 \endhead
-\hline
-\endfoot
 26 a 50 mensajes diarios; 62,9\,\% consultaría precios con un asistente & N1; PC8 & RF10 & Respuestas predefinidas desde el catálogo \\ \hline
 Respuestas de más de 46 min en alta afluencia & N1 & RNF05 & Agente disponible en todo horario \\ \hline
 2 cruces de citas al mes; 50,5\,\% no halló horario con facilidad & N2; PC7 & RF07, RF11 & Agenda única con validación anticruce \\ \hline
@@ -50,13 +48,11 @@ La Tabla~\ref{tab:ob2_atributos} define los atributos de calidad prioritarios, s
 \hline
 \textbf{Atributo} & \textbf{Requerimiento} & \textbf{Escenario} \\ \hline
 \endhead
-\hline
-\endfoot
-Seguridad (confidencialidad, trazabilidad) & RNF01, RNF02, RNF03; RF09 & El 100\,\% de los intentos de editar datos clínicos con el rol de secretaria se rechaza; toda modificación de citas y registros clínicos queda asociada a un usuario, una fecha y una hora; el agente no devuelve información clínica \\ \hline
+Seguridad (confidencialidad, trazabilidad) & RNF01, RNF02, RNF03; RF09 & El 100\,\% de los intentos de editar datos clínicos con el rol de secretaria se rechaza; toda modificación de citas y registros clínicos queda asociada a un usuario, una fecha y una hora; el agente no devuelve información clínica, y el modelo de lenguaje no recibe datos identificativos ni registra citas \\ \hline
 Fiabilidad (disponibilidad, recuperabilidad) & RNF05, RNF04 & Un paciente escribe fuera de la jornada y recibe respuesta del agente en segundos, sin intervención de la recepción; ante la pérdida del servidor, el sistema se restaura desde el respaldo diario con una pérdida máxima de 24 horas de datos \\ \hline
 Mantenibilidad (modularidad) & RF07, RF11; restricción de un único desarrollador & Un cambio en las reglas de agendamiento se realiza en un solo módulo, sin modificar la conversación del agente \\ \hline
 Usabilidad & RNF06 & El profesional registra el tratamiento durante la consulta con búsqueda en catálogos; el registro posconsulta ($T_1$) es menor que los 3,40 min del pretest \\ \hline
 \end{longtable}
 \endgroup
 
-A estos impulsores se suman tres restricciones del proyecto: un único desarrollador, un plazo acotado (julio a diciembre de 2026) y un bajo costo de operación para la clínica. Las restricciones dan peso a los criterios con los que se seleccionan la metodología y las tecnologías.
+A estos factores se suman tres restricciones del proyecto: un único desarrollador, un plazo acotado (julio a diciembre de 2026) y un bajo costo de operación para la clínica. Las restricciones dan peso a los criterios con los que se seleccionan la metodología y las tecnologías.
