@@ -28,9 +28,29 @@
 
 \subsubsection{Implementación del agente conversacional}
 
-El agente se implementó según la arquitectura híbrida del diseño (Figuras~\ref{fig:ob2_estilo_agente} y \ref{fig:ob2_c4_componentes}): un servicio propio en Python con la máquina de estados, el intérprete de mensajes y los recordatorios, y una interfaz interna en la API que aplica las reglas de la agenda y es la única que escribe. Ambos están desplegados en el servidor; la conexión con WhatsApp Cloud API queda pendiente de las credenciales de Meta. \textit{[Actualizar al conectar: número de prueba en desarrollo, número dedicado en producción, proveedor y modelo de lenguaje elegidos.]}
+El agente se implementó según la arquitectura híbrida del diseño (Figuras~\ref{fig:ob2_estilo_agente} y \ref{fig:ob2_c4_componentes}): un servicio en Python (FastAPI) con la máquina de estados, el intérprete de mensajes y los recordatorios, y una interfaz interna en la API que aplica las reglas de la agenda y es la única que escribe. Ambos corren como contenedores en el servidor (Tabla~\ref{tab:ob3_contenedores}); la interfaz interna no es accesible desde internet (RNF03). La Tabla~\ref{tab:ob3_meta} resume la configuración en Meta, y la Tabla~\ref{tab:ob3_agente}, lo construido por componente. \textit{[Proveedor y modelo de lenguaje elegidos.]}
 
-La Tabla~\ref{tab:ob3_agente} resume lo construido por componente, y la Tabla~\ref{tab:ob3_plantillas}, las plantillas que requieren aprobación de Meta.
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|}
+\caption{Configuración del agente en Meta}
+\label{tab:ob3_meta} \\
+\hline
+\textbf{Elemento} & \textbf{Configuración} \\ \hline
+\endfirsthead
+\hline
+\textbf{Elemento} & \textbf{Configuración} \\ \hline
+\endhead
+Portafolio y aplicación & A nombre del centro, sin verificación de la empresa \\ \hline
+Números & De prueba de Meta en desarrollo; chip prepago dedicado en producción. Recepción conserva su número \\ \hline
+Webhook & Subdominio \textit{bot} por HTTPS, verificado por Meta; la firma de cada mensaje se valida con el secreto de la aplicación \\ \hline
+Credenciales & Token permanente de un usuario del sistema, guardado solo en el servidor \\ \hline
+Plantilla de recordatorio & Categoría de utilidad, sin datos clínicos; botones Confirmar, Cancelar y Reprogramar (RF14) \\ \hline
+\end{xltabular}
+\endgroup
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -47,29 +67,11 @@ La Tabla~\ref{tab:ob3_agente} resume lo construido por componente, y la Tabla~\r
 \textbf{Componente} & \textbf{Implementación} & \textbf{Requerimiento} \\ \hline
 \endhead
 Aviso y menú & Aviso con Acepto y No acepto; menú como lista interactiva & RF09, RF10 \\ \hline
-Intérprete de mensajes & Modelo de lenguaje por API con respuesta estructurada y validada; sin respuesta válida, menú & RF10, RF13 \\ \hline
+Intérprete de mensajes & Modelo de lenguaje por una interfaz compatible con OpenAI, que permite cambiar de proveedor; respuesta estructurada y validada; sin respuesta válida, menú & RF10, RF13 \\ \hline
 Agendar, reprogramar y cancelar & Especialidad, profesional, día y hora; escritura solo tras \textit{Confirmar}; límites aplicados por la API & RF11, RF12 \\ \hline
 Urgencias & Primeros horarios de hoy o mañana y aviso de emergencia, sin consejo médico & RF11 \\ \hline
 Recordatorios & Tarea programada que envía la plantilla del día anterior y registra la respuesta & RF14 \\ \hline
 Derivación & Enlace al WhatsApp de recepción; el agente deja de responder a ese número por unas horas & RF13 \\ \hline
-\end{xltabular}
-\endgroup
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{4.0cm}|}
-\caption{Plantillas de mensaje sujetas a aprobación de Meta}
-\label{tab:ob3_plantillas} \\
-\hline
-\textbf{Plantilla} & \textbf{Uso} & \textbf{Opciones} \\ \hline
-\endfirsthead
-\hline
-\textbf{Plantilla} & \textbf{Uso} & \textbf{Opciones} \\ \hline
-\endhead
-Recordatorio de cita & Día previo a la cita (RF14) & Confirmar, Cancelar, Reprogramar \\ \hline
 \end{xltabular}
 \endgroup
 

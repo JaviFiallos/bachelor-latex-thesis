@@ -24,7 +24,6 @@
 
 El sistema se desplegó según el esquema del diseño (Figura~\ref{fig:ob2_despliegue}). La Tabla~\ref{tab:ob3_infraestructura} resume la infraestructura contratada y la forma de publicar cada versión.
 
-% VERIFICAR: memoria del plan contratado y costo mensual (VPS y dominio).
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
@@ -39,12 +38,13 @@ El sistema se desplegó según el esquema del diseño (Figura~\ref{fig:ob2_despl
 \hline
 \textbf{Elemento} & \textbf{Elección} & \textbf{Motivo} \\ \hline
 \endhead
-Servidor & Contabo Cloud VPS, Ubuntu 24.04 LTS, \textit{[n]} GB de memoria y 96 GB de disco & Memoria suficiente para los contenedores del sistema a bajo costo mensual \textit{[costo]} \\ \hline
-Dominio & Dominio propio con DNS en Cloudflare & URL fija para la aplicación y para el webhook de Meta \\ \hline
+Servidor & Contabo Cloud VPS 4: 4 vCPU, 8 GB de memoria, 100 GB de disco, Ubuntu 24.04 LTS & Recursos holgados para los cinco contenedores por 6,60 USD mensuales \\ \hline
+Dominio & \textit{bellidentalv1.site}, con DNS en Cloudflare solo como resolución, sin proxy & Subdominios fijos: \textit{app} para el sistema y \textit{bot} para el webhook de Meta; el tráfico cifrado llega directo al servidor \\ \hline
 HTTPS & Caddy con certificados de Let's Encrypt & Certificado obtenido y renovado sin intervención \\ \hline
+Contenedores & Docker Compose con el proxy, la aplicación web, la API, el agente y PostgreSQL & El mismo archivo levanta el sistema en otro servidor (RNF04) \\ \hline
 Imágenes & GitHub Container Registry & Una imagen por repositorio, etiquetada por versión para volver atrás \\ \hline
-Integración y entrega continuas & GitHub Actions en cada repositorio & Pruebas, imagen y despliegue automático en cada cambio de la rama principal \\ \hline
-Seguridad del servidor & SSH solo con llave, firewall con 80 y 443, fail2ban y actualizaciones automáticas & Base de datos y API sin puertos expuestos (RNF01) \\ \hline
+Integración y entrega continuas & GitHub Actions en los repositorios del servidor, la aplicación web y el agente & Pruebas, imagen y despliegue automático en cada cambio de la rama principal \\ \hline
+Seguridad del servidor & SSH solo con llave, firewall con 80 y 443, fail2ban y actualizaciones automáticas & Solo el proxy publica puertos; la base de datos, la API y el agente no son accesibles directamente (RNF01) \\ \hline
 \end{xltabular}
 \endgroup
 
@@ -69,7 +69,33 @@ La Figura~\ref{fig:ob3_cicd} muestra el flujo de publicación, común al servido
 \label{fig:ob3_cicd}
 \end{figure}
 
-La aplicación está en línea desde el 21 de octubre de 2026. \textit{[Completar: consumo de memoria medido frente al estimado (0,6 a 1 GB por contenedor); respaldo diario hacia Google Drive y prueba de restauración, cuando se implementen.]}
+El sistema y el agente están en línea desde el 21 de octubre de 2026. La Tabla~\ref{tab:ob3_contenedores} muestra la memoria medida de cada contenedor frente a su límite: el total ronda los 0,6 GB, dentro de lo estimado en el diseño (Tabla~\ref{tab:ob2_riesgos}) y muy por debajo de la memoria del servidor.
+
+% Medición: docker stats --no-stream, 23/10/2026, sin carga de usuarios.
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|c|c|}
+\caption{Contenedores en producción y memoria medida}
+\label{tab:ob3_contenedores} \\
+\hline
+\textbf{Contenedor} & \textbf{Función} & \textbf{Uso (MB)} & \textbf{Límite (MB)} \\ \hline
+\endfirsthead
+\hline
+\textbf{Contenedor} & \textbf{Función} & \textbf{Uso (MB)} & \textbf{Límite (MB)} \\ \hline
+\endhead
+Proxy (Caddy) & Única entrada pública; HTTPS & 19 & 128 \\ \hline
+Aplicación web & Interfaz de la secretaria, el odontólogo y el director & 6 & 64 \\ \hline
+API & Reglas del negocio y única escritura en la base de datos & 466 & 1\,024 \\ \hline
+Agente & Webhook de WhatsApp, conversación y recordatorios & 44 & 256 \\ \hline
+Base de datos & PostgreSQL 16, sin puerto expuesto & 59 & 1\,024 \\ \hline
+\textbf{Total} & & \textbf{594} & \textbf{2\,496} \\ \hline
+\end{xltabular}
+\endgroup
+
+\textit{[Completar cuando se implemente: respaldo diario hacia Google Drive y prueba de restauración.]}
 
 \paragraph{Transición}
 
@@ -89,8 +115,8 @@ La Tabla~\ref{tab:ob3_hitos} resume la transición desde el despliegue hasta la 
 \hline
 \textbf{Fecha} & \textbf{Hito} \\ \hline
 \endhead
-21/10/2026 & Despliegue en producción de la aplicación \\ \hline
-\textit{[dd/mm/2026]} & Conexión del agente con WhatsApp y aprobación de la plantilla \\ \hline
+21/10/2026 & Despliegue en producción del sistema y del agente \\ \hline
+\textit{[dd/mm/2026]} & Aprobación de la plantilla de recordatorio \\ \hline
 \textit{[dd/mm/2026]} & Carga inicial: profesionales, horarios, catálogos y pacientes \\ \hline
 \textit{[dd/mm/2026]} & Capacitación del personal \\ \hline
 \textit{[dd/mm/2026]} & Inicio del uso real \\ \hline
