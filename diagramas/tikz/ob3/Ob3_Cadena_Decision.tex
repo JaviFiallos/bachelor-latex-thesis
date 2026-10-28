@@ -1,0 +1,40 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{estilo}
+\usetikzlibrary{shapes.geometric}
+\begin{document}
+\begin{tikzpicture}[
+  font=\footnotesize, node distance=0.42cm,
+  paso/.style={draw, rounded corners=2pt, line width=0.7pt, align=center, text width=4.6cm, minimum height=0.95cm, inner sep=3pt},
+  dec/.style={diamond, draw=black!60, line width=0.7pt, aspect=2.6, align=center, inner sep=1pt, font=\scriptsize},
+  lado/.style={draw=black!45, rounded corners=2pt, align=center, text width=3.3cm, font=\scriptsize, inner sep=3pt, fill=white},
+  rol/.style={font=\scriptsize\bfseries, align=right, anchor=east},
+  f/.style={-{Stealth[length=2mm]}, line width=0.65pt, draw=black!70},
+  e/.style={font=\scriptsize\itshape, fill=white, inner sep=1pt}
+]
+\node[paso, fill=dPersonaF, draw=dPersonaB] (msg) {\textbf{Mensaje del paciente}\\ texto, botón o lista};
+\node[paso, fill=dAgenteF, draw=dAgenteB, below=of msg] (wh) {\textbf{Webhook}\\ firma verificada y aviso aceptado};
+\node[dec, below=of wh] (txt) {¿Texto\\ libre?};
+\node[paso, fill=dExternoF, draw=dExternoB, dashed, below=of txt] (llm) {\textbf{Modelo de lenguaje}\\ intención y datos en JSON validado};
+\node[paso, fill=dAgenteF, draw=dAgenteB, below=of llm] (sm) {\textbf{Máquina de estados}\\ compara con los catálogos y decide el paso};
+\node[paso, fill=dPersonaF, draw=dPersonaB, below=of sm] (conf) {\textbf{Paciente}\\ pulsa \textit{Confirmar}};
+\node[paso, fill=dSistemaF, draw=dSistemaB, below=of conf] (api) {\textbf{API interna}\\ pertenencia y límites del agente};
+\node[paso, fill=dDatosF, draw=dDatosB, below=of api] (bd) {\textbf{Base de datos}\\ restricción de exclusión: sin cruces};
+\node[paso, fill=dAgenteF, draw=dAgenteB, below=of bd] (resp) {\textbf{Respuesta}\\ texto del código con datos de la API};
+\foreach \a/\b in {msg/wh, wh/txt, llm/sm, sm/conf, conf/api, api/bd, bd/resp} \draw[f] (\a) -- (\b);
+\draw[f] (txt) -- node[e, right=2pt]{sí} (llm);
+% Ramas laterales
+\node[lado, right=1.3cm of wh] (aviso) {Sin aceptación: aviso de privacidad (RF09)};
+\node[lado, right=1.3cm of llm] (menu) {Falla, demora o JSON inválido: menú (RNF05)};
+\node[lado, right=1.3cm of api] (conf409) {Horario ocupado o límite: otros horarios o recepción (RF07, RF13)};
+\draw[f, dashed] (wh) -- (aviso);
+\draw[f, dashed] (llm) -- (menu);
+\draw[f, dashed] (api) -- (conf409);
+\draw[f] (txt.west) -- node[e, above]{no} ++(-2.05,0) |- (sm.west);
+% Rol de cada componente
+\node[rol] at ([xshift=-1.5cm]llm.west) {Propone};
+\node[rol] at ([xshift=-1.5cm]sm.west) {Decide};
+\node[rol] at ([xshift=-1.5cm]conf.west) {Confirma};
+\node[rol] at ([xshift=-1.5cm]api.west) {Valida};
+\node[rol] at ([xshift=-1.5cm]bd.west) {Garantiza};
+\end{tikzpicture}
+\end{document}

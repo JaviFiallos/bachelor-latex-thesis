@@ -141,4 +141,8 @@ Interfaz del agente & Operaciones del servicio del agente: aviso, identificació
 \end{xltabular}
 \endgroup
 
-Cada módulo expone una interfaz pública y no accede al interior de los demás. Los cambios de la agenda, como crear o reprogramar una cita, se publican como eventos que programan los recordatorios. Así, un cambio en las reglas de agendamiento no altera la conversación del agente (Tabla~\ref{tab:ob2_atributos}). La auditoría (RNF02) es transversal y no forma un módulo. La separación no es completa: los módulos comparten la base de datos, de modo que un cambio de tabla puede afectar a más de uno.
+Cada módulo expone una interfaz pública y no accede al interior de los demás. Los cambios de la agenda, como crear o reprogramar una cita, se publican como eventos que programan los recordatorios. Así, un cambio en las reglas de agendamiento no altera la conversación del agente. La auditoría (RNF02) es transversal y no forma un módulo. La separación no es completa: los módulos comparten la base de datos, de modo que un cambio de tabla puede afectar a más de uno.
+
+\paragraph{Estructura de la aplicación web}
+
+La aplicación web es una aplicación de una sola página organizada por funcionalidades que replican los módulos de la API: agenda, pacientes, clínico, cobros y dirección. Una capa base gestiona la sesión, adjunta el token a cada petición y restringe las rutas por perfil; los componentes compartidos, como el selector de horarios o el panel lateral, se reutilizan entre funcionalidades.

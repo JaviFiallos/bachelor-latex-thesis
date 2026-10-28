@@ -1,0 +1,26 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{estilo}
+\begin{document}
+\begin{tikzpicture}[
+  font=\footnotesize,
+  paso/.style={draw, rounded corners=2pt, line width=0.6pt, align=center, text width=2.15cm, minimum height=1.05cm, inner sep=2pt},
+  repo/.style={paso, fill=dPersonaF, draw=dPersonaB, text width=1.9cm},
+  f/.style={-{Stealth[length=2mm]}, line width=0.65pt, draw=dExternoB},
+  et/.style={font=\scriptsize\itshape, text=black!65}
+]
+\def\dx{2.55}
+% Carriles: API, interfaz web, agente
+\foreach \n/\y/\r/\t in {a/0/API/{Pruebas unitarias\\ y de integración}, b/-1.55/Interfaz web/{Pruebas y\\ compilación}, c/-3.1/Agente/{Pruebas\\ del agente}} {
+  \node[repo] (r\n) at (0,\y) {\textbf{\r}\\ cambio en la rama principal};
+  \node[paso, fill=dSistemaF, draw=dSistemaB] (t\n) at (\dx,\y) {\t};
+  \node[paso, fill=dSistemaF, draw=dSistemaB] (i\n) at (2*\dx,\y) {Imagen en el registro\\ (\textit{latest} y \textit{sha})};
+  \node[paso, fill=dAgenteF, draw=dAgenteB] (d\n) at (3*\dx,\y) {Despliegue\\ por SSH};
+  \draw[f] (r\n) -- (t\n); \draw[f] (t\n) -- (i\n); \draw[f] (i\n) -- (d\n);
+}
+\node[et, above=1pt of da, align=center] {respaldo previo de la base\\ y espera hasta ``sano''};
+\node[draw=dDatosB, fill=dDatosF, rounded corners=3pt, line width=0.7pt, align=center, text width=2.6cm, minimum height=4.1cm] (vps) at (4*\dx+0.45,-1.55)
+  {\textbf{Servidor virtual}\\[3pt] Docker Compose\\ actualiza el contenedor\\[3pt] comprobación HTTPS\\ de la aplicación};
+\foreach \n in {a,b,c} \draw[f] (d\n.east) -- (d\n.east -| vps.west);
+\node[et, below=4pt of ic, align=center] {volver atrás: desplegar la etiqueta \textit{sha} anterior};
+\end{tikzpicture}
+\end{document}

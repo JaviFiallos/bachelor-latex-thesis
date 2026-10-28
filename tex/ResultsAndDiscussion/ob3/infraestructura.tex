@@ -1,0 +1,33 @@
+% 3.4.1 Infraestructura del servidor (T6). Sin IPs, nombres de instancia ni secretos.
+% Fuente: bellidental-backend/docs/DEPLOY-SETUP.md y deploy/vps-setup.sh.
+
+La implementación pone en operación el sistema y el agente según el despliegue del diseño (Figura~\ref{fig:ob2_despliegue}).
+
+\subsubsection{Infraestructura del servidor}
+
+La Tabla~\ref{tab:ob3_infraestructura} resume el servidor contratado y su configuración de seguridad.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}X|}
+\caption{Infraestructura y configuración del servidor}
+\label{tab:ob3_infraestructura} \\
+\hline
+\textbf{Elemento} & \textbf{Configuración} \\ \hline
+\endfirsthead
+\hline
+\textbf{Elemento} & \textbf{Configuración} \\ \hline
+\endhead
+Servidor & Contabo Cloud VPS 4: 4 vCPU, 8 GB de memoria, 100 GB de disco, Ubuntu 24.04 LTS; 6,60 USD mensuales \\ \hline
+Dominio y DNS & \textit{bellidentalv1.site} con DNS en Cloudflare, sin proxy; subdominio \textit{app} para el sistema y \textit{bot} para el webhook \\ \hline
+HTTPS & Caddy obtiene y renueva los certificados de Let's Encrypt \\ \hline
+Acceso & Usuario de trabajo sin acceso directo de administrador; SSH solo con llave \\ \hline
+Firewall & Solo SSH, 80 y 443; la base de datos, la API y el agente no publican puertos (RNF01) \\ \hline
+Protección & fail2ban bloquea los intentos repetidos de acceso por SSH \\ \hline
+Actualizaciones & Automáticas, con reinicio de madrugada si lo requieren; los contenedores se reinician solos \\ \hline
+Secretos & Archivo de entorno con permisos restringidos, fuera de los repositorios \\ \hline
+\end{xltabular}
+\endgroup

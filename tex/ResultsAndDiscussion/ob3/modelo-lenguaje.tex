@@ -1,0 +1,27 @@
+% 3.4.4 Conexión con el modelo de lenguaje (T6). Modelo elegido en tab:ob2_matriz_llm.
+
+\subsubsection{Conexión con el modelo de lenguaje}
+
+El agente consume el modelo seleccionado en el diseño (Tabla~\ref{tab:ob2_matriz_llm}) con la configuración de la Tabla~\ref{tab:ob3_llm}.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}X|}
+\caption{Configuración del modelo de lenguaje}
+\label{tab:ob3_llm} \\
+\hline
+\textbf{Elemento} & \textbf{Configuración} \\ \hline
+\endfirsthead
+\hline
+\textbf{Elemento} & \textbf{Configuración} \\ \hline
+\endhead
+Modelo & Claude Haiku 5.5, por la API de Anthropic \\ \hline
+Respuesta & Salida estructurada con el esquema de intención y datos; nivel de esfuerzo bajo; máximo de 256 tokens \\ \hline
+Credencial & Clave de API en el archivo de entorno del servidor; sin clave, el agente atiende solo con el menú \\ \hline
+Datos & El proveedor no entrena con los datos enviados por API; figura como encargado en el aviso de privacidad (LOPDP) \\ \hline
+Costo & 0,10 y 0,50 USD por millón de tokens de entrada y de salida \\ \hline
+\end{xltabular}
+\endgroup

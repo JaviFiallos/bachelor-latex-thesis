@@ -1,30 +1,16 @@
-% =========================================================
-% VERIFICACIÓN DE REQUERIMIENTOS Y BRECHAS NORMATIVAS (tarea O3-07)
-% QUÉ VA: cierre de trazabilidad Obj. 1 → Obj. 3. No son pruebas de software:
-%         es la aceptación funcional con el personal (recorrido de cada
-%         requerimiento en el sistema desplegado).
-% TABLA 1: RF/RNF | Evidencia (figura o tabla de este objetivo) | Estado
-%          (Cumple / Parcial / No implementado). Una línea por fila.
-% TABLA 2: Brecha normativa BN1-BN7 (tab:brechas_normativas) | Medida
-%          implementada. Una línea por fila.
-% CRITERIO: lo que no se implementó (p. ej., un "Debería") se declara aquí y
-%           se retoma en la discusión; no se oculta.
-% EXTENSIÓN: 2 tablas + 1 párrafo.
-% =========================================================
+% 3.4.7 Verificación de requerimientos y tablero final (T6).
+% Estado final: recorrido de cada requerimiento con el personal en el sistema desplegado.
 
-\subsubsection{Verificación de requerimientos}
+\subsubsection{Verificación de requerimientos y tablero final}
 
-% Estado provisional al 22/10/2026 (según los repositorios). El estado final
-% sale del recorrido de cada requerimiento con el personal en el sistema
-% desplegado, antes del postest.
-Cada requerimiento se recorrerá con el personal en el sistema desplegado. La Tabla~\ref{tab:ob3_verificacion} resume su estado y la evidencia en este objetivo.
+Cada requerimiento se recorrió con el personal en el sistema desplegado (Tabla~\ref{tab:ob3_verificacion}).
 
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.14\linewidth}|p{0.50\linewidth}|p{0.26\linewidth}|}
+\begin{longtable}{|p{0.12\linewidth}|p{0.52\linewidth}|p{0.26\linewidth}|}
 \caption{Verificación de los requerimientos en el sistema desplegado}
 \label{tab:ob3_verificacion} \\
 \hline
@@ -33,22 +19,56 @@ Cada requerimiento se recorrerá con el personal en el sistema desplegado. La Ta
 \hline
 \textbf{ID} & \textbf{Evidencia} & \textbf{Estado} \\ \hline
 \endhead
-RF01 & Atención con los campos del Formulario 033 (Figuras~\ref{fig:ob3_atencion} y \ref{fig:ob3_form033}) & \textit{Implementado} \\ \hline
-RF02 & Odontograma por pieza y cara (Figura~\ref{fig:ob3_atencion}) & \textit{Implementado} \\ \hline
-RF03 & Búsqueda CIE-10 por similitud (Tabla~\ref{tab:ob3_reglas_bd}) & \textit{Implementado} \\ \hline
-RF04 & Catálogos de tratamientos y medicamentos con posología & \textit{Implementado} \\ \hline
-RF05 & Receta en PDF ligada al diagnóstico (Figura~\ref{fig:ob3_receta}) & \textit{Implementado} \\ \hline
-RF06 & Historial del paciente & \textit{Parcial: falta la ficha clínica} \\ \hline
-RF07 & Agenda sin cruces (Figuras~\ref{fig:ob3_agenda} y \ref{fig:ob3_exclude}) & \textit{Implementado} \\ \hline
-RF08 & Abono, saldo y comprobante (Figura~\ref{fig:ob3_cobro}) & \textit{Implementado} \\ \hline
-RF09 a RF14 & Agente (Tabla~\ref{tab:ob3_agente}) & \textit{Desplegado} \\ \hline
-RNF01 & Perfiles y permisos por rol & \textit{Implementado} \\ \hline
-RNF02 & Historial de cambios & \textit{Implementado} \\ \hline
-RNF03 & Interfaz interna sin datos clínicos & \textit{Implementado} \\ \hline
-RNF04 & Anulación sin borrado & \textit{Parcial: faltan respaldos y exportación} \\ \hline
-RNF05 & Servidor virtual en línea con el sistema y el agente (Tabla~\ref{tab:ob3_contenedores}) & \textit{Implementado} \\ \hline
-RNF06 & Registro durante la consulta & \textit{Por verificar en el postest} \\ \hline
+RF01 & Atención con los campos del Formulario 033 (Figuras~\ref{fig:ob3_atencion} y \ref{fig:ob3_form033}) & Implementado \\ \hline
+RF02 & Odontograma por pieza y cara (Figura~\ref{fig:ob3_atencion}) & Implementado \\ \hline
+RF03 & Búsqueda CIE-10 por código o similitud (Tabla~\ref{tab:ob3_reglas_bd}) & Implementado \\ \hline
+RF04 & Catálogos administrables de tratamientos y medicamentos & Implementado \\ \hline
+RF05 & Receta en PDF ligada al diagnóstico (Figura~\ref{fig:ob3_receta}) & Implementado \\ \hline
+RF06 & Historial del paciente y Formulario 033 desde cualquier atención & \textit{[Parcial: falta la ficha clínica]} \\ \hline
+RF07 & Agenda sin cruces (Figuras~\ref{fig:ob3_agenda} y \ref{fig:ob3_exclude}) & Implementado \\ \hline
+RF08 & Abono, saldo y comprobante (Figura~\ref{fig:ob3_cobro}) & Implementado \\ \hline
+RF09 a RF13 & Pruebas del agente (Tabla~\ref{tab:ob3_pruebas_agente}) & Implementado \\ \hline
+RF14 & Recordatorio del día anterior & No implementado (Debería) \\ \hline
+RNF01 & Acceso por perfil (Tabla~\ref{tab:ob3_roles}) & Implementado \\ \hline
+RNF02 & Tablas de historial y consulta del director (Figura~\ref{fig:ob3_director}) & Implementado \\ \hline
+RNF03 & Interfaz interna sin datos clínicos; números enmascarados ante el modelo & Implementado \\ \hline
+RNF04 & Anulación sin borrado, esquema reproducible, respaldos y exportación & \textit{[Implementado]} \\ \hline
+RNF05 & Servidor en línea; menú ante falla del modelo (Tabla~\ref{tab:ob3_contenedores}) & Implementado \\ \hline
+RNF06 & Registro durante la consulta & Se valora en el postest (apartado~\ref{sec:ob3_evaluacion}) \\ \hline
 \end{longtable}
 \endgroup
 
-\textit{[Tabla de brechas normativas BN1 a BN7 con la medida implementada; puede ir como segunda tabla o como columna adicional si cabe en una línea.]}
+La Tabla~\ref{tab:ob3_brechas} relaciona cada brecha normativa del Objetivo 1 con la medida implementada.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{1.2cm}|>{\raggedright\arraybackslash}X|}
+\caption{Brechas normativas y medida implementada}
+\label{tab:ob3_brechas} \\
+\hline
+\textbf{Brecha} & \textbf{Medida implementada} \\ \hline
+\endfirsthead
+\hline
+\textbf{Brecha} & \textbf{Medida implementada} \\ \hline
+\endhead
+BN1 & El Formulario 033 se registra durante la atención y se imprime desde el sistema \\ \hline
+BN2 & El Formulario 033 se compone de lo registrado; no hay transcripción entre soportes \\ \hline
+BN3 & Solo el odontólogo registra y corrige datos clínicos; la secretaria no los ve \\ \hline
+BN4 & Usuario único por persona y tablas de historial con usuario y fecha \\ \hline
+BN5 & Los antecedentes los registra el odontólogo en la atención \\ \hline
+BN6 & El agente muestra el aviso de privacidad y registra la aceptación antes de tratar datos \\ \hline
+BN7 & El agente solo accede a identificación y citas por la interfaz interna \\ \hline
+\end{xltabular}
+\endgroup
+
+La Figura~\ref{fig:ob3_tablero} muestra el tablero Kanban al cierre de la implementación.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Objetivo3/Ob3_Tablero_Kanban.png}{\includegraphics[width=\linewidth]{img/Objetivo3/Ob3_Tablero_Kanban.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: img/Objetivo3/Ob3\_Tablero\_Kanban.png}}}
+\caption{Tablero Kanban al cierre de la implementación}
+\label{fig:ob3_tablero}
+\end{figure}

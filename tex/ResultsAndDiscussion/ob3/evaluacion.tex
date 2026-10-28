@@ -1,5 +1,5 @@
 % =========================================================
-% EVALUACIÓN DE LA REDUCCIÓN DEL TIEMPO (tareas O3-08 y O3-09)
+% 3.5 EVALUACIÓN DEL TIEMPO DE GESTIÓN ADMINISTRATIVA (T7). Único apartado con fechas.
 % Es el núcleo del objetivo. Debe ser comparable con el pretest en TODO:
 % mismo instrumento (Instrumento 4, partes A y B), mismo observador, mismo tipo
 % de jornada (alta afluencia), mismos días de la semana, mismo número de
@@ -13,9 +13,7 @@
 %   - Registros del sistema para los indicadores complementarios.
 % =========================================================
 
-\subsubsection{Evaluación del tiempo de gestión administrativa}
-
-\paragraph{Comparación del proceso actual y el implementado}
+\subsubsection{Comparación del proceso actual y el implementado}
 
 La Tabla~\ref{tab:ob3_asis_tobe} contrasta cada tramo del $TGA$ y cada necesidad de comunicación con su tratamiento en el sistema implementado.
 
@@ -42,12 +40,12 @@ $T_5$ Digitalización (3,38 min) & Copia al Excel & Eliminado & PC1, PC2 \\ \hli
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Comunicación con el paciente}} \\ \hline
 Información (N1) & Respuesta manual, con demora & Respuesta automática al texto libre o al menú (RF10) & PC8 \\ \hline
 Solicitud de cita (N2, N4) & Varios canales, sin agenda única & Agente o recepción sobre la misma agenda (RF07, RF11, RF12) & PC7, PC8 \\ \hline
-Confirmación (N3) & Manual, 31 a 60 min diarios & Recordatorio el día previo (RF14) & PC8 \\ \hline
+Confirmación (N3) & Manual, 31 a 60 min diarios & Sin cambio: RF14 no implementado (Debería) & PC8 \\ \hline
 Derivación (N5) & Atendida por la secretaria entre otras tareas & Derivación al personal (RF13) & PC8 \\ \hline
 \end{longtable}
 \endgroup
 
-\paragraph{Procedimiento}
+\subsubsection{Procedimiento}
 
 La medición postest aplicó la ficha de observación del pretest (Anexo 2, Instrumento 4) en tres jornadas de alta afluencia, \textit{[fechas]}, tras \textit{[n]} semanas de uso del sistema. Se registraron \textit{[n]} ciclos completos de atención. La Tabla~\ref{tab:ob3_definiciones} fija qué se cronometra en cada tramo con el sistema, para que el postest mida lo mismo que el pretest.
 
@@ -85,7 +83,7 @@ $T_5$ Digitalización & Lote diario al Excel & Registro de lote si existe alguna
 % consulta (p. ej., "Más del 033"), ese tiempo es gestión diferida y debe
 % cronometrarse en la parte B del postest. Declararlo protege la validez.
 
-\paragraph{Resultados por tramo}
+\subsubsection{Resultados por tramo}
 
 La Tabla~\ref{tab:ob3_tga} compara cada tramo entre el pretest y el postest, y la Figura~\ref{fig:ob3_tga_barras} muestra la composición del $TGA$.
 
@@ -125,7 +123,7 @@ $T_5$ Digitalización & 3,38 & & & \\ \hline
 
 \textit{[2--3 líneas: reducción total del $TGA$ en minutos y porcentaje; tramo con mayor reducción; minutos diarios liberados con 26 atenciones por jornada (pretest: 354 min).]}
 
-\paragraph{Contraste estadístico}
+\subsubsection{Contraste estadístico}
 
 % Hipótesis: H0: TGA_post >= TGA_pre ; H1: TGA_post < TGA_pre (unilateral, α = 0,05).
 % Las observaciones pretest y postest son pacientes distintos → muestras
@@ -137,7 +135,7 @@ $T_5$ Digitalización & 3,38 & & & \\ \hline
 % Herramienta: R, Python (scipy) o JASP; dejar el script o la hoja en el anexo.
 \textit{[Tabla corta: prueba aplicada, estadístico, valor p y tamaño del efecto para $T_{E1}$; 2 líneas de interpretación.]}
 
-\paragraph{Indicadores complementarios}
+\subsubsection{Indicadores complementarios}
 
 % Fuente: registros del sistema durante el periodo de evaluación (consultas SQL
 % sobre citas y conversaciones del agente) y nueva aplicación del Instrumento 2
@@ -167,8 +165,7 @@ Tiempo diario de confirmación de citas & 31 a 60 min & \\ \hline
 Mensajes diarios atendidos por la secretaria & 26 a 50 & \\ \hline
 Conversaciones resueltas por el agente sin derivación & --- & \textit{[\%]} \\ \hline
 Citas agendadas o reprogramadas por el agente & --- & \textit{[n]} \\ \hline
-Recordatorios respondidos (confirmar, cancelar, reprogramar) & --- & \textit{[\%]} \\ \hline
 \end{xltabular}
 \endgroup
 
-\textit{[2--3 líneas de interpretación. La usabilidad (RNF06) se valora con $T_1$: el escenario de la Tabla~\ref{tab:ob2_atributos} exige que sea menor que 3,40 min.]}
+\textit{[2--3 líneas de interpretación. La usabilidad (RNF06) se valora con $T_1$: se cumple si es menor que los 3,40 min del pretest.]}

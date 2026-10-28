@@ -1,30 +1,16 @@
-% =========================================================
-% IMPLEMENTACIÓN DE LA BASE DE DATOS (tarea O3-03)
-% QUÉ VA: cómo el modelo de datos del Obj. 2 (modelo-datos.tex, Anexo 4) quedó
-%         en PostgreSQL. Solo lo que sostiene requerimientos clave:
-%   1. Migraciones versionadas con Flyway: una por módulo (tabla corta).
-%   2. Restricción anticruce de la agenda (RF07): EXCLUDE con btree_gist.
-%      Es la evidencia más fuerte de "agenda sin cruces"; mostrar el fragmento
-%      SQL (5-6 líneas) como figura o verbatim.
-%   3. Separación de datos clínicos e identificación (RNF01, BN3) y
-%      anulación en lugar de borrado (RNF04).
-%   4. Trazabilidad (RNF02): tablas de historial de Envers (usuario, fecha).
-% FUENTE: bellidental-backend/src/main/resources/db/migration y docs/schema.dbml.
-% CUIDADO: aquí se consolida el modelo (el Obj. 2 solo lista las entidades).
-%          Si difiere del diseño, explicarlo en una línea; ER completo en el Anexo 4.
-% EXTENSIÓN: 1 tabla + 1 fragmento + 1 párrafo.
-% =========================================================
+% 3.3.3 Base de datos (T3): grupos de tablas con ER parcial, roles × permisos y reglas en la BD.
+% Fuente: bellidental-backend/docs/schema.dbml y db/migration. ER parciales: diagramas/tikz/ob3/Ob3_ER_*.tex.
 
 \subsubsection{Base de datos}
 
-El modelo de datos (Tabla~\ref{tab:ob2_entidades}) se implementó en PostgreSQL 16 mediante 18 migraciones versionadas con Flyway, que reconstruyen el esquema en cualquier servidor en el mismo orden. El esquema reúne 32 tablas en cinco grupos (Tabla~\ref{tab:ob3_grupos_bd}); su núcleo son el paciente, la cita y la atención, de la que dependen los registros clínicos. El diagrama completo se presenta en el Anexo~4.
+El modelo del diseño (Tabla~\ref{tab:ob2_entidades}) se implementó en PostgreSQL 16 con 32 tablas en cuatro grupos (Tabla~\ref{tab:ob3_grupos_bd}). Cada grupo se creó con la migración de su tarjeta; el diagrama completo está en el Anexo~4.
 
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.8cm}|}
 \caption{Grupos de tablas de la base de datos}
 \label{tab:ob3_grupos_bd} \\
 \hline
@@ -33,13 +19,83 @@ El modelo de datos (Tabla~\ref{tab:ob2_entidades}) se implementó en PostgreSQL 
 \hline
 \textbf{Grupo} & \textbf{Tablas núcleo} & \textbf{Requerimiento} \\ \hline
 \endhead
-Identidad y personal & Usuarios, roles y permisos; profesionales, especialidades y horarios & RNF01, RF07 \\ \hline
-Pacientes y agenda & Pacientes y citas & RF06, RF07, RF11, RF12 \\ \hline
-Clínico & Historia clínica y antecedentes, atención, diagnósticos, hallazgos del odontograma, tratamientos realizados y recetas, con sus catálogos (CIE-10, tratamientos, medicamentos y condiciones dentales) & RF01 a RF05 \\ \hline
-Cobros & Pagos & RF08 \\ \hline
-Agente & Aceptación del aviso y recordatorios & RF09, RF14 \\ \hline
+Identidad y acceso & Usuarios, roles y permisos & RNF01; BN3, BN4 \\ \hline
+Personal, pacientes y agenda & Profesionales, especialidades, horarios, pacientes y citas & RF06, RF07, RF11, RF12 \\ \hline
+Registro clínico & Historia y antecedentes, atención, diagnósticos, odontograma, tratamientos y recetas, con sus catálogos & RF01 a RF05; BN1, BN5 \\ \hline
+Cobros, auditoría y agente & Pagos, historial de cambios y aceptación del aviso & RF08, RF09, RNF02 \\ \hline
 \end{xltabular}
 \endgroup
+
+\paragraph{Identidad y acceso}
+
+Los permisos se asignan a roles y los roles a usuarios (Figura~\ref{fig:ob3_er_identidad}); la API autoriza cada operación por permiso.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{img/Objetivo3/Ob3_ER_Identidad.pdf}
+\caption{Tablas de identidad y acceso}
+\label{fig:ob3_er_identidad}
+\end{figure}
+
+La Tabla~\ref{tab:ob3_roles} resume el acceso por perfil: la secretaria no accede a datos clínicos (BN3), y el agente opera como usuario de sistema, sin inicio de sesión.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.0cm}|>{\raggedright\arraybackslash}p{2.1cm}|>{\raggedright\arraybackslash}p{2.1cm}|>{\raggedright\arraybackslash}p{2.6cm}|}
+\caption{Acceso por perfil a los módulos}
+\label{tab:ob3_roles} \\
+\hline
+\textbf{Módulo} & \textbf{Director} & \textbf{Odontólogo} & \textbf{Secretaria} & \textbf{Agente} \\ \hline
+\endfirsthead
+\hline
+\textbf{Módulo} & \textbf{Director} & \textbf{Odontólogo} & \textbf{Secretaria} & \textbf{Agente} \\ \hline
+\endhead
+Pacientes (identificación) & Total & Lectura & Total & Mínima \\ \hline
+Agenda & Total & Total & Total & Agendar, reprogramar, cancelar \\ \hline
+Horarios de profesionales & Total & Lectura & Registra & Disponibilidad \\ \hline
+Historia, atención, odontograma y recetas & Total\textsuperscript{1} & Total & --- & --- \\ \hline
+Tratamientos & Total\textsuperscript{1} & Registra & Valores para el cobro & Precios públicos \\ \hline
+Cobros & Registra y anula & Registra y anula & Registra y anula & --- \\ \hline
+Usuarios, catálogos, estadísticas e historial de cambios & Total & --- & --- & --- \\ \hline
+\multicolumn{5}{|l|}{\textsuperscript{1} El director también tiene el rol de odontólogo.} \\ \hline
+\end{xltabular}
+\endgroup
+
+\paragraph{Personal, pacientes y agenda}
+
+La cita une paciente, profesional y especialidad; la clave compuesta exige que el profesional tenga esa especialidad (Figura~\ref{fig:ob3_er_agenda}). Los horarios admiten turnos semanales y excepciones por fecha. El origen de la cita (recepción, profesional, agente o sin cita) distingue en la agenda las del agente (RF07, RF11), y la reprogramación enlaza la cita nueva con la original (RF12).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{img/Objetivo3/Ob3_ER_Agenda.pdf}
+\caption{Tablas de personal, pacientes y agenda}
+\label{fig:ob3_er_agenda}
+\end{figure}
+
+\paragraph{Registro clínico}
+
+La atención es la entidad central: de ella dependen los diagnósticos CIE-10, los hallazgos del odontograma, los tratamientos y las recetas (Figura~\ref{fig:ob3_er_clinico}; RF01 a RF05). La historia clínica es única por paciente y guarda los antecedentes registrados en el consultorio (BN5). Los catálogos sustituyen el texto manuscrito (PC4). Ninguna fila clínica se borra: se anula con fecha y motivo.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Objetivo3/Ob3_ER_Clinico.pdf}
+\caption{Tablas del registro clínico}
+\label{fig:ob3_er_clinico}
+\end{figure}
+
+\paragraph{Cobros, auditoría y agente}
+
+El saldo no se guarda: se calcula con los tratamientos y los pagos vigentes (RF08). Once tablas de historial registran cada cambio de los registros clínicos, las citas, los pacientes y los pagos, con su usuario y fecha (RNF02, BN4). Del agente solo se guarda la aceptación del aviso de privacidad por teléfono (Figura~\ref{fig:ob3_er_cobros}; RF09, BN6).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{img/Objetivo3/Ob3_ER_Cobros_Agente.pdf}
+\caption{Tablas de cobros, auditoría y agente}
+\label{fig:ob3_er_cobros}
+\end{figure}
 
 \paragraph{Reglas en la base de datos}
 
@@ -60,9 +116,9 @@ Las reglas críticas se aplican en la propia base de datos, de modo que valen pa
 \textbf{Mecanismo} & \textbf{Efecto} & \textbf{Requerimiento} \\ \hline
 \endhead
 Restricción de exclusión & Rechaza dos citas activas del mismo profesional con horarios superpuestos, sean de la recepción o del agente & RF07 \\ \hline
-Índices de trigramas & Búsqueda por similitud en el catálogo CIE-10 y en los nombres de pacientes & RF03, RF06 \\ \hline
+Índices de trigramas & Búsqueda por similitud en el catálogo CIE-10, en los medicamentos y en los nombres de pacientes & RF03, RF06 \\ \hline
 Disparador contra el borrado & Los pagos se anulan con motivo; nunca se eliminan & RF08, RNF04 \\ \hline
-Tablas de historial & Registran el usuario, la fecha y la hora de cada cambio en pacientes, citas y registros clínicos & RNF02 \\ \hline
+Tablas de historial & Registran el usuario, la fecha y la hora de cada cambio & RNF02 \\ \hline
 \end{xltabular}
 \endgroup
 
