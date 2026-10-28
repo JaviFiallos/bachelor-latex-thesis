@@ -1,6 +1,6 @@
 \subsubsection{Selección de tecnologías del agente conversacional}
 
-Las tecnologías del agente se seleccionan con el mismo método de dos filtros. Se exceptúan el enfoque de comprensión de los mensajes, que se decide por requisitos, y la exposición del webhook, que se compara de forma cualitativa.
+Las tecnologías del agente se seleccionan con el mismo método de dos filtros. Se exceptúa el enfoque de comprensión de los mensajes, que se decide por requisitos.
 
 \paragraph{Acceso a WhatsApp}
 
@@ -26,7 +26,6 @@ Uso autorizado por Meta según sus términos de servicio (canal oficial) & --- &
 Costo por mensaje sin recargo del intermediario (restricción de costo) & 30\,\% & 3 & 1 & --- \\ \hline
 Mensajes interactivos (botones y listas) y plantillas para recordatorios (RF10, RF14) & 25\,\% & 3 & 3 & --- \\ \hline
 Menor número de terceros que tratan los datos (BN7) & 25\,\% & 3 & 2 & --- \\ \hline
-Facilidad de configuración para un único desarrollador (restricción de un único desarrollador) & 20\,\% & 2 & 3 & --- \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,80} & \textbf{2,15} & \textbf{---} \\ \hline
 \end{xltabular}
 \endgroup
@@ -62,7 +61,41 @@ RNF05 & Atender aunque falle la interpretación & Menú de la máquina de estado
 
 Las exigencias forman dos grupos: comprender el texto libre requiere procesamiento de lenguaje natural (NLP), y registrar citas, un comportamiento determinista. Un menú cubre el segundo grupo, pero no el primero; un modelo que decide por sí solo, a la inversa. Se adopta, por tanto, un enfoque híbrido: el NLP interpreta y el código decide, como en el agente de citas por WhatsApp de \cite{santhosh2026whatsapp} y en la combinación de reglas y NLP de \cite{alejandrino2023dental}. Las consultas clínicas se derivan, dado el bajo desempeño de los chatbots en situaciones clínicas complejas \cite{hindelang2024chatbots}. La política de Meta, que prohíbe en WhatsApp los asistentes de IA de propósito general, refuerza este límite: el agente solo trata temas de la clínica \cite{meta2025aipolicy}.
 
-El NLP puede resolverse con un clasificador de intenciones entrenado, como el de Rasa, o con un modelo de lenguaje grande (LLM). El clasificador necesita un conjunto de frases de ejemplo etiquetadas por intención; la clínica no dispone de conversaciones etiquetadas, y reunirlas implicaría tratar mensajes de pacientes sin su consentimiento. El LLM reconoce las intenciones a partir de instrucciones, sin entrenamiento previo \cite{zhao2023llmsurvey}. Un LLM local de unos 7\,000 millones de parámetros ocupa unos 4 GB de memoria, la mayor parte del servidor previsto, por lo que se consume por API. Al modelo solo se envían el texto del mensaje y el paso de la conversación, nunca el nombre, la cédula ni el historial del paciente. El proveedor se elige en la implementación por tres criterios: una interfaz común a varios proveedores, el compromiso de no entrenar con los datos enviados y el costo por mensaje.
+El NLP puede resolverse con un clasificador de intenciones entrenado, como el de Rasa, o con un modelo de lenguaje grande (LLM). El clasificador necesita un conjunto de frases de ejemplo etiquetadas por intención. El LLM reconoce las intenciones a partir de instrucciones, sin entrenamiento previo \cite{zhao2023llmsurvey}. Un LLM local de unos 7\,000 millones de parámetros ocupa unos 4 GB de memoria, la mayor parte del servidor previsto, por lo que se consume por API. Al modelo solo se envían el texto del mensaje y el paso de la conversación, nunca el nombre, la cédula ni el historial del paciente.
+
+\paragraph{Modelo de lenguaje}
+
+Se comparan cuatro modelos de bajo costo consumidos por API: GPT-6 Luna, Claude Haiku 5.5, Qwen 3.8 Flash y GPT-OSS 120B en Groq (Tabla~\ref{tab:ob2_matriz_llm}). La comprensión del español informal recibe el mayor peso, porque de ella depende extraer la intención y los datos de cada solicitud.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.0cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{1.7cm}|>{\centering\arraybackslash}p{1.9cm}|}
+\caption{Evaluación de modelos de lenguaje mediante dos filtros}
+\label{tab:ob2_matriz_llm} \\
+\hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{GPT-6 Luna} & \textbf{Claude Haiku 5.5} & \textbf{Qwen 3.8 Flash} & \textbf{GPT-OSS 120B (Groq)} \\ \hline
+\endfirsthead
+\hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{GPT-6 Luna} & \textbf{Claude Haiku 5.5} & \textbf{Qwen 3.8 Flash} & \textbf{GPT-OSS 120B (Groq)} \\ \hline
+\endhead
+\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de eliminación (primer filtro)}} \\ \hline
+Respuesta en formato JSON para obtener la intención y los datos (RF11) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
+Pago por uso, sin suscripción fija (restricción de costo) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
+\multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
+Comprensión del español informal y extracción de la especialidad, el día y la hora (N2, RF11) & 30\,\% & 3 & 3 & 2 & 2 \\ \hline
+Validación nativa de la respuesta contra un esquema JSON (RF07, RF11) & 20\,\% & 3 & 3 & 2 & 2 \\ \hline
+Tratamiento de los mensajes fuera de jurisdicciones sin garantías equivalentes (BN7) & 20\,\% & 3 & 3 & 1 & 3 \\ \hline
+Costo mensual estimado (restricción de costo) & 10\,\% & 3 & 3 & 3 & 2 \\ \hline
+Latencia de respuesta en la conversación & 10\,\% & 2 & 2 & 2 & 3 \\ \hline
+Experiencia previa del desarrollador (restricción de un único desarrollador) & 10\,\% & 2 & 3 & 1 & 1 \\ \hline
+\textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,80} & \textbf{2,90} & \textbf{1,80} & \textbf{2,20} \\ \hline
+\end{xltabular}
+\endgroup
+
+Claude Haiku 5.5 obtiene el mayor total. Con el volumen previsto de mensajes, el costo mensual estimado es de unos 15 USD para GPT-6 Luna y Claude Haiku 5.5 (0,10 y 0,50 USD por millón de tokens de entrada y de salida), 16 USD para Qwen 3.8 Flash y 22 USD para GPT-OSS 120B en Groq; la caché de las instrucciones, que casi no cambian, puede reducirlo a la mitad. Como la diferencia de costo es de pocos dólares, deciden la calidad y el tratamiento de los datos. GPT-6 Luna empata en ambos, y la diferencia la decide la experiencia del desarrollador. GPT-OSS 120B gana en latencia, y Qwen 3.8 Flash procesa los mensajes en servidores de su proveedor en China. El modelo se usa con nivel de esfuerzo bajo, suficiente para interpretar mensajes cortos, y con salida estructurada validada contra el esquema de intención y datos.
 
 \paragraph{Motor conversacional}
 
@@ -83,13 +116,12 @@ El motor ejecuta la gestión del diálogo basada en estados finitos, o máquina 
 \textbf{Criterio} & \textbf{Peso} & \textbf{Módulo dentro de la API} & \textbf{Servicio propio separado} & \textbf{n8n autoalojado} & \textbf{Rasa} \\ \hline
 \endhead
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterio de eliminación (primer filtro)}} \\ \hline
-Autoalojable, sin depender de un servicio de pago que la clínica no controla (RNF04) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
+Autoalojable, sin depender de un servicio de pago (RNF04) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
 Reglas de agenda en un único lugar, la API del sistema (RF07, RF11) & 25\,\% & 3 & 3 & 2 & 2 \\ \hline
 Aislamiento: el componente que procesa texto libre no accede a la base de datos (RNF03, BN7) & 20\,\% & 1 & 3 & 3 & 3 \\ \hline
-Integración con modelos de lenguaje y validación de su respuesta (enfoque híbrido) & 20\,\% & 2 & 3 & 3 & 2 \\ \hline
-Servicios adicionales que operar y actualizar (restricción de un único desarrollador) & 20\,\% & 3 & 2 & 2 & 1 \\ \hline
-Consumo de recursos en el servidor compartido (restricción de costo) & 15\,\% & 3 & 3 & 2 & 1 \\ \hline
+Integración con modelos de lenguaje y validación de su respuesta & 20\,\% & 2 & 3 & 3 & 2 \\ \hline
+Consumo de recursos en el servidor compartido & 15\,\% & 3 & 3 & 2 & 1 \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,40} & \textbf{2,80} & \textbf{2,40} & \textbf{1,85} \\ \hline
 \end{xltabular}
 \endgroup
@@ -98,32 +130,35 @@ El servicio propio obtiene el mayor total. Se construye en Python, cuyo ecosiste
 
 \paragraph{Exposición del webhook}
 
-Meta exige una URL pública con HTTPS, que cifra la comunicación en tránsito, para entregar los mensajes. Se comparan de forma cualitativa tres opciones (Tabla~\ref{tab:ob2_webhook}). Cloudflare Tunnel y ngrok establecen una conexión saliente desde el equipo, pero añaden un tercero que descifra los mensajes en su red.
+Meta exige una URL pública con HTTPS, que cifra la comunicación en tránsito, para entregar los mensajes. Se comparan un proxy inverso propio, Cloudflare Tunnel y ngrok (Tabla~\ref{tab:ob2_webhook}). Los túneles establecen una conexión saliente desde el equipo, pero añaden un tercero que descifra los mensajes en su red, por lo que este criterio recibe el mayor peso.
 
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
-\caption{Comparación cualitativa de mecanismos para exponer el webhook}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.0cm}|}
+\caption{Evaluación de mecanismos para exponer el webhook mediante dos filtros}
 \label{tab:ob2_webhook} \\
 \hline
-\textbf{Criterio} & \textbf{Proxy inverso (Caddy)} & \textbf{Cloudflare Tunnel} & \textbf{ngrok} \\ \hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{Proxy inverso (Caddy)} & \textbf{Cloudflare Tunnel} & \textbf{ngrok} \\ \hline
 \endfirsthead
 \hline
-\textbf{Criterio} & \textbf{Proxy inverso (Caddy)} & \textbf{Cloudflare Tunnel} & \textbf{ngrok} \\ \hline
+\textbf{Criterio} & \textbf{Peso} & \textbf{Proxy inverso (Caddy)} & \textbf{Cloudflare Tunnel} & \textbf{ngrok} \\ \hline
 \endhead
-HTTPS con certificado válido exigido por Meta & Sí; certificado de Let's Encrypt obtenido y renovado automáticamente & Sí; certificado del proveedor & Sí; certificado del proveedor \\ \hline
-Dependencias adicionales & Ninguna; el proxy es la entrada del despliegue & Cliente de un tercero & Cuenta y cliente de un tercero \\ \hline
-Tercero que descifra los mensajes en tránsito (BN7) & No & Sí, en la red del proveedor & Sí, en la red del proveedor \\ \hline
-Estabilidad de la URL & Dominio propio y fijo & Temporal, sin dominio propio & Depende de la configuración de la cuenta \\ \hline
-Costo & Sin costo adicional al servidor & Sin costo & Bajo; depende del plan \\ \hline
-\textbf{Uso en el proyecto} & \textbf{Seleccionado para el servidor virtual} & Solo desarrollo, con datos ficticios & No se usa \\ \hline
+\multicolumn{5}{|l|}{\cellcolor{gray!10}\textbf{Criterio de eliminación (primer filtro)}} \\ \hline
+HTTPS con certificado válido exigido por Meta & --- & Cumple & Cumple & Cumple \\ \hline
+\multicolumn{5}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
+Sin un tercero que descifre los mensajes en tránsito (BN7) & 30\,\% & 3 & 1 & 1 \\ \hline
+URL estable con dominio propio (RNF05) & 25\,\% & 3 & 1 & 2 \\ \hline
+Sin componentes ni cuentas adicionales que operar & 15\,\% & 3 & 2 & 1 \\ \hline
+Costo adicional al servidor (restricción de costo) & 15\,\% & 3 & 3 & 2 \\ \hline
+Funcionamiento sin IP pública ni puertos abiertos & 15\,\% & 1 & 3 & 3 \\ \hline
+\textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,70} & \textbf{1,75} & \textbf{1,70} \\ \hline
 \end{xltabular}
 \endgroup
 
-Caddy se selecciona para el servidor virtual: es la única entrada pública del despliegue y obtiene y renueva el certificado sin configuración adicional. Cloudflare Tunnel se reserva para el desarrollo.
+Caddy obtiene el mayor total: es la única entrada pública del despliegue y obtiene y renueva el certificado de Let's Encrypt sin configuración adicional. Los túneles ganan en funcionamiento sin IP pública, por lo que Cloudflare Tunnel se reserva para el desarrollo, con datos ficticios.
 
 La Tabla~\ref{tab:ob2_stack_agente} resume las decisiones del agente y los requerimientos o brechas que atienden.
 
@@ -143,6 +178,7 @@ La Tabla~\ref{tab:ob2_stack_agente} resume las decisiones del agente y los reque
 \endhead
 Acceso a WhatsApp & WhatsApp Cloud API (Meta) & RF09 a RF14; BN7 \\ \hline
 Comprensión de los mensajes & Híbrido: máquina de estados y NLP con un LLM por API & RF10, RF13; N5; BN7 \\ \hline
+Modelo de lenguaje & Claude Haiku 5.5, esfuerzo bajo y salida JSON validada & N2; RF11; BN7 \\ \hline
 Motor conversacional & Servicio propio en Python (FastAPI) & RF07, RF11, RF12, RF14; RNF03 \\ \hline
 Exposición del webhook & Proxy inverso Caddy con Let's Encrypt & HTTPS exigido por Meta; RNF05 \\ \hline
 \end{xltabular}

@@ -67,7 +67,7 @@ El agente y la API se comunican por HTTP en la red interna del servidor, con men
 \endhead
 Aviso de privacidad & Consultar y registrar la aceptación por teléfono & RF09 \\ \hline
 Información & Horarios, formas de pago, precios públicos y contacto de recepción & RF10, RF13 \\ \hline
-Identificación & Pacientes del teléfono y verificación por cédula & RF11 \\ \hline
+Identificación & Pacientes del teléfono & RF11 \\ \hline
 Disponibilidad & Especialidades, profesionales, días y horas libres; horarios de urgencia & RF11 \\ \hline
 Citas & Citas activas; agendar, reprogramar, cancelar y confirmar & RF11, RF12 \\ \hline
 Recordatorios & Pendientes de envío, resultado del envío y respuesta del paciente & RF14 \\ \hline
@@ -81,7 +81,7 @@ Error o demora & Deriva a recepción & RF13 \\ \hline
 
 \paragraph{Interpretación de los mensajes}
 
-La Figura~\ref{fig:ob2_nlp} muestra cómo se interpreta un mensaje. Los botones y las listas pasan directamente a la máquina de estados; el texto libre pasa por el LLM, que devuelve la intención y los datos del mensaje en una respuesta estructurada. Esa respuesta se valida antes de usarla, y si el modelo falla o tarda, el agente muestra el menú. El modelo recibe el texto, el paso actual y los últimos mensajes, nunca el nombre, la cédula ni el historial; no dispone de herramientas que escriban ni ve datos de otros pacientes, lo que limita el efecto de instrucciones maliciosas escritas en el mensaje.
+La Figura~\ref{fig:ob2_nlp} muestra cómo se interpreta un mensaje. Los botones y las listas pasan directamente a la máquina de estados; el texto libre pasa por el LLM, que devuelve la intención y los datos del mensaje en una respuesta estructurada. Esa respuesta se valida antes de usarla, y si el modelo falla o tarda, el agente muestra el menú. El modelo recibe el texto, el paso actual y los últimos mensajes, no dispone de herramientas que escriban ni ve datos de otros pacientes, lo que limita el efecto de instrucciones maliciosas escritas en el mensaje.
 
 \begin{figure}[H]
 \centering
@@ -187,7 +187,6 @@ La Tabla~\ref{tab:ob2_mecanismos} resume los mecanismos de WhatsApp Cloud API qu
 \endhead
 Webhook verificado & Token al registrar la URL y firma en cada solicitud \cite{meta2026whatsapp} & RNF03 \\ \hline
 Mensajes interactivos & Listas para el menú y la cita; botones para el recordatorio & RF10, RF11 \\ \hline
-Plantillas utility & Recordatorios iniciados por la clínica, aprobados por Meta y cobrados por envío \cite{meta2026pricing} & RF14 \\ \hline
 Consentimiento previo & Requisito de Meta para escribir primero \cite{meta2026optin}; se usa la aceptación del aviso & RF09, RF14 \\ \hline
 Ventana de 24 h & Respuestas libres solo dentro de 24 h del último mensaje; después, plantillas & RF10, RF13 \\ \hline
 Límite diario de envíos & Tope de destinatarios por día según el nivel de la cuenta \cite{meta2026limits} & RF14 \\ \hline
