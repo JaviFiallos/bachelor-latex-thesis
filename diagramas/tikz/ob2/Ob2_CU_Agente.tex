@@ -1,0 +1,25 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{../ob3/estilo}
+\usetikzlibrary{shapes.geometric}
+\input{casos-uso}
+\tikzset{cuA/.style={cu, fill=dAgenteF, draw=dAgenteB}}
+\begin{document}
+\begin{tikzpicture}
+\draw[limite] (-4.7,-4.4) rectangle (5.0,4.5);
+\node[font=\footnotesize\bfseries, anchor=north west] at (-4.6,4.45) {Agente conversacional};
+\node[cuA] (avi) at (-1.6,3.3) {Aceptar aviso de privacidad\rf{RF09}};
+\node[cuA] (inf) at (-1.6,1.9) {Consultar horarios y precios\rf{RF10}};
+\node[cuA] (age) at (-1.6,0.5) {Agendar cita\rf{RF11}};
+\node[cuA] (rep) at (-1.6,-0.9) {Reprogramar o cancelar cita\rf{RF12}};
+\node[cuA] (rec) at (-1.6,-2.3) {Responder recordatorio\rf{RF14}};
+\node[cuA] (der) at (2.9,-3.4) {Derivar a recepción\rf{RF13}};
+\node[cuA] (ide) at (3.1,-0.2) {Identificar al paciente\rf{RF11}};
+\actor{pac}{-7.0,0.2}{Paciente}
+\actor{rcp}{6.9,-3.4}{Recepción}
+\foreach \c in {avi,inf,age,rep,rec} \draw[asoc] (pac) -- (\c);
+\draw[asoc] (pac) to[out=-60,in=200] (der);
+\draw[asoc] (rcp) -- (der);
+\draw[incl] (age) -- node[st, sloped, pos=0.62]{«include»} (ide);
+\draw[incl] (rep) -- node[st, sloped, pos=0.62]{«include»} (ide);
+\end{tikzpicture}
+\end{document}

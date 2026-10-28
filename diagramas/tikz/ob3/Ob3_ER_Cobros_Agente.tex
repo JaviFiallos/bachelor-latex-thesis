@@ -1,0 +1,20 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{estilo}
+\begin{document}
+\begin{tikzpicture}
+\node[ext] (pat) at (0,0) {patients};
+\node[ext] (enc) at (4.9,3.1) {encounters};
+\node[ext] (users) at (9.8,0) {users};
+\node[ent={dClinicoF}{dClinicoB}] (pay) at (4.9,0) {\tname{payments}\nodepart{two}\cols{\pk{payment\_id}\\ \fk{patient\_id}\\ \fk{encounter\_id}\\ amount, method\\ receipt\_number\\ \fk{received\_by}\\ voided\_at, void\_reason}};
+\node[ent={dAgenteF}{dAgenteB}] (pc) at (0,-3.6) {\tname{privacy\_consents}\nodepart{two}\cols{\pk{consent\_id}\\ phone\_e164\\ \fk{patient\_id}\\ notice\_version\\ accepted\_at}};
+\node[ent={dDatosF}{dDatosB}] (rev) at (9.8,-3.6) {\tname{revision\_info}\nodepart{two}\cols{\pk{revision\_id}\\ revision\_at\\ \fk{user\_id}}};
+\node[ent={dDatosF}{dDatosB}] (aud) at (4.9,-3.9) {\tname{tablas \_aud (11)}\nodepart{two}\cols{\pk{id}, \pk{\fk{revision\_id}}\\ revtype\\ columnas auditadas}};
+\unoN{pat}{pay}
+\unoN{enc}{pay}
+\draw[rel] (users) -- node[card, pos=0.12]{1} node[card, pos=0.85]{N} node[font=\scriptsize\itshape, above=2pt, pos=0.5]{received\_by} (pay);
+\unoN{pat}{pc}
+\unoN{users}{rev}
+\unoN{rev}{aud}
+\leyenda
+\end{tikzpicture}
+\end{document}

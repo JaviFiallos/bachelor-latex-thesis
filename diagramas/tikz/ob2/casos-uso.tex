@@ -1,0 +1,19 @@
+% Estilo UML de casos de uso (actor, caso, límite del sistema, include, generalización).
+\tikzset{
+  cu/.style={ellipse, draw=dSistemaB, fill=dSistemaF, line width=0.7pt, align=center,
+    minimum width=3.3cm, minimum height=0.95cm, inner sep=1pt, font=\footnotesize},
+  asoc/.style={draw=black!70, line width=0.6pt},
+  incl/.style={draw=black!70, dashed, line width=0.6pt, -{Stealth[length=2mm]}},
+  gen/.style={draw=black!70, line width=0.6pt, -{Triangle[open, length=3mm, width=3mm]}},
+  limite/.style={draw=dExternoB, line width=0.8pt, rounded corners=3pt},
+  st/.style={font=\scriptsize\itshape, fill=white, inner sep=1pt},
+}
+% \actor{nombre}{posición}{etiqueta}: figura de palitos y nodo invisible para las líneas.
+\newcommand{\actor}[3]{%
+  \begin{scope}[shift={(#2)}, line width=0.7pt]
+    \draw (0,0.55) circle (0.18); \draw (0,0.37)--(0,-0.12); \draw (-0.32,0.2)--(0.32,0.2);
+    \draw (0,-0.12)--(-0.24,-0.55); \draw (0,-0.12)--(0.24,-0.55);
+  \end{scope}
+  \node[minimum width=0.9cm, minimum height=1.5cm, inner sep=0pt] (#1) at ($(#2)+(0,0.05)$) {};
+  \node[font=\footnotesize\bfseries, below=0pt of #1, align=center] {#3};}
+\newcommand{\rf}[1]{\\[-1pt]{\scriptsize #1}}

@@ -1,0 +1,107 @@
+% 3.3.2 Base técnica (T2): estructura del servidor y de la interfaz web, dependencias clave y pruebas.
+% Fuente: bellidental-backend (src/main/java/com/bellidental, pom.xml) y bellidental-frontend (src/app, package.json).
+
+\subsubsection{Base técnica}
+
+\paragraph{Estructura del servidor y de la interfaz web}
+
+La API mantiene el monolito modular del diseño (Figura~\ref{fig:ob2_modulos}): un paquete por módulo, con tres capas internas (\texttt{api}, controladores; \texttt{application}, servicios y transacciones; \texttt{domain}, entidades y reglas) y una interfaz pública para los demás módulos (Figura~\ref{fig:ob3_arbol_api}). El esquema se crea con 22 migraciones de Flyway, versionadas junto al código.
+
+La interfaz web replica esa división (Figura~\ref{fig:ob3_arbol_web}): una carpeta por funcionalidad, con sus páginas, componentes y servicios de acceso a la API. La capa \texttt{core} gestiona la sesión, adjunta el token a cada petición y restringe las rutas por perfil.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.49\linewidth}
+\footnotesize
+\dirtree{%
+.1 src/main/.
+.2 java/com/bellidental/.
+.3 identity\DTcomment{Identidad y acceso}.
+.3 security\DTcomment{token y permisos}.
+.3 patients\DTcomment{Pacientes}.
+.3 professionals\DTcomment{Profesionales}.
+.3 appointments\DTcomment{Agenda}.
+.4 api\DTcomment{controladores REST}.
+.4 application\DTcomment{servicios}.
+.4 domain\DTcomment{reglas y entidades}.
+.3 clinicalrecords\DTcomment{Historia clínica}.
+.3 clinical\DTcomment{Atención y CIE-10}.
+.3 odontogram\DTcomment{Odontograma}.
+.3 treatments\DTcomment{Tratamientos}.
+.3 prescriptions\DTcomment{Recetas}.
+.3 clinicalsummary\DTcomment{Ficha y 033}.
+.3 billing\DTcomment{Cobros}.
+.3 bot\DTcomment{Interfaz del agente}.
+.3 audit\DTcomment{Historial de cambios}.
+.3 dashboard\DTcomment{Estadísticas}.
+.3 shared, config\DTcomment{transversal}.
+.2 resources/db/migration\DTcomment{V1 a V22}.
+}
+\caption{API}
+\label{fig:ob3_arbol_api}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\linewidth}
+\footnotesize
+\dirtree{%
+.1 src/app/.
+.2 core\DTcomment{base}.
+.3 auth\DTcomment{sesión}.
+.3 interceptors\DTcomment{token y errores}.
+.3 guards\DTcomment{rutas por perfil}.
+.2 features.
+.3 auth\DTcomment{Inicio de sesión}.
+.3 appointments\DTcomment{Agenda}.
+.3 patients\DTcomment{Pacientes}.
+.3 professionals\DTcomment{Horarios}.
+.3 clinical\DTcomment{Atención}.
+.3 odontogram\DTcomment{Odontograma}.
+.3 treatments\DTcomment{Tratamientos}.
+.3 prescriptions\DTcomment{Recetas}.
+.3 billing\DTcomment{Cobros}.
+.3 management\DTcomment{Dirección}.
+.3 dashboard\DTcomment{Estadísticas}.
+.2 shared\DTcomment{componentes comunes}.
+.2 layout\DTcomment{menú por perfil}.
+}
+\caption{Interfaz web}
+\label{fig:ob3_arbol_web}
+\end{subfigure}
+\caption{Estructura del código de la API y de la interfaz web}
+\label{fig:ob3_arboles}
+\end{figure}
+
+\paragraph{Dependencias clave}
+
+La Tabla~\ref{tab:ob3_dependencias} complementa la pila del diseño (Tabla~\ref{tab:ob2_stack}) con las librerías que sostienen requerimientos.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}X|}
+\caption{Dependencias clave del servidor, la interfaz web y el agente}
+\label{tab:ob3_dependencias} \\
+\hline
+\textbf{Componente} & \textbf{Dependencia} & \textbf{Uso} \\ \hline
+\endfirsthead
+\hline
+\textbf{Componente} & \textbf{Dependencia} & \textbf{Uso} \\ \hline
+\endhead
+API & Spring Security y JJWT & Inicio de sesión con token y permisos por rol (RNF01) \\ \hline
+API & Spring Data JPA e Hibernate Envers & Persistencia e historial de cambios (RNF02) \\ \hline
+API & Flyway & Esquema versionado y reproducible (RNF04) \\ \hline
+API & OpenPDF & Receta y comprobante en PDF (RF05, RF08) \\ \hline
+API & springdoc-openapi & Documentación de los endpoints \\ \hline
+Interfaz web & Angular 22 (componentes independientes y señales) y Angular CDK & Pantallas por funcionalidad; paneles laterales y diálogos accesibles \\ \hline
+Interfaz web & Fuentes e íconos locales & Ningún recurso de terceros en tiempo de ejecución (LOPDP) \\ \hline
+Agente & FastAPI, httpx y Pydantic & Webhook, llamadas a la API y a WhatsApp, validación de mensajes \\ \hline
+Agente & SDK de Anthropic & Clasificación del texto libre con salida estructurada \\ \hline
+\end{xltabular}
+\endgroup
+
+En desarrollo, la interfaz web se sirve con el servidor de Angular y un proxy dirige \texttt{/api} a la API local; PostgreSQL corre en un contenedor, y el webhook usa el número de prueba de Meta y un túnel temporal (Tabla~\ref{tab:ob2_webhook}).
+
+\paragraph{Pruebas}
+
+Las reglas críticas se verifican con pruebas automáticas: unitarias para las reglas de dominio y la máquina de estados del agente, y de integración contra PostgreSQL en contenedor (Testcontainers) para la agenda, la atención y la auditoría. La API cuenta con 52 clases de prueba, la interfaz web con 18 y el agente con 6 módulos; todas se ejecutan antes de cada despliegue (apartado~\ref{sec:ob3_cicd}).

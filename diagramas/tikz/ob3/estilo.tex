@@ -1,0 +1,31 @@
+% Preámbulo común de los diagramas del Objetivo 3 (paleta de main.tex).
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usetikzlibrary{babel,arrows.meta,positioning,fit,backgrounds,shapes.multipart,calc}
+\definecolor{dPersonaF}{HTML}{FFE6CC}\definecolor{dPersonaB}{HTML}{D79B00}
+\definecolor{dSistemaF}{HTML}{DAE8FC}\definecolor{dSistemaB}{HTML}{6C8EBF}
+\definecolor{dAgenteF}{HTML}{D5E8D4}\definecolor{dAgenteB}{HTML}{82B366}
+\definecolor{dDatosF}{HTML}{E1D5E7}\definecolor{dDatosB}{HTML}{9673A6}
+\definecolor{dClinicoF}{HTML}{FFF2CC}\definecolor{dClinicoB}{HTML}{D6B656}
+\definecolor{dExternoF}{HTML}{F5F5F5}\definecolor{dExternoB}{HTML}{666666}
+% Entidad: encabezado coloreado y columnas clave. PK subrayada, FK en cursiva.
+\tikzset{
+  ent/.style 2 args={rectangle split, rectangle split parts=2, draw=#2, line width=0.7pt,
+    rectangle split part fill={#1,white}, rounded corners=1.5pt, font=\footnotesize,
+    inner sep=3pt, minimum width=2.9cm},
+  ext/.style={draw=dExternoB, dashed, fill=dExternoF, rounded corners=1.5pt, font=\footnotesize\ttfamily,
+    inner sep=4pt, minimum width=2.4cm},
+  rel/.style={draw=black!65, line width=0.6pt},
+  card/.style={font=\scriptsize, inner sep=1.5pt, fill=white},
+}
+\newcommand{\pk}[1]{\underline{#1}}
+\newcommand{\fk}[1]{\textit{#1}}
+\newcommand{\cols}[1]{\begin{tabular}{@{}l@{}}#1\end{tabular}}
+\newcommand{\tname}[1]{\textbf{\ttfamily #1}}
+% Relación 1:N con cardinalidades junto a cada extremo.
+\newcommand{\unoN}[3][]{\draw[rel,#1] (#2) -- node[card, pos=0.12]{1} node[card, pos=0.88]{N} (#3);}
+\newcommand{\unoUno}[3][]{\draw[rel,#1] (#2) -- node[card, pos=0.12]{1} node[card, pos=0.88]{1} (#3);}
+\newcommand{\leyenda}{\node[font=\scriptsize, text=black!70, anchor=north west] at (current bounding box.south west)
+  {\underline{subrayado}: clave primaria \quad \textit{cursiva}: clave foránea \quad recuadro gris: tabla de otro grupo};}

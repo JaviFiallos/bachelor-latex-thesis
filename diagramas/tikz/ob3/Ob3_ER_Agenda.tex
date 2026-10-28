@@ -1,0 +1,20 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{estilo}
+\begin{document}
+\begin{tikzpicture}
+\node[ent={dPersonaF}{dPersonaB}] (pat) at (0,0) {\tname{patients}\nodepart{two}\cols{\pk{patient\_id}\\ document\_number\\ first\_name, last\_name\\ birth\_date, sex\\ phone\_e164}};
+\node[ent={dSistemaF}{dSistemaB}] (app) at (4.8,0) {\tname{appointments}\nodepart{two}\cols{\pk{appointment\_id}\\ \fk{patient\_id}\\ \fk{professional\_id}\\ \fk{specialty\_id}\\ start\_at, end\_at\\ status, source\\ \fk{rescheduled\_from\_id}}};
+\node[ent={dSistemaF}{dSistemaB}] (ps) at (9.6,0) {\tname{professional\_specialties}\nodepart{two}\cols{\pk{\fk{professional\_id}}\\ \pk{\fk{specialty\_id}}\\ active}};
+\node[ent={dSistemaF}{dSistemaB}] (spec) at (9.6,3.2) {\tname{specialties}\nodepart{two}\cols{\pk{specialty\_id}\\ name\\ default\_duration\_minutes}};
+\node[ent={dSistemaF}{dSistemaB}] (prof) at (9.6,-3.6) {\tname{professionals}\nodepart{two}\cols{\pk{professional\_id}\\ \fk{user\_id}\\ license\_number\\ color\_tag}};
+\node[ent={dSistemaF}{dSistemaB}] (sch) at (4.8,-3.9) {\tname{professional\_schedules}\nodepart{two}\cols{\pk{professional\_schedule\_id}\\ \fk{professional\_id}\\ weekday o specific\_date\\ start\_time, end\_time\\ available}};
+\node[ext] (users) at (0,-3.6) {users};
+\unoN{pat}{app}
+\unoN{ps}{app}
+\unoN{spec}{ps}
+\unoN{prof}{ps}
+\unoN{prof}{sch}
+\draw[rel] (users) -- node[card, pos=0.12]{1} node[card, pos=0.85]{N} node[font=\scriptsize\itshape, sloped, above=2pt, pos=0.5]{created\_by} (app);
+\leyenda
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,37 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{../ob3/estilo}
+\usetikzlibrary{shapes.geometric}
+\input{casos-uso}
+\begin{document}
+\begin{tikzpicture}
+\draw[limite] (-6.1,-5.4) rectangle (6.1,6.2);
+\node[font=\footnotesize\bfseries, anchor=north west] at (-6.0,6.15) {Sistema de información};
+% Casos compartidos
+\node[cu] (login) at (0,5.0) {Iniciar sesión\rf{RNF01}};
+% Secretaria
+\node[cu] (pac) at (-4,2.2) {Registrar paciente\rf{RF06}};
+\node[cu] (cit) at (-4,0.6) {Gestionar citas\rf{RF07}};
+\node[cu] (cob) at (-4,-1.1) {Registrar cobro\\ y comprobante\rf{RF08}};
+% Odontólogo
+\node[cu] (mis) at (4,2.2) {Consultar sus citas\rf{RF07}};
+\node[cu] (ate) at (4,0.4) {Atender paciente\rf{RF01}};
+\node[cu] (his) at (4,-1.4) {Consultar historial\rf{RF06}};
+% Incluidos en la atención
+\node[cu, fill=dClinicoF, draw=dClinicoB] (odo) at (-0.2,2.6) {Registrar odontograma\rf{RF02}};
+\node[cu, fill=dClinicoF, draw=dClinicoB] (dx) at (-0.2,1.1) {Registrar diagnóstico\rf{RF03}};
+\node[cu, fill=dClinicoF, draw=dClinicoB] (tra) at (-0.2,-0.4) {Registrar tratamientos\rf{RF04}};
+\node[cu, fill=dClinicoF, draw=dClinicoB] (rec) at (-0.2,-1.9) {Emitir receta\rf{RF05}};
+% Director
+\node[cu] (adm) at (4,-3.3) {Gestionar usuarios\\ y catálogos\rf{RNF01}};
+\node[cu] (aud) at (4,-4.7) {Consultar historial\\ de cambios\rf{RNF02}};
+% Actores
+\actor{sec}{-8.4,2.2}{Secretaria}
+\actor{doc}{8.4,2.2}{Odontólogo}
+\actor{dir}{8.4,-4.1}{Director}
+\foreach \c in {login,pac,cit,cob} \draw[asoc] (sec) -- (\c);
+\foreach \c in {login,mis,ate,his} \draw[asoc] (doc) -- (\c);
+\foreach \c in {adm,aud} \draw[asoc] (dir) -- (\c);
+\foreach \c in {odo,dx,tra,rec} \draw[incl] (ate) -- node[st, sloped, pos=0.62]{«include»} (\c);
+\draw[gen] ($(dir.north)+(0,0.25)$) -- ($(doc.south)+(0,-0.45)$);
+\end{tikzpicture}
+\end{document}

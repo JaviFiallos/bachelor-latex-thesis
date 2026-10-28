@@ -1,0 +1,42 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{estilo}
+\tikzset{cat/.style={draw=dClinicoB, fill=dClinicoF!45, rounded corners=1.5pt, font=\footnotesize\bfseries\ttfamily, inner sep=4pt, minimum width=2.6cm}}
+\begin{document}
+\begin{tikzpicture}
+% Historia clínica
+\node[ext] (pat) at (0,2.9) {patients};
+\node[ent={dClinicoF}{dClinicoB}] (cr) at (0,0) {\tname{clinical\_records}\nodepart{two}\cols{\pk{clinical\_record\_id}\\ \fk{patient\_id}\\ record\_number\\ no\_known\_history}};
+\node[ent={dClinicoF}{dClinicoB}] (mhe) at (0,-3.6) {\tname{medical\_history\_entries}\nodepart{two}\cols{\pk{medical\_history\_entry\_id}\\ \fk{clinical\_record\_id}\\ \fk{medical\_history\_condition\_id}\\ scope, voided\_at}};
+\node[cat] (mhc) at (0,-6.4) {medical\_history\_conditions};
+% Atención
+\node[ext] (app) at (5.1,2.9) {appointments};
+\node[ent={dClinicoF}{dClinicoB}] (enc) at (5.1,0) {\tname{encounters}\nodepart{two}\cols{\pk{encounter\_id}\\ \fk{appointment\_id}\\ \fk{professional\_id}\\ chief\_complaint\\ status, closed\_at\\ voided\_at}};
+\node[ent={dClinicoF}{dClinicoB}] (fnd) at (5.1,-4.0) {\tname{dental\_findings}\nodepart{two}\cols{\pk{dental\_finding\_id}\\ \fk{encounter\_id}\\ tooth\_code, surface\_code\\ \fk{dental\_condition\_id}\\ status}};
+\node[cat] (dc) at (5.1,-6.9) {dental\_conditions};
+% Diagnósticos, recetas y tratamientos
+\node[ent={dClinicoF}{dClinicoB}] (dx) at (10.2,2.0) {\tname{encounter\_diagnoses}\nodepart{two}\cols{\pk{encounter\_diagnosis\_id}\\ \fk{encounter\_id}\\ \fk{icd10\_id}\\ certainty}};
+\node[cat] (icd) at (15.0,2.0) {icd10\_codes};
+\node[ent={dClinicoF}{dClinicoB}] (rx) at (10.2,-1.7) {\tname{prescriptions}\nodepart{two}\cols{\pk{prescription\_id}\\ \fk{encounter\_id}\\ \fk{encounter\_diagnosis\_id}\\ status}};
+\node[ent={dClinicoF}{dClinicoB}] (rxi) at (15.0,-1.7) {\tname{prescription\_items}\nodepart{two}\cols{\pk{prescription\_item\_id}\\ \fk{prescription\_id}\\ \fk{medication\_id}\\ dose, frequency}};
+\node[cat] (med) at (15.0,-4.6) {medications};
+\node[ent={dClinicoF}{dClinicoB}] (pt) at (10.2,-5.4) {\tname{performed\_treatments}\nodepart{two}\cols{\pk{performed\_treatment\_id}\\ \fk{encounter\_id}\\ \fk{treatment\_id}\\ \fk{dental\_finding\_id}\\ price, voided\_at}};
+\node[cat] (tc) at (15.0,-7.0) {treatment\_catalog};
+\unoUno{pat}{cr}
+\unoN{cr}{mhe}
+\unoN{mhc}{mhe}
+\unoUno{app}{enc}
+\unoN{enc}{fnd}
+\unoN{dc}{fnd}
+\unoN{enc}{dx}
+\unoN{icd}{dx}
+\unoN{enc}{rx}
+\unoN{dx}{rx}
+\unoN{rx}{rxi}
+\unoN{med}{rxi}
+\unoN{enc}{pt}
+\unoN{fnd}{pt}
+\unoN{tc}{pt}
+\node[font=\scriptsize, text=black!70, anchor=north west] at (current bounding box.south west)
+  {\underline{subrayado}: clave primaria \quad \textit{cursiva}: clave foránea \quad gris: tabla de otro grupo \quad amarillo claro: catálogo};
+\end{tikzpicture}
+\end{document}
