@@ -38,8 +38,6 @@ Google Drive de la clínica & Guarda los respaldos cifrados fuera del servidor \
 
 El agente añade a esta infraestructura su propio contenedor, el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp registrado en la Cloud API, las plantillas de mensaje aprobadas por Meta y la cuenta del proveedor del modelo de lenguaje.
 
-La cuenta de WhatsApp opera sin la verificación de la empresa ante Meta, con un límite de envío de mensajes iniciados por la clínica suficiente para los recordatorios diarios; la verificación, que eleva ese límite, queda como recomendación.
-
 \paragraph{Riesgos y mitigaciones}
 
 La Tabla~\ref{tab:ob2_riesgos} identifica los riesgos del despliegue en un servidor virtual, sus efectos y sus mitigaciones.
@@ -60,7 +58,6 @@ La Tabla~\ref{tab:ob2_riesgos} identifica los riesgos del despliegue en un servi
 \endhead
 Impago o cierre del VPS & Caída total del sistema y del agente & Cuenta a nombre de la clínica; respaldo y exportación para migrar \\ \hline
 Caída de internet en la clínica & Personal sin acceso; el agente sigue activo & Ficha en papel y carga posterior \\ \hline
-Pérdida del servidor & Hasta 24 h de datos perdidos & Restauración desde el respaldo diario externo \\ \hline
 Datos tratados fuera del Ecuador & Datos personales fuera del control de la clínica & Contrato de encargado (LOPDP \cite{lopdp2021}); proveedores nombrados en el aviso de privacidad; respaldos cifrados; Meta, Google y el proveedor del modelo no reciben datos clínicos \\ \hline
 Falla del modelo de lenguaje & El agente no comprende el texto libre & El agente presenta el menú; el proveedor se cambia sin modificar el agente \\ \hline
 Suspensión de la cuenta de WhatsApp & Sin agente ni recordatorios & Plantillas aprobadas; recepción como canal alterno \\ \hline
@@ -68,4 +65,3 @@ Agotamiento de recursos & Lentitud o caída de contenedores & Límite de memoria
 \end{longtable}
 \endgroup
 
-\textbf{Cambio frente a la instalación local prevista inicialmente.} En la Entrevista 1 (Tabla~\ref{tab:ent1}, P7), el Director pidió que la continuidad y la propiedad de la información no dependieran de un proveedor externo; de ahí deriva RNF04. El VPS reintroduce esa dependencia, que se mitiga con cuatro medidas: la cuenta del VPS y el dominio a nombre de la clínica, el respaldo diario bajo la cuenta de la clínica, la exportación completa en formato abierto y el mismo archivo de Docker Compose, que permite migrar a otro proveedor. A cambio, el VPS mantiene el agente disponible fuera del horario sin depender de un equipo encendido en la clínica. La disponibilidad del sistema en horario de atención (RNF05) queda sujeta a la conexión de la clínica; durante una caída, la ficha rápida en papel y la carga posterior sostienen la atención.

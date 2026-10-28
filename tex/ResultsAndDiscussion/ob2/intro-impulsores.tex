@@ -2,7 +2,7 @@ Este objetivo traduce el diagnóstico del Objetivo 1 en decisiones de diseño: l
 
 \subsubsection{Factores de diseño}
 
-Los factores de diseño (\textit{architectural drivers}) son los requerimientos, atributos de calidad y restricciones que condicionan la arquitectura de un sistema \cite{cervantes2016designing}. La Tabla~\ref{tab:ob2_impulsores} traza cada evidencia del análisis hasta el requerimiento que origina y su implicación en el diseño. Los datos provienen de la entrevista y el instrumento operativo (Tablas~\ref{tab:ent1} y \ref{tab:instrumento2}), la encuesta a pacientes (Tablas~\ref{tab:p1_frecuencia} a \ref{tab:p8_frecuencia}) y los puntos críticos y brechas normativas (Tablas~\ref{tab:puntos_criticos} y \ref{tab:brechas_normativas}).
+Los factores de diseño son los requerimientos, atributos de calidad y restricciones que condicionan la arquitectura de un sistema \cite{cervantes2016designing}. La Tabla~\ref{tab:ob2_impulsores} traza cada evidencia del análisis hasta el requerimiento que origina y su implicación en el diseño. Los datos provienen de la entrevista y el instrumento operativo (Tablas~\ref{tab:ent1} y \ref{tab:instrumento2}), la encuesta a pacientes (Tablas~\ref{tab:p1_frecuencia} a \ref{tab:p8_frecuencia}) y los puntos críticos y brechas normativas (Tablas~\ref{tab:puntos_criticos} y \ref{tab:brechas_normativas}).
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -31,28 +31,3 @@ Historial en Excel sin autoría de cambios & BN4 & RNF02 & Usuario, fecha y hora
 Sistemas por suscripción abandonados a los 6 o 7 meses & BN2 & RNF04 & Datos bajo control de la clínica; respaldo y exportación \\ \hline
 \end{longtable}
 \endgroup
-
-La Tabla~\ref{tab:ob2_atributos} define los atributos de calidad prioritarios, según la clasificación de ISO/IEC 25010 \cite{iso2011iec25010}, la misma que \cite{arcila2022microservice} empleó para verificar la disponibilidad de su arquitectura dental. Cada atributo se expresa como un escenario medible.
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.19\linewidth}|p{0.22\linewidth}|p{0.49\linewidth}|}
-\caption{Atributos de calidad prioritarios}
-\label{tab:ob2_atributos} \\
-\hline
-\textbf{Atributo} & \textbf{Requerimiento} & \textbf{Escenario} \\ \hline
-\endfirsthead
-\hline
-\textbf{Atributo} & \textbf{Requerimiento} & \textbf{Escenario} \\ \hline
-\endhead
-Seguridad (confidencialidad, trazabilidad) & RNF01, RNF02, RNF03; RF09 & El 100\,\% de los intentos de editar datos clínicos con el rol de secretaria se rechaza; toda modificación de citas y registros clínicos queda asociada a un usuario, una fecha y una hora; el agente no devuelve información clínica, y el modelo de lenguaje no recibe datos identificativos ni registra citas \\ \hline
-Fiabilidad (disponibilidad, recuperabilidad) & RNF05, RNF04 & Un paciente escribe fuera de la jornada y recibe respuesta del agente en segundos, sin intervención de la recepción; ante la pérdida del servidor, el sistema se restaura desde el respaldo diario con una pérdida máxima de 24 horas de datos \\ \hline
-Mantenibilidad (modularidad) & RF07, RF11; restricción de un único desarrollador & Un cambio en las reglas de agendamiento se realiza en un solo módulo, sin modificar la conversación del agente \\ \hline
-Usabilidad & RNF06 & El profesional registra el tratamiento durante la consulta con búsqueda en catálogos; el registro posconsulta ($T_1$) es menor que los 3,40 min del pretest \\ \hline
-\end{longtable}
-\endgroup
-
-A estos factores se suman tres restricciones del proyecto: un único desarrollador, un plazo acotado (julio a diciembre de 2026) y un bajo costo de operación para la clínica. Las restricciones dan peso a los criterios con los que se seleccionan la metodología y las tecnologías.
