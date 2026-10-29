@@ -20,7 +20,7 @@ Estructura: **3.3 Desarrollo** · **3.4 Implementación** · **3.5 Evaluación d
 | # | Tarea | Archivos | Figuras |
 |---|---|---|---|
 | T1 | Reestructura y coherencia: tres subsecciones, intro, tabla RAD y arquitectura del front en Obj. 2, RF14 no implementado, sin fechas | `results-ob3.tex`, `ob3/intro.tex`, `ob2/metodologia.tex`, `ob2/diseno-interfaz.tex`, `ob2/arquitectura-general.tex` | — |
-| T2 | 3.3.1 Diseño con el usuario y 3.3.2 Base técnica (árboles del back y del front, dependencias, pruebas) | `ob3/diseno-usuario.tex`, `ob3/base-tecnica.tex` | árboles en LaTeX (`dirtree`) |
+| T2 | 3.3.1 Diseño con el usuario y 3.3.2 Construcción: base del proyecto, tarjeta 0 (árboles del back y del front, dependencias, esquema versionado, pruebas) | `ob3/diseno-usuario.tex`, `ob3/base-tecnica.tex` | árboles en LaTeX (`dirtree`) |
 | T3 | 3.3.3 Base de datos por grupos, roles × permisos, reglas en la BD | `ob3/base-datos.tex` | 4 ER parciales (generadas) |
 | T4 | 3.3.4 Tarjetas principales: back + front por tarjeta | `ob3/tarjetas.tex` | capturas del autor |
 | T5 | 3.3.5 Desarrollo del agente: estructura, interfaz interna, LLM, cadena de decisión híbrida | `ob3/agente-desarrollo.tex` | cadena de decisión (generada), árbol del agente |
@@ -44,3 +44,4 @@ Estructura: **3.3 Desarrollo** · **3.4 Implementación** · **3.5 Evaluación d
 | `Ob3_Agente_Agendamiento.png` | Confirmación de la cita y su aparición en la agenda | 3.4.5 |
 | `Ob3_Agente_Derivacion.png` | Consulta clínica o de saldo derivada a recepción | 3.4.5 |
 | `Ob3_Tablero_Kanban.png` | Tablero final con las tarjetas completadas | 3.4.7 |
+| `Ob3_Tarjeta_Agenda.png` | Tarjeta 4 abierta en Planka: etiquetas, trazabilidad, tareas y pruebas | 3.3.4 |

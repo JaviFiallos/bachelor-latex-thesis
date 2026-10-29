@@ -1,9 +1,9 @@
 % 3.3.4 Construcción de las tarjetas principales (T4): estado del tablero y API + interfaz por tarjeta.
 % Sin fechas (solo en 3.5). Capturas con datos ficticios en img/Objetivo3/.
 
-\subsubsection{Construcción de las tarjetas principales}
+\subsubsection{Construcción: tarjetas del sistema}
 
-La construcción siguió las tarjetas del plan (Tabla~\ref{tab:ob2_tarjetas}) con una sola tarjeta en desarrollo; cada una abarcó la API y la interfaz web de su módulo. La Tabla~\ref{tab:ob3_tarjetas} resume el estado final, y los apartados siguientes detallan las tarjetas que atienden los puntos críticos del Objetivo 1.
+La construcción siguió las tarjetas del plan (Tabla~\ref{tab:ob2_tarjetas}) con una sola tarjeta en desarrollo. El tablero se gestionó en Planka, de código abierto. Cada tarjeta agrupa en una lista las tareas de la API y de la interfaz web que se construyeron a la vez, y en otra sus pruebas (Figura~\ref{fig:ob3_tarjeta_detalle}). La Tabla~\ref{tab:ob3_tarjetas} resume el estado final, y los apartados siguientes detallan las tarjetas que atienden los puntos críticos del Objetivo 1.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -19,17 +19,25 @@ La construcción siguió las tarjetas del plan (Tabla~\ref{tab:ob2_tarjetas}) co
 \hline
 \textbf{Tarjeta} & \textbf{Estado} \\ \hline
 \endhead
+0. Base del proyecto: estructura, base de datos y pruebas & Completada \\ \hline
 1 a 10. Identidad, pacientes y profesionales, historia clínica, agenda, atención, odontograma, tratamientos, recetas, cobros y auditoría & Completadas \\ \hline
 11 a 13. Agente: núcleo, agendamiento e interpretación del texto libre & Completadas \\ \hline
-14. Agente: recordatorios & No implementada (Debería) \\ \hline
-15. Respaldos y exportación & \textit{[Completada]} \\ \hline
+14. Agente: recordatorios & No implementada (Debería); retirada del tablero \\ \hline
+15. Respaldos y exportación & \textit{[Respaldos completados; falta la exportación]} \\ \hline
 \multicolumn{2}{|l|}{\cellcolor{gray!10}\textbf{Tarjetas añadidas durante la construcción}} \\ \hline
-Formulario 033: vista e impresión & Completada \\ \hline
+Formulario 033: vista, impresión e historial inmediato & Completada \\ \hline
 Funciones del director: usuarios, profesionales, catálogos y estadísticas & Completada \\ \hline
 Ajustes del prototipo (Tabla~\ref{tab:ob3_ajustes}) & Completada \\ \hline
 Despliegue en el servidor e integración continua & Completada \\ \hline
 \end{xltabular}
 \endgroup
+
+\begin{figure}[H]
+\centering
+\IfFileExists{img/Objetivo3/Ob3_Tarjeta_Agenda.png}{\includegraphics[width=0.8\linewidth]{img/Objetivo3/Ob3_Tarjeta_Agenda.png}}{\fbox{\parbox{0.9\linewidth}{\centering Pendiente: img/Objetivo3/Ob3\_Tarjeta\_Agenda.png}}}
+\caption{Tarjeta 4 del tablero, con su trazabilidad, sus tareas y sus pruebas}
+\label{fig:ob3_tarjeta_detalle}
+\end{figure}
 
 \paragraph{Identidad y roles}
 
@@ -66,7 +74,7 @@ Despliegue en el servidor e integración continua & Completada \\ \hline
 
 \paragraph{Tratamientos, receta y Formulario 033}
 
-\textbf{API.} El tratamiento se elige del catálogo con su precio base, editable; si se liga a un hallazgo pendiente, este pasa a realizado. La receta nace como borrador y, al emitirse, queda inmutable y se genera en PDF con la leyenda de confidencialidad y el espacio para la firma (RF04, RF05). \textbf{Interfaz.} Tratamientos y receta se registran en un panel lateral, con posologías predefinidas (Figura~\ref{fig:ob3_receta}); el Formulario 033 se compone de lo registrado y se imprime en el formato del MSP (Figura~\ref{fig:ob3_form033}), lo que elimina la transcripción de la Etapa 2 (BN1, BN2).
+\textbf{API.} El tratamiento se elige del catálogo con su precio base, editable; si se liga a un hallazgo pendiente, este pasa a realizado. La receta nace como borrador y, al emitirse, queda inmutable y se genera en PDF con la leyenda de confidencialidad y el espacio para la firma (RF04, RF05). \textbf{Interfaz.} Tratamientos y receta se registran en un panel lateral, con posologías predefinidas (Figura~\ref{fig:ob3_receta}); el Formulario 033 se compone de lo registrado y se imprime en el formato del MSP (Figura~\ref{fig:ob3_form033}), lo que elimina la transcripción de la Etapa 2 (BN1, BN2). Su sección 12 reúne todas las sesiones del paciente y sirve de historial inmediato desde cualquier atención (RF06).
 
 \begin{figure}[H]
 \centering
