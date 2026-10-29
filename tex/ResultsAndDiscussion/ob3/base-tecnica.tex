@@ -1,11 +1,13 @@
-% 3.3.2 Base técnica (T2): estructura del servidor y de la interfaz web, dependencias clave y pruebas.
+% 3.3.2 Construcción, tarjeta 0 (T2): estructura de la API y de la interfaz web, dependencias, esquema versionado y pruebas.
 % Fuente: bellidental-backend (src/main/java/com/bellidental, pom.xml) y bellidental-frontend (src/app, package.json).
 
-\subsubsection{Base técnica}
+\subsubsection{Construcción: base del proyecto (tarjeta 0)}
 
-\paragraph{Estructura del servidor y de la interfaz web}
+La construcción (Tabla~\ref{tab:ob2_fases_rad}) empezó con la tarjeta 0 del plan (Tabla~\ref{tab:ob2_tarjetas}): la estructura común de la API y de la interfaz web, el esquema versionado de la base de datos y el entorno de pruebas. Las demás tarjetas se construyeron sobre esta base.
 
-La API mantiene el monolito modular del diseño (Figura~\ref{fig:ob2_modulos}): un paquete por módulo, con tres capas internas (\texttt{api}, controladores; \texttt{application}, servicios y transacciones; \texttt{domain}, entidades y reglas) y una interfaz pública para los demás módulos (Figura~\ref{fig:ob3_arbol_api}). El esquema se crea con 22 migraciones de Flyway, versionadas junto al código.
+\paragraph{Estructura de la API y de la interfaz web}
+
+La API mantiene el monolito modular del diseño (Figura~\ref{fig:ob2_modulos}): un paquete por módulo, con tres capas internas (\texttt{api}, controladores; \texttt{application}, servicios y transacciones; \texttt{domain}, entidades y reglas) y una interfaz pública para los demás módulos (Figura~\ref{fig:ob3_arbol_api}).
 
 La interfaz web replica esa división (Figura~\ref{fig:ob3_arbol_web}): una carpeta por funcionalidad, con sus páginas, componentes y servicios de acceso a la API. La capa \texttt{core} gestiona la sesión, adjunta el token a cada petición y restringe las rutas por perfil.
 
@@ -72,7 +74,7 @@ La interfaz web replica esa división (Figura~\ref{fig:ob3_arbol_web}): una carp
 
 \paragraph{Dependencias clave}
 
-La Tabla~\ref{tab:ob3_dependencias} complementa la pila del diseño (Tabla~\ref{tab:ob2_stack}) con las librerías que sostienen requerimientos.
+La Tabla~\ref{tab:ob3_dependencias} complementa la pila del diseño (Tabla~\ref{tab:ob2_stack}) con las librerías que sostienen requerimientos; las del agente se detallan en su construcción (Tabla~\ref{tab:ob3_herramientas_agente}).
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -80,7 +82,7 @@ La Tabla~\ref{tab:ob3_dependencias} complementa la pila del diseño (Tabla~\ref{
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
 \begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}X|}
-\caption{Dependencias clave del servidor, la interfaz web y el agente}
+\caption{Dependencias clave de la API y de la interfaz web}
 \label{tab:ob3_dependencias} \\
 \hline
 \textbf{Componente} & \textbf{Dependencia} & \textbf{Uso} \\ \hline
@@ -95,13 +97,15 @@ API & OpenPDF & Receta y comprobante en PDF (RF05, RF08) \\ \hline
 API & springdoc-openapi & Documentación de los endpoints \\ \hline
 Interfaz web & Angular 22 (componentes independientes y señales) y Angular CDK & Pantallas por funcionalidad; paneles laterales y diálogos accesibles \\ \hline
 Interfaz web & Fuentes e íconos locales & Ningún recurso de terceros en tiempo de ejecución (LOPDP) \\ \hline
-Agente & FastAPI, httpx y Pydantic & Webhook, llamadas a la API y a WhatsApp, validación de mensajes \\ \hline
-Agente & SDK de Anthropic & Clasificación del texto libre con salida estructurada \\ \hline
 \end{xltabular}
 \endgroup
 
 En desarrollo, la interfaz web se sirve con el servidor de Angular y un proxy dirige \texttt{/api} a la API local; PostgreSQL corre en un contenedor, y el webhook usa el número de prueba de Meta y un túnel temporal (Tabla~\ref{tab:ob2_webhook}).
 
+\paragraph{Esquema versionado}
+
+Flyway crea el esquema con migraciones numeradas que se versionan junto al código y se aplican al arrancar la API. La tarjeta 0 dejó configurado el mecanismo; cada tarjeta añadió después la migración de su grupo de tablas (V1 a V22; apartado siguiente).
+
 \paragraph{Pruebas}
 
-Las reglas críticas se verifican con pruebas automáticas: unitarias para las reglas de dominio y la máquina de estados del agente, y de integración contra PostgreSQL en contenedor (Testcontainers) para la agenda, la atención y la auditoría. La API cuenta con 52 clases de prueba, la interfaz web con 18 y el agente con 6 módulos; todas se ejecutan antes de cada despliegue (apartado~\ref{sec:ob3_cicd}).
+La tarjeta 0 dejó listo el entorno de pruebas, y cada tarjeta añadió las suyas: unitarias para las reglas de dominio y la máquina de estados del agente, y de integración contra PostgreSQL en contenedor (Testcontainers) para la agenda, la atención y la auditoría. La API cuenta con 52 clases de prueba, la interfaz web con 18 y el agente con 6 módulos; todas se ejecutan antes de cada despliegue (apartado~\ref{sec:ob3_cicd}).
