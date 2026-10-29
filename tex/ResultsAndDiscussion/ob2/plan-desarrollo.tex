@@ -2,7 +2,7 @@
 
 El plan corresponde a la fase de construcción del enfoque RAD. Traduce los requerimientos priorizados en tarjetas de un tablero Kanban, ordenadas por dependencia. Cada tarjeta corresponde, en general, a un módulo (Tabla~\ref{tab:ob2_modulos}).
 
-La Figura~\ref{fig:ob2_boceto_kanban} muestra el boceto del tablero con una posible distribución de tarjetas: cada una indica el módulo, los requerimientos y la prioridad, y la columna En desarrollo admite una sola tarjeta. El tablero completo se presenta en la implementación.
+La Figura~\ref{fig:ob2_boceto_kanban} muestra el boceto del tablero con una posible distribución de tarjetas. Cada tarjeta lleva como etiquetas la prioridad y el grupo; muestra los requerimientos y su origen en el Objetivo 1, y una lista con las tareas de la API y de la interfaz web que se construyen a la vez, con su avance. La columna En desarrollo admite una sola tarjeta. El tablero final se presenta en el Objetivo 3.
 
 \begin{figure}[H]
 \centering
@@ -11,7 +11,7 @@ La Figura~\ref{fig:ob2_boceto_kanban} muestra el boceto del tablero con una posi
 \label{fig:ob2_boceto_kanban}
 \end{figure}
 
-La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las cuatro tarjetas en negrita corresponden al agente conversacional; cada una abarca el servicio del agente y su interfaz en la API.
+La Tabla~\ref{tab:ob2_tarjetas} presenta las dieciséis tarjetas. La tarjeta 0 prepara la base común de la API, la interfaz web y la base de datos; las cuatro tarjetas en negrita corresponden al agente conversacional; cada una abarca el servicio del agente y su interfaz en la API.
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
@@ -27,7 +27,8 @@ La Tabla~\ref{tab:ob2_tarjetas} presenta las quince tarjetas. Las cuatro tarjeta
 \textbf{Tarjeta} & \textbf{Módulo} & \textbf{Requerimientos} & \textbf{Prioridad} & \textbf{Depende de} \\ \hline
 \endhead
 
-1. Identidad y autenticación & Identidad y acceso & RNF01 & Debe & --- \\ \hline
+0. Base del proyecto: estructura, base de datos y pruebas & Transversal & RNF01, RNF02, RNF04 & Debe & --- \\ \hline
+1. Identidad y autenticación & Identidad y acceso & RNF01 & Debe & 0 \\ \hline
 2. Profesionales y pacientes & Pacientes y profesionales & RF06 (parcial), RF07 (base) & Debe & 1 \\ \hline
 3. Historia clínica y antecedentes & Clínico & RF01 & Debe & 2 \\ \hline
 4. Agenda y horarios & Agenda & RF07 & Debe & 2 \\ \hline
