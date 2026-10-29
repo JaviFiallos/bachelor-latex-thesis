@@ -1,0 +1,63 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{estilo}
+\begin{document}
+\begin{tikzpicture}[
+  font=\footnotesize, every node/.append style={execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  caja/.style={draw, rounded corners=2pt, line width=0.7pt, align=center, text width=#1, minimum height=0.8cm, inner sep=3pt},
+  caja/.default=2.3cm,
+  capa/.style={font=\scriptsize\bfseries, align=right, anchor=east, text=black!70, text width=2.2cm},
+  cod/.style={draw=black!45, rounded corners=2pt, align=left, font=\scriptsize, text width=3.3cm, inner sep=3pt, fill=white},
+  f/.style={-{Stealth[length=2mm]}, line width=0.65pt, draw=black!70},
+  r/.style={black!45, dotted, line width=0.8pt}
+]
+\def\cx{0}
+\def\dx{2.56}
+% Agente, proxy y seguridad
+\node[caja=7.4cm, fill=dAgenteF, draw=dAgenteB] (ag) at (\cx,0) {\textbf{Agente}: adaptador de la API; clave de servicio en cada petición y plazo de 10 s};
+\node[caja=7.4cm, fill=dExternoF, draw=dExternoB, dashed] (px) at (\cx,-1.25) {\textbf{Proxy inverso}: la ruta del agente se bloquea desde internet};
+\node[caja=7.4cm, fill=dSistemaF, draw=dSistemaB] (fl) at (\cx,-2.5) {Filtro de la clave de servicio $\rightarrow$ usuario de sistema con permiso \texttt{BOT}};
+% Controladores
+\node[caja=3.55cm, fill=dSistemaF, draw=dSistemaB] (c1) at (\cx-1.92,-3.75) {Aviso, información e identificación};
+\node[caja=3.55cm, fill=dSistemaF, draw=dSistemaB] (c2) at (\cx+1.92,-3.75) {Disponibilidad y citas};
+% Servicios del módulo bot
+\node[caja, fill=dSistemaF, draw=dSistemaB] (s0) at (\cx-\dx,-5.0) {Aviso de privacidad};
+\node[caja, fill=dSistemaF, draw=dSistemaB] (s1) at (\cx,-5.0) {Información};
+\node[caja, fill=dSistemaF, draw=dSistemaB] (s2) at (\cx+\dx,-5.0) {Disponibilidad};
+\node[caja, fill=dSistemaF, draw=dSistemaB] (s3) at (\cx-\dx,-6.1) {Identificación};
+\node[caja, fill=dSistemaF, draw=dSistemaB] (s4) at (\cx,-6.1) {Consulta de citas};
+\node[caja, fill=dSistemaF, draw=dSistemaB, line width=1pt] (s5) at (\cx+\dx,-6.1) {Agendamiento y límites};
+% Interfaces públicas de otros módulos
+\node[caja, fill=dClinicoF, draw=dClinicoB] (p) at (\cx-\dx,-7.45) {Pacientes};
+\node[caja, fill=dClinicoF, draw=dClinicoB] (q) at (\cx,-7.45) {Profesionales};
+\node[caja, fill=dClinicoF, draw=dClinicoB] (a) at (\cx+\dx,-7.45) {Agenda};
+% Base de datos
+\node[caja=7.4cm, fill=dDatosF, draw=dDatosB] (bd) at (\cx,-8.75) {\textbf{PostgreSQL}: restricción de exclusión sobre las citas};
+% Columna derecha
+\node[caja=2.2cm, fill=dExternoF, draw=dExternoB] (cl) at (\cx+6.0,-5.0) {Clínico y cobros};
+\node[cod] (k1) at (\cx+6.55,-6.1) {404: paciente o cita ajenos al teléfono\\409 \texttt{BOT\_LIMIT\_REACHED}\\409 \texttt{BOT\_TOO\_LATE}};
+\node[caja=2.2cm, fill=dPersonaF, draw=dPersonaB] (rec) at (\cx+6.0,-7.45) {Recepción (interfaz web)};
+\node[cod] (k2) at (\cx+6.55,-8.75) {409 \texttt{APPOINTMENT\_OVERLAP}};
+% Flujo entre capas
+\draw[f] (ag) -- (px);
+\draw[f] (px) -- (fl);
+\draw[f] (fl.south -| c1) -- (c1);
+\draw[f] (fl.south -| c2) -- (c2);
+\draw[f] (c1.south -| s0) -- (s0);
+\draw[f] (c2.south -| s2) -- (s2);
+\draw[f] (s3) -- (p);
+\draw[f] (s4) -- (q);
+\draw[f] (s5) -- (a);
+\foreach \n in {p, q, a} \draw[f] (\n) -- (bd.north -| \n);
+\draw[f] (rec) -- node[font=\scriptsize\itshape, above, align=center, inner sep=1pt]{misma\\operación} (a);
+% Sin acceso a clínico y cobros
+\draw[f, dashed, red!60!black] (s2) -- node[pos=0.5, font=\bfseries, text=red!60!black, fill=white, inner sep=1pt]{$\times$} (cl);
+% Rechazos
+\draw[r] (k1) -- (s5);
+\draw[r] (k2) -- (bd);
+% Capas
+\node[capa] at (-4.05,-2.5) {Seguridad};
+\node[capa] at (-4.05,-3.75) {Controladores};
+\node[capa] at (-4.05,-5.55) {Servicios del módulo \texttt{bot}};
+\node[capa] at (-4.05,-7.45) {Interfaces públicas};
+\end{tikzpicture}
+\end{document}

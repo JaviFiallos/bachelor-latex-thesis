@@ -1,14 +1,73 @@
-% 3.3.5 Desarrollo del agente conversacional (T5): estructura, interfaz interna, LLM y combinación híbrida.
+% 3.3.5 Construcción del agente conversacional (T5), tarjetas 11 a 13: del diseño al código, herramientas,
+% estructura, procesamiento de un mensaje, estado, interfaz interna, reglas, LLM, combinación híbrida y pruebas.
 % No repetir del Obj. 2: estados (fig:ob2_estados_conversacion), secuencias, contrato (tab:ob2_contrato), intenciones.
-% RF14 (recordatorios) no implementado.
+% RF14 (recordatorios) no implementado. Diagramas: diagramas/tikz/ob3/Ob3_Flujo_Mensaje.tex, Ob3_Interfaz_Bot.tex.
 
-\subsubsection{Desarrollo del agente conversacional}
+\subsubsection{Construcción: agente conversacional (tarjetas 11 a 13)}
 
-El agente se construyó en las tarjetas 11 a 13 como un servicio en Python (FastAPI) separado de la API, según la arquitectura híbrida del diseño.
+El agente se construyó en las tarjetas 11 a 13 (Tabla~\ref{tab:ob2_tarjetas}) como un servicio en Python separado de la API, con la arquitectura híbrida del diseño: una máquina de estados que decide y un modelo de lenguaje que solo interpreta el texto libre. Los apartados siguientes lo presentan de lo general a lo particular.
+
+\paragraph{Del diseño a la implementación}
+
+Cada componente funcional del diseño (Figura~\ref{fig:ob2_componentes_func}) se implementó en una carpeta del agente y, si necesita datos de la clínica, en un servicio del módulo \texttt{bot} de la API (Tabla~\ref{tab:ob3_traza_agente}).
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}p{2.0cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.1cm}|>{\centering\arraybackslash}p{1.1cm}|}
+\caption{Componentes del agente: necesidad, requerimiento e implementación}
+\label{tab:ob3_traza_agente} \\
+\hline
+\textbf{Componente} & \textbf{Origen} & \textbf{Agente} & \textbf{Servicio de la API} & \textbf{Tarjeta} \\ \hline
+\endfirsthead
+\hline
+\textbf{Componente} & \textbf{Origen} & \textbf{Agente} & \textbf{Servicio de la API} & \textbf{Tarjeta} \\ \hline
+\endhead
+Aviso de privacidad & BN6; RF09 & \texttt{dialog/consent} & Aviso de privacidad & 11 \\ \hline
+Menú e información & N1; RF10 & \texttt{dialog/menu}, \texttt{messages} & Información & 11 \\ \hline
+Derivación & N5; RF13 & \texttt{dialog/handoff} & Información (contacto de recepción) & 11 \\ \hline
+Identificación & N2; RF11 & \texttt{dialog/identify} & Identificación & 12 \\ \hline
+Agendamiento & N2, N4; RF11 & \texttt{dialog/booking} & Disponibilidad; agendamiento y límites & 12 \\ \hline
+Reprogramación y cancelación & N2; RF12 & \texttt{dialog/appointments} & Consulta de citas; agendamiento y límites & 12 \\ \hline
+Intérprete de mensajes & N1, N2; RF10, RF13 & \texttt{nlu}, \texttt{dialog/free\_text} & --- & 13 \\ \hline
+Urgencias & N2; RF11, RF13 & \texttt{dialog/urgent} & Disponibilidad (horarios de urgencia) & 13 \\ \hline
+Recordatorios & N3; RF14 & \multicolumn{2}{l|}{No implementado (Debería)} & 14 \\ \hline
+\end{xltabular}
+\endgroup
+
+\paragraph{Herramientas y su uso}
+
+La Tabla~\ref{tab:ob3_herramientas_agente} indica cómo se usó cada herramienta seleccionada en el diseño (Tablas~\ref{tab:ob2_mecanismos} y \ref{tab:ob2_matriz_llm}).
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}X|}
+\caption{Herramientas del agente y su uso}
+\label{tab:ob3_herramientas_agente} \\
+\hline
+\textbf{Herramienta} & \textbf{Uso en el agente} \\ \hline
+\endfirsthead
+\hline
+\textbf{Herramienta} & \textbf{Uso en el agente} \\ \hline
+\endhead
+WhatsApp Cloud API (Graph API v23.0) & Recepción de mensajes por webhook; envío de texto, botones (hasta 3) y listas (hasta 10 filas) \\ \hline
+FastAPI y Uvicorn & Puntos de verificación y de recepción del webhook; procesamiento en segundo plano tras responder \\ \hline
+Pydantic & Mensajes de salida con los límites de WhatsApp, que se validan antes del envío; esquema de la interpretación del modelo \\ \hline
+pydantic-settings & Claves, plazos y versión de la Graph API desde variables de entorno; ningún secreto en el código \\ \hline
+httpx & Llamadas asíncronas a la Graph API y a la API interna, con plazo máximo \\ \hline
+SDK de Anthropic & Claude Haiku 5.5 con salida estructurada validada contra el esquema \\ \hline
+pytest con dobles de prueba & Conversaciones completas sin WhatsApp, sin API y sin modelo \\ \hline
+\end{xltabular}
+\endgroup
 
 \paragraph{Estructura del servicio}
 
-El servicio sigue los puertos y adaptadores del diseño (Figura~\ref{fig:ob2_estilo_agente}): el núcleo, con la máquina de estados, no depende de WhatsApp, de la API ni del proveedor del LLM, y cada adaptador ocupa su carpeta (Figura~\ref{fig:ob3_arbol_agente}). El clasificador admite el SDK de Anthropic o una interfaz compatible con OpenAI sin cambios en la conversación.
+El servicio sigue los puertos y adaptadores del diseño (Figura~\ref{fig:ob2_estilo_agente}): el núcleo, con la máquina de estados, no depende de WhatsApp, de la API ni del proveedor del modelo, y cada adaptador ocupa su carpeta (Figura~\ref{fig:ob3_arbol_agente}). El clasificador admite el SDK de Anthropic o una interfaz compatible con OpenAI sin cambios en la conversación.
 
 \begin{figure}[H]
 \centering
@@ -23,7 +82,7 @@ El servicio sigue los puertos y adaptadores del diseño (Figura~\ref{fig:ob2_est
 .3 consent, menu, identify\DTcomment{aviso, menú e identificación}.
 .3 booking, appointments, urgent\DTcomment{citas y urgencias}.
 .3 free\_text, handoff\DTcomment{texto libre y derivación}.
-.2 nlu\DTcomment{adaptador del LLM: instrucciones, esquema y clasificador}.
+.2 nlu\DTcomment{adaptador del modelo: instrucciones, esquema y clasificador}.
 .2 backend\DTcomment{adaptador de la API interna}.
 .2 messages\DTcomment{textos fijos}.
 }
@@ -32,13 +91,81 @@ El servicio sigue los puertos y adaptadores del diseño (Figura~\ref{fig:ob2_est
 \label{fig:ob3_arbol_agente}
 \end{figure}
 
-\paragraph{Interfaz interna con la API}
+\paragraph{Procesamiento de un mensaje}
 
-Las 15 operaciones del contrato (Tabla~\ref{tab:ob2_contrato}), sin las de recordatorios, se implementaron en el módulo \texttt{bot} de la API. Cada petición lleva una clave de servicio, y el proxy bloquea la ruta desde internet (RNF03). Los rechazos llegan con un código que el agente traduce en una acción; ante un error o una demora mayor de 10 s, deriva a recepción (RF13). Las escrituras usan la misma operación de agenda que la recepción, por lo que la restricción anticruce vale para ambos canales.
+Cada evento de WhatsApp sigue la Figura~\ref{fig:ob3_flujo_mensaje}. La firma prueba que el evento viene de Meta. El agente responde 200 antes de procesar, porque Meta reintenta los eventos sin respuesta; por eso cada identificador se procesa una sola vez. El candado por teléfono impide que dos mensajes seguidos del mismo paciente modifiquen a la vez su conversación. Ante un error, el paciente recibe el contacto de recepción (RNF05, RF13).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Objetivo3/Ob3_Flujo_Mensaje.pdf}
+\caption{Procesamiento de un mensaje en el servicio del agente}
+\label{fig:ob3_flujo_mensaje}
+\end{figure}
+
+\paragraph{Estado de la conversación}
+
+Cada teléfono tiene una conversación en memoria con el paso actual (Figura~\ref{fig:ob2_estados_conversacion}), el paciente identificado, la selección en curso, los últimos textos, el fin de la derivación y el contador de mensajes no reconocidos. Expira a los 30 min sin actividad. Solo la aceptación del aviso se guarda en la base de datos; la conversación no (BN7).
+
+\paragraph{Interfaz interna en la API}
+
+El módulo \texttt{bot} implementa el contrato del diseño (Tabla~\ref{tab:ob2_contrato}) en 15 operaciones, sin las de recordatorios, organizadas en capas (Figura~\ref{fig:ob3_interfaz_bot}):
+
+\begin{itemize}
+    \item \textbf{Seguridad.} El filtro convierte la clave de servicio en un usuario de sistema con el permiso \texttt{BOT}; el agente se autoriza con el mismo mecanismo que el personal (RNF01).
+    \item \textbf{Servicios.} Solo usan las interfaces públicas de pacientes, profesionales y agenda; ninguno depende de los módulos clínico o de cobros (RNF03, BN7).
+    \item \textbf{Pertenencia.} Toda operación sobre una cita recibe el teléfono; si el paciente o la cita no le corresponden, la respuesta es 404.
+    \item \textbf{Agenda.} Las escrituras usan la misma operación que la recepción, con origen \textit{agente}; la restricción de exclusión vale para ambos canales (RF07).
+    \item \textbf{Respuesta.} Un sobre común con éxito, mensaje, código y datos; el agente actúa según el código (Tabla~\ref{tab:ob2_contrato}).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{img/Objetivo3/Ob3_Interfaz_Bot.pdf}
+\caption{Capas de la interfaz interna del agente en la API}
+\label{fig:ob3_interfaz_bot}
+\end{figure}
+
+\paragraph{Reglas y dónde se aplican}
+
+Cada regla del diseño se ubicó en la capa que puede garantizarla (Tabla~\ref{tab:ob3_reglas_agente}): la base de datos, lo que vale para todos los canales; la API, lo que protege la agenda; el agente, lo propio de la conversación. Los límites de la API son configurables.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.0cm}|>{\raggedright\arraybackslash}p{2.3cm}|}
+\caption{Reglas del agente y capa que las aplica}
+\label{tab:ob3_reglas_agente} \\
+\hline
+\textbf{Regla} & \textbf{Capa} & \textbf{Requerimiento} \\ \hline
+\endfirsthead
+\hline
+\textbf{Regla} & \textbf{Capa} & \textbf{Requerimiento} \\ \hline
+\endhead
+\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Datos y privacidad}} \\ \hline
+Sin aceptación del aviso no se trata ningún dato & Agente y API & RF09; BN6 \\ \hline
+Las secuencias de siete o más dígitos se enmascaran ante el modelo; la cédula no entra al historial & Agente & RNF03; BN7 \\ \hline
+Paciente o cita de otro teléfono: 404 & API & RNF03 \\ \hline
+\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Identificación y citas}} \\ \hline
+Un paciente del teléfono confirma su nombre; con varios, se pide la cédula; sin coincidencia o tras dos intentos, se deriva & Agente y API & RF11 \\ \hline
+Toda escritura se ejecuta solo tras \textit{Confirmar} & Agente & RF11, RF12 \\ \hline
+Días con horarios libres en los próximos 14 días & API & RF11 \\ \hline
+Una cita activa del agente por paciente y especialidad, y hasta tres por teléfono; las de recepción no cuentan & API & RF11 \\ \hline
+Reprogramar o cancelar hasta 2 h antes; la cita nueva enlaza la original & API & RF12 \\ \hline
+Sin cruces de citas del mismo profesional & Base de datos & RF07 \\ \hline
+Urgencia: tres primeros horarios de hoy o mañana y texto fijo de emergencia, sin consejo médico & Agente y API & RF11, RF13 \\ \hline
+\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Conversación}} \\ \hline
+Fuera de tema: texto fijo y menú; el agente no conversa de otros temas (política de Meta) & Agente & RF10 \\ \hline
+Dos mensajes no reconocidos seguidos: derivación & Agente & RF13 \\ \hline
+Derivación: el agente calla 4 h o hasta que el paciente escribe \textit{menú} & Agente & RF13 \\ \hline
+Plazos de 8 s para el modelo y 10 s para la API; al vencer, menú o derivación & Agente & RNF05 \\ \hline
+\end{xltabular}
+\endgroup
 
 \paragraph{Integración con el modelo de lenguaje}
 
-Al modelo seleccionado (Tabla~\ref{tab:ob2_matriz_llm}) solo se envían el texto, el paso de la conversación y los dos mensajes anteriores; las secuencias de siete o más dígitos, como cédulas y teléfonos, se reemplazan antes del envío (RNF03, BN7). Las instrucciones fijan las intenciones (Tabla~\ref{tab:ob2_intenciones}), el vocabulario de los pacientes y ejemplos, y ordenan ignorar instrucciones escritas en el mensaje. La respuesta es una salida estructurada validada contra un esquema (Figura~\ref{fig:ob3_traza}); si el modelo falla, tarda o responde fuera del esquema, el agente muestra el menú (RNF05).
+El clasificador llama a Claude Haiku 5.5 (Tabla~\ref{tab:ob2_matriz_llm}) con un máximo de 256 tokens de salida. Solo se envían el texto, el paso de la conversación y los dos mensajes anteriores, ya enmascarados. Las instrucciones fijan las intenciones (Tabla~\ref{tab:ob2_intenciones}), el vocabulario de los pacientes y ejemplos, y ordenan ignorar instrucciones escritas en el mensaje. La respuesta se valida contra un esquema con campos de hasta 40 caracteres (Figura~\ref{fig:ob3_traza}); si el modelo falla, tarda o responde fuera del esquema, el agente muestra el menú (RNF05).
 
 \begin{figure}[H]
 \centering
@@ -72,7 +199,7 @@ Con esa salida, la máquina de estados busca la especialidad en el catálogo de 
 
 \paragraph{Combinación de la máquina de estados y el modelo}
 
-La combinación se resuelve en el enrutador del núcleo (Figura~\ref{fig:ob3_cadena}). Los botones y las listas van directo a la máquina de estados. El texto libre pasa por el modelo cuando la conversación está libre, o, dentro de un flujo, solo para detectar una urgencia o una derivación. El modelo propone; el código decide el paso y redacta la respuesta con datos de la API; el paciente confirma; la API y la base de datos aplican las reglas. Dos mensajes no reconocidos seguidos se derivan a recepción (RF13).
+La combinación se resuelve en el enrutador del núcleo (Figura~\ref{fig:ob3_cadena}). Los botones y las listas van directo a la máquina de estados. El texto libre pasa por el modelo cuando la conversación está libre; dentro de un flujo, solo para detectar una urgencia, una consulta clínica, de saldo o de pago, o un pedido de hablar con recepción. El modelo propone; el código decide el paso y redacta la respuesta con datos de la API; el paciente confirma; la API y la base de datos aplican las reglas.
 
 \begin{figure}[H]
 \centering
@@ -80,3 +207,7 @@ La combinación se resuelve en el enrutador del núcleo (Figura~\ref{fig:ob3_cad
 \caption{Cadena de decisión de un mensaje en el agente híbrido}
 \label{fig:ob3_cadena}
 \end{figure}
+
+\paragraph{Pruebas durante la construcción}
+
+Cada tarjeta del agente incluyó sus pruebas. En el agente, pruebas unitarias con dobles de WhatsApp, de la API y del modelo recorren conversaciones completas: webhook y firma, menú, agendamiento, reprogramación e interpretación del texto libre. En la API, pruebas de integración contra PostgreSQL verifican el contrato, la pertenencia por teléfono, los límites y la regla de 2 h. Las pruebas con WhatsApp real se presentan en la implementación (Tabla~\ref{tab:ob3_pruebas_agente}).
