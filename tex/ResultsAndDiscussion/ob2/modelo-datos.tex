@@ -1,6 +1,6 @@
 \subsubsection{Modelo de datos}
 
-El modelo relacional deriva del Formulario 033, de la ficha rápida y de los requerimientos del Objetivo 1. Su entidad central es la atención: cada cita atendida genera una atención, en la que se registran los diagnósticos, el odontograma, los tratamientos y la receta. El modelo completo se consolida en la implementación.
+El modelo relacional deriva del Formulario 033, de la ficha rápida y de los requerimientos. Su entidad central es la atención: cada cita atendida genera una atención, en la que se registran los diagnósticos, el odontograma, los tratamientos y la receta. El modelo completo se consolida en la implementación.
 
 La Tabla~\ref{tab:ob2_entidades} relaciona cada entidad con los requerimientos que atiende. Se añaden dos entidades propias del agente, vinculadas con el paciente y la cita; las guarda la API, porque el servicio del agente no accede a la base de datos, y el estado de la conversación no se almacena.
 
@@ -29,7 +29,6 @@ Receta & Medicamentos con posología predefinida & RF04, RF05 \\ \hline
 Pago & Abonos; el saldo se calcula, no se guarda & RF08 \\ \hline
 \multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Entidades del agente}} \\ \hline
 Aceptación del aviso & Teléfono, versión del aviso y fecha de aceptación & RF09 \\ \hline
-Recordatorio & Envío del día anterior y respuesta del paciente & RF14 \\ \hline
 \end{xltabular}
 \endgroup
 
@@ -82,4 +81,4 @@ La Figura~\ref{fig:ob2_estados_cita} muestra los estados de la cita y las transi
     \label{fig:ob2_estados_cita}
 \end{figure}
 
-La reprogramación crea una nueva cita en estado pendiente, vinculada a la original. Las citas creadas por el agente siguen los mismos estados que las de la recepción.
+La reprogramación crea una nueva cita en estado pendiente, que guarda la referencia a la cita original; esta pasa a reprogramada, de modo que se conserva el historial de cambios. Las citas creadas por el agente siguen los mismos estados que las de la recepción.

@@ -1,6 +1,6 @@
 \subsubsection{Selección de tecnologías del sistema}
 
-Se aplica el método de dos filtros de la metodología de desarrollo. Los criterios de eliminación derivan de los requerimientos del sistema (Tabla~\ref{tab:requerimientos}), y los pesos de los criterios de ponderación, de las restricciones del proyecto. Se evalúan por separado el framework del servidor, el framework de la interfaz web y el motor de base de datos; las tecnologías del agente conversacional se seleccionan en el apartado siguiente. Cada criterio indica entre paréntesis su origen, y en todas las matrices 3 es la puntuación más favorable.
+Se aplica el método de dos filtros de la metodología de desarrollo. Los criterios de eliminación derivan de los requerimientos del sistema (Tabla~\ref{tab:requerimientos}), y los pesos de los criterios de ponderación, de las restricciones del proyecto. Se evalúan por separado el framework del servidor, el framework de la interfaz web y el motor de base de datos. En todas las matrices, 3 es la puntuación más favorable.
 
 \paragraph{Framework del servidor}
 
@@ -22,12 +22,12 @@ Se comparan Spring Boot, Django, Laravel y NestJS (Tabla~\ref{tab:ob2_matriz_bac
 \endhead
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de eliminación (primer filtro)}} \\ \hline
 Control de acceso por roles y autenticación por token mediante componentes maduros (RNF01) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
-Código abierto sin licencias de pago (restricción de costo) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
+Código abierto sin licencias de pago & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
 Transacciones y validaciones de dominio robustas para la agenda (RF07, RF11) & 20\,\% & 3 & 3 & 2 & 2 \\ \hline
 Auditoría de cambios integrable (RNF02) & 15\,\% & 3 & 3 & 3 & 2 \\ \hline
-Experiencia previa del desarrollador (restricción de un único desarrollador) & 25\,\% & 3 & 2 & 1 & 2 \\ \hline
-Consumo de memoria en el servidor (restricción de costo) & 15\,\% & 1 & 1 & 3 & 2 \\ \hline
+Experiencia previa del desarrollador & 25\,\% & 3 & 2 & 1 & 2 \\ \hline
+Consumo de memoria en el servidor & 15\,\% & 1 & 1 & 3 & 2 \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,40} & \textbf{2,30} & \textbf{1,90} & \textbf{2,15} \\ \hline
 \end{xltabular}
 \endgroup
@@ -36,7 +36,7 @@ Spring Boot obtiene el mayor total, con el consumo de memoria más alto del grup
 
 \paragraph{Framework de la interfaz web}
 
-Se comparan Angular, React y Vue (Tabla~\ref{tab:ob2_matriz_frontend}). La captura extensa de la historia clínica (Formulario 033) y la experiencia del desarrollador reciben los mayores pesos.
+Se comparan Angular, React y Vue (Tabla~\ref{tab:ob2_matriz_frontend}). La captura extensa de la historia clínica en el Formulario 033 y la experiencia del desarrollador reciben los mayores pesos.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -87,17 +87,17 @@ Se comparan PostgreSQL, MySQL y MongoDB (Tabla~\ref{tab:ob2_matriz_bd}). La gara
 \endhead
 \multicolumn{5}{|l|}{\cellcolor{gray!10}\textbf{Criterios de eliminación (primer filtro)}} \\ \hline
 Integridad referencial declarativa (claves foráneas) para datos clínicos estructurados (RF01, BN1) & --- & Cumple & Cumple & No cumple \\ \hline
-Código abierto sin licencias de pago (restricción de costo) & --- & Cumple & Cumple & Cumple \\ \hline
+Código abierto sin licencias de pago & --- & Cumple & Cumple & Cumple \\ \hline
 \multicolumn{5}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
 Garantía de no cruce ante reservas concurrentes, en la propia base de datos (RF07) & 35\,\% & 3 & 1 & --- \\ \hline
 Búsqueda por similitud de texto para el catálogo CIE-10 (RF03) & 25\,\% & 3 & 2 & --- \\ \hline
-Consumo de recursos en un servidor compartido (restricción de costo) & 20\,\% & 2 & 3 & --- \\ \hline
+Consumo de recursos en un servidor compartido  & 20\,\% & 2 & 3 & --- \\ \hline
 Herramientas de respaldo y exportación en formato abierto (RNF04) & 20\,\% & 3 & 3 & --- \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,80} & \textbf{2,05} & \textbf{---} \\ \hline
 \end{xltabular}
 \endgroup
 
-PostgreSQL obtiene el mayor total. Es la única alternativa con una restricción de exclusión nativa, necesaria para impedir cruces de citas en la propia base de datos, y su extensión de similitud de texto facilita la búsqueda en el catálogo CIE-10. MySQL gana en consumo de recursos. MongoDB queda descartado en el primer filtro, porque no ofrece integridad referencial declarativa.
+PostgreSQL obtiene el mayor total. Entre las alternativas evaluadas, es la única con una restricción de exclusión nativa, necesaria para impedir cruces de citas en la propia base de datos, y su extensión de similitud de texto facilita la búsqueda en el catálogo CIE-10. MySQL gana en consumo de recursos. MongoDB queda descartado en el primer filtro, porque no ofrece integridad referencial declarativa.
 
 La Tabla~\ref{tab:ob2_stack} resume la pila tecnológica seleccionada.
 
@@ -115,7 +115,7 @@ La Tabla~\ref{tab:ob2_stack} resume la pila tecnológica seleccionada.
 \hline
 \textbf{Capa} & \textbf{Tecnología seleccionada} & \textbf{Componentes clave} & \textbf{Requerimientos atendidos} \\ \hline
 \endhead
-Backend & Spring Boot 3.5 con Java 21 & Spring Security con JWT, Spring Data JPA, validación de datos, migraciones con Flyway (usuario y fecha de cada revisión) & RF07, RF11, RNF01, RNF02 \\ \hline
+Backend & Spring Boot 3.5 con Java 21 & Spring Security con JWT, Spring Data JPA, validación de datos y auditoría con Hibernate Envers (usuario y fecha de cada revisión) & RF07, RF11, RNF01, RNF02 \\ \hline
 Frontend & Angular 22.1 & Enrutamiento, formularios y servicios con inyección de dependencias; aplicación de una sola página servida por nginx & RF02, RF07, RNF06 \\ \hline
 Base de datos & PostgreSQL 16 & Restricción de exclusión anticruce (extensión \texttt{btree\_gist}); búsqueda por similitud con \texttt{pg\_trgm} e índices GIN; migraciones con Flyway & RF01, RF03, RF07, RNF04 \\ \hline
 Contenedores & Docker y Docker Compose & Todos los servicios en un único archivo de composición, portable a otro proveedor & RNF04, RNF05 \\ \hline

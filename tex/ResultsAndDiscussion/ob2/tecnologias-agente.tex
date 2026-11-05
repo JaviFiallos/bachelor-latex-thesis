@@ -21,10 +21,10 @@ Las librerías no oficiales, como Baileys y whatsapp-web.js, emulan WhatsApp Web
 \textbf{Criterio} & \textbf{Peso} & \textbf{Cloud API (Meta)} & \textbf{BSP (p. ej., Twilio)} & \textbf{No oficiales (Baileys, whatsapp-web.js)} \\ \hline
 \endhead
 \multicolumn{5}{|l|}{\cellcolor{gray!10}\textbf{Criterio de eliminación (primer filtro)}} \\ \hline
-Uso autorizado por Meta según sus términos de servicio (canal oficial) & --- & Cumple & Cumple & No cumple \\ \hline
+Uso autorizado por Meta según sus términos de servicio & --- & Cumple & Cumple & No cumple \\ \hline
 \multicolumn{5}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
-Costo por mensaje sin recargo del intermediario (restricción de costo) & 30\,\% & 3 & 1 & --- \\ \hline
-Mensajes interactivos (botones y listas) y plantillas para recordatorios (RF10, RF14) & 25\,\% & 3 & 3 & --- \\ \hline
+Costo por mensaje sin recargo del intermediario & 30\,\% & 3 & 1 & --- \\ \hline
+Mensajes interactivos con botones y listas (RF10, RF11) & 25\,\% & 3 & 3 & --- \\ \hline
 Menor número de terceros que tratan los datos (BN7) & 25\,\% & 3 & 2 & --- \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,80} & \textbf{2,15} & \textbf{---} \\ \hline
 \end{xltabular}
@@ -34,7 +34,7 @@ WhatsApp Cloud API obtiene el mayor total. El BSP gana en facilidad de configura
 
 \paragraph{Enfoque de comprensión de los mensajes}
 
-El enfoque se decide por requisitos, como propone el diseño guiado por atributos \cite{cervantes2016designing}: cada requisito del agente plantea una exigencia, y el enfoque debe cubrirlas todas (Tabla~\ref{tab:ob2_comprension}).
+El enfoque se decide a partir de los requisitos, siguiendo el diseño guiado por atributos (ADD, \textit{Attribute-Driven Design}) \cite{cervantes2016designing}: cada requisito del agente plantea una exigencia, y el enfoque debe cubrirlas todas (Tabla~\ref{tab:ob2_comprension}).
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -61,7 +61,7 @@ RNF05 & Atender aunque falle la interpretación & Menú de la máquina de estado
 
 Las exigencias forman dos grupos: comprender el texto libre requiere procesamiento de lenguaje natural (NLP), y registrar citas, un comportamiento determinista. Un menú cubre el segundo grupo, pero no el primero; un modelo que decide por sí solo, a la inversa. Se adopta, por tanto, un enfoque híbrido: el NLP interpreta y el código decide, como en el agente de citas por WhatsApp de \cite{santhosh2026whatsapp} y en la combinación de reglas y NLP de \cite{alejandrino2023dental}. Las consultas clínicas se derivan, dado el bajo desempeño de los chatbots en situaciones clínicas complejas \cite{hindelang2024chatbots}. La política de Meta, que prohíbe en WhatsApp los asistentes de IA de propósito general, refuerza este límite: el agente solo trata temas de la clínica \cite{meta2025aipolicy}.
 
-El NLP puede resolverse con un clasificador de intenciones entrenado, como el de Rasa, o con un modelo de lenguaje grande (LLM). El clasificador necesita un conjunto de frases de ejemplo etiquetadas por intención. El LLM reconoce las intenciones a partir de instrucciones, sin entrenamiento previo \cite{zhao2023llmsurvey}. Un LLM local de unos 7\,000 millones de parámetros ocupa unos 4 GB de memoria, la mayor parte del servidor previsto, por lo que se consume por API. Al modelo solo se envían el texto del mensaje y el paso de la conversación, nunca el nombre, la cédula ni el historial del paciente.
+El NLP puede resolverse con un clasificador de intenciones entrenado, como el de Rasa, o con un modelo de lenguaje grande (LLM). El clasificador debe entrenarse con frases de pacientes etiquetadas con su intención, como «quiero una cita el jueves» (agendar). El LLM reconoce las intenciones a partir de instrucciones, sin entrenamiento previo \cite{zhao2023llmsurvey}. Un LLM local de unos 7\,000 millones de parámetros ocupa unos 4 GB de memoria, la mayor parte del servidor previsto, por lo que se consume por API. Al modelo solo se envían el texto del mensaje y el paso de la conversación, nunca el nombre, la cédula ni el historial del paciente.
 
 \paragraph{Modelo de lenguaje}
 
@@ -83,23 +83,23 @@ Se comparan cuatro modelos de bajo costo consumidos por API: GPT-6 Luna, Claude 
 \endhead
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de eliminación (primer filtro)}} \\ \hline
 Respuesta en formato JSON para obtener la intención y los datos (RF11) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
-Pago por uso, sin suscripción fija (restricción de costo) & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
+Pago por uso, sin suscripción fija & --- & Cumple & Cumple & Cumple & Cumple \\ \hline
 \multicolumn{6}{|l|}{\cellcolor{gray!10}\textbf{Criterios de ponderación (segundo filtro)}} \\ \hline
 Comprensión del español informal y extracción de la especialidad, el día y la hora (N2, RF11) & 30\,\% & 3 & 3 & 2 & 2 \\ \hline
 Validación nativa de la respuesta contra un esquema JSON (RF07, RF11) & 20\,\% & 3 & 3 & 2 & 2 \\ \hline
 Tratamiento de los mensajes fuera de jurisdicciones sin garantías equivalentes (BN7) & 20\,\% & 3 & 3 & 1 & 3 \\ \hline
-Costo mensual estimado (restricción de costo) & 10\,\% & 3 & 3 & 3 & 2 \\ \hline
+Costo mensual estimado & 10\,\% & 3 & 3 & 3 & 2 \\ \hline
 Latencia de respuesta en la conversación & 10\,\% & 2 & 2 & 2 & 3 \\ \hline
-Experiencia previa del desarrollador (restricción de un único desarrollador) & 10\,\% & 2 & 3 & 1 & 1 \\ \hline
+Experiencia previa del desarrollador & 10\,\% & 2 & 3 & 1 & 1 \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,80} & \textbf{2,90} & \textbf{1,80} & \textbf{2,20} \\ \hline
 \end{xltabular}
 \endgroup
 
-Claude Haiku 5.5 obtiene el mayor total. Con el volumen previsto de mensajes, el costo mensual estimado es de unos 15 USD para GPT-6 Luna y Claude Haiku 5.5 (0,10 y 0,50 USD por millón de tokens de entrada y de salida), 16 USD para Qwen 3.8 Flash y 22 USD para GPT-OSS 120B en Groq; la caché de las instrucciones, que casi no cambian, puede reducirlo a la mitad. Como la diferencia de costo es de pocos dólares, deciden la calidad y el tratamiento de los datos. GPT-6 Luna empata en ambos, y la diferencia la decide la experiencia del desarrollador. GPT-OSS 120B gana en latencia, y Qwen 3.8 Flash procesa los mensajes en servidores de su proveedor en China. El modelo se usa con nivel de esfuerzo bajo, suficiente para interpretar mensajes cortos, y con salida estructurada validada contra el esquema de intención y datos.
+Claude Haiku 5.5 obtiene el mayor total. Con el volumen previsto de mensajes, el costo mensual estimado es de unos 15 USD para GPT-6 Luna y Claude Haiku 5.5 (0,10 y 0,50 USD por millón de tokens de entrada y de salida), 16 USD para Qwen 3.8 Flash y 22 USD para GPT-OSS 120B en Groq. Como la diferencia de costo es de pocos dólares, deciden la calidad y el tratamiento de los datos. GPT-6 Luna empata en ambos, y la diferencia la decide la experiencia del desarrollador. GPT-OSS 120B gana en latencia, y Qwen 3.8 Flash procesa los mensajes en servidores de su proveedor en China. El modelo se usa con nivel de esfuerzo bajo, suficiente para interpretar mensajes cortos, y con salida estructurada validada contra el esquema de intención y datos.
 
 \paragraph{Motor conversacional}
 
-El motor ejecuta la gestión del diálogo basada en estados finitos, o máquina de estados, en la que cada mensaje se atiende según el paso en que se encuentra la conversación \cite{jurafsky2025slp}. Dialogflow, servicio de Google, y Botpress, hoy ofrecido solo en la nube, no superan el primer filtro, porque dejarían la conversación en un servicio de pago que la clínica no controla (RNF04). Las demás alternativas se comparan en la Tabla~\ref{tab:ob2_matriz_motor}; las reglas de agenda en un único lugar y el aislamiento de los datos reciben los mayores pesos.
+El motor ejecuta la gestión del diálogo basada en estados finitos, o máquina de estados, en la que cada mensaje se atiende según el paso en que se encuentra la conversación \cite{jurafsky2025slp}. Dialogflow, servicio de Google, y Botpress, hoy ofrecido solo en la nube, no superan el primer filtro, porque dejarían la conversación en un servicio de pago que la clínica no controla (RNF04). Las demás alternativas, que definen dónde se construye el motor (como módulo de la API del sistema o como servicio propio separado) o con qué plataforma (n8n o Rasa), se comparan en la Tabla~\ref{tab:ob2_matriz_motor}; las reglas de agenda en un único lugar y el aislamiento de los datos reciben los mayores pesos.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -126,7 +126,7 @@ Consumo de recursos en el servidor compartido & 15\,\% & 3 & 3 & 2 & 1 \\ \hline
 \end{xltabular}
 \endgroup
 
-El servicio propio obtiene el mayor total. Se construye en Python, cuyo ecosistema ofrece clientes para los proveedores de modelos de lenguaje y validación de respuestas estructuradas, y se comunica con la API del sistema por una interfaz interna. El módulo dentro de la API gana en servicios que operar, pero ejecutaría el procesamiento del texto libre en el mismo proceso que accede a los datos clínicos; n8n reparte la lógica de la conversación entre dos herramientas.
+El servicio propio obtiene el mayor total. Se construye en Python, cuyo ecosistema ofrece clientes para los proveedores de modelos de lenguaje y validación de respuestas estructuradas, y se comunica con la API del sistema por una interfaz interna. El módulo dentro de la API gana en servicios que operar, pero ejecutaría el procesamiento del texto libre en el mismo proceso que accede a los datos clínicos.
 
 \paragraph{Exposición del webhook}
 
@@ -152,7 +152,7 @@ HTTPS con certificado válido exigido por Meta & --- & Cumple & Cumple & Cumple 
 Sin un tercero que descifre los mensajes en tránsito (BN7) & 30\,\% & 3 & 1 & 1 \\ \hline
 URL estable con dominio propio (RNF05) & 25\,\% & 3 & 1 & 2 \\ \hline
 Sin componentes ni cuentas adicionales que operar & 15\,\% & 3 & 2 & 1 \\ \hline
-Costo adicional al servidor (restricción de costo) & 15\,\% & 3 & 3 & 2 \\ \hline
+Costo adicional al servidor & 15\,\% & 3 & 3 & 2 \\ \hline
 Funcionamiento sin IP pública ni puertos abiertos & 15\,\% & 1 & 3 & 3 \\ \hline
 \textbf{Total ponderado (1--3)} & \textbf{100\,\%} & \textbf{2,70} & \textbf{1,75} & \textbf{1,70} \\ \hline
 \end{xltabular}

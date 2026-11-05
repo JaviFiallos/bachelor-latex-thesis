@@ -70,7 +70,6 @@ Información & Horarios, formas de pago, precios públicos y contacto de recepci
 Identificación & Pacientes del teléfono & RF11 \\ \hline
 Disponibilidad & Especialidades, profesionales, días y horas libres; horarios de urgencia & RF11 \\ \hline
 Citas & Citas activas; agendar, reprogramar, cancelar y confirmar & RF11, RF12 \\ \hline
-Recordatorios & Pendientes de envío, resultado del envío y respuesta del paciente & RF14 \\ \hline
 \multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Respuestas que el agente distingue}} \\ \hline
 Horario ocupado & Avisa y ofrece otros horarios & RF07 \\ \hline
 Límite alcanzado & Explica el límite y deriva a recepción & RF11 \\ \hline
@@ -145,7 +144,7 @@ La Figura~\ref{fig:ob2_componentes_func} resume los nueve componentes funcionale
         rectangle split part fill={#1,white}, text width=4.3cm, align=left, inner sep=3pt, font=\scriptsize},
 ]
     \def\dx{4.9}
-    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (0,0) {\textbf{Aviso de privacidad}\nodepart{two}\textbf{RF09.} Primera interacción; sin aceptación no se tratan datos. Habilita los recordatorios.};
+    \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (0,0) {\textbf{Aviso de privacidad}\nodepart{two}\textbf{RF09.} Primera interacción; sin aceptación no se tratan datos.};
     \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (\dx,0) {\textbf{Intérprete de mensajes}\nodepart{two}\textbf{RF10, RF13.} Convierte el texto libre en intención y datos; no decide ni escribe. Si falla, se muestra el menú.};
     \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (2*\dx,0) {\textbf{Menú}\nodepart{two}\textbf{RF10.} Horarios, precios, agendar, reprogramar y hablar con recepción.};
     \node[tarjeta={dAgenteF}{dAgenteB}, anchor=north] at (0,-2.0) {\textbf{Identificación}\nodepart{two}\textbf{RF11.} Busca al paciente por teléfono; si hay varios, pide la cédula. Sin coincidencia, deriva.};
@@ -159,7 +158,7 @@ La Figura~\ref{fig:ob2_componentes_func} resume los nueve componentes funcionale
 \label{fig:ob2_componentes_func}
 \end{figure}
 
-La Figura~\ref{fig:ob2_estados_conversacion} muestra cómo se encadenan estos componentes en una conversación. El aviso solo aparece si el teléfono aún no lo aceptó, y la identificación solo se pide para agendar o reprogramar. El texto libre pasa por el intérprete antes de llegar a la máquina de estados, y los horarios y precios se responden desde el menú. El recordatorio inicia una conversación propia. El estado se guarda en memoria y caduca a los 30 min; un reinicio del servicio no pierde citas, porque una cita solo se registra al confirmarse.
+La Figura~\ref{fig:ob2_estados_conversacion} muestra cómo se encadenan estos componentes en una conversación. El aviso solo aparece si el teléfono aún no lo aceptó, y la identificación solo se pide para agendar o reprogramar. El texto libre pasa por el intérprete antes de llegar a la máquina de estados, y los horarios y precios se responden desde el menú. El estado se guarda en memoria y caduca a los 30 min; un reinicio del servicio no pierde citas, porque una cita solo se registra al confirmarse.
 
 \begin{figure}[H]
 \centering
@@ -186,9 +185,8 @@ La Tabla~\ref{tab:ob2_mecanismos} resume los mecanismos de WhatsApp Cloud API qu
 \textbf{Mecanismo} & \textbf{Uso en el diseño} & \textbf{Requerimiento} \\ \hline
 \endhead
 Webhook verificado & Token al registrar la URL y firma en cada solicitud \cite{meta2026whatsapp} & RNF03 \\ \hline
-Mensajes interactivos & Listas para el menú y la cita; botones para el recordatorio & RF10, RF11 \\ \hline
-Consentimiento previo & Requisito de Meta para escribir primero \cite{meta2026optin}; se usa la aceptación del aviso & RF09, RF14 \\ \hline
-Ventana de 24 h & Respuestas libres solo dentro de 24 h del último mensaje; después, plantillas & RF10, RF13 \\ \hline
+Mensajes interactivos & Lista para el menú; botones para elegir horario y confirmar & RF10, RF11 \\ \hline
+Ventana de 24 h & El agente solo responde a mensajes del paciente, dentro de las 24 h que Meta permite sin plantillas & RF10, RF13 \\ \hline
 Enlace wa.me & Deriva al número de recepción, distinto del número del agente & RF13 \\ \hline
 \end{xltabular}
 \endgroup
