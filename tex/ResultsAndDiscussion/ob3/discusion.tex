@@ -1,31 +1,21 @@
 % =========================================================
-% DISCUSIÓN DEL OBJETIVO 3 (tarea O3-10)
-% QUÉ VA: prosa, sin tablas (criterio de la discusión del Obj. 2). 4 párrafos:
-%   1. Confirmación o refutación de las hipótesis del diseño (final del proceso
-%      propuesto del Obj. 2): ¿desaparecieron T4 y T5?, ¿bajaron T1 a T3?, ¿cuánto del TGA?
-%   2. Contraste con antecedentes: Alejandrino y Pajota (68,75 % proyectado,
-%      alejandrino2023dental) frente a la reducción medida aquí; trabajos sin
-%      medición de carga del personal (tudorcar2020conversational) → aporte.
-%      Decisiones de diseño (antes en la discusión del Obj. 2): modularidad de
-%      roca2020microservice y arcila2022microservice, pero en un monolito más un
-%      servicio del agente; regla anticruce en la BD frente a la validación en la
-%      aplicación de shaikh2026smartmedibook; agente híbrido como
-%      santhosh2026whatsapp y alejandrino2023dental (reglas + lenguaje natural),
-%      pero el modelo no decide ni escribe (hindelang2024chatbots: límites
-%      clínicos y de privacidad); reserva por mensajería viable como
-%      hmadchayyapum2025line.
-%   3. Agente: uso real frente a la disposición declarada en la encuesta
-%      (62,9 %, 61,9 %, 58,1 %); efecto en inasistencias y confirmaciones.
-%   4. Limitaciones: diseño preexperimental sin grupo control; muestreo por
-%      conveniencia; efecto Hawthorne (personal observado); curva de
-%      aprendizaje corta; periodo de evaluación breve; WhatsApp sin
-%      verificación de la empresa (límite de envíos); Meta, Google, el VPS y el
-%      proveedor del modelo tratan datos fuera del Ecuador; módulos que comparten
-%      la BD; dependencia de la conexión de la clínica.
-%      Y lo no implementado: RF14 (confirmación manual, N3), respaldos si faltan.
-% EXTENSIÓN: 4 párrafos de 4-6 líneas.
+% DISCUSIÓN DEL OBJETIVO 3
+% Prosa, sin tablas. Peso en el software entregado y las metodologías aplicadas
+% (criterio del tutor), sin dejar de lado la hipótesis. 4 párrafos:
+%   1. Producto y construcción: RAD + Kanban, decisiones de diseño frente a
+%      antecedentes (roca, arcila, shaikh, santhosh, alejandrino, hindelang).
+%   2. Hipótesis: TGA −28,5 %, de la Etapa 2; T1 sube por BN3/BN5; frente al
+%      68,75 % proyectado de alejandrino2023dental y el vacío de tudorcar2020.
+%   3. Agente: implementado y validado, no habilitado (cherrezojeda2020ict).
+%   4. Limitaciones y trabajo futuro.
 % =========================================================
 
 \subsubsection{Discusión}
 
-\textit{[Por redactar tras la evaluación.]}
+El principal resultado del objetivo es el software entregado. El sistema clínico-administrativo quedó implementado y en uso en recepción y consultorio, y el agente conversacional, implementado y validado con pacientes ficticios; los requerimientos funcionales de prioridad «Debe» quedaron cubiertos. El enfoque RAD, con Kanban en la construcción, organizó el trabajo en dieciséis tarjetas, desde la base del proyecto hasta la verificación con el personal, y los contenedores con integración y despliegue continuos sostuvieron las entregas en el servidor. Las decisiones de diseño se apoyan en los antecedentes, con ajustes al contexto: la modularidad de \cite{roca2020microservice} y \cite{arcila2022microservice} se adoptó en un monolito modular con un servicio aparte para el agente, adecuado a un equipo y un servidor reducidos; la prevención de citas cruzadas, que \cite{shaikh2026smartmedibook} resuelve en la aplicación, se garantizó con una restricción de la base de datos; y el agente combina reglas y lenguaje natural, como \cite{santhosh2026whatsapp} y \cite{alejandrino2023dental}, aunque el modelo solo interpreta el mensaje y nunca decide ni escribe, en línea con los límites clínicos y de privacidad que señala \cite{hindelang2024chatbots}.
+
+En cuanto a la hipótesis, el $TGA$ se redujo un 28,5~\% con un efecto grande ($r = 0{,}86$), por lo que se confirma. La reducción no provino de acelerar la atención, sino de eliminar la Etapa 2: $T_1$ aumentó porque el registro clínico pasó de la secretaria al odontólogo, como exigen BN3 y BN5, de modo que el sistema, además de reducir la gestión, la reasigna a quien corresponde según la norma. La cifra es menor que el 68,75~\% de \cite{alejandrino2023dental}, pero aquel valor fue una proyección de un plan de proyecto, mientras que aquí se midió antes y después con el mismo instrumento. Esa medición de la carga del personal es el aspecto que ninguno de los estudios revisados por \cite{tudorcar2020conversational} había evaluado.
+
+El agente atendió en las pruebas la información, el agendamiento, la reprogramación y la derivación sobre la misma agenda de la recepción, de forma similar a la reserva odontológica por mensajería de \cite{hmadchayyapum2025line}. Sin embargo, no se habilitó para los pacientes, pese a la disposición declarada en la encuesta (62,9~\%, 61,9~\% y 58,1~\%). La barrera no fue técnica sino organizacional: la configuración de la cuenta requería tiempo del personal, y la clínica manifestó reservas sobre los datos de sus pacientes en una plataforma de terceros, el mismo temor que reportan los odontólogos ecuatorianos \cite{cherrezojeda2020ict}. Por ello no se evaluó su efecto en la comunicación con el paciente, lo que no altera el resultado del $TGA$, cuyos tramos no incluyen la mensajería.
+
+El diseño preexperimental no incluye grupo de control, y $T_{E2}$ se midió por lote diario y no por ficha. El postest se realizó tras un periodo breve de adaptación (tres días de capacitación y dos de uso), por lo que $T_1$ refleja una etapa inicial de uso del sistema. Al no habilitarse el agente para los pacientes, no fue posible evaluar su efecto sobre la confirmación de citas y la puntualidad; su habilitación para los pacientes queda como trabajo futuro.

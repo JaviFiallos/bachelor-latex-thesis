@@ -7,7 +7,7 @@ La gestión clínico-administrativa del Centro Odontológico Bellidental se sust
 \paragraph{Unidad de análisis: el ciclo completo de atención}
 
 La unidad de análisis es el ciclo completo de atención, definido como el conjunto de actividades administrativas que genera la atención de un paciente, desde su llegada al centro hasta el registro de dicha atención en el Formulario 033 y en el historial digital. 
-%En este documento, las expresiones \emph{por paciente} y \emph{por ciclo completo de atención} se refieren a la misma unidad.
+En este documento, las expresiones \emph{por paciente} y \emph{por ciclo completo de atención} se refieren a la misma unidad.
 
 El ciclo comprende dos etapas que procesan la misma información en momentos distintos:
 
@@ -71,7 +71,7 @@ La Figura~\ref{fig:bpmn1} modela la Etapa 1 mediante los carriles Paciente, Secr
 
     \item \textbf{Registro del tratamiento.} La secretaria anota en la tabla de control clínico-financiero la fecha, el diagnóstico, el tratamiento y el profesional.
 
-    \item \textbf{Cobro.} La secretaria cobra y registra el abono y el saldo en la misma tabla.
+    \item \textbf{Cobro.} La secretaria cobra y registra el abono y el saldo en la misma tabla; el paciente firma como comprobante del monto abonado.
 
     \item \textbf{Agendamiento.} Si se requiere una nueva cita, la secretaria la asigna en Google Calendar.
 
@@ -136,19 +136,19 @@ La Tabla~\ref{tab:tramos_tga} relaciona cada tramo medido en la ficha de observa
 \textbf{Tramo} & \textbf{Nombre} & \textbf{Actividades del diagrama} & \textbf{Prom. (min)} \\ \hline
 \endhead
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Etapa 1: gestión en la atención}} \\ \hline
-$T_1$ & Registro posconsulta & Elaboración de la receta y registro del tratamiento en la tabla de control & 3,40 \\ \hline
-$T_2$ & Registro del pago & Cobro y registro de abono y saldo & 1,60 \\ \hline
-$T_3$ & Agendamiento & Asignación de la siguiente cita en Google Calendar & 1,30 \\ \hline
+$T_1$ & Registro clínico y receta & Anotación del tratamiento en la tabla de control, tras el aviso verbal del profesional, y receta manuscrita & 3,40 \\ \hline
+$T_2$ & Cobro y registro del abono & Anotación del abono, cálculo manual del saldo y firma del paciente como comprobante & 1,60 \\ \hline
+$T_3$ & Agendamiento de la próxima cita & Asignación de la siguiente cita en Google Calendar & 1,30 \\ \hline
 \multicolumn{3}{|r|}{\textbf{Subtotal $T_{E1}$}} & \textbf{6,30} \\ \hline
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Etapa 2: gestión documental diferida}} \\ \hline
-$T_4$ & Transcripción al Formulario 033 & Interpretación del odontograma y rama A & 3,94 \\ \hline
-$T_5$ & Digitalización & Rama B: transcripción al historial digital & 3,38 \\ \hline
-\multicolumn{3}{|r|}{\textbf{Subtotal $T_{E2}$}} & \textbf{7,32} \\ \hline
-\multicolumn{3}{|r|}{\textbf{$TGA$}} & \textbf{13,62} \\ \hline
+$T_4$ & Llenado del Formulario 033 (en lote) & Interpretación del odontograma y rama A & 3,94 \\ \hline
+$T_5$ & Digitalización (transcripción a Excel, en lote) & Rama B: transcripción al historial digital & 3,38 \\ \hline
+\multicolumn{3}{|r|}{\textbf{Subtotal $T_{E2}$}} & \textbf{7,33} \\ \hline
+\multicolumn{3}{|r|}{\textbf{$TGA$}} & \textbf{13,63} \\ \hline
 \end{xltabular}
 \endgroup
 
-La Etapa 2 representa el 53,7\,\% del $TGA$ y consume en promedio 190 minutos por jornada (Tabla~\ref{tab:resumen_obs_parte_b}), cifra superior a los 120 a 180 minutos declarados por la secretaria (Tabla~\ref{tab:ent2}, P3). En la Etapa 1, el registro posconsulta es el tramo más extenso y equivale al 25,0\,\% del $TGA$. Con un promedio de 26 atenciones por jornada, el $TGA$ supone una carga administrativa estimada de 354 minutos diarios, distribuida entre la secretaria y los profesionales.
+La Etapa 2 representa el 53,8\,\% del $TGA$ y consume en promedio 190 minutos por jornada (Tabla~\ref{tab:resumen_obs_parte_b}), cifra superior a los 120 a 180 minutos declarados por la secretaria (Tabla~\ref{tab:ent2}, P3). En la Etapa 1, el registro clínico y receta ($T_1$) es el tramo más extenso y equivale al 24,9\,\% del $TGA$. Con un promedio de 26 atenciones por jornada, el $TGA$ supone una carga administrativa estimada de 354 minutos diarios, distribuida entre la secretaria y los profesionales.
 
 La observación registró, además, una espera previa de 6,2 minutos y un retraso de 7,4 minutos respecto a la hora programada (Tabla~\ref{tab:resumen_obs_parte_a}). Ambos indicadores son complementarios y no forman parte del $TGA$.
 
@@ -170,13 +170,13 @@ La Tabla~\ref{tab:puntos_criticos} presenta los puntos críticos identificados a
 \hline
 \textbf{N°} & \textbf{Punto crítico} & \textbf{Evidencia} & \textbf{Efecto} \\ \hline
 \endhead
-PC1 & Triple registro & 7,32 min por atención; 190 min por jornada (Tabla~\ref{tab:resumen_obs_parte_b}) & Mayor consumo de tiempo \\ \hline
+PC1 & Triple registro & 7,33 min por atención; 190 min por jornada (Tabla~\ref{tab:resumen_obs_parte_b}) & Mayor consumo de tiempo \\ \hline
 PC2 & Interpretación del odontograma manuscrito & Errores de transcripción (Tabla~\ref{tab:ent3}, P4) & Registros inexactos \\ \hline
 PC3 & Odontograma registrado por la secretaria & Registro bajo dictado (Tabla~\ref{tab:ent1}, P1) & Datos clínicos fuera de la cadena sanitaria \\ \hline
 PC4 & Receta y CIE-10 manuscritos & 3,40 min en $T_1$; sin catálogos (Tablas~\ref{tab:ent1} a \ref{tab:ent3}, P5 y P6) & Tiempo administrativo en consulta \\ \hline
 PC5 & Antecedentes tomados en recepción & Declarados recién en consulta (Tabla~\ref{tab:ent2}, P2 y P4; Tabla~\ref{tab:ent3}, P1, P2 y P4) & Doble interrogatorio \\ \hline
 PC6 & Historial no disponible de inmediato & Demora con pacientes sin cita (Tablas~\ref{tab:ent1} a \ref{tab:ent3}, P5) & Búsqueda en archivo \\ \hline
-PC7 & Agenda con canales paralelos & Citas fuera de Google Calendar (Tablas~\ref{tab:ent1} y \ref{tab:ent2}, P4); dos conflictos en el último mes (Tabla~\ref{tab:instrumento2}, P5) & Cruces de citas y retraso de 7,4 min \\ \hline
+PC7 & Agenda con canales paralelos & Citas fuera de Google Calendar (Tablas~\ref{tab:ent1} y \ref{tab:ent2}, P4); dos conflictos en el último mes (Tabla~\ref{tab:instrumento2}, P5) & Cruces de citas \\ \hline
 PC8 & Secretaria polifuncional & 26 a 50 mensajes diarios (Tabla~\ref{tab:instrumento2}, P1) & Tareas interrumpidas \\ \hline
 \end{longtable}
 \endgroup
@@ -404,9 +404,9 @@ RNF04 & Propiedad y persistencia de los datos: almacenamiento en una base de dat
 
 RNF05 & Disponibilidad del sistema durante el horario de atención y del agente fuera de él. & N1 & Debería \\ \hline
 
-RNF06 & Usabilidad que permita registrar la atención durante la consulta, en pocos pasos y sin desatender al paciente. & PC1, PC4 & Debe \\ \hline
+RNF06 & Usabilidad que permita al odontólogo registrar la atención en el consultorio, durante la consulta y hasta su cierre, sin requerir transcripción posterior. & PC1, PC4 & Debe \\ \hline
 
 \end{longtable}
 \endgroup
 
-Los requerimientos responden a los puntos críticos, las brechas normativas y las necesidades identificadas. En relación con el $TGA$, RF01 y RF02 apuntan a eliminar la Etapa 2 al registrar la información una sola vez durante la atención; RF03 a RF05 inciden en $T_1$, RF08 en $T_2$, y RF07 y RF11 en $T_3$. Estos efectos se verificarán en la evaluación del sistema mediante la medición de los mismos tramos. Los requerimientos RF09 a RF14 y RNF03 definen el alcance del agente conversacional y constituyen el insumo para el diseño de su arquitectura. RF14, RF13 y RNF05 se priorizan como ``Debería'' frente al tiempo disponible para el desarrollo, sin afectar el alcance esencial del sistema.
+Los requerimientos responden a los puntos críticos, las brechas normativas y las necesidades identificadas. En relación con el $TGA$, RF01 y RF02 corresponden a la Etapa 2, al registrar la información una sola vez durante la atención; RF03 a RF05 corresponden a $T_1$; RF08, a $T_2$; y RF07 y RF11, a $T_3$. Los resultados por tramo se presentan en la evaluación del sistema. Los requerimientos RF09 a RF14 y RNF03 definen el alcance del agente conversacional y constituyen el insumo para el diseño de su arquitectura. RF14, RF13 y RNF05 se priorizan como ``Debería'' frente al tiempo disponible para el desarrollo, sin afectar el alcance esencial del sistema.

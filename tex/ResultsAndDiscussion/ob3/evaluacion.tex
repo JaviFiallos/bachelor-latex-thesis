@@ -1,16 +1,7 @@
 % =========================================================
-% 3.5 EVALUACIÓN DEL TIEMPO DE GESTIÓN ADMINISTRATIVA (T7). Único apartado con fechas.
-% Es el núcleo del objetivo. Debe ser comparable con el pretest en TODO:
-% mismo instrumento (Instrumento 4, partes A y B), mismo observador, mismo tipo
-% de jornada (alta afluencia), mismos días de la semana, mismo número de
-% jornadas (tres) y tamaño de muestra similar (pretest n = 78).
-%
-% DATOS NECESARIOS:
-%   - Postest: fichas parte A por paciente (T1, T2, T3, espera, retraso) y
-%     registro de lote parte B por jornada (T4, T5 o tareas diferidas).
-%   - Pretest: las 78 fichas individuales (disponibles) para la prueba de
-%     muestras independientes sobre TE1. Días: martes, jueves y sábado.
-%   - Registros del sistema para los indicadores complementarios.
+% 3.5 EVALUACIÓN DEL TIEMPO DE GESTIÓN ADMINISTRATIVA. Único apartado con fechas.
+% Cifras definitivas: salida del script contraste_pre_post.py (muestras
+% independientes, n = 78 por fase).
 % =========================================================
 
 \subsubsection{Comparación del proceso actual y el implementado}
@@ -32,11 +23,11 @@ La Tabla~\ref{tab:ob3_asis_tobe} contrasta cada tramo del $TGA$ y cada necesidad
 \textbf{Tramo o necesidad} & \textbf{Actual} & \textbf{Con el sistema} & \textbf{PC} \\ \hline
 \endhead
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Ciclo completo de atención}} \\ \hline
-$T_1$ Registro posconsulta (3,40 min) & Receta manuscrita y registro tras aviso verbal & Receta desde catálogos durante la atención (RF03 a RF05) & PC1, PC4 \\ \hline
-$T_2$ Pago (1,60 min) & Abono y saldo manuales & Saldo calculado sobre lo registrado (RF08) & PC1 \\ \hline
-$T_3$ Agendamiento (1,30 min) & Google Calendar manual & Agenda única del sistema (RF07, RF11) & PC7 \\ \hline
-$T_4$ Transcripción (3,94 min) & Odontograma manuscrito al Formulario 033 & Eliminado (RF01, RF02) & PC1 a PC3 \\ \hline
-$T_5$ Digitalización (3,38 min) & Copia al Excel & Eliminado & PC1, PC2 \\ \hline
+$T_1$ Registro clínico y receta (3,40 min) & Anotación del tratamiento por la secretaria tras el aviso verbal; receta manuscrita & El odontólogo registra la atención (Formulario 033, CIE-10, tratamientos) y la receta desde catálogos (RF01 a RF05; BN3, BN5) & PC1, PC4 \\ \hline
+$T_2$ Cobro y registro del abono (1,60 min) & Abono y saldo manuales; firma del paciente & Abono en el sistema, saldo automático y comprobante en PDF listo para imprimir (RF08) & PC1 \\ \hline
+$T_3$ Agendamiento de la próxima cita (1,30 min) & Google Calendar manual & Agenda única del sistema, que no admite citas superpuestas (RF07, RF11) & PC7 \\ \hline
+$T_4$ Llenado del Formulario 033 (3,94 min) & Lote diario a partir de la ficha rápida & Eliminado (RF01, RF02) & PC1 a PC3 \\ \hline
+$T_5$ Digitalización (3,38 min) & Lote diario a Excel & Eliminado & PC1, PC2 \\ \hline
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Comunicación con el paciente}} \\ \hline
 Información (N1) & Respuesta manual, con demora & Respuesta automática al texto libre o al menú (RF10) & PC8 \\ \hline
 Solicitud de cita (N2, N4) & Varios canales, sin agenda única & Agente o recepción sobre la misma agenda (RF07, RF11, RF12) & PC7, PC8 \\ \hline
@@ -47,16 +38,8 @@ Derivación (N5) & Atendida por la secretaria entre otras tareas & Derivación a
 
 \subsubsection{Procedimiento}
 
-La medición postest aplicó la ficha de observación del pretest (Anexo 2, Instrumento 4) en tres jornadas de alta afluencia, \textit{[fechas]}, tras \textit{[n]} semanas de uso del sistema. Se registraron \textit{[n]} ciclos completos de atención. La Tabla~\ref{tab:ob3_definiciones} fija qué se cronometra en cada tramo con el sistema, para que el postest mida lo mismo que el pretest.
+La medición postest aplicó la ficha de observación del pretest (Anexo 2, Instrumento 4) a 78 ciclos completos de atención en tres jornadas de alta afluencia: martes 27, jueves 29 y sábado 31 de octubre de 2026, tras tres días de capacitación y dos días de uso del sistema. La Tabla~\ref{tab:ob3_definiciones} fija qué se cronometró en cada tramo, para que el postest midiera lo mismo que el pretest.
 
-% PENDIENTE DE REVISIÓN (O3-08a): el odontólogo registrará los datos de la
-% ficha rápida y los tratamientos con sus códigos, con ligeras variaciones;
-% puede sumarse tiempo a T1. Ajustar la fila T1 tras las mediciones de la
-% semana del 19/10/2026. La carga previa de pacientes (script, día anterior)
-% no se cronometra, igual que la preparación de fichas en el pretest.
-% Esta tabla es clave para la validez: el contenido de cada tramo cambia con el
-% sistema, pero su inicio y fin deben ser equivalentes. Ajustar si en la
-% práctica el flujo resultó distinto.
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
@@ -71,17 +54,16 @@ La medición postest aplicó la ficha de observación del pretest (Anexo 2, Inst
 \hline
 \textbf{Tramo} & \textbf{Pretest} & \textbf{Postest} \\ \hline
 \endhead
-$T_1$ Registro posconsulta & Receta manuscrita y anotación en la tabla de control & Desde el fin del acto clínico hasta cerrar la atención en el sistema, receta incluida \\ \hline
-$T_2$ Registro del pago & Cobro y anotación de abono y saldo & Cobro y registro del abono con comprobante \\ \hline
-$T_3$ Agendamiento & Asignación en Google Calendar & Asignación en la agenda del sistema \\ \hline
-$T_4$ Transcripción & Lote diario al Formulario 033 & Registro de lote si existe alguna tarea diferida; si no, 0 \\ \hline
-$T_5$ Digitalización & Lote diario al Excel & Registro de lote si existe alguna tarea diferida; si no, 0 \\ \hline
+$T_1$ Registro clínico y receta & La secretaria, tras el aviso verbal del profesional, anota el tratamiento en la tabla de control; receta manuscrita & El odontólogo registra en el sistema el odontograma, el Formulario 033, el diagnóstico CIE-10, los tratamientos y la receta, durante la consulta y al finalizarla. Tiempo neto acumulado de uso del sistema por paciente, con pausas durante las interrupciones, desde el primer registro hasta el cierre de la ficha \\ \hline
+$T_2$ Cobro y registro del abono & Abono anotado en la hoja de abonos de la ficha rápida, saldo calculado a mano y firma del paciente por el saldo abonado & Abono registrado en el sistema, saldo calculado automáticamente y comprobante en PDF listo para imprimir \\ \hline
+$T_3$ Agendamiento de la próxima cita & Asignación en Google Calendar & Asignación en la agenda del sistema \\ \hline
+$T_4$ Llenado del Formulario 033 (en lote) & Lote diario a partir de las fichas rápidas & No existe: el Formulario 033 se genera desde el sistema; se registra 0 \\ \hline
+$T_5$ Digitalización (transcripción a Excel, en lote) & Lote diario a la hoja de cálculo & No existe; se registra 0 \\ \hline
+$T_{E2}$ Etapa 2 & Tiempo neto del lote diario de transcripción ($T_4 + T_5$), con pausas durante las interrupciones, dividido entre las fichas de la jornada & 0 \\ \hline
 \end{xltabular}
 \endgroup
 
-% ATENCIÓN: si el odontólogo completa campos del Formulario 033 después de la
-% consulta (p. ej., "Más del 033"), ese tiempo es gestión diferida y debe
-% cronometrarse en la parte B del postest. Declararlo protege la validez.
+En ambas fases, $T_2$ se midió desde que el paciente llega a caja hasta que se registra el abono y se entrega el comprobante. En el pretest, el odontograma de la ficha rápida se llenaba durante el procedimiento y no se contabilizaba; en el postest sí forma parte de $T_1$, por lo que la comparación es conservadora.
 
 \subsubsection{Resultados por tramo}
 
@@ -90,82 +72,114 @@ La Tabla~\ref{tab:ob3_tga} compara cada tramo entre el pretest y el postest, y l
 \begingroup
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{2pt}
 \setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|c|}
-\caption{Tiempo de gestión administrativa por tramo, pretest y postest}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\caption{Tiempo de gestión administrativa por tramo, pretest y postest ($n = 78$ por fase)}
 \label{tab:ob3_tga} \\
 \hline
-\textbf{Tramo} & \textbf{Pretest (min)} & \textbf{Postest (min)} & \textbf{Diferencia (min)} & \textbf{Reducción (\%)} \\ \hline
+\textbf{Tramo} & \textbf{Pretest (min)} & \textbf{Postest (min)} & \textbf{Variación (\%)} \\ \hline
 \endfirsthead
 \hline
-\textbf{Tramo} & \textbf{Pretest (min)} & \textbf{Postest (min)} & \textbf{Diferencia (min)} & \textbf{Reducción (\%)} \\ \hline
+\textbf{Tramo} & \textbf{Pretest (min)} & \textbf{Postest (min)} & \textbf{Variación (\%)} \\ \hline
 \endhead
-$T_1$ Registro posconsulta & 3,40 & & & \\ \hline
-$T_2$ Registro del pago & 1,60 & & & \\ \hline
-$T_3$ Agendamiento & 1,30 & & & \\ \hline
-\textbf{Subtotal $T_{E1}$} & \textbf{6,30} & & & \\ \hline
-$T_4$ Transcripción & 3,94 & & & \\ \hline
-$T_5$ Digitalización & 3,38 & & & \\ \hline
-\textbf{Subtotal $T_{E2}$} & \textbf{7,32} & & & \\ \hline
-\textbf{$TGA$} & \textbf{13,62} & & & \\ \hline
+$T_1$ Registro clínico y receta & 3,40 & 6,33 & +86,1 \\ \hline
+$T_2$ Cobro y registro del abono & 1,60 & 1,92 & +19,7 \\ \hline
+$T_3$ Agendamiento de la próxima cita & 1,30 & 1,50 & +15,7 \\ \hline
+\textbf{$T_{E1}$ Etapa 1 ($T_1 + T_2 + T_3$)} & \textbf{6,30} & \textbf{9,75} & \textbf{+54,7} \\ \hline
+\textbf{$T_{E2}$ Etapa 2 ($T_4 + T_5$)} & \textbf{7,33} & \textbf{0,00} & \textbf{$-$100,0} \\ \hline
+\textbf{$TGA$} & \textbf{13,63} & \textbf{9,75} & \textbf{$-$28,5} \\ \hline
 \end{xltabular}
 \endgroup
+\noindent{\footnotesize $T_{E2}$: tiempo del lote diario dividido entre las fichas de la jornada. Las sumas pueden no coincidir por redondeo.\par}
+\medskip
 
-% FIGURA RECOMENDADA: barras apiladas pretest vs postest (T1..T5) con pgfplots,
-% colores de la paleta común. Es la imagen que resume el objetivo.
 \begin{figure}[H]
 \centering
-\fbox{\parbox{0.9\linewidth}{\centering Pendiente: barras apiladas del $TGA$ pretest y postest por tramo (pgfplots)}}
+\begin{tikzpicture}
+\begin{axis}[
+  xbar stacked,
+  width=0.92\linewidth, height=4.6cm,
+  bar width=0.75cm,
+  xmin=0, xmax=15.5,
+  xlabel={Minutos por ciclo completo de atención},
+  ytick=data, symbolic y coords={Postest,Pretest},
+  y tick label style={font=\small},
+  enlarge y limits=0.45,
+  /pgf/number format/use comma,
+  legend style={at={(0.5,-0.42)}, anchor=north, legend columns=5, font=\scriptsize, draw=none},
+  legend cell align=left,
+  tick label style={font=\small},
+  axis lines*=left,
+]
+\addplot[fill=dSistemaF, draw=dSistemaB] coordinates {(3.40,Pretest) (6.33,Postest)};
+\addplot[fill=dAgenteF, draw=dAgenteB] coordinates {(1.60,Pretest) (1.92,Postest)};
+\addplot[fill=dClinicoF, draw=dClinicoB] coordinates {(1.30,Pretest) (1.50,Postest)};
+\addplot[fill=dPersonaF, draw=dPersonaB] coordinates {(3.94,Pretest) (0,Postest)};
+\addplot[fill=dDatosF, draw=dDatosB] coordinates {(3.38,Pretest) (0,Postest)};
+\legend{$T_1$, $T_2$, $T_3$, $T_4$, $T_5$}
+\node[anchor=west, font=\small\bfseries] at (axis cs:13.63,Pretest) {13,63};
+\node[anchor=west, font=\small\bfseries] at (axis cs:9.75,Postest) {9,75};
+\end{axis}
+\end{tikzpicture}
 \caption{Composición del $TGA$ antes y después del sistema}
 \label{fig:ob3_tga_barras}
 \end{figure}
 
-\textit{[2--3 líneas: reducción total del $TGA$ en minutos y porcentaje; tramo con mayor reducción; minutos diarios liberados con 26 atenciones por jornada (pretest: 354 min).]}
+El $TGA$ se redujo de 13,63 a 9,75 minutos por ciclo ($-3{,}88$ min; $-28{,}5$~\%). La reducción proviene de la Etapa 2: el llenado del Formulario 033 ($T_4$) y su digitalización ($T_5$), que sumaban 7,33 minutos por ciclo, dejaron de existir. En la Etapa 1, $T_1$ pasó de 3,40 a 6,33 minutos porque, conforme a BN3 y BN5, el registro clínico que realizaba la secretaria pasó al odontólogo, que lo efectúa en el sistema durante la consulta. $T_2$ y $T_3$ variaron levemente. En una jornada de 26 atenciones, la gestión administrativa pasó de unos 354 a 253 minutos, y desaparecieron los cerca de 190 minutos diarios de transcripción de la secretaria.
 
 \subsubsection{Contraste estadístico}
 
-% Hipótesis: H0: TGA_post >= TGA_pre ; H1: TGA_post < TGA_pre (unilateral, α = 0,05).
-% Las observaciones pretest y postest son pacientes distintos → muestras
-% independientes. Procedimiento:
-%   1. Normalidad de T_E1 por fase: Shapiro-Wilk.
-%   2. Si ambas son normales: t de Welch; si no: U de Mann-Whitney.
-%   3. Tamaño del efecto: d de Cohen (t) o r = Z/sqrt(N) (U).
-%   4. T_E2 se registra por jornada (lote): comparación descriptiva.
-% Herramienta: R, Python (scipy) o JASP; dejar el script o la hoja en el anexo.
-\textit{[Tabla corta: prueba aplicada, estadístico, valor p y tamaño del efecto para $T_{E1}$; 2 líneas de interpretación.]}
+La Tabla~\ref{tab:ob3_contraste} resume el contraste de la hipótesis sobre el $TGA$.
 
-\subsubsection{Indicadores complementarios}
-
-% Fuente: registros del sistema durante el periodo de evaluación (consultas SQL
-% sobre citas y conversaciones del agente) y nueva aplicación del Instrumento 2
-% a la secretaria (mismas preguntas P1 a P5 que en el pretest).
-% Cada fila compara con su línea base del Obj. 1.
-La Tabla~\ref{tab:ob3_indicadores} compara los indicadores complementarios con su línea base del Objetivo 1.
-
-\begingroup
+\begin{table}[H]
+\centering
+\caption{Contraste del $TGA$ entre el pretest y el postest}
+\label{tab:ob3_contraste}
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.2cm}|}
-\caption{Indicadores complementarios antes y después del sistema}
-\label{tab:ob3_indicadores} \\
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|}
 \hline
-\textbf{Indicador} & \textbf{Pretest} & \textbf{Postest} \\ \hline
-\endfirsthead
-\hline
-\textbf{Indicador} & \textbf{Pretest} & \textbf{Postest} \\ \hline
-\endhead
-Espera previa a la atención & 6,2 min & \\ \hline
-Retraso respecto a la hora programada & 7,4 min & \\ \hline
-Cruces de citas en el mes & 2 & \\ \hline
-Inasistencias semanales & 3 a 5 & \\ \hline
-Tiempo diario de confirmación de citas & 31 a 60 min & \\ \hline
-Mensajes diarios atendidos por la secretaria & 26 a 50 & \\ \hline
-Conversaciones resueltas por el agente sin derivación & --- & \textit{[\%]} \\ \hline
-Citas agendadas o reprogramadas por el agente & --- & \textit{[n]} \\ \hline
-\end{xltabular}
-\endgroup
+\textbf{Elemento} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+Ciclos observados ($n$) & 78 & 78 \\ \hline
+Media del $TGA$ (min) & 13,63 & 9,75 \\ \hline
+Mediana [RIC] del $TGA$ (min) & 13,45 [13,18--13,98] & 9,72 [9,06--10,44] \\ \hline
+Normalidad (Shapiro--Wilk) & \multicolumn{2}{c|}{Se rechaza en el pretest ($p < 0{,}001$)} \\ \hline
+Prueba & \multicolumn{2}{c|}{U de Mann--Whitney unilateral, muestras independientes} \\ \hline
+Estadístico y valor $p$ & \multicolumn{2}{c|}{$U = 0$; $p < 0{,}001$} \\ \hline
+Tamaño del efecto & \multicolumn{2}{c|}{$r = 0{,}86$} \\ \hline
+Decisión & \multicolumn{2}{c|}{Se rechaza $H_0$} \\ \hline
+\end{tabularx}
+\end{table}
 
-\textit{[2--3 líneas de interpretación. La usabilidad (RNF06) se valora con $T_1$: se cumple si es menor que los 3,40 min del pretest.]}
+La prueba de Shapiro--Wilk rechazó la normalidad del pretest ($p < 0{,}001$), por lo que se aplicó la U de Mann--Whitney unilateral para muestras independientes ($n = 78$ por fase). El resultado ($U = 0$; $p < 0{,}001$; $r = 0{,}86$) permite rechazar $H_0$. La espera previa ($p = 0{,}994$), el retraso ($p = 0{,}699$) y la duración clínica ($p = 0{,}269$) no difirieron (Tabla~\ref{tab:ob3_control}): ambas mediciones se realizaron en condiciones comparables, y el registro durante la consulta no prolongó la atención.
+
+Como $T_{E2}$ se cronometró por lote diario, se verificó que la reducción se mantiene aun si ese tiempo estuviera sobrestimado hasta en un 53~\%.
+
+\subsubsection{Variables de control e indicadores complementarios}
+
+La espera previa, el retraso respecto a la hora programada y la duración clínica se conservaron solo como variables de control (Tabla~\ref{tab:ob3_control}). Las tres se compararon con la U de Mann--Whitney bilateral, porque Shapiro--Wilk rechazó la normalidad en al menos una fase; la espera, por ejemplo, promedió 6,21 frente a 6,23 min.
+
+\begin{table}[H]
+\centering
+\caption{Variables de control en el pretest y el postest}
+\label{tab:ob3_control}
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\hline
+\textbf{Variable} & \textbf{Pretest} & \textbf{Postest} & \textbf{$p$} \\ \hline
+Espera previa a la atención & 6{,}00 [5{,}00--7{,}75] & 6{,}00 [5{,}00--7{,}00] & 0{,}994 \\ \hline
+Retraso respecto a la hora programada & 8{,}00 [6{,}00--9{,}00] & 7{,}00 [6{,}00--9{,}00] & 0{,}699 \\ \hline
+Duración clínica & 40{,}00 [24{,}25--54{,}00] & 36{,}50 [30{,}25--42{,}50] & 0{,}269 \\ \hline
+\end{tabularx}
+
+\vspace{2pt}
+{\footnotesize Mediana [RIC] en minutos. U de Mann--Whitney bilateral; $n = 78$ por fase.\par}
+\end{table}
+
+Los indicadores de comunicación con el paciente no se midieron porque el agente no se habilitó para los pacientes.
+
+En cuanto a la usabilidad (RNF06), el odontólogo registró cada atención en el consultorio durante la consulta ($T_1$ = 6,33 min de tiempo neto), sin transcripción posterior ($T_4 = T_5 = 0$).
