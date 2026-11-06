@@ -125,43 +125,6 @@ El módulo \texttt{bot} implementa el contrato del diseño (Tabla~\ref{tab:ob2_c
 \label{fig:ob3_interfaz_bot}
 \end{figure}
 
-\paragraph{Ubicación de las reglas de negocio por capa}
-
-Las reglas del diseño se distribuyen en tres capas (Tabla~\ref{tab:ob3_reglas_agente}): la base de datos aplica las que afectan a ambos canales; la API, las que protegen la agenda; y el agente, las propias de la conversación. Los límites de la API son configurables.
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.0cm}|>{\raggedright\arraybackslash}p{2.3cm}|}
-\caption{Reglas del agente y capa que las aplica}
-\label{tab:ob3_reglas_agente} \\
-\hline
-\textbf{Regla} & \textbf{Capa} & \textbf{Requerimiento} \\ \hline
-\endfirsthead
-\hline
-\textbf{Regla} & \textbf{Capa} & \textbf{Requerimiento} \\ \hline
-\endhead
-\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Datos y privacidad}} \\ \hline
-Sin aceptación del aviso no se trata ningún dato & Agente y API & RF09; BN6 \\ \hline
-Las secuencias de siete o más dígitos se enmascaran ante el modelo; la cédula no entra al historial & Agente & RNF03; BN7 \\ \hline
-Paciente o cita de otro teléfono: 404 & API & RNF03 \\ \hline
-\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Identificación y citas}} \\ \hline
-Un paciente del teléfono confirma su nombre; con varios, se pide la cédula; sin coincidencia o tras dos intentos, se deriva & Agente y API & RF11 \\ \hline
-Toda escritura se ejecuta solo tras \textit{Confirmar} & Agente & RF11, RF12 \\ \hline
-Días con horarios libres en los próximos 14 días & API & RF11 \\ \hline
-Citas agendadas por el agente: una activa por paciente y especialidad, y hasta tres por teléfono; las citas registradas en recepción no tienen este límite & API & RF11 \\ \hline
-Reprogramar o cancelar por el agente con al menos 2 h de anticipación; la cita nueva guarda la referencia a la original & API & RF12 \\ \hline
-Sin cruces de citas del mismo profesional & Base de datos & RF07 \\ \hline
-Urgencia (dolor, sangrado, hinchazón o golpe): texto fijo de emergencia y los tres primeros horarios libres de hoy o mañana, sin consejo médico & Agente y API & RF11, RF13 \\ \hline
-\multicolumn{3}{|l|}{\cellcolor{gray!10}\textbf{Conversación}} \\ \hline
-Dos mensajes no reconocidos seguidos: derivación & Agente & RF13 \\ \hline
-Derivación: el agente calla 4 h o hasta que el paciente escribe \textit{menú} & Agente & RF13 \\ \hline
-Plazos de 8 s para el modelo y 10 s para la API; al vencer, menú o derivación & Agente & RNF05 \\ \hline
-\end{xltabular}
-\endgroup
-
 \paragraph{Integración con el modelo de lenguaje}
 
 El clasificador llama a Claude Haiku 5.5 (Tabla~\ref{tab:ob2_matriz_llm}) con un máximo de 256 tokens de salida. Solo se envían el texto, el paso de la conversación y los dos mensajes anteriores del paciente, con los números largos ya enmascarados. Las instrucciones fijan las intenciones (Tabla~\ref{tab:ob2_intenciones}), el vocabulario de los pacientes y ejemplos, y ordenan ignorar instrucciones escritas en el mensaje. La respuesta se valida contra un esquema con campos de hasta 40 caracteres (Figura~\ref{fig:ob3_traza}); si el modelo falla, tarda o responde fuera del esquema, el agente muestra el menú (RNF05).
