@@ -37,31 +37,3 @@ Google Drive de la clínica & Guarda los respaldos cifrados fuera del servidor \
 \endgroup
 
 El agente añade a esta infraestructura su propio contenedor, el webhook por HTTPS \cite{meta2026whatsapp}, un número de WhatsApp registrado en la Cloud API y la cuenta del proveedor del modelo de lenguaje.
-
-\paragraph{Riesgos y mitigaciones}
-
-La Tabla~\ref{tab:ob2_riesgos} identifica los riesgos del despliegue en un servidor virtual, sus efectos y sus mitigaciones.
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{longtable}{|p{0.26\linewidth}|p{0.28\linewidth}|p{0.36\linewidth}|}
-\caption{Riesgos del despliegue y mitigaciones}
-\label{tab:ob2_riesgos} \\
-\hline
-\textbf{Riesgo} & \textbf{Efecto} & \textbf{Mitigación} \\ \hline
-\endfirsthead
-\hline
-\textbf{Riesgo} & \textbf{Efecto} & \textbf{Mitigación} \\ \hline
-\endhead
-Impago o cierre del VPS & Caída total del sistema y del agente & Cuenta a nombre de la clínica; respaldo y exportación para migrar \\ \hline
-Caída de internet en la clínica & Personal sin acceso; el agente sigue activo & Ficha en papel y carga posterior \\ \hline
-Datos tratados fuera del Ecuador & Datos personales fuera del control de la clínica & Contrato de encargado (LOPDP \cite{lopdp2021}); proveedores nombrados en el aviso de privacidad; respaldos cifrados; Meta, Google y el proveedor del modelo no reciben datos clínicos \\ \hline
-Falla del modelo de lenguaje & El agente no comprende el texto libre & El agente presenta el menú; el proveedor se cambia sin modificar el agente \\ \hline
-Suspensión de la cuenta de WhatsApp & Sin agente & Uso conforme a la política de Meta; recepción como canal alterno \\ \hline
-Agotamiento de recursos & Lentitud o caída de contenedores & Límite de memoria por contenedor (0,6 a 1 GB estimados) \\ \hline
-\end{longtable}
-\endgroup
-
