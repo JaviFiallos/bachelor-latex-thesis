@@ -1,0 +1,216 @@
+% Prueba controlada del agente conversacional — material para imprimir.
+% Compilar: latexmk -pdf -cd tareas/prueba-controlada/prueba-controlada.tex
+% Páginas: 1–2 guion del investigador · 3 tarjeta de tareas (una por participante)
+%          4 hoja de registro (una por participante) · 5 hoja de consolidación
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{array,tabularx,enumitem,amssymb,xcolor,colortbl}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\newcommand{\cas}{$\square$}
+\newcommand{\linea}[1]{\rule{#1}{0.4pt}}
+\newcommand{\titulo}[1]{\begin{center}\large\bfseries #1\end{center}\vspace{-4pt}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\pagestyle{empty}
+
+\begin{document}
+
+% =====================================================================
+% 1. GUION DEL INVESTIGADOR
+% =====================================================================
+\titulo{Prueba controlada del agente conversacional — Guion del investigador}
+
+\textbf{Objetivo.} Verificar que personas sin relación con el desarrollo resuelven por WhatsApp, sin ayuda de recepción, las tareas que el diagnóstico identificó como carga de la secretaria (Instrumento 2) y que los pacientes aceptarían hacer con un asistente (Instrumento 3, P5--P7).
+
+\textbf{Participantes.} 8 a 12 personas adultas que usan WhatsApp a diario, ajenas al desarrollo, con su propio teléfono. Se identifican solo con un código (P01, P02…). En las hojas no se anota su nombre ni su número.
+
+\textbf{Duración.} 15 minutos por participante, una persona a la vez.
+
+\textbf{Preparación (una vez)}
+\begin{enumerate}[nosep,leftmargin=*]
+  \item Crear en el sistema un \emph{Profesional de prueba} en Odontología general, con horario de atención la próxima semana, para no ocupar la agenda de los odontólogos.
+  \item Por cada participante, registrar un paciente ficticio (\emph{Paciente Prueba P01}…) con una cédula ficticia y el número de WhatsApp del participante. El agente reconoce al paciente por su número; sin registro previo deriva a recepción.
+  \item Comprobar que el agente responde desde el número de pruebas y que el sistema está accesible para revisar la agenda.
+  \item Imprimir, por participante, una tarjeta de tareas y una hoja de registro. Tener a mano un cronómetro con vueltas (el del teléfono sirve).
+\end{enumerate}
+
+\textbf{Desarrollo de la sesión}
+\begin{enumerate}[nosep,leftmargin=*]
+  \item Leer: \emph{«Vamos a probar un asistente de WhatsApp de una clínica dental. No le evaluamos a usted, evaluamos al asistente. Escríbale como lo haría normalmente; puede usar los botones o escribir. Yo no puedo ayudarle salvo que se quede bloqueado.»}
+  \item Pedir el consentimiento verbal y marcarlo en la hoja de registro.
+  \item El participante guarda el número de pruebas y escribe «Hola». Debe aparecer el aviso de privacidad; anotar si lo acepta.
+  \item Entregar la tarjeta de tareas y hacer las tareas en orden, de la 1 a la 5. La tarea 5 va al final porque, tras derivar a recepción, el agente deja de responder hasta que se escriba «menu».
+  \item Por cada tarea: iniciar el cronómetro cuando el participante envía su primer mensaje; marcar una vuelta cuando llega la primera respuesta; detenerlo cuando aparece el mensaje del criterio de éxito o cuando el participante dice que no puede continuar.
+  \item Tras las tareas 3 y 4, revisar la agenda en el sistema y marcar lo que corresponda.
+  \item Si el participante pide ayuda o se queda bloqueado más de un minuto, intervenir una sola vez y marcar \emph{Con ayuda}.
+  \item Al final, el participante responde el cuestionario de la hoja de registro.
+\end{enumerate}
+
+\textbf{Criterios de éxito}
+
+{\small
+\begin{tabularx}{\linewidth}{|C{0.6cm}|L{3.1cm}|X|C{1.3cm}|}
+\hline
+\rowcolor{gray!15}\textbf{N.°} & \textbf{Tarea} & \textbf{Se cumple cuando…} & \textbf{Req.} \\ \hline
+1 & Precio de una limpieza & El agente muestra el precio de la profilaxis del catálogo con la nota de valor referencial & RF10 \\ \hline
+2 & Horario y dirección & El agente muestra la dirección y el horario de atención & RF10 \\ \hline
+3 & Agendar una cita & Llega «Listo, su cita quedó agendada para…» y la cita aparece en la agenda con origen \emph{agente} & RF11 \\ \hline
+4 & Cambiar la cita a otro día & Llega «Su cita quedó para…» y en la agenda la cita nueva queda enlazada a la original, que figura como reprogramada & RF12 \\ \hline
+5 & Pregunta clínica & El agente no responde la pregunta y deriva a recepción con su enlace & RF13 \\ \hline
+\end{tabularx}}
+
+\textbf{Al terminar todas las sesiones}
+\begin{enumerate}[nosep,leftmargin=*]
+  \item Cancelar las citas de prueba, desactivar el \emph{Profesional de prueba} y desactivar o eliminar los pacientes ficticios.
+  \item Pasar los datos de cada hoja de registro a la hoja de consolidación.
+\end{enumerate}
+
+\newpage
+% =====================================================================
+% 2. TARJETA DE TAREAS (para el participante)
+% =====================================================================
+\titulo{Tarjeta de tareas}
+
+Usted es paciente de la clínica dental \textbf{Bellidental} y le escribe a su asistente de WhatsApp. Haga las tareas en orden. Escriba como lo haría normalmente: puede usar los botones o escribir con sus palabras.
+
+\vspace{6pt}
+{\large
+\begin{tabularx}{\linewidth}{|C{1cm}|X|}
+\hline
+\textbf{1} & Quiere saber cuánto cuesta una \textbf{limpieza dental}. \\[14pt] \hline
+\textbf{2} & Quiere saber \textbf{en qué horario atiende} la clínica y \textbf{dónde queda}. \\[14pt] \hline
+\textbf{3} & Quiere una \textbf{cita de odontología general} para un día de la \textbf{próxima semana, en la tarde}, con el \textbf{Profesional de prueba}. \\[14pt] \hline
+\textbf{4} & Le surgió un compromiso: \textbf{cambie esa cita a otro día}. \\[14pt] \hline
+\textbf{5} & Quiere saber si \textbf{puede tomar ibuprofeno} después de la limpieza. \\[14pt] \hline
+\end{tabularx}}
+
+\vspace{10pt}
+Cuando crea que terminó una tarea, avise al investigador antes de pasar a la siguiente.
+
+\newpage
+% =====================================================================
+% 3. HOJA DE REGISTRO (una por participante)
+% =====================================================================
+\titulo{Hoja de registro}
+
+\begin{tabularx}{\linewidth}{|L{3.6cm}|X|L{2.4cm}|X|}
+\hline
+Código & P\linea{1.2cm} & Fecha & \\ \hline
+Hora de inicio & & Hora de fin & \\ \hline
+Rango de edad & \multicolumn{3}{l|}{\cas\ 18--29 \qquad \cas\ 30--44 \qquad \cas\ 45--59 \qquad \cas\ 60 o más} \\ \hline
+Consentimiento verbal & \multicolumn{3}{l|}{\cas\ Sí} \\ \hline
+Aviso de privacidad & \multicolumn{3}{l|}{\cas\ Aparece y lo acepta \qquad \cas\ No aparece \qquad \cas\ No lo acepta} \\ \hline
+\end{tabularx}
+
+\vspace{4pt}
+\textbf{Tareas}
+
+{\small
+\begin{tabularx}{\linewidth}{|C{0.6cm}|C{1.8cm}|C{1.8cm}|C{1.6cm}|L{1.6cm}|L{2.4cm}|X|}
+\hline
+\rowcolor{gray!15}\textbf{N.°} & \textbf{Primera respuesta (s)} & \textbf{Tiempo de tarea (mm:ss)} & \textbf{Mensajes enviados} & \textbf{Vía} & \textbf{Resultado} & \textbf{Observación} \\ \hline
+1 & & & & \cas\ Menú\newline\cas\ Texto & \cas\ Sí\newline\cas\ Con ayuda\newline\cas\ No & \\ \hline
+2 & & & & \cas\ Menú\newline\cas\ Texto & \cas\ Sí\newline\cas\ Con ayuda\newline\cas\ No & \\ \hline
+3 & & & & \cas\ Menú\newline\cas\ Texto & \cas\ Sí\newline\cas\ Con ayuda\newline\cas\ No & \\ \hline
+4 & & & & \cas\ Menú\newline\cas\ Texto & \cas\ Sí\newline\cas\ Con ayuda\newline\cas\ No & \\ \hline
+5 & & & & \cas\ Menú\newline\cas\ Texto & \cas\ Sí\newline\cas\ Con ayuda\newline\cas\ No & \\ \hline
+\end{tabularx}}
+
+{\footnotesize \emph{Mensajes enviados}: mensajes escritos más botones u opciones pulsados por el participante. \emph{Vía}: puede marcarse ambas.}
+
+\textbf{Revisión en el sistema}
+
+\begin{tabularx}{\linewidth}{|X|C{2.6cm}|}
+\hline
+Tarea 3: la cita aparece en la agenda con origen \emph{agente} & \cas\ Sí \quad \cas\ No \\ \hline
+Tarea 4: la cita nueva está enlazada a la original, que figura como reprogramada & \cas\ Sí \quad \cas\ No \\ \hline
+\end{tabularx}
+
+\vspace{4pt}
+\textbf{Cuestionario al participante} \quad {\small (1 = Totalmente en desacuerdo \dots\ 5 = Totalmente de acuerdo)}
+
+{\small
+\begin{tabularx}{\linewidth}{|C{0.6cm}|X|C{0.55cm}|C{0.55cm}|C{0.55cm}|C{0.55cm}|C{0.55cm}|}
+\hline
+\rowcolor{gray!15}\textbf{N.°} & \textbf{Afirmación} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} \\ \hline
+1 & Me resultó fácil consultar precios con el asistente. & \cas & \cas & \cas & \cas & \cas \\ \hline
+2 & Me resultó fácil consultar el horario de atención con el asistente. & \cas & \cas & \cas & \cas & \cas \\ \hline
+3 & Me resultó fácil agendar y cambiar una cita con el asistente. & \cas & \cas & \cas & \cas & \cas \\ \hline
+4 & El asistente respondió con rapidez. & \cas & \cas & \cas & \cas & \cas \\ \hline
+5 & Volvería a usar el asistente para coordinar mis citas. & \cas & \cas & \cas & \cas & \cas \\ \hline
+\end{tabularx}}
+
+¿Qué le resultó confuso o difícil? \linea{8.6cm}
+
+\linea{\linewidth}
+
+\newpage
+% =====================================================================
+% 4. HOJA DE CONSOLIDACIÓN
+% =====================================================================
+\titulo{Hoja de consolidación}
+
+\textbf{a) Resultado y valoración.} Resultado: \textbf{S} = sí, \textbf{A} = con ayuda, \textbf{N} = no. Cuestionario: de 1 a 5.
+
+{\small
+\begin{tabularx}{\linewidth}{|C{1cm}|*{10}{>{\centering\arraybackslash}X|}}
+\hline
+\rowcolor{gray!15} & \multicolumn{5}{c|}{\textbf{Resultado por tarea}} & \multicolumn{5}{c|}{\textbf{Cuestionario}} \\ \hline
+\rowcolor{gray!15}\textbf{Cód.} & \textbf{T1} & \textbf{T2} & \textbf{T3} & \textbf{T4} & \textbf{T5} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} \\ \hline
+P01 & & & & & & & & & & \\ \hline
+P02 & & & & & & & & & & \\ \hline
+P03 & & & & & & & & & & \\ \hline
+P04 & & & & & & & & & & \\ \hline
+P05 & & & & & & & & & & \\ \hline
+P06 & & & & & & & & & & \\ \hline
+P07 & & & & & & & & & & \\ \hline
+P08 & & & & & & & & & & \\ \hline
+P09 & & & & & & & & & & \\ \hline
+P10 & & & & & & & & & & \\ \hline
+P11 & & & & & & & & & & \\ \hline
+P12 & & & & & & & & & & \\ \hline
+\end{tabularx}}
+
+\vspace{6pt}
+\textbf{b) Tiempos.} Tiempo de tarea en mm:ss; primera respuesta en segundos.
+
+{\small
+\begin{tabularx}{\linewidth}{|C{1cm}|*{10}{>{\centering\arraybackslash}X|}}
+\hline
+\rowcolor{gray!15} & \multicolumn{5}{c|}{\textbf{Tiempo de tarea}} & \multicolumn{5}{c|}{\textbf{Primera respuesta}} \\ \hline
+\rowcolor{gray!15}\textbf{Cód.} & \textbf{T1} & \textbf{T2} & \textbf{T3} & \textbf{T4} & \textbf{T5} & \textbf{T1} & \textbf{T2} & \textbf{T3} & \textbf{T4} & \textbf{T5} \\ \hline
+P01 & & & & & & & & & & \\ \hline
+P02 & & & & & & & & & & \\ \hline
+P03 & & & & & & & & & & \\ \hline
+P04 & & & & & & & & & & \\ \hline
+P05 & & & & & & & & & & \\ \hline
+P06 & & & & & & & & & & \\ \hline
+P07 & & & & & & & & & & \\ \hline
+P08 & & & & & & & & & & \\ \hline
+P09 & & & & & & & & & & \\ \hline
+P10 & & & & & & & & & & \\ \hline
+P11 & & & & & & & & & & \\ \hline
+P12 & & & & & & & & & & \\ \hline
+\end{tabularx}}
+
+\vspace{6pt}
+\textbf{Indicadores que se calculan} (van a 3.6)
+
+{\small
+\begin{tabularx}{\linewidth}{|L{5.2cm}|X|L{2.6cm}|}
+\hline
+\rowcolor{gray!15}\textbf{Indicador} & \textbf{Cálculo} & \textbf{Diagnóstico} \\ \hline
+Tareas completadas sin ayuda (\%) & S / total de tareas, por tarea y global & I2-P1; I3-P5--P7 \\ \hline
+Tiempo por tarea & Mediana de cada tarea & I2-P1 \\ \hline
+Primera respuesta del agente & Mediana de la tabla b), en segundos & I2-P3 ($>$46 min); I3-P2 \\ \hline
+Derivación correcta (\%) & Participantes con T5 = S & RF13 \\ \hline
+Valoración del participante & Mediana y \% de respuestas 4--5 por ítem (tabla a) & I3-P5--P7 \\ \hline
+\end{tabularx}}
+
+\end{document}
