@@ -1,9 +1,11 @@
-% 3.4.5 Pruebas del agente conversacional (T6). Número de producción, datos ficticios.
+% 3.4.5 Funcionamiento del agente conversacional (T6). Número de producción, datos ficticios.
+% Recordatorio (opcional): guardar la captura como img/Objetivo3/Ob3_Agente_Recordatorio.jpeg
+% y la figura y su mención aparecen solas.
 % CONFIRMAR cada fila con la prueba realizada y sus capturas.
 
-\subsubsection{Pruebas del agente conversacional}
+\subsubsection{Funcionamiento del agente conversacional}
 
-El agente se probó por WhatsApp sobre el sistema desplegado, con pacientes ficticios y el chip prepago dedicado al agente para las pruebas. La Tabla~\ref{tab:ob3_pruebas_agente} resume los casos, y la Figura~\ref{fig:ob3_conversaciones}, cuatro de ellos.
+El agente se verificó por WhatsApp sobre el sistema desplegado, con pacientes ficticios y el chip prepago dedicado al agente. La Tabla~\ref{tab:ob3_pruebas_agente} relaciona cada caso con su requerimiento; la Figura~\ref{fig:ob3_conv_info} muestra las consultas de información y la Figura~\ref{fig:ob3_conv_cita}, el agendamiento y la derivación.\IfFileExists{img/Objetivo3/Ob3_Agente_Recordatorio.jpeg}{ La Figura~\ref{fig:ob3_conv_recordatorio} muestra el recordatorio del día anterior.}{}
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -32,13 +34,28 @@ Consulta clínica o de saldo & Derivación con el enlace a recepción & RF13 & C
 \end{xltabular}
 \endgroup
 
+\newcommand{\captura}[2]{\includegraphics[width=\linewidth,height=#2,keepaspectratio]{img/Objetivo3/#1.jpeg}}
+
 \begin{figure}[H]
 \centering
-\newcommand{\captura}[2]{\IfFileExists{img/Objetivo3/#1.jpeg}{\includegraphics[width=0.24\linewidth]{img/Objetivo3/#1.jpeg}}{\fbox{\parbox{0.9\linewidth}{\centering\footnotesize Pendiente:\\ #2}}}}
-\begin{subfigure}[t]{0.24\linewidth}\centering\captura{Ob3_Agente_Horarios}{Horarios}\caption{Aviso, menú y horarios}\end{subfigure}\hfill
-\begin{subfigure}[t]{0.24\linewidth}\centering\captura{Ob3_Agente_Texto_Libre}{Texto libre}\caption{Texto libre interpretado}\end{subfigure}\hfill
-\begin{subfigure}[t]{0.24\linewidth}\centering\captura{Ob3_Agente_Agendamiento}{Agendamiento}\caption{Cita confirmada}\end{subfigure}\hfill
-\begin{subfigure}[t]{0.24\linewidth}\centering\captura{Ob3_Agente_Derivacion}{Derivación}\caption{Derivación}\end{subfigure}
-\caption{Conversaciones de prueba con el agente}
-\label{fig:ob3_conversaciones}
+\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Horarios}{0.42\textheight}\caption{Horario de un profesional}\end{subfigure}\hfill
+\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Texto_Libre}{0.42\textheight}\caption{Horario de una especialidad}\end{subfigure}
+\caption{Consultas de información en texto libre (RF10)}
+\label{fig:ob3_conv_info}
 \end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Agendamiento}{0.55\textheight}\caption{Cita confirmada}\end{subfigure}\hfill
+\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Derivacion}{0.55\textheight}\caption{Derivación a recepción}\end{subfigure}
+\caption{Agendamiento y derivación (RF11, RF13)}
+\label{fig:ob3_conv_cita}
+\end{figure}
+
+\IfFileExists{img/Objetivo3/Ob3_Agente_Recordatorio.jpeg}{%
+\begin{figure}[H]
+\centering
+\captura{Ob3_Agente_Recordatorio}{0.55\textheight}
+\caption{Recordatorio del día anterior con Confirmar, Cancelar y Reprogramar (RF14)}
+\label{fig:ob3_conv_recordatorio}
+\end{figure}}{}

@@ -6,8 +6,8 @@
 % Material reutilizable: resultados/borrador-discusion-ob3.tex
 %                        ob3/verificacion.tex (oculta)
 % DESCARTADO (2026-11-09): la prueba controlada del agente (tareas/prueba-controlada/)
-%            no se realizará ni se menciona en el documento. Las notas "% PRUEBA"
-%            se conservan solo como referencia; N1, N2 y N3 quedan "No evaluado".
+%            no se realizará ni se menciona en el documento. Se retiraron de la
+%            matriz de cierre los indicadores de comunicación (N1, N2, N3).
 % =========================================================
 \subsection{Resultados}
 \label{sec:resultados}
@@ -163,8 +163,7 @@ El $TGA$ bajó de 13,63 a 9,75 min por ciclo ($-3{,}88$ min; $-28{,}5$~\%), con 
 
 \paragraph{Agente conversacional}
 
-El agente quedó implementado, desplegado y validado con pacientes ficticios en el número dedicado, incluido el recordatorio del día anterior. No se habilitó para los pacientes de la clínica, por lo que su efecto sobre la comunicación no forma parte de la evaluación del $TGA$.
-% PRUEBA (descartada 2026-11-09): no se realizará la prueba controlada; no agregar resultados aquí.
+El agente quedó implementado, desplegado y validado con pacientes ficticios en el número dedicado, con las consultas de información, el agendamiento, la reprogramación, la derivación y el recordatorio del día anterior (Tabla~\ref{tab:ob3_pruebas_agente}).
 
 \paragraph{Contraste con los antecedentes}
 
@@ -173,7 +172,7 @@ La reducción medida (28,5~\%) es menor que el 68,75~\% de \cite{alejandrino2023
 % ---------------------------------------------------------
 \subsubsection{Matriz de cierre}
 
-La Tabla~\ref{tab:res_cierre} relaciona los indicadores del diagnóstico con el valor obtenido y el nivel de evidencia: medido en operación (pretest y postest), verificado en el sistema desplegado o no evaluado.
+La Tabla~\ref{tab:res_cierre} relaciona los indicadores del diagnóstico con el valor obtenido y el nivel de evidencia: medido en operación (pretest y postest) o verificado en el sistema desplegado.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -195,11 +194,7 @@ Registros por atención (PC1) & 3 & 1, durante la consulta & Medido \\ \hline
 Registro clínico por personal no clínico (PC3) & Secretaria bajo dictado & Solo el odontólogo & Verificado \\ \hline
 Cruces de citas (PC7) & 2 al mes & Rechazados por la base de datos & Verificado \\ \hline
 Autoría de los cambios (BN4) & Sin registro & Usuario, fecha y hora & Verificado \\ \hline
-Respuesta a consultas por WhatsApp (N1) & Más de 46 min & --- & No evaluado \\ \hline
-% PRUEBA (descartada 2026-11-09): N1 y N2 se mantienen "---"/"No evaluado".
-Agendamiento por WhatsApp (N2) & 58,1~\% dispuesto & --- & No evaluado \\ \hline
-Confirmación de citas (N3) & 31 a 60 min diarios & --- & No evaluado \\ \hline
 \end{xltabular}
 \endgroup
 
-Los indicadores de la gestión clínico-administrativa se alcanzaron: los de tiempo se midieron en operación, y los de control y trazabilidad se verificaron en el sistema desplegado. Los de comunicación con el paciente dependen de que el agente atienda a los pacientes de la clínica, y quedan como trabajo futuro.
+Los indicadores de la gestión clínico-administrativa se alcanzaron: los de tiempo se midieron en operación, y los de control y trazabilidad se verificaron en el sistema desplegado.

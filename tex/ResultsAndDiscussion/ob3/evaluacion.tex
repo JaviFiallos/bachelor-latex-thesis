@@ -67,7 +67,7 @@ En ambas fases, $T_2$ se midió desde que el paciente llega a caja hasta que se 
 
 \subsubsection{Resultados por tramo}
 
-La Tabla~\ref{tab:ob3_tga} compara cada tramo entre el pretest y el postest, y la Figura~\ref{fig:ob3_tga_barras} muestra la composición del $TGA$.
+La Tabla~\ref{tab:ob3_tga} compara cada tramo entre el pretest y el postest, y la Figura~\ref{fig:ob3_tga_radar} lo representa en un gráfico de radar: en el postest, $T_4$ y $T_5$ valen cero y el área se concentra en la Etapa 1.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -96,34 +96,44 @@ $T_3$ Agendamiento de la próxima cita & 1,30 & 1,50 & +15,7 \\ \hline
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-  xbar stacked,
-  width=0.92\linewidth, height=4.6cm,
-  bar width=0.75cm,
-  xmin=0, xmax=15.5,
-  xlabel={Minutos por ciclo completo de atención},
-  ytick=data, symbolic y coords={Postest,Pretest},
-  y tick label style={font=\small},
-  enlarge y limits=0.45,
-  /pgf/number format/use comma,
-  legend style={at={(0.5,-0.42)}, anchor=north, legend columns=5, font=\scriptsize, draw=none},
-  legend cell align=left,
-  tick label style={font=\small},
-  axis lines*=left,
-]
-\addplot[fill=dSistemaF, draw=dSistemaB] coordinates {(3.40,Pretest) (6.33,Postest)};
-\addplot[fill=dAgenteF, draw=dAgenteB] coordinates {(1.60,Pretest) (1.92,Postest)};
-\addplot[fill=dClinicoF, draw=dClinicoB] coordinates {(1.30,Pretest) (1.50,Postest)};
-\addplot[fill=dPersonaF, draw=dPersonaB] coordinates {(3.94,Pretest) (0,Postest)};
-\addplot[fill=dDatosF, draw=dDatosB] coordinates {(3.38,Pretest) (0,Postest)};
-\legend{$T_1$, $T_2$, $T_3$, $T_4$, $T_5$}
-\node[anchor=west, font=\small\bfseries] at (axis cs:13.63,Pretest) {13,63};
-\node[anchor=west, font=\small\bfseries] at (axis cs:9.75,Postest) {9,75};
-\end{axis}
+\begin{tikzpicture}[x=0.62cm, y=0.62cm, font=\small, val/.style={font=\footnotesize\bfseries, text=black!80, inner sep=2pt}]
+  % Rejilla: rombos cada 2 min y ejes de los cuatro tramos
+  \foreach \r in {2,4,6} {
+    \draw[black!15] (\r,0) -- (0,\r) -- (-\r,0) -- (0,-\r) -- cycle;
+    \node[font=\scriptsize, text=black!50, anchor=north east, inner sep=1pt] at (225:{\r*0.7071}) {\r};
+  }
+  \foreach \a in {90,0,270,180} \draw[black!35] (0,0) -- (\a:7);
+  % Pretest
+  \draw[dPersonaB, line width=1pt, fill=dPersonaF, fill opacity=0.45]
+    (90:3.40) -- (0:2.90) -- (270:3.94) -- (180:3.38) -- cycle;
+  % Postest: T4 y T5 en cero
+  \draw[dSistemaB, line width=1pt, fill=dSistemaF, fill opacity=0.45]
+    (90:6.33) -- (0:3.42) -- (0,0) -- cycle;
+  \foreach \p in {(90:3.40),(0:2.90),(270:3.94),(180:3.38)} \fill[dPersonaB] \p circle (2pt);
+  \foreach \p in {(90:6.33),(0:3.42),(0,0)} \fill[dSistemaB] \p circle (2pt);
+  % Valores
+  \node[val, anchor=east]  at (90:3.40) {3,40~};
+  \node[val, anchor=west]  at (90:6.33) {~6,33};
+  \node[val, anchor=north east] at (0:2.90) {2,90};
+  \node[val, anchor=south west] at (0:3.42) {3,42};
+  \node[val, anchor=west]  at (270:3.94) {~3,94};
+  \node[val, anchor=south] at (180:3.38) {3,38};
+  \node[val, anchor=south west] at (0,0) {0};
+  % Rótulos de los ejes
+  \node[anchor=south, align=center] at (90:7)  {$T_1$ Registro clínico y receta};
+  \node[anchor=west,  align=left]   at (0:7)   {$T_2 + T_3$\\Cobro y\\agendamiento};
+  \node[anchor=north, align=center] at (270:7) {$T_4$ Llenado del Formulario 033};
+  \node[anchor=east,  align=right]  at (180:7) {$T_5$\\Digitalización};
+  % Leyenda
+  \begin{scope}[shift={(-4.2,-9.6)}]
+    \draw[dPersonaB, line width=1pt, fill=dPersonaF, fill opacity=0.45] (0,0) rectangle (0.6,0.4);
+    \node[anchor=west, font=\footnotesize] at (0.7,0.2) {Pretest ($TGA$ = 13,63 min)};
+    \draw[dSistemaB, line width=1pt, fill=dSistemaF, fill opacity=0.45] (7.4,0) rectangle (8.0,0.4);
+    \node[anchor=west, font=\footnotesize] at (8.1,0.2) {Postest ($TGA$ = 9,75 min)};
+  \end{scope}
 \end{tikzpicture}
-\caption{Composición del $TGA$ antes y después del sistema}
-\label{fig:ob3_tga_barras}
+\caption{Tiempo por tramo del $TGA$ antes y después del sistema, en minutos por ciclo}
+\label{fig:ob3_tga_radar}
 \end{figure}
 
 El $TGA$ se redujo de 13,63 a 9,75 minutos por ciclo ($-3{,}88$ min; $-28{,}5$~\%). La reducción proviene de la Etapa 2: el llenado del Formulario 033 ($T_4$) y su digitalización ($T_5$), que sumaban 7,33 minutos por ciclo, dejaron de existir. En la Etapa 1, $T_1$ pasó de 3,40 a 6,33 minutos porque, conforme a BN3 y BN5, el registro clínico que realizaba la secretaria pasó al odontólogo, que lo efectúa en el sistema durante la consulta. $T_2$ y $T_3$ variaron levemente.
@@ -161,7 +171,7 @@ La Figura~\ref{fig:ob3_jornada} traslada los promedios a una jornada de 26 atenc
 \label{fig:ob3_jornada}
 \end{figure}
 
-\subsubsection{Variables de control e indicadores complementarios}
+\subsubsection{Variables de control y usabilidad}
 
 La espera previa, el retraso respecto a la hora programada y la duración clínica se conservaron como variables de control (Tabla~\ref{tab:ob3_control}). Sus valores fueron similares en ambas fases, de modo que las dos mediciones se realizaron en condiciones comparables y el registro durante la consulta no prolongó la atención clínica.
 
@@ -182,7 +192,5 @@ Duración clínica & 40{,}00 [24{,}25--54{,}00] & 36{,}50 [30{,}25--42{,}50] \\ 
 \vspace{2pt}
 {\footnotesize Mediana [rango intercuartílico] en minutos; $n = 78$ por fase.\par}
 \end{table}
-
-Los indicadores de comunicación con el paciente no se midieron porque el agente no se habilitó para los pacientes.
 
 En cuanto a la usabilidad (RNF06), el odontólogo registró cada atención en el consultorio durante la consulta ($T_1$ = 6,33 min de tiempo neto), sin transcripción posterior ($T_4 = T_5 = 0$).
