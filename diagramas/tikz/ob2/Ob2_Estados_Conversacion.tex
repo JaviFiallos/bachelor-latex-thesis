@@ -1,0 +1,52 @@
+\documentclass[tikz,border=4pt]{standalone}
+\input{../ob3/estilo}
+\tikzset{
+  est/.style 2 args={draw=#2, fill=#1, line width=0.7pt, rounded corners=6pt, align=center,
+    minimum width=2.6cm, minimum height=0.8cm, inner sep=3pt, font=\footnotesize},
+  ini/.style={circle, fill=black!80, minimum size=6pt, inner sep=0pt},
+  fin/.style={circle, draw=black!80, line width=0.7pt, minimum size=9pt, inner sep=0pt,
+    path picture={\fill[black!80] (path picture bounding box.center) circle (2.6pt);}},
+  t/.style={->, >={Stealth[length=2mm]}, draw=black!60, line width=0.6pt},
+  lb/.style={font=\scriptsize, fill=white, inner sep=1pt, align=center},
+}
+\newcommand{\sub}[1]{\\[-1pt]{\scriptsize #1}}
+\begin{document}
+\begin{tikzpicture}
+% Estados
+\node[est={dAgenteF}{dAgenteB}]   (av)  at (0,2.6)   {\textbf{Aviso de privacidad}};
+\node[est={dAgenteF}{dAgenteB}]   (me)  at (0,0)     {\textbf{Menú}};
+\node[est={dAgenteF}{dAgenteB}]   (ho)  at (5,2.6)   {\textbf{Horarios}\sub{día, profesional o especialidad}};
+\node[est={dExternoF}{dExternoB}] (in)  at (5,-1.3)  {\textbf{Intérprete}\sub{texto libre $\rightarrow$ intención}};
+\node[est={dAgenteF}{dAgenteB}]   (id)  at (10,-1.3) {\textbf{Identificación}};
+\node[est={dAgenteF}{dAgenteB}]   (ci)  at (14.6,-1.3) {\textbf{Agendar o}\\[-1pt]\textbf{reprogramar}};
+\node[est={dSistemaF}{dSistemaB}] (re)  at (14.6,2.6) {\textbf{Recordatorio}};
+\node[est={dPersonaF}{dPersonaB}] (de)  at (5,-4.4)  {\textbf{Derivación}\sub{a recepción}};
+% Inicios y finales
+\node[ini] (i1) at (0,3.9) {};
+\node[ini] (i2) at (2.4,-2.6) {};
+\node[ini] (i3) at (14.6,3.9) {};
+\node[fin] (f1) at (18.0,-1.3) {};
+\node[fin] (f2) at (18.4,2.6) {};
+\node[fin] (f3) at (5,-5.7) {};
+% Transiciones
+\draw[t] (i1) -- node[lb, right]{primer mensaje} (av);
+\draw[t] (av) -- node[lb, right]{acepta} (me);
+\draw[t] (me.north east) to[bend left=12] node[lb, pos=0.45]{horarios} (ho.south west);
+\draw[t] (ho.west) to[bend right=20] node[lb, pos=0.5]{menú} (me.60);
+\draw[t] (i2) |- node[lb, pos=0.25, left]{texto libre} (in.200);
+\draw[t] (in.160) -| node[lb, pos=0.3, below]{información o no reconocido} (me.south);
+\draw[t] (in.north) -- node[lb, pos=0.7]{día, profesional\\o especialidad} (ho.south);
+\draw[t] (me.east) -| node[lb, pos=0.3, above]{agendar o reprogramar} ([xshift=-0.5cm]id.north);
+\draw[t] (in.east) -- node[lb, above, pos=0.5]{agendar o\\reprogramar} (id.west);
+\draw[t] (ho.east) -| node[lb, pos=0.25, above]{ver horas libres} ([xshift=0.5cm]id.north);
+\draw[t] (id) -- (ci);
+\draw[t] (ci) -- node[lb, above]{confirma} (f1);
+\draw[t] (i3) -- node[lb, right]{día anterior} (re);
+\draw[t] (re) -- node[lb, right]{reprogramar} (ci);
+\draw[t] (re) -- node[lb, above]{confirma o cancela} (f2);
+\draw[t] (me.south west) |- node[lb, pos=0.75, above]{recepción} (de.west);
+\draw[t] (in.south) -- node[lb, right]{clínica o recepción} (de.north);
+\draw[t] (id.south) |- node[lb, pos=0.75, above]{sin coincidencia} (de.east);
+\draw[t] (de) -- (f3);
+\end{tikzpicture}
+\end{document}

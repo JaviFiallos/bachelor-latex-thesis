@@ -5,7 +5,201 @@
 % Plan: tareas/PLAN-RESULTADOS.md
 % Material reutilizable: resultados/borrador-discusion-ob3.tex
 %                        ob3/verificacion.tex (oculta)
-% Prueba controlada del agente: tareas/prueba-controlada/
+% DESCARTADO (2026-11-09): la prueba controlada del agente (tareas/prueba-controlada/)
+%            no se realizará ni se menciona en el documento. Las notas "% PRUEBA"
+%            se conservan solo como referencia; N1, N2 y N3 quedan "No evaluado".
 % =========================================================
 \subsection{Resultados}
 \label{sec:resultados}
+
+Este apartado reúne los resultados de los tres objetivos y los contrasta con los antecedentes. La Figura~\ref{fig:res_hilo} resume cómo cada etapa se apoyó en la anterior.
+
+\begin{figure}[H]
+\centering
+\begingroup
+\shorthandoff{><}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+    font=\footnotesize,
+    eta/.style 2 args={rectangle split, rectangle split parts=2, draw=#2, line width=0.7pt, rounded corners=2pt,
+        rectangle split part fill={#1,white}, text width=2.55cm, align=center, inner sep=3pt},
+    fl/.style={-{Stealth[length=2mm]}, draw=black!60, line width=0.7pt}
+]
+    \node[eta={dExternoF}{dExternoB}] (a) at (0,0)
+        {\textbf{Antecedentes}\nodepart{two}13 estudios; ninguno mide la carga del personal};
+    \node[eta={dPersonaF}{dPersonaB}, right=0.45cm of a.north east, anchor=north west] (b)
+        {\textbf{Diagnóstico}\nodepart{two}4 instrumentos; 8 PC, 7 BN y 5 N};
+    \node[eta={dClinicoF}{dClinicoB}, right=0.45cm of b.north east, anchor=north west] (c)
+        {\textbf{Requerimientos}\nodepart{two}14 RF y 6 RNF priorizados con MoSCoW};
+    \node[eta={dSistemaF}{dSistemaB}, right=0.45cm of c.north east, anchor=north west] (d)
+        {\textbf{Diseño}\nodepart{two}Monolito modular y agente híbrido de 9 componentes};
+    \node[eta={dAgenteF}{dAgenteB}, right=0.45cm of d.north east, anchor=north west] (e)
+        {\textbf{Implementación}\nodepart{two}16 tarjetas y 4 añadidas; servidor con CI/CD};
+    \node[eta={dDatosF}{dDatosB}, right=0.45cm of e.north east, anchor=north west] (f)
+        {\textbf{Evaluación}\nodepart{two}$TGA$: 13,63 $\rightarrow$ 9,75 min ($-28{,}5$~\%)};
+    \foreach \x/\y in {a/b,b/c,c/d,d/e,e/f} \draw[fl] (\x.east |- \x.text split) -- (\y.west |- \y.text split);
+    \node[font=\scriptsize, text=black!70, below=0.15cm of b.south, anchor=north] {Objetivo 1};
+    \node[font=\scriptsize, text=black!70, below=0.15cm of c.south, anchor=north] {Objetivo 1};
+    \node[font=\scriptsize, text=black!70, below=0.15cm of d.south, anchor=north] {Objetivo 2};
+    \node[font=\scriptsize, text=black!70, below=0.15cm of e.south, anchor=north] {Objetivo 3};
+    \node[font=\scriptsize, text=black!70, below=0.15cm of f.south, anchor=north] {Objetivo 3};
+\end{tikzpicture}%
+}
+\endgroup
+\caption{Encadenamiento de los resultados, de los antecedentes a la evaluación}
+\label{fig:res_hilo}
+\end{figure}
+
+% ---------------------------------------------------------
+\subsubsection{Diagnóstico del flujo clínico-administrativo}
+
+El diagnóstico triangulado de la entrevista al personal, el instrumento operativo, la encuesta a 105 pacientes y la observación de 78 ciclos (Tabla~\ref{tab:res_diagnostico}) mostró que el problema central no era la atención, sino el registro: cada atención se escribía tres veces, y la Etapa 2 concentraba el 53,8~\% del $TGA$.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
+\caption{Síntesis del diagnóstico del Objetivo 1}
+\label{tab:res_diagnostico} \\
+\hline
+\textbf{Dimensión} & \textbf{Resultado principal} & \textbf{Fuente} \\ \hline
+\endfirsthead
+\hline
+\textbf{Dimensión} & \textbf{Resultado principal} & \textbf{Fuente} \\ \hline
+\endhead
+Flujo & Triple registro (ficha rápida, Formulario 033 y Excel); $TGA$ de 13,63 min, 354 min por jornada; 190 min diarios de transcripción & Observación (Tabla~\ref{tab:tramos_tga}); PC1 a PC8 \\ \hline
+Norma & Datos clínicos registrados por personal no clínico, sin credenciales ni trazabilidad, y antecedentes tomados en recepción & AM 00115-2021, AM 5216-A, LOPDP; BN1 a BN7 \\ \hline
+Comunicación & 26 a 50 mensajes diarios; 60,0~\% percibe demora; 46,7~\% olvidó o confundió su cita; 58,1 a 62,9~\% usaría un asistente & Instrumento operativo y encuesta; N1 a N5 \\ \hline
+Requerimientos & 14 funcionales y 6 no funcionales; RF13 y RF14 como «Debería» & Tabla~\ref{tab:requerimientos} \\ \hline
+\end{xltabular}
+\endgroup
+
+Los hallazgos coinciden con los antecedentes nacionales. El registro diferido en papel repite lo observado en un centro de salud de Ambato, donde el 66,7~\% del personal aún usa registros físicos \cite{laraespinoza2026gestion}, y el riesgo de error al transcribir el odontograma se corresponde con la baja completitud de los Formularios 033 evaluados por \cite{uce2016caracteristicas}. La falta de autoría de los cambios en el Excel es la misma ausencia de pistas de auditoría que \cite{martinez2022proteccion} documenta en la historia clínica electrónica pública. Como recomienda \cite{staras2021using}, el flujo se observó y cronometró antes de construir, lo que permitió fijar una línea base medible; a diferencia de \cite{gomes2018bpm}, que se queda en el modelado, el modelo BPMN sirvió aquí para derivar requerimientos trazables hasta la evaluación.
+
+% ---------------------------------------------------------
+\subsubsection{Diseño del sistema y del agente conversacional}
+
+El Objetivo 2 tradujo cada requerimiento en una decisión de diseño. La Tabla~\ref{tab:res_diseno} resume las decisiones para los cuatro elementos del objetivo y la metodología, y las contrasta con los antecedentes.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\caption{Decisiones de diseño y contraste con los antecedentes}
+\label{tab:res_diseno} \\
+\hline
+\textbf{Elemento} & \textbf{Decisión} & \textbf{Contraste} \\ \hline
+\endfirsthead
+\hline
+\textbf{Elemento} & \textbf{Decisión} & \textbf{Contraste} \\ \hline
+\endhead
+Metodología & RAD con Kanban en la construcción (Tabla~\ref{tab:ob2_matriz_metodologia}) & Iteraciones cortas con el personal, como el SDLC por etapas de \cite{hmadchayyapum2025line} \\ \hline
+Estructura lógica & Monolito modular y un servicio aparte para el agente; puertos y adaptadores en el agente & Microservicios en \cite{roca2020microservice} y \cite{arcila2022microservice}; aquí se conserva su modularidad sin el costo de operar un servicio por módulo \\ \hline
+Componentes funcionales & Nueve componentes; el LLM solo interpreta el texto libre y el código decide & Reglas y NLP como \cite{santhosh2026whatsapp} y \cite{alejandrino2023dental}; consultas clínicas derivadas por los límites que señala \cite{hindelang2024chatbots} \\ \hline
+Integración & WhatsApp Cloud API; interfaz interna en la API, única que escribe; anticruce en la base de datos & Plataforma masiva, con menor abandono según \cite{tudorcar2020conversational}; \cite{shaikh2026smartmedibook} valida la doble reserva en la aplicación \\ \hline
+Despliegue & Contenedores en un servidor virtual con proxy HTTPS y respaldo cifrado & Contenedores como \cite{roca2020microservice} y \cite{arcila2022microservice}, en un solo servidor de bajo costo \\ \hline
+\end{xltabular}
+\endgroup
+
+El diseño se apartó de los antecedentes en dos puntos, ambos por el contexto de la clínica. Primero, en lugar de un microservicio por función, se adoptó un monolito modular, adecuado para un desarrollador y un servidor. Segundo, la regla anticruce pasó de la aplicación a la base de datos, de modo que vale igual para la recepción y para el agente (N4). El modelo de lenguaje no tiene herramientas que escriban ni ve datos clínicos, lo que cumple BN7 sin renunciar al texto libre.
+
+% ---------------------------------------------------------
+\subsubsection{Sistema implementado y evaluación del tiempo de gestión administrativa}
+
+\paragraph{Cobertura de los requerimientos}
+
+Las dieciséis tarjetas del plan y las cuatro añadidas durante la construcción se completaron (Tabla~\ref{tab:ob3_tarjetas}). La Tabla~\ref{tab:res_cobertura} resume la cobertura de los requerimientos y de las brechas normativas.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{2.0cm}|}
+\caption{Cobertura de los requerimientos y de las brechas normativas}
+\label{tab:res_cobertura} \\
+\hline
+\textbf{Grupo} & \textbf{Evidencia} & \textbf{Estado} \\ \hline
+\endfirsthead
+\hline
+\textbf{Grupo} & \textbf{Evidencia} & \textbf{Estado} \\ \hline
+\endhead
+RF01 a RF08: gestión clínico-administrativa & Atención con el Formulario 033, odontograma, CIE-10, recetas, agenda sin cruces y cobros, en uso en recepción y consultorio & 8 de 8 \\ \hline
+RF09 a RF14: agente & Aviso, información, agendamiento, reprogramación, derivación y recordatorio, probados con pacientes ficticios (Tabla~\ref{tab:ob3_pruebas_agente}) & 6 de 6 \\ \hline
+RNF01 a RNF06 & Acceso por rol, historial de cambios, agente sin datos clínicos, respaldo y exportación, servidor en línea y registro durante la consulta & 6 de 6 \\ \hline
+BN1 a BN7 & Registro único por el odontólogo, credenciales y trazabilidad, aviso de privacidad y agente limitado a identificación y citas & 7 de 7 \\ \hline
+\end{xltabular}
+\endgroup
+
+\paragraph{Tiempo de gestión administrativa}
+
+El $TGA$ bajó de 13,63 a 9,75 min por ciclo ($-3{,}88$ min; $-28{,}5$~\%), con las variables de control en valores similares (Tablas~\ref{tab:ob3_tga} y \ref{tab:ob3_control}). La Figura~\ref{fig:res_balance} muestra el balance por tramo: la eliminación de la Etapa 2 compensa con holgura el aumento de $T_1$, que refleja el traslado del registro clínico de la secretaria al odontólogo exigido por BN3 y BN5. En una jornada de 26 atenciones, la carga pasó de unos 354 a 253 min, y la secretaria dejó de dedicar unos 190 min diarios a la transcripción.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  xbar, width=0.8\linewidth, height=5.2cm, bar width=0.42cm,
+  xmin=-9.6, xmax=4.4,
+  xlabel={Variación por ciclo, postest $-$ pretest (min)},
+  symbolic y coords={E2,T3,T2,T1}, ytick={E2,T3,T2,T1},
+  yticklabels={{$T_4+T_5$ (Etapa 2)},{$T_3$ Agendamiento},{$T_2$ Cobro},{$T_1$ Registro clínico}},
+  y tick label style={font=\small}, tick label style={font=\small},
+  /pgf/number format/use comma,
+  nodes near coords, nodes near coords style={font=\small, /pgf/number format/fixed, /pgf/number format/precision=2, /pgf/number format/fixed zerofill},
+  extra x ticks={0}, extra x tick labels={}, extra x tick style={grid=major, major grid style={black!60}},
+  axis lines*=left, enlarge y limits=0.2,
+]
+\addplot[fill=dSistemaF, draw=dSistemaB] coordinates {(2.93,T1) (0.32,T2) (0.20,T3) (-7.33,E2)};
+\end{axis}
+\end{tikzpicture}
+\caption{Variación del tiempo por tramo entre el pretest y el postest}
+\label{fig:res_balance}
+\end{figure}
+
+\paragraph{Agente conversacional}
+
+El agente quedó implementado, desplegado y validado con pacientes ficticios en el número dedicado, incluido el recordatorio del día anterior. No se habilitó para los pacientes de la clínica, por lo que su efecto sobre la comunicación no forma parte de la evaluación del $TGA$.
+% PRUEBA (descartada 2026-11-09): no se realizará la prueba controlada; no agregar resultados aquí.
+
+\paragraph{Contraste con los antecedentes}
+
+La reducción medida (28,5~\%) es menor que el 68,75~\% de \cite{alejandrino2023dental}, que fue una proyección de un plan de proyecto, mientras que aquí se midió antes y después con el mismo instrumento. \cite{shaikh2026smartmedibook} y \cite{hmadchayyapum2025line} validaron sus sistemas con casos de prueba y con una escala de usabilidad, pero no midieron el tiempo del personal, que es justamente el vacío que señala \cite{tudorcar2020conversational}. El ahorro tampoco provino de acelerar una tarea, como el 57,3~\% en la anamnesis asistida que reporta \cite{hindelang2024chatbots}, sino de suprimir el registro duplicado.
+
+% ---------------------------------------------------------
+\subsubsection{Matriz de cierre}
+
+La Tabla~\ref{tab:res_cierre} relaciona los indicadores del diagnóstico con el valor obtenido y el nivel de evidencia: medido en operación (pretest y postest), verificado en el sistema desplegado o no evaluado.
+
+\begingroup
+\fontsize{9}{11}\selectfont
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}p{2.2cm}|}
+\caption{Indicadores del diagnóstico y valor obtenido}
+\label{tab:res_cierre} \\
+\hline
+\textbf{Indicador} & \textbf{Inicial} & \textbf{Obtenido} & \textbf{Nivel} \\ \hline
+\endfirsthead
+\hline
+\textbf{Indicador} & \textbf{Inicial} & \textbf{Obtenido} & \textbf{Nivel} \\ \hline
+\endhead
+$TGA$ por ciclo & 13,63 min & 9,75 min & Medido \\ \hline
+Gestión documental diferida ($T_{E2}$) & 7,33 min; 190 min por jornada & 0 & Medido \\ \hline
+Registros por atención (PC1) & 3 & 1, durante la consulta & Medido \\ \hline
+Registro clínico por personal no clínico (PC3) & Secretaria bajo dictado & Solo el odontólogo & Verificado \\ \hline
+Cruces de citas (PC7) & 2 al mes & Rechazados por la base de datos & Verificado \\ \hline
+Autoría de los cambios (BN4) & Sin registro & Usuario, fecha y hora & Verificado \\ \hline
+Respuesta a consultas por WhatsApp (N1) & Más de 46 min & --- & No evaluado \\ \hline
+% PRUEBA (descartada 2026-11-09): N1 y N2 se mantienen "---"/"No evaluado".
+Agendamiento por WhatsApp (N2) & 58,1~\% dispuesto & --- & No evaluado \\ \hline
+Confirmación de citas (N3) & 31 a 60 min diarios & --- & No evaluado \\ \hline
+\end{xltabular}
+\endgroup
+
+Los indicadores de la gestión clínico-administrativa se alcanzaron: los de tiempo se midieron en operación, y los de control y trazabilidad se verificaron en el sistema desplegado. Los de comunicación con el paciente dependen de que el agente atienda a los pacientes de la clínica, y quedan como trabajo futuro.

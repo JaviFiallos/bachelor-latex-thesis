@@ -1,11 +1,11 @@
-% 3.3.5 Construcción del agente conversacional (T5), tarjetas 11 a 13: del diseño al código, herramientas,
+% 3.3.5 Construcción del agente conversacional (T5), tarjetas 11 a 14: del diseño al código, herramientas,
 % estructura, procesamiento de un mensaje, estado, interfaz interna, reglas, LLM, combinación híbrida y pruebas.
 % No repetir del Obj. 2: estados (fig:ob2_estados_conversacion), secuencias, contrato (tab:ob2_contrato), intenciones.
-% RF14 (recordatorios) no implementado. Diagramas: diagramas/tikz/ob3/Ob3_Flujo_Mensaje.tex, Ob3_Interfaz_Bot.tex.
+% Diagramas: diagramas/tikz/ob3/Ob3_Flujo_Mensaje.tex, Ob3_Interfaz_Bot.tex.
 
-\subsubsection{Construcción: agente conversacional (tarjetas 11 a 13)}
+\subsubsection{Construcción: agente conversacional (tarjetas 11 a 14)}
 
-El agente se construyó en las tarjetas 11 a 13 (Tabla~\ref{tab:ob2_tarjetas}) como un servicio en Python separado de la API, con la arquitectura híbrida del diseño: una máquina de estados que decide y un modelo de lenguaje que solo interpreta el texto libre. Los apartados siguientes lo presentan de lo general a lo particular.
+El agente se construyó en las tarjetas 11 a 14 (Tabla~\ref{tab:ob2_tarjetas}) como un servicio en Python separado de la API, con la arquitectura híbrida del diseño: una máquina de estados que decide y un modelo de lenguaje que solo interpreta el texto libre. Los apartados siguientes lo presentan de lo general a lo particular.
 
 \paragraph{Del diseño a la implementación}
 
@@ -26,14 +26,14 @@ Cada componente funcional del diseño (Figura~\ref{fig:ob2_componentes_func}) se
 \textbf{Componente} & \textbf{Origen} & \textbf{Agente} & \textbf{Servicio de la API} & \textbf{Tarjeta} \\ \hline
 \endhead
 Aviso de privacidad & BN6; RF09 & \texttt{dialog/consent} & Aviso de privacidad & 11 \\ \hline
-Menú e información & N1; RF10 & \texttt{dialog/menu}, \texttt{messages} & Información & 11 \\ \hline
+Menú e información & N1; RF10 & \texttt{dialog/menu}, \texttt{dialog/hours}, \texttt{messages} & Información; horario de profesionales & 11 \\ \hline
 Derivación & N5; RF13 & \texttt{dialog/handoff} & Información (contacto de recepción) & 11 \\ \hline
 Identificación & N2; RF11 & \texttt{dialog/identify} & Identificación & 12 \\ \hline
 Agendamiento & N2, N4; RF11 & \texttt{dialog/booking} & Disponibilidad; agendamiento y límites & 12 \\ \hline
-Reprogramación y cancelación & N2; RF12 & \texttt{dialog/appointments} & Consulta de citas; agendamiento y límites & 12 \\ \hline
+Consulta, reprogramación y cancelación & N2; RF12 & \texttt{dialog/appointments} & Consulta de citas; agendamiento y límites & 12 \\ \hline
 Intérprete de mensajes & N1, N2; RF10, RF13 & \texttt{nlu}, \texttt{dialog/free\_text} & --- & 13 \\ \hline
 Urgencias & N2; RF11, RF13 & \texttt{dialog/urgent} & Disponibilidad (horarios de urgencia) & 13 \\ \hline
-Recordatorios & N3; RF14 & \multicolumn{2}{l|}{No implementado (Debería)} & 14 \\ \hline
+Recordatorios & N3; RF14 & \texttt{reminders}, \texttt{dialog/reminder\_reply} & Recordatorios & 14 \\ \hline
 \end{xltabular}
 \endgroup
 
@@ -79,10 +79,11 @@ El servicio sigue los puertos y adaptadores del diseño (Figura~\ref{fig:ob2_est
 .2 whatsapp\DTcomment{adaptador de WhatsApp: webhook, firma y envío}.
 .2 dialog\DTcomment{núcleo: máquina de estados}.
 .3 router\DTcomment{enrutador de cada mensaje}.
-.3 consent, menu, identify\DTcomment{aviso, menú e identificación}.
+.3 consent, menu, hours, identify\DTcomment{aviso, menú, horarios e identificación}.
 .3 booking, appointments, urgent\DTcomment{citas y urgencias}.
 .3 free\_text, handoff\DTcomment{texto libre y derivación}.
 .2 nlu\DTcomment{adaptador del modelo: instrucciones, esquema y clasificador}.
+.2 reminders\DTcomment{tarea programada de recordatorios}.
 .2 backend\DTcomment{adaptador de la API interna}.
 .2 messages\DTcomment{textos fijos}.
 }
@@ -108,7 +109,7 @@ Cada teléfono tiene una conversación en memoria con el paso actual (Figura~\re
 
 \paragraph{Interfaz interna en la API}
 
-El módulo \texttt{bot} implementa el contrato del diseño (Tabla~\ref{tab:ob2_contrato}) en 15 operaciones, sin las de recordatorios, organizadas en capas (Figura~\ref{fig:ob3_interfaz_bot}):
+El módulo \texttt{bot} implementa el contrato del diseño (Tabla~\ref{tab:ob2_contrato}) en 20 operaciones, organizadas en capas (Figura~\ref{fig:ob3_interfaz_bot}):
 
 \begin{itemize}
     \item \textbf{Seguridad.} El filtro convierte la clave de servicio en un usuario de sistema con el permiso \texttt{BOT}; el agente se autoriza con el mismo mecanismo que el personal (RNF01).
@@ -172,4 +173,4 @@ La combinación se resuelve en el enrutador del núcleo (Figura~\ref{fig:ob3_cad
 
 \paragraph{Pruebas durante la construcción}
 
-Cada tarjeta del agente incluyó sus pruebas. En el agente, pruebas unitarias con dobles de WhatsApp, de la API y del modelo recorren conversaciones completas: recepción del webhook y verificación de su firma, menú, agendamiento, reprogramación e interpretación del texto libre. En la API, pruebas de integración contra PostgreSQL verifican el contrato, la pertenencia por teléfono, los límites y la regla de 2 h. Las pruebas con WhatsApp real se presentan en la implementación (Tabla~\ref{tab:ob3_pruebas_agente}).
+Cada tarjeta del agente incluyó sus pruebas. En el agente, pruebas unitarias con dobles de WhatsApp, de la API y del modelo recorren conversaciones completas: recepción del webhook y verificación de su firma, menú, agendamiento, reprogramación, recordatorios e interpretación del texto libre. En la API, pruebas de integración contra PostgreSQL verifican el contrato, la pertenencia por teléfono, los límites y la regla de 2 h. Las pruebas con WhatsApp real se presentan en la implementación (Tabla~\ref{tab:ob3_pruebas_agente}).

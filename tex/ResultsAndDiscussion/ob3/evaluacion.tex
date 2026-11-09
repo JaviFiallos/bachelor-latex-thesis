@@ -1,7 +1,7 @@
 % =========================================================
 % 3.5 EVALUACIÓN DEL TIEMPO DE GESTIÓN ADMINISTRATIVA. Único apartado con fechas.
-% Cifras definitivas: salida del script contraste_pre_post.py (muestras
-% independientes, n = 78 por fase).
+% Comparación descriptiva pretest--postest (n = 78 por fase), sin pruebas
+% estadísticas (indicación del tutor, 2026-11-08).
 % =========================================================
 
 \subsubsection{Comparación del proceso actual y el implementado}
@@ -31,7 +31,7 @@ $T_5$ Digitalización (3,38 min) & Lote diario a Excel & Eliminado & PC1, PC2 \\
 \multicolumn{4}{|l|}{\cellcolor{gray!10}\textbf{Comunicación con el paciente}} \\ \hline
 Información (N1) & Respuesta manual, con demora & Respuesta automática al texto libre o al menú (RF10) & PC8 \\ \hline
 Solicitud de cita (N2, N4) & Varios canales, sin agenda única & Agente o recepción sobre la misma agenda (RF07, RF11, RF12) & PC7, PC8 \\ \hline
-Confirmación (N3) & Manual, 31 a 60 min diarios & Sin cambio: RF14 no implementado (Debería) & PC8 \\ \hline
+Confirmación (N3) & Manual, 31 a 60 min diarios & Recordatorio del día anterior con Confirmar, Cancelar o Reprogramar (RF14) & PC8 \\ \hline
 Derivación (N5) & Atendida por la secretaria entre otras tareas & Derivación al personal (RF13) & PC8 \\ \hline
 \end{longtable}
 \endgroup
@@ -126,40 +126,44 @@ $T_3$ Agendamiento de la próxima cita & 1,30 & 1,50 & +15,7 \\ \hline
 \label{fig:ob3_tga_barras}
 \end{figure}
 
-El $TGA$ se redujo de 13,63 a 9,75 minutos por ciclo ($-3{,}88$ min; $-28{,}5$~\%). La reducción proviene de la Etapa 2: el llenado del Formulario 033 ($T_4$) y su digitalización ($T_5$), que sumaban 7,33 minutos por ciclo, dejaron de existir. En la Etapa 1, $T_1$ pasó de 3,40 a 6,33 minutos porque, conforme a BN3 y BN5, el registro clínico que realizaba la secretaria pasó al odontólogo, que lo efectúa en el sistema durante la consulta. $T_2$ y $T_3$ variaron levemente. En una jornada de 26 atenciones, la gestión administrativa pasó de unos 354 a 253 minutos, y desaparecieron los cerca de 190 minutos diarios de transcripción de la secretaria.
+El $TGA$ se redujo de 13,63 a 9,75 minutos por ciclo ($-3{,}88$ min; $-28{,}5$~\%). La reducción proviene de la Etapa 2: el llenado del Formulario 033 ($T_4$) y su digitalización ($T_5$), que sumaban 7,33 minutos por ciclo, dejaron de existir. En la Etapa 1, $T_1$ pasó de 3,40 a 6,33 minutos porque, conforme a BN3 y BN5, el registro clínico que realizaba la secretaria pasó al odontólogo, que lo efectúa en el sistema durante la consulta. $T_2$ y $T_3$ variaron levemente.
 
-\subsubsection{Contraste estadístico}
+\subsubsection{Carga diaria de gestión administrativa}
 
-La Tabla~\ref{tab:ob3_contraste} resume el contraste de la hipótesis sobre el $TGA$.
+La Figura~\ref{fig:ob3_jornada} traslada los promedios a una jornada de 26 atenciones. La gestión administrativa pasó de unos 354 a 253 minutos diarios, y la Etapa 2, que ocupaba unos 190 minutos de la secretaria, desapareció. Aun si el tiempo de la Etapa 2 fuera la mitad del medido, el $TGA$ del pretest (9,97 min) seguiría siendo mayor que el del postest.
 
-\begin{table}[H]
+\begin{figure}[H]
 \centering
-\caption{Contraste del $TGA$ entre el pretest y el postest}
-\label{tab:ob3_contraste}
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|}
-\hline
-\textbf{Elemento} & \textbf{Pretest} & \textbf{Postest} \\ \hline
-Ciclos observados ($n$) & 78 & 78 \\ \hline
-Media del $TGA$ (min) & 13,63 & 9,75 \\ \hline
-Mediana [RIC] del $TGA$ (min) & 13,45 [13,18--13,98] & 9,72 [9,06--10,44] \\ \hline
-Normalidad (Shapiro--Wilk) & \multicolumn{2}{c|}{Se rechaza en el pretest ($p < 0{,}001$)} \\ \hline
-Prueba & \multicolumn{2}{c|}{U de Mann--Whitney unilateral, muestras independientes} \\ \hline
-Estadístico y valor $p$ & \multicolumn{2}{c|}{$U = 0$; $p < 0{,}001$} \\ \hline
-Tamaño del efecto & \multicolumn{2}{c|}{$r = 0{,}86$} \\ \hline
-Decisión & \multicolumn{2}{c|}{Se rechaza $H_0$} \\ \hline
-\end{tabularx}
-\end{table}
-
-La prueba de Shapiro--Wilk rechazó la normalidad del pretest ($p < 0{,}001$), por lo que se aplicó la U de Mann--Whitney unilateral para muestras independientes ($n = 78$ por fase). El resultado ($U = 0$; $p < 0{,}001$; $r = 0{,}86$) permite rechazar $H_0$. La espera previa ($p = 0{,}994$), el retraso ($p = 0{,}699$) y la duración clínica ($p = 0{,}269$) no difirieron (Tabla~\ref{tab:ob3_control}): ambas mediciones se realizaron en condiciones comparables, y el registro durante la consulta no prolongó la atención.
-
-Como $T_{E2}$ se cronometró por lote diario, se verificó que la reducción se mantiene aun si ese tiempo estuviera sobrestimado hasta en un 53~\%.
+\begin{tikzpicture}
+\begin{axis}[
+  xbar stacked,
+  width=0.92\linewidth, height=4.2cm,
+  bar width=0.75cm,
+  xmin=0, xmax=400,
+  xlabel={Minutos por jornada de 26 atenciones},
+  ytick=data, symbolic y coords={Postest,Pretest},
+  y tick label style={font=\small},
+  enlarge y limits=0.45,
+  /pgf/number format/use comma,
+  legend style={at={(0.5,-0.45)}, anchor=north, legend columns=2, font=\scriptsize, draw=none},
+  legend cell align=left,
+  tick label style={font=\small},
+  axis lines*=left,
+]
+\addplot[fill=dSistemaF, draw=dSistemaB] coordinates {(164,Pretest) (253,Postest)};
+\addplot[fill=dPersonaF, draw=dPersonaB] coordinates {(190,Pretest) (0,Postest)};
+\legend{Etapa 1: gestión en la atención, Etapa 2: gestión documental diferida}
+\node[anchor=west, font=\small\bfseries] at (axis cs:354,Pretest) {354};
+\node[anchor=west, font=\small\bfseries] at (axis cs:253,Postest) {253};
+\end{axis}
+\end{tikzpicture}
+\caption{Gestión administrativa por jornada antes y después del sistema}
+\label{fig:ob3_jornada}
+\end{figure}
 
 \subsubsection{Variables de control e indicadores complementarios}
 
-La espera previa, el retraso respecto a la hora programada y la duración clínica se conservaron solo como variables de control (Tabla~\ref{tab:ob3_control}). Las tres se compararon con la U de Mann--Whitney bilateral, porque Shapiro--Wilk rechazó la normalidad en al menos una fase; la espera, por ejemplo, promedió 6,21 frente a 6,23 min.
+La espera previa, el retraso respecto a la hora programada y la duración clínica se conservaron como variables de control (Tabla~\ref{tab:ob3_control}). Sus valores fueron similares en ambas fases, de modo que las dos mediciones se realizaron en condiciones comparables y el registro durante la consulta no prolongó la atención clínica.
 
 \begin{table}[H]
 \centering
@@ -168,16 +172,15 @@ La espera previa, el retraso respecto a la hora programada y la duración clíni
 \fontsize{9}{11}\selectfont
 \renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|}
 \hline
-\textbf{Variable} & \textbf{Pretest} & \textbf{Postest} & \textbf{$p$} \\ \hline
-Espera previa a la atención & 6{,}00 [5{,}00--7{,}75] & 6{,}00 [5{,}00--7{,}00] & 0{,}994 \\ \hline
-Retraso respecto a la hora programada & 8{,}00 [6{,}00--9{,}00] & 7{,}00 [6{,}00--9{,}00] & 0{,}699 \\ \hline
-Duración clínica & 40{,}00 [24{,}25--54{,}00] & 36{,}50 [30{,}25--42{,}50] & 0{,}269 \\ \hline
+\textbf{Variable} & \textbf{Pretest} & \textbf{Postest} \\ \hline
+Espera previa a la atención & 6{,}00 [5{,}00--7{,}75] & 6{,}00 [5{,}00--7{,}00] \\ \hline
+Retraso respecto a la hora programada & 8{,}00 [6{,}00--9{,}00] & 7{,}00 [6{,}00--9{,}00] \\ \hline
+Duración clínica & 40{,}00 [24{,}25--54{,}00] & 36{,}50 [30{,}25--42{,}50] \\ \hline
 \end{tabularx}
-
 \vspace{2pt}
-{\footnotesize Mediana [RIC] en minutos. U de Mann--Whitney bilateral; $n = 78$ por fase.\par}
+{\footnotesize Mediana [rango intercuartílico] en minutos; $n = 78$ por fase.\par}
 \end{table}
 
 Los indicadores de comunicación con el paciente no se midieron porque el agente no se habilitó para los pacientes.

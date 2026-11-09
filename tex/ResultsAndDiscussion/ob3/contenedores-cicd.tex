@@ -6,7 +6,7 @@
 
 El entorno de producción materializa la arquitectura de contenedores definida previamente en la fase de diseño (Tabla~\ref{tab:ob2_contenedores} y Figura~\ref{fig:ob2_c4_contenedores}), orquestando los servicios mediante Docker Compose sobre una red interna protegida. De este modo, la puesta en marcha y actualización de cada componente se gestiona de forma desacoplada.
     
-\textit{[Respaldo: contenedor, frecuencia, destino y prueba de restauración.]}
+El contenedor de respaldo genera cada día, a las 20:30, un volcado de PostgreSQL; conserva 30 días en el servidor y envía una copia cifrada al Google Drive de la clínica, que se comprobó descifrándola desde Drive. La restauración quedó documentada en un procedimiento de operación. El director descarga además una exportación abierta, un archivo ZIP con un CSV por tabla (RNF04).
 
 Cada repositorio publica sus cambios con el mismo flujo de GitHub Actions (Figura~\ref{fig:ob3_cicd}): pruebas, imagen en GitHub Container Registry y despliegue por SSH. Si una prueba falla, no se despliega. Antes de actualizar la API se respalda la base de datos, y el despliegue espera a que el contenedor responda como sano; para volver atrás se despliega la etiqueta anterior.
 

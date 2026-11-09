@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compila cada diagrama del Objetivo 2 y copia el PDF a img/Objetivo3/.
+# Compila cada diagrama del Objetivo 2 y copia el PDF a img/Objetivo2/.
 set -euo pipefail
 cd "$(dirname "$0")"
 out=../../../img/Objetivo2
