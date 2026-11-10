@@ -12,7 +12,7 @@
 \subsection{Resultados}
 \label{sec:resultados}
 
-Este apartado reúne los resultados de los tres objetivos y los contrasta con los antecedentes. La Figura~\ref{fig:res_hilo} resume cómo cada etapa se apoyó en la anterior.
+Este apartado reúne los resultados de los tres objetivos. La Figura~\ref{fig:res_hilo} resume cómo cada etapa se apoyó en la anterior.
 
 \begin{figure}[H]
 \centering
@@ -76,12 +76,10 @@ Requerimientos & 14 funcionales y 6 no funcionales; RF13 y RF14 como «Debería�
 \end{xltabular}
 \endgroup
 
-Los hallazgos coinciden con los antecedentes nacionales. El registro diferido en papel repite lo observado en un centro de salud de Ambato, donde el 66,7~\% del personal aún usa registros físicos \cite{laraespinoza2026gestion}, y el riesgo de error al transcribir el odontograma se corresponde con la baja completitud de los Formularios 033 evaluados por \cite{uce2016caracteristicas}. La falta de autoría de los cambios en el Excel es la misma ausencia de pistas de auditoría que \cite{martinez2022proteccion} documenta en la historia clínica electrónica pública. Como recomienda \cite{staras2021using}, el flujo se observó y cronometró antes de construir, lo que permitió fijar una línea base medible; a diferencia de \cite{gomes2018bpm}, que se queda en el modelado, el modelo BPMN sirvió aquí para derivar requerimientos trazables hasta la evaluación.
-
 % ---------------------------------------------------------
 \subsubsection{Diseño del sistema y del agente conversacional}
 
-El Objetivo 2 tradujo cada requerimiento en una decisión de diseño. La Tabla~\ref{tab:res_diseno} resume las decisiones para los cuatro elementos del objetivo y la metodología, y las contrasta con los antecedentes.
+El Objetivo 2 tradujo cada requerimiento en una decisión de diseño. La Tabla~\ref{tab:res_diseno} resume las decisiones para los cuatro elementos del objetivo y la metodología, y la justificación de cada una.
 
 \begingroup
 \fontsize{9}{11}\selectfont
@@ -89,23 +87,21 @@ El Objetivo 2 tradujo cada requerimiento en una decisión de diseño. La Tabla~\
 \setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
 \setlength{\tabcolsep}{4pt}
 \begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.4cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
-\caption{Decisiones de diseño y contraste con los antecedentes}
+\caption{Decisiones de diseño y su justificación}
 \label{tab:res_diseno} \\
 \hline
-\textbf{Elemento} & \textbf{Decisión} & \textbf{Contraste} \\ \hline
+\textbf{Elemento} & \textbf{Decisión} & \textbf{Justificación} \\ \hline
 \endfirsthead
 \hline
-\textbf{Elemento} & \textbf{Decisión} & \textbf{Contraste} \\ \hline
+\textbf{Elemento} & \textbf{Decisión} & \textbf{Justificación} \\ \hline
 \endhead
-Metodología & RAD con Kanban en la construcción (Tabla~\ref{tab:ob2_matriz_metodologia}) & Iteraciones cortas con el personal, como el SDLC por etapas de \cite{hmadchayyapum2025line} \\ \hline
-Estructura lógica & Monolito modular y un servicio aparte para el agente; puertos y adaptadores en el agente & Microservicios en \cite{roca2020microservice} y \cite{arcila2022microservice}; aquí se conserva su modularidad sin el costo de operar un servicio por módulo \\ \hline
-Componentes funcionales & Nueve componentes; el LLM solo interpreta el texto libre y el código decide & Reglas y NLP como \cite{santhosh2026whatsapp} y \cite{alejandrino2023dental}; consultas clínicas derivadas por los límites que señala \cite{hindelang2024chatbots} \\ \hline
-Integración & WhatsApp Cloud API; interfaz interna en la API, única que escribe; anticruce en la base de datos & Plataforma masiva, con menor abandono según \cite{tudorcar2020conversational}; \cite{shaikh2026smartmedibook} valida la doble reserva en la aplicación \\ \hline
-Despliegue & Contenedores en un servidor virtual con proxy HTTPS y respaldo cifrado & Contenedores como \cite{roca2020microservice} y \cite{arcila2022microservice}, en un solo servidor de bajo costo \\ \hline
+Metodología & RAD con Kanban en la construcción (Tabla~\ref{tab:ob2_matriz_metodologia}) & RAD valida la interfaz con prototipos ante el personal antes de construir; Kanban ordena el trabajo de un solo desarrollador con una tarjeta en curso, sin un equipo con roles ni un cliente en sitio \\ \hline
+Estructura lógica & Monolito modular y un servicio aparte para el agente; puertos y adaptadores en el agente & Un desarrollador y un servidor: se conserva la modularidad sin el costo de operar un servicio por módulo; el agente se aísla y su canal y su modelo de lenguaje pueden cambiarse sin tocar el núcleo \\ \hline
+Componentes funcionales & Nueve componentes; el modelo de lenguaje solo interpreta el texto libre y el código decide & El modelo no tiene herramientas que escriban ni ve datos clínicos, lo que cumple BN7 sin renunciar al texto libre; las consultas clínicas se derivan al personal \\ \hline
+Integración & WhatsApp Cloud API; interfaz interna en la API, única que escribe; anticruce en la base de datos & WhatsApp es el canal que ya usan los pacientes; con la regla anticruce en la base de datos, y no en la aplicación, la recepción y el agente comparten una sola agenda con las mismas reglas (N4) \\ \hline
+Despliegue & Contenedores en un servidor virtual con proxy HTTPS y respaldo cifrado & Un solo servidor de bajo costo; los contenedores hacen portable el despliegue, el HTTPS es requisito del webhook y el respaldo cifrado protege los datos clínicos (RNF04) \\ \hline
 \end{xltabular}
 \endgroup
-
-El diseño se apartó de los antecedentes en dos puntos, ambos por el contexto de la clínica. Primero, en lugar de un microservicio por función, se adoptó un monolito modular, adecuado para un desarrollador y un servidor. Segundo, la regla anticruce pasó de la aplicación a la base de datos, de modo que vale igual para la recepción y para el agente (N4). El modelo de lenguaje no tiene herramientas que escriban ni ve datos clínicos, lo que cumple BN7 sin renunciar al texto libre.
 
 % ---------------------------------------------------------
 \subsubsection{Sistema implementado y evaluación del tiempo de gestión administrativa}
@@ -164,10 +160,6 @@ El $TGA$ bajó de 13,63 a 9,75 min por ciclo ($-3{,}88$ min; $-28{,}5$~\%), con 
 \paragraph{Agente conversacional}
 
 El agente quedó implementado, desplegado y validado con pacientes ficticios en el número dedicado, con las consultas de información, el agendamiento, la reprogramación, la derivación y el recordatorio del día anterior (Tabla~\ref{tab:ob3_pruebas_agente}).
-
-\paragraph{Contraste con los antecedentes}
-
-La reducción medida (28,5~\%) es menor que el 68,75~\% de \cite{alejandrino2023dental}, que fue una proyección de un plan de proyecto, mientras que aquí se midió antes y después con el mismo instrumento. \cite{shaikh2026smartmedibook} y \cite{hmadchayyapum2025line} validaron sus sistemas con casos de prueba y con una escala de usabilidad, pero no midieron el tiempo del personal, que es justamente el vacío que señala \cite{tudorcar2020conversational}. El ahorro tampoco provino de acelerar una tarea, como el 57,3~\% en la anamnesis asistida que reporta \cite{hindelang2024chatbots}, sino de suprimir el registro duplicado.
 
 % ---------------------------------------------------------
 \subsubsection{Matriz de cierre}
