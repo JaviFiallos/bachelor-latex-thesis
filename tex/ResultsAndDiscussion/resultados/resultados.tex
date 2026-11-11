@@ -51,32 +51,6 @@ Este apartado reúne los resultados de los tres objetivos. La Figura~\ref{fig:re
 \end{figure}
 
 % ---------------------------------------------------------
-\subsubsection{Diagnóstico del flujo clínico-administrativo}
-
-El diagnóstico triangulado de la entrevista al personal, el instrumento operativo, la encuesta a 105 pacientes y la observación de 78 ciclos (Tabla~\ref{tab:res_diagnostico}) mostró que el problema central no era la atención, sino el registro: cada atención se escribía tres veces, y la Etapa 2 concentraba el 53,8~\% del $TGA$.
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2.4cm}|}
-\caption{Síntesis del diagnóstico del Objetivo 1}
-\label{tab:res_diagnostico} \\
-\hline
-\textbf{Dimensión} & \textbf{Resultado principal} & \textbf{Fuente} \\ \hline
-\endfirsthead
-\hline
-\textbf{Dimensión} & \textbf{Resultado principal} & \textbf{Fuente} \\ \hline
-\endhead
-Flujo & Triple registro (ficha rápida, Formulario 033 y Excel); $TGA$ de 13,63 min, 354 min por jornada; 190 min diarios de transcripción & Observación (Tabla~\ref{tab:tramos_tga}); PC1 a PC8 \\ \hline
-Norma & Datos clínicos registrados por personal no clínico, sin credenciales ni trazabilidad, y antecedentes tomados en recepción & AM 00115-2021, AM 5216-A, LOPDP; BN1 a BN7 \\ \hline
-Comunicación & 26 a 50 mensajes diarios; 60,0~\% percibe demora; 46,7~\% olvidó o confundió su cita; 58,1 a 62,9~\% usaría un asistente & Instrumento operativo y encuesta; N1 a N5 \\ \hline
-Requerimientos & 14 funcionales y 6 no funcionales; RF13 y RF14 como «Debería» & Tabla~\ref{tab:requerimientos} \\ \hline
-\end{xltabular}
-\endgroup
-
-% ---------------------------------------------------------
 \subsubsection{Diseño del sistema y del agente conversacional}
 
 El Objetivo 2 tradujo cada requerimiento en una decisión de diseño. La Tabla~\ref{tab:res_diseno} resume las decisiones para los cuatro elementos del objetivo y la metodología, y la justificación de cada una.
@@ -105,31 +79,6 @@ Despliegue & Contenedores en un servidor virtual con proxy HTTPS y respaldo cifr
 
 % ---------------------------------------------------------
 \subsubsection{Sistema implementado y evaluación del tiempo de gestión administrativa}
-
-\paragraph{Cobertura de los requerimientos}
-
-Las dieciséis tarjetas del plan y las cuatro añadidas durante la construcción se completaron (Tabla~\ref{tab:ob3_tarjetas}). La Tabla~\ref{tab:res_cobertura} resume la cobertura de los requerimientos y de las brechas normativas.
-
-\begingroup
-\fontsize{9}{11}\selectfont
-\renewcommand{\arraystretch}{1.2}
-\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
-\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{2.0cm}|}
-\caption{Cobertura de los requerimientos y de las brechas normativas}
-\label{tab:res_cobertura} \\
-\hline
-\textbf{Grupo} & \textbf{Evidencia} & \textbf{Estado} \\ \hline
-\endfirsthead
-\hline
-\textbf{Grupo} & \textbf{Evidencia} & \textbf{Estado} \\ \hline
-\endhead
-RF01 a RF08: gestión clínico-administrativa & Atención con el Formulario 033, odontograma, CIE-10, recetas, agenda sin cruces y cobros, en uso en recepción y consultorio & 8 de 8 \\ \hline
-RF09 a RF14: agente & Aviso, información, agendamiento, reprogramación, derivación y recordatorio, probados con pacientes ficticios (Tabla~\ref{tab:ob3_pruebas_agente}) & 6 de 6 \\ \hline
-RNF01 a RNF06 & Acceso por rol, historial de cambios, agente sin datos clínicos, respaldo y exportación, servidor en línea y registro durante la consulta & 6 de 6 \\ \hline
-BN1 a BN7 & Registro único por el odontólogo, credenciales y trazabilidad, aviso de privacidad y agente limitado a identificación y citas & 7 de 7 \\ \hline
-\end{xltabular}
-\endgroup
 
 \paragraph{Tiempo de gestión administrativa}
 
