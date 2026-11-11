@@ -1,116 +1,72 @@
 % ============================================================
-% 1.3 Fundamentación Teórica  —  v3
-% Archivo: tex/Theoretical-foundation/fundamento_v3.tex
+% 1.3 Fundamentación Teórica
+% Archivo: tex/Theoretical-foundation/fundamento.tex
 % Bibliografía: bib/fundamentacion_teorica.bib (+ references.bib compartido)
+% Se conservan solo los conceptos empleados en el desarrollo del trabajo.
 % ============================================================
 
 \subsection{Fundamentación teórica}
 
-Los conceptos básicos que guardan relación con las variables directa e indirecta
-que se enuncian en el tema del trabajo de investigación se organizan en cuatro
-bloques: el flujo de información clínico-administrativo y sus técnicas de
-representación, los sistemas de información en salud y su arquitectura de
-software, los agentes conversacionales aplicados a la comunicación con el
-paciente, y el marco normativo ecuatoriano aplicable al manejo de información
-clínica.
+Los conceptos relacionados con las variables del tema se organizan en cuatro
+bloques: el flujo de información clínico-administrativo y su representación, los
+sistemas de información en salud y su arquitectura de software, los agentes
+conversacionales para la comunicación con el paciente y el marco normativo
+ecuatoriano de la información clínica.
 
 % -----------------------------------------------------------
 \subsubsection{Gestión del flujo de información clínico-administrativa}
 % -----------------------------------------------------------
 
-El flujo de información clínico-administrativa comprende el conjunto de
-actividades, decisiones y transferencias de datos que ocurren desde el primer
-contacto del paciente con un establecimiento de salud hasta el cierre
-administrativo de su atención, incluyendo tanto los datos clínicos (diagnóstico,
-tratamiento, odontograma) como los datos de gestión (agenda, facturación,
-seguimiento). Su representación formal es el punto de partida habitual para el
-análisis de procesos en entornos sanitarios, dado que permite hacer visibles
-pasos, actores y dependencias que de otro modo permanecen implícitos en la
-práctica cotidiana.
+El flujo de información clínico-administrativa comprende las actividades,
+decisiones y transferencias de datos que ocurren desde el primer contacto del
+paciente con el establecimiento hasta el cierre administrativo de su atención. Abarca
+tanto los datos clínicos (diagnóstico, tratamiento, odontograma) como los de gestión
+(agenda, cobro, seguimiento), y su representación formal hace visibles los pasos,
+actores y dependencias que en la práctica permanecen implícitos.
 
 \paragraph{Modelado de procesos de negocio (BPMN).}
 
-El \textit{Business Process Model and Notation} (BPMN) es un estándar
-internacional de notación gráfica para la representación de procesos de negocio,
-mantenido por el \textit{Object Management Group} (OMG) y publicado como estándar
-ISO/IEC 19510 \cite{omg2024bpmn}. Su propósito es ofrecer una notación
-comprensible tanto para actores del negocio como para desarrolladores técnicos,
-de modo que un mismo diagrama sirva como puente entre el diseño de un proceso y
-su eventual implementación en software \cite{omg2024bpmn}. En el sector salud,
-esta notación se ha empleado para elicitar requerimientos de modelado a partir de
-iniciativas clínicas reales y para documentar fragmentos reutilizables ante
-desafíos propios del dominio, como la simultaneidad de roles y la variabilidad de
-los procesos \cite{pufahl2022bpmn}. El \textit{process mapping} como práctica
-general en entornos sanitarios ha sido objeto de revisión sistemática,
-encontrándose alta variabilidad en su rigor metodológico y en el grado de
-involucramiento de los actores clínicos durante su elaboración
-\cite{antonacci2021process}.
-
-\paragraph{Mapeo de flujo de valor (Value Stream Mapping) y metodología Lean.}
-
-El \textit{Value Stream Mapping} (VSM) es una técnica de gestión orientada a
-diagramar la totalidad de pasos ---de valor y sin valor agregado--- necesarios
-para llevar un servicio desde su inicio hasta el cliente, incluyendo tanto el
-flujo de materiales como el de información \cite{lean2022vsm}. En el ámbito
-odontológico, se ha propuesto un modelo de traducción de sus elementos clásicos a
-términos propios del entorno clínico ambulatorio, validado en clínicas dentales
-\cite{alogla2025revisiting}, hallazgo consistente con revisiones más amplias sobre
-gestión de la práctica dental basada en evidencia \cite{batheja2025optimizing}.
+El \textit{Business Process Model and Notation} (BPMN) es un estándar de notación
+gráfica para representar procesos de negocio, mantenido por el \textit{Object
+Management Group} (OMG) y publicado como ISO/IEC 19510. Su notación resulta
+comprensible tanto para los actores del negocio como para los desarrolladores, de
+modo que un mismo diagrama sirve de puente entre el proceso y su implementación en
+software \cite{omg2024bpmn}. En el sector salud se ha empleado para documentar
+procesos clínicos con roles simultáneos y alta variabilidad \cite{pufahl2022bpmn},
+aunque el rigor con que se elaboran estos mapas de procesos varía considerablemente
+entre estudios \cite{antonacci2021process}.
 
 \paragraph{Estudios de tiempos y movimientos.}
 
-Los Estudios de Tiempos y Movimientos (\textit{Time and Motion Studies}, TMS)
-tienen su origen en la ingeniería industrial y han sido adoptados por la
-investigación biomédica como método para capturar y analizar la duración de
-eventos dentro de un proceso asistencial \cite{cureus2022purpose}. La literatura
-reconoce que el término agrupa variantes heterogéneas ---desde la observación
-continua por un observador externo hasta el análisis de registros de actividad del
-sistema---, siendo la captura de la duración de uno o más eventos el único
-elemento común entre ellas \cite{Lopetegui2014TMS}. En el registro dental
-electrónico, esta metodología ha permitido identificar rupturas de flujo de
-trabajo asociadas al registro de cargos, la visualización de radiografías y la
-interacción con el agendador, con diferencias estadísticamente significativas en
-los tiempos de interacción según el rol del proveedor \cite{schwei2016exploring}.
+Los estudios de tiempos y movimientos (\textit{Time and Motion Studies}, TMS)
+provienen de la ingeniería industrial y se emplean en la investigación biomédica para
+medir la duración de los eventos de un proceso asistencial \cite{cureus2022purpose}.
+El término agrupa variantes que van desde la observación continua por un observador
+externo hasta el análisis de registros del sistema; su único elemento común es la
+captura de la duración de uno o más eventos \cite{Lopetegui2014TMS}. En el registro
+dental electrónico, esta metodología ha permitido identificar interrupciones del flujo
+de trabajo asociadas al registro de cargos, la revisión de radiografías y el uso de la
+agenda \cite{schwei2016exploring}.
 
 % -----------------------------------------------------------
 \subsubsection{Sistemas de información en salud}
 % -----------------------------------------------------------
 
-Un sistema de información en salud se define como el conjunto organizado de
-componentes ---datos, procesos y tecnología--- que interactúan para producir
-información que sustente la toma de decisiones en una organización sanitaria
-\cite{sciencedirect2024his}. Este marco conceptual orienta tanto la selección de
-componentes funcionales de un sistema como los criterios para evaluar su éxito
-frente a objetivos organizacionales y estándares regulatorios
-\cite{ovreiu2024empowering}.
+Un sistema de información en salud es el conjunto organizado de datos, procesos y
+tecnología que produce información para la toma de decisiones en una organización
+sanitaria \cite{sciencedirect2024his}. Este marco orienta tanto la selección de sus
+componentes funcionales como la evaluación de su éxito frente a los objetivos de la
+organización y las exigencias regulatorias \cite{ovreiu2024empowering}.
 
 \paragraph{Historia clínica electrónica (EHR).}
 
-La historia clínica electrónica (\textit{Electronic Health Record}, EHR)
-reemplaza el registro en papel por un repositorio digital estructurado de la
-información clínica del paciente. La evidencia disponible reporta mejoras en
-eficiencia clínica y gestión de datos asociadas a su adopción, junto con barreras
-persistentes de interoperabilidad, ciberseguridad, costo y resistencia del
-usuario \cite{sravya2024electronic}. En el subdominio dental, la ausencia de
-estándares globales para la implementación de EHR ha sido señalada como fuente de
-desafíos de comunicación entre plataformas y de discontinuidades en el cuidado
-\cite{gurupur2024standards}.
-
-\paragraph{Estándares de interoperabilidad: HL7 y HL7 FHIR.}
-
-Health Level Seven (HL7) es una organización acreditada por el \textit{American
-National Standards Institute} (ANSI) que produce los estándares técnicos más
-utilizados mundialmente para el intercambio de información clínica y
-administrativa entre sistemas de salud heterogéneos \cite{hl7international2024}.
-\textit{Fast Healthcare Interoperability Resources} (FHIR) es la especificación
-más reciente de esta familia: describe la información sanitaria mediante
-componentes modulares llamados \textit{recursos} y define una interfaz REST sobre
-JSON o XML para su intercambio, facilitando la integración con arquitecturas
-orientadas a servicios \cite{hl7fhir2023overview}. En la literatura revisada, HL7
-es la variante de mayor aplicación en sistemas de información sanitarios de la
-última década \cite{wongperez2023hl7}; su combinación con arquitecturas de
-microservicios ha sido documentada como patrón técnicamente sólido para chatbots
-de salud \cite{roca2020microservice}.
+La historia clínica electrónica (\textit{Electronic Health Record}, EHR) reemplaza el
+registro en papel por un repositorio digital estructurado de la información clínica
+del paciente. Su adopción se asocia con mejoras en la eficiencia clínica y en la
+gestión de datos, aunque persisten barreras de costo, seguridad y resistencia del
+usuario \cite{sravya2024electronic}. En odontología, la falta de estándares comunes
+para su implementación dificulta la comunicación entre plataformas y la continuidad
+del cuidado \cite{gurupur2024standards}.
 
 \paragraph{Metodologías de desarrollo de software.}
 
@@ -127,14 +83,12 @@ transición \cite{martin1991rapid}.
 
 \paragraph{Arquitectura de software: backend, frontend y API REST.}
 
-Una interfaz de programación de aplicaciones (API) es el mecanismo que permite
-que una aplicación acceda a recursos alojados en otra aplicación o servicio. El
-estilo REST (\textit{Representational State Transfer}), de mayor adopción para
-APIs web, se caracteriza por la independencia entre cliente y servidor y la
-identificación uniforme de recursos \cite{ibm2024restapi}. Bajo este esquema, el
-\textit{backend} concentra la lógica de negocio y el acceso a datos, mientras que
-el \textit{frontend} presenta la información al usuario final mediante el consumo
-de esas interfaces.
+Una interfaz de programación de aplicaciones (API) permite que una aplicación acceda
+a los recursos de otra. El estilo REST (\textit{Representational State Transfer}), el
+de mayor adopción en la web, se caracteriza por la independencia entre cliente y
+servidor y por la identificación uniforme de los recursos \cite{ibm2024restapi}. El
+\textit{backend} concentra la lógica de negocio y el acceso a datos, y el
+\textit{frontend} presenta la información al usuario consumiendo esas interfaces.
 
 \paragraph{Modelado de la arquitectura: modelo C4 y UML.}
 
@@ -142,28 +96,17 @@ El modelo C4 describe una arquitectura mediante cuatro niveles de detalle
 progresivo: contexto, contenedores, componentes y código \cite{brown2018c4}. UML
 complementa estas vistas con diagramas de secuencia, de estados y de despliegue,
 que representan el comportamiento y la distribución física del sistema
-\cite{omg2017uml}. Como alternativa, el modelo de vistas 4+1 organiza la arquitectura en
-cinco perspectivas concurrentes \cite{kruchten1995views}.
+\cite{omg2017uml}.
 
-\paragraph{Arquitectura de microservicios.}
+\paragraph{Microservicios y monolito modular.}
 
 La arquitectura de microservicios estructura una aplicación como un conjunto de
-servicios pequeños, débilmente acoplados e independientemente desplegables, cada
-uno responsable de una capacidad de negocio específica y comunicado con los demás
-mediante API REST \cite{ibm2026microservices}. Este enfoque se ha aplicado
-concretamente al dominio dental en una arquitectura de cuatro microservicios
----Paciente, Registro Médico Dental, Odontograma y Proveedor de Servicios
-Dentales--- con API Gateway y autenticación por token, que demostró en un
-prototipo en la nube capacidad de escalamiento automático ante incrementos de
-demanda \cite{arcila2022microservice}.
-
-\paragraph{Monolito modular.}
-
-El monolito modular es una aplicación desplegada como una única unidad, cuyo
-código se divide en módulos con interfaces públicas y sin dependencias internas
-cruzadas. Conserva la separación de responsabilidades de los microservicios sin
-el costo operativo de distribuir y coordinar servicios independientes
-\cite{richards2020fundamentals}.
+servicios pequeños, desplegables de forma independiente y comunicados mediante API
+REST, cada uno responsable de una capacidad de negocio \cite{ibm2026microservices}.
+El monolito modular, en cambio, se despliega como una única unidad, pero divide su
+código en módulos con interfaces públicas y sin dependencias internas cruzadas; así
+conserva la separación de responsabilidades sin el costo operativo de distribuir y
+coordinar servicios independientes \cite{richards2020fundamentals}.
 
 \paragraph{Arquitectura de puertos y adaptadores.}
 
@@ -175,67 +118,40 @@ sustituirse sin modificar la lógica \cite{cockburn2005hexagonal}.
 \paragraph{Contenedorización y despliegue: Docker.}
 
 Un contenedor es una unidad estándar de software que empaqueta el código de una
-aplicación junto con todas sus dependencias, de modo que se ejecuta de forma
-rápida y consistente en cualquier entorno de cómputo \cite{docker2024containers}.
-Docker es la plataforma de contenedorización de mayor adopción en la industria y
-constituye el mecanismo habitual para desplegar de forma aislada y escalable cada
-microservicio de una arquitectura distribuida \cite{docker2024containers}; ha sido
-empleado de forma explícita en arquitecturas de chatbot de salud
-\cite{roca2020microservice} y en prototipos de sistemas dentales basados en
-microservicios \cite{arcila2022microservice}.
+aplicación con todas sus dependencias, de modo que se ejecuta de forma consistente en
+cualquier entorno. Docker es la plataforma de contenedores de mayor adopción en la
+industria \cite{docker2024containers}.
 
-\paragraph{Autenticación en arquitecturas distribuidas: JSON Web Token (JWT).}
+\paragraph{Autenticación mediante JSON Web Token (JWT).}
 
-Un \textit{JSON Web Token} (JWT) es un estándar abierto (RFC~7519) que define una
-forma compacta y autocontenida de transmitir información entre partes como un
-objeto JSON firmado digitalmente, permitiendo verificar la identidad del emisor y
-la integridad del contenido \cite{auth0jwt2024introduction}. En arquitecturas de
-microservicios expuestas mediante un API Gateway, JWT centraliza la autenticación
-de solicitudes evitando que cada servicio implemente su propio esquema de
-credenciales \cite{auth0jwt2024introduction}; fue adoptado de forma explícita en
-el sistema de registros dental de \cite{arcila2022microservice} y en el módulo de
-reserva de citas de \cite{shaikh2026smartmedibook}.
+Un \textit{JSON Web Token} (JWT) es un estándar abierto (RFC~7519) que transmite
+información entre partes como un objeto JSON firmado digitalmente, lo que permite
+verificar la identidad del emisor y la integridad del contenido sin consultar una
+sesión en el servidor \cite{auth0jwt2024introduction}.
 
 \paragraph{Diseño guiado por atributos (ADD).}
 
 El método \textit{Attribute-Driven Design} (ADD), propuesto por el
 \textit{Software Engineering Institute} (SEI), define la arquitectura a partir de
-sus factores de diseño (\textit{architectural drivers}): los requerimientos funcionales prioritarios, los
-atributos de calidad y las restricciones del sistema. Estos factores guían las decisiones de diseño en
-cada iteración del método \cite{cervantes2016designing}.
-
-\paragraph{Evaluación de la calidad del software: ISO/IEC 25010.}
-
-ISO/IEC~25010 define un modelo de calidad de producto de software organizado en
-características medibles ---eficiencia de desempeño, compatibilidad, usabilidad,
-fiabilidad, seguridad, mantenibilidad y portabilidad--- dentro de la serie SQuaRE
-\cite{iso2011iec25010}. Ofrece un lenguaje común para especificar requisitos de
-calidad y evaluar en qué grado un producto los satisface \cite{iso2011iec25010},
-y fue empleada de forma explícita para verificar los atributos de calidad de una
-arquitectura de microservicios dental bajo pruebas de carga
-\cite{arcila2022microservice}.
+sus factores de diseño (\textit{architectural drivers}): los requerimientos
+funcionales prioritarios, los atributos de calidad y las restricciones del sistema.
+Estos factores guían las decisiones de diseño en cada iteración del método
+\cite{cervantes2016designing}.
 
 % -----------------------------------------------------------
 \subsubsection{Agentes conversacionales para la gestión de citas}
 % -----------------------------------------------------------
 
-\paragraph{Procesamiento de Lenguaje Natural (NLP).}
+\paragraph{Agentes conversacionales y procesamiento de lenguaje natural.}
 
-El Procesamiento de Lenguaje Natural (\textit{Natural Language Processing}, NLP)
-es un subcampo de la inteligencia artificial que utiliza aprendizaje automático
-para permitir que los sistemas computacionales interpreten y generen lenguaje
-humano \cite{ibm2024nlp}. Sus técnicas sustentan la clasificación y extracción de
-información en texto, así como el reconocimiento de intención (\textit{intent
-recognition}) dentro de una conversación \cite{ibm2024nlp}.
-
-\paragraph{Agentes conversacionales (chatbots).}
-
-Un agente conversacional, o \textit{chatbot}, es un programa de software capaz de
-comunicarse con personas mediante lenguaje natural, entendiendo las expresiones
-del usuario y generando respuestas relevantes al problema planteado
-\cite{csaky2019chatbot}. Las arquitecturas de chatbot han evolucionado desde
-reglas y plantillas escritas manualmente hacia métodos estadísticos y, más
-recientemente, basados en aprendizaje profundo \cite{csaky2019chatbot}.
+Un agente conversacional, o \textit{chatbot}, es un programa capaz de comunicarse con
+personas en lenguaje natural, entender sus expresiones y generar respuestas
+pertinentes; sus arquitecturas han evolucionado desde reglas escritas manualmente
+hacia métodos estadísticos y de aprendizaje profundo \cite{csaky2019chatbot}. Para
+interpretar el texto libre se apoyan en el procesamiento de lenguaje natural
+(\textit{Natural Language Processing}, NLP), subcampo de la inteligencia artificial
+que permite reconocer la intención de un mensaje y extraer sus datos
+\cite{ibm2024nlp}.
 
 \paragraph{Modelos de lenguaje grande (LLM).}
 
@@ -247,37 +163,13 @@ tareas nuevas a partir de instrucciones, sin un entrenamiento específico
 y extraer sus datos en un formato estructurado; sus respuestas, sin embargo, no son
 deterministas y pueden contener información inexacta \cite{zhao2023llmsurvey}.
 
-\paragraph{Modelado de diálogo basado en reglas: AIML.}
+\paragraph{WhatsApp Business Platform.}
 
-\textit{Artificial Intelligence Markup Language} (AIML) es un lenguaje de
-marcado basado en XML para especificar el comportamiento de agentes
-conversacionales mediante unidades llamadas \textit{categorías}, cada una
-compuesta por un patrón de entrada y una plantilla de respuesta asociada
-\cite{geeksforgeeks2023aiml}. A diferencia de los enfoques estadísticos, AIML
-representa un modelado de diálogo por reglas explícitas, lo que facilita su
-trazabilidad y su combinación con estándares de datos clínicos
-\cite{geeksforgeeks2023aiml}. En los antecedentes revisados, aparece como
-mecanismo conversacional de una arquitectura de chatbot para pacientes crónicos,
-incluyendo un generador automático de categorías AIML a partir de recursos FHIR
-\cite{roca2020microservice}, y entre las tecnologías identificadas en una revisión
-sistemática de chatbots de toma de historia clínica \cite{hindelang2024chatbots}.
-
-\paragraph{Plataformas de mensajería: WhatsApp Business Platform y LINE.}
-
-La \textit{WhatsApp Business Platform}, operada por Meta, permite a una
-organización enviar y recibir mensajes de forma programática mediante su Cloud
-API. La integración con sistemas externos se realiza mediante \textit{webhooks}:
-cuando ocurre un evento ---como la recepción de un mensaje--- la plataforma
-transmite un \textit{payload} a una URL registrada por el desarrollador, quien
-debe confirmarlo mediante una respuesta HTTP \cite{meta2026whatsapp}. Otras
-plataformas de alta penetración regional, como LINE (predominante en el sudeste
-asiático), ofrecen una \textit{Messaging API} de estructura equivalente y
-notificación de eventos mediante el mismo patrón de \textit{webhook}
-\cite{line2026messaging}. La elección de una u otra plataforma responde
-principalmente a la penetración de mensajería de la población objetivo; el patrón
-de integración es análogo en ambas. Esta última variante fue la empleada en un
-chatbot de reserva de servicios odontológicos en un centro de salud universitario
-\cite{hmadchayyapum2025line}.
+La \textit{WhatsApp Business Platform}, operada por Meta, permite a una organización
+enviar y recibir mensajes de forma programática mediante su Cloud API. La integración
+con sistemas externos se realiza mediante \textit{webhooks}: cuando ocurre un evento,
+como la recepción de un mensaje, la plataforma envía los datos a una URL registrada,
+que debe confirmar su recepción con una respuesta HTTP \cite{meta2026whatsapp}.
 
 % -----------------------------------------------------------
 \subsubsection{Marco normativo de la información clínica en Ecuador}
@@ -285,34 +177,29 @@ chatbot de reserva de servicios odontológicos en un centro de salud universitar
 
 \paragraph{Historia clínica y confidencialidad de la información en salud.}
 
-El Acuerdo Ministerial 5216-A del Ministerio de Salud Pública del Ecuador
-establece el marco normativo obligatorio para el manejo de información
-confidencial dentro del Sistema Nacional de Salud, disponiendo que la gestión
-documental de historias clínicas ---en formato físico o digital--- debe
-garantizar un sistema adecuado de archivo, custodia, confidencialidad y
-trazabilidad del uso de la información \cite{msp5216a}.
+El Acuerdo Ministerial 5216-A del Ministerio de Salud Pública del Ecuador establece
+el marco obligatorio para el manejo de información confidencial en el Sistema
+Nacional de Salud. Dispone que la gestión de las historias clínicas, en formato
+físico o digital, garantice su archivo, custodia, confidencialidad y la trazabilidad
+del uso de la información \cite{msp5216a}.
 
-\paragraph{Estandarización del registro clínico odontológico e indicadores de calidad.}
+\paragraph{Registro clínico odontológico y codificación de diagnósticos.}
 
-Dentro del marco normativo dispuesto por el Ministerio de Salud Pública, la
-historia clínica única odontológica se registra en Ecuador mediante un formulario
-estandarizado del Sistema Nacional de Salud \cite{msp5216a}. La
-completitud de este tipo de formularios se evalúa mediante indicadores de calidad
-de registro que combinan variables administrativas con indicadores clínicos
-propios de la especialidad, entre los que destaca el índice CPO-D (dientes
-permanentes cariados, perdidos y obturados), instrumento epidemiológico
-estandarizado internacionalmente por la Organización Mundial de la Salud para
-cuantificar la prevalencia de caries dental \cite{who2013oralhealth}. La
-evaluación de 293~formularios de historia clínica única odontológica en un
-contexto universitario ecuatoriano constató que menos de la mitad de los
-indicadores clave, incluido el índice CPO-D, se registraba de forma completa
-\cite{uce2016caracteristicas}.
+La historia clínica única odontológica se registra en Ecuador mediante un formulario
+estandarizado del Sistema Nacional de Salud, el Formulario 033 \cite{msp5216a}. Su
+completitud se evalúa con indicadores que combinan datos administrativos y clínicos,
+entre ellos el índice CPO-D (dientes permanentes cariados, perdidos y obturados),
+estandarizado por la Organización Mundial de la Salud para cuantificar la caries
+dental \cite{who2013oralhealth}. Los diagnósticos se codifican con la Clasificación
+Internacional de Enfermedades, décima revisión (CIE-10), también de la Organización
+Mundial de la Salud, que asigna a cada enfermedad un código alfanumérico; las
+afecciones bucales y dentales se agrupan en las categorías K00 a K14
+\cite{who2019icd10}.
 
 \paragraph{Protección de datos personales en el ámbito sanitario.}
 
-La Ley Orgánica de Protección de Datos Personales del Ecuador regula el
-tratamiento de datos personales, incluyendo los datos de salud como categoría de
-tratamiento especial. Su nivel de cumplimiento en sistemas de historia clínica
-electrónica del subsistema nacional de salud ecuatoriano ha sido analizado,
-identificándose brechas entre lo dispuesto por la normativa y su implementación
-técnica efectiva \cite{martinez2022proteccion}.
+La Ley Orgánica de Protección de Datos Personales del Ecuador regula el tratamiento
+de los datos personales y considera los datos de salud como una categoría especial
+\cite{lopdp2021}. Su cumplimiento en los sistemas de historia clínica electrónica del
+país presenta brechas entre lo dispuesto por la norma y su implementación técnica
+\cite{martinez2022proteccion}.
