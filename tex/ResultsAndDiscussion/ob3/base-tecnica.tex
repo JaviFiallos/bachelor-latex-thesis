@@ -7,68 +7,38 @@ La construcción comenzó por la base común sobre la que se desarrollaron las d
 
 \paragraph{Estructura de la API y de la interfaz web}
 
-La API mantiene el monolito modular del diseño (Figura~\ref{fig:ob2_modulos}): un paquete por módulo, con tres capas internas (\texttt{api}, controladores; \texttt{application}, servicios y transacciones; \texttt{domain}, entidades y reglas) y una interfaz pública para los demás módulos (Figura~\ref{fig:ob3_arbol_api}).
+La API mantiene el monolito modular del diseño (Figura~\ref{fig:ob2_modulos}): un paquete por módulo, con tres capas internas (\texttt{api}, controladores; \texttt{application}, servicios y transacciones; \texttt{domain}, entidades y reglas) y una interfaz pública para los demás módulos. La Figura~\ref{fig:ob3_arbol_api} muestra esta estructura en el módulo de agenda; los demás módulos la repiten.
 
-La interfaz web replica esa división (Figura~\ref{fig:ob3_arbol_web}): una carpeta por funcionalidad, con sus páginas, componentes y servicios de acceso a la API. La capa \texttt{core} gestiona la sesión, adjunta el token a cada petición y restringe las rutas por perfil.
+La interfaz web replica esa división (Figura~\ref{fig:ob3_arbol_web}): una carpeta por funcionalidad, con sus páginas, componentes, servicios de acceso a la API y modelos. La capa \texttt{core} gestiona la sesión, adjunta el token a cada petición y restringe las rutas por perfil.
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}[t]{0.49\linewidth}
+\begin{subfigure}[t]{0.48\linewidth}
 \footnotesize
 \dirtree{%
-.1 src/main/.
-.2 java/com/bellidental/.
-.3 identity\DTcomment{Identidad y acceso}.
-.3 security\DTcomment{token y permisos}.
-.3 patients\DTcomment{Pacientes}.
-.3 professionals\DTcomment{Profesionales}.
-.3 appointments\DTcomment{Agenda}.
-.4 api\DTcomment{controladores REST}.
-.4 application\DTcomment{servicios}.
-.4 domain\DTcomment{reglas y entidades}.
-.3 clinicalrecords\DTcomment{Historia clínica}.
-.3 clinical\DTcomment{Atención y CIE-10}.
-.3 odontogram\DTcomment{Odontograma}.
-.3 treatments\DTcomment{Tratamientos}.
-.3 prescriptions\DTcomment{Recetas}.
-.3 clinicalsummary\DTcomment{Ficha y 033}.
-.3 billing\DTcomment{Cobros}.
-.3 bot\DTcomment{Interfaz del agente}.
-.3 audit\DTcomment{Historial de cambios}.
-.3 dashboard\DTcomment{Estadísticas}.
-.3 shared, config\DTcomment{transversal}.
-.2 resources/db/migration\DTcomment{V1 a V22}.
+.1 src/main/java/com/bellidental/.
+.2 appointments\DTcomment{Agenda}.
+.3 api\DTcomment{controladores REST}.
+.3 application\DTcomment{servicios}.
+.3 domain\DTcomment{reglas y entidades}.
 }
 \caption{API}
 \label{fig:ob3_arbol_api}
 \end{subfigure}\hfill
-\begin{subfigure}[t]{0.49\linewidth}
+\begin{subfigure}[t]{0.48\linewidth}
 \footnotesize
 \dirtree{%
-.1 src/app/.
-.2 core\DTcomment{base}.
-.3 auth\DTcomment{sesión}.
-.3 interceptors\DTcomment{token y errores}.
-.3 guards\DTcomment{rutas por perfil}.
-.2 features.
-.3 auth\DTcomment{Inicio de sesión}.
-.3 appointments\DTcomment{Agenda}.
-.3 patients\DTcomment{Pacientes}.
-.3 professionals\DTcomment{Horarios}.
-.3 clinical\DTcomment{Atención}.
-.3 odontogram\DTcomment{Odontograma}.
-.3 treatments\DTcomment{Tratamientos}.
-.3 prescriptions\DTcomment{Recetas}.
-.3 billing\DTcomment{Cobros}.
-.3 management\DTcomment{Dirección}.
-.3 dashboard\DTcomment{Estadísticas}.
-.2 shared\DTcomment{componentes comunes}.
-.2 layout\DTcomment{menú por perfil}.
+.1 src/app/features/.
+.2 appointments\DTcomment{Agenda}.
+.3 pages\DTcomment{pantallas}.
+.3 components\DTcomment{componentes}.
+.3 services\DTcomment{acceso a la API}.
+.3 models\DTcomment{tipos de datos}.
 }
 \caption{Interfaz web}
 \label{fig:ob3_arbol_web}
 \end{subfigure}
-\caption{Estructura del código de la API y de la interfaz web}
+\caption{Estructura de un módulo, la agenda, en la API y en la interfaz web}
 \label{fig:ob3_arboles}
 \end{figure}
 
