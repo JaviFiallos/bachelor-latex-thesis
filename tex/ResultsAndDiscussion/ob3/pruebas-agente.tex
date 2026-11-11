@@ -34,20 +34,21 @@ Consulta clínica o de saldo & Derivación con el enlace a recepción & RF13 & C
 \end{xltabular}
 \endgroup
 
-\newcommand{\captura}[2]{\includegraphics[width=\linewidth,height=#2,keepaspectratio]{img/Objetivo3/#1.jpeg}}
+% Todas las capturas con el mismo ancho, para que el texto se vea al mismo tamaño.
+\newcommand{\captura}[1]{\includegraphics[width=5.6cm]{img/Objetivo3/#1.jpeg}}
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Horarios}{0.42\textheight}\caption{Horario de un profesional}\end{subfigure}\hfill
-\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Texto_Libre}{0.42\textheight}\caption{Horario de una especialidad}\end{subfigure}
+\begin{subfigure}[t]{0.48\linewidth}\centering\captura{Ob3_Agente_Horarios}\caption{Horario de un profesional}\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}\centering\captura{Ob3_Agente_Texto_Libre}\caption{Horario de una especialidad}\end{subfigure}
 \caption{Consultas de información en texto libre (RF10)}
 \label{fig:ob3_conv_info}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Agendamiento}{0.55\textheight}\caption{Cita confirmada}\end{subfigure}\hfill
-\begin{subfigure}[b]{0.48\linewidth}\centering\captura{Ob3_Agente_Derivacion}{0.55\textheight}\caption{Derivación a recepción}\end{subfigure}
+\begin{subfigure}[t]{0.48\linewidth}\centering\captura{Ob3_Agente_Agendamiento}\caption{Cita confirmada}\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}\centering\captura{Ob3_Agente_Derivacion}\caption{Derivación a recepción}\end{subfigure}
 \caption{Agendamiento y derivación (RF11, RF13)}
 \label{fig:ob3_conv_cita}
 \end{figure}
@@ -55,7 +56,7 @@ Consulta clínica o de saldo & Derivación con el enlace a recepción & RF13 & C
 \IfFileExists{img/Objetivo3/Ob3_Agente_Recordatorio.jpeg}{%
 \begin{figure}[H]
 \centering
-\captura{Ob3_Agente_Recordatorio}{0.55\textheight}
+\captura{Ob3_Agente_Recordatorio}
 \caption{Recordatorio del día anterior con Confirmar, Cancelar y Reprogramar (RF14)}
 \label{fig:ob3_conv_recordatorio}
 \end{figure}}{}
